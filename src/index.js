@@ -19,15 +19,12 @@ const authErrorEventBus = new AuthErrorEventBus
 const authService = new AuthService(httpClient, tokenStorage);
 const socketClient = new Socket(baseURL, () => tokenStorage.getToken());
 
-
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider
         authService={authService}
-        authErrorEventBus={authErrorEventBus}
-      >
+        authErrorEventBus={authErrorEventBus}>
         <App />
       </AuthProvider>  
     </BrowserRouter>

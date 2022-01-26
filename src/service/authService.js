@@ -4,7 +4,14 @@ export default class AuthService {
     this.tokenStorage = tokenStorage;
   }
 
-  async signup(username, password, name, email) {
+  // async signup(username, password, name, email) {
     
+  // }
+
+  async login(username, password) {
+    return this.http.getAxios().post("/user/login", {
+      username,
+      password,
+    });
   }
 }

@@ -26,9 +26,9 @@ export function AuthProvider({ authService, authErrorEventBus, children}) {
     });
   }, [authErrorEventBus]);
 
-  useEffect(() => {
-    authService.me().then(setUser).catch(console.error);
-  }, [authService]);
+  // useEffect(() => {
+  //   authService.me().then(setUser).catch(console.error);
+  // }, [authService]);
 
   const signUp = useCallback(
     async (username, password, name, email) =>
