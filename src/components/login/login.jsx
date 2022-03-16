@@ -69,7 +69,6 @@ const Login = ({ onSignUp, onLogIn }) => {
         <button type="submit" className={styles.submitBtn}>회원가입</button>
       </form>
       </div>
-
     </div>
   );
 };

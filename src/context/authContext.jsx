@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 
-import Login from "../components/page/login";
+import Login from "../components/login/login";
 
 const AuthContext = createContext({});
 const contextRef = createRef();
@@ -40,12 +40,16 @@ export function AuthProvider({ authService, authErrorEventBus, children}) {
 
   const login = useCallback(
     async (username, password) =>
-      authService.login(username, password).then((user) => setUser(user)),
+      authService
+      .login(username, password)
+      .then((user) => setUser(user)),
     [authService]
   );
 
   const logout = useCallback(
-    async () => authService.logout().then(() => setUser(undefined)),
+    async () => authService
+      .logout()
+      .then(() => setUser(undefined)),
     [authService]
   );
 
