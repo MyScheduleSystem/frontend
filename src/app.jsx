@@ -3,11 +3,11 @@ import styles from "./app.module.css";
 import TestData from "./dev/testData";
 
 function App() {
-    const data = getInitData.call(this);
+    const testData2 = getInitData.call(this);
     return (
         <div className={styles.body}>
-            {data.title}
-            <div>{data.contents.map((el) => el.description)}</div>
+            {testData2.title}
+            <div>{testData2.contents.map((el) => el.description)}</div>
         </div>
     );
 }
