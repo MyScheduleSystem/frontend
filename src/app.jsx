@@ -1,16 +1,19 @@
 import React from "react";
-// import { Routes, Route } from "react-router-dom";
 import styles from "./app.module.css";
-import Login from "./components/login/login";
+import TestData from "./dev/testData";
 
 function App() {
-  return (
-    <div className={styles.body}>
-      {/* <Routes>
-        <Route path="/login" element={<Login />} />
-      </Routes> */}
-    </div>
-  )
+    const data = getInitData.call(this);
+    return (
+        <div className={styles.body}>
+            {data.title}
+            <div>{data.contents.map((el) => el.description)}</div>
+        </div>
+    );
+}
+
+function getInitData() {
+    return TestData.container.calender.todo;
 }
 
 export default App;
