@@ -1,6 +1,7 @@
 const TestData = {}
 const userId = 1
 const date = '2022-05'
+const day = '01'
 
 TestData[userId] = {
     container: {
@@ -8,7 +9,15 @@ TestData[userId] = {
         month: '',
         [date]: {
             calendar: {
-                todo: [],
+                [day]: {
+                    todo: [
+                        {
+                            content: '',
+                            startDate: '',
+                            endDaate: '',
+                        }
+                    ],
+                }
             },
         },
         theme: {
