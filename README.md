@@ -15,6 +15,7 @@ OpenSource
     fortawesome
     Lodash
     PostCss
+    MaterialUi(MUI)
 
 Function
     개인 스케쥴 관리(수정, 추가, 삭제)
