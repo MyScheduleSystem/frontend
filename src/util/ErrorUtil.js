@@ -9,4 +9,8 @@ ErrorUtil.assert = (command) => {
     if(!command) debugger
 }
 
+ErrorUtil.invalidParameter = (param) => {
+    if(param == null) debugger
+}
+
 export default ErrorUtil
