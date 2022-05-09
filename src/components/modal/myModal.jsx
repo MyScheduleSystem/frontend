@@ -9,9 +9,14 @@ function MyModal({ isClickModal, onClose, todoItems }) {
     return (
         <Modal open={isClickModal} onClose={onCloseHandler}>
             <Box>
-                {todoItems.map((item, i) => (
-                    <p key={i}>{item.content}</p>
-                ))}
+                {todoItems.map((item, i) => {
+                    return (
+                        <div key={i}>
+                            <p>{item.content}</p>
+                            <p>{item.content}</p>
+                        </div>
+                    );
+                })}
             </Box>
         </Modal>
     );
