@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./app.module.css";
-import SideBar from "./components/sidebar/sidebar"
-import MyCalendar from './components/calendar/myCalendar';
-import myData from './dev/testData'
+import SideBar from "./components/sidebar/sidebar";
+import MyCalendar from "./components/calendar/myCalendar";
+import myData from "./dev/testData";
 
 function App() {
     return (
@@ -12,6 +12,5 @@ function App() {
         </div>
     );
 }
-
 
 export default App;
