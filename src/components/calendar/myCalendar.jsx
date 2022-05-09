@@ -18,8 +18,8 @@ function MyCalendar({ todoList }) {
         setTodoItemList.call(this, e, todoList, setTodoItems);
     };
 
-    const onCloseHandler = (props) => {
-        setIsClickModal(props);
+    const onCloseHandler = (closed) => {
+        setIsClickModal(closed);
     };
 
     const setTileContent = (e) => {
@@ -29,7 +29,6 @@ function MyCalendar({ todoList }) {
             v.todo.forEach((item) => {
                 if (item.startDate === formatedDate) {
                     rtnArr.push(<p key={item.tileContent}>{item.tileContent}</p>);
-                    return;
                 }
             });
         });
@@ -45,11 +44,10 @@ function MyCalendar({ todoList }) {
 }
 
 function setTodoItemList(e, todoList, setTodoItems) {
-    const day = DateUtil.dateFormat(e);
     const desc = [];
     Lodash.forEach(todoList, (v) => {
         v.todo.forEach((item) => {
-            if (item.startDate === day) {
+            if (item.startDate === DateUtil.dateFormat(e)) {
                 const obj = {};
                 obj.tileContent = item.tileContent;
                 obj.content = item.content;
