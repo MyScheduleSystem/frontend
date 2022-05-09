@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus, faPencil } from "@fortawesome/free-solid-svg-icons";
-
-import ErrorUtil from "../util/ErrorUtil"
+import ErrorUtil from "../util/errorUtil"
 
 // 2022-05-07 FoxMon(김준호)
 // Solid인 fortawesome만 사용하도록 함.
