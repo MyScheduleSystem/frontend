@@ -5,7 +5,11 @@ import ErrorUtil from './errorUtil'
 const DateUtil = {}
 
 DateUtil.dateFormat = function() {
-    return moment().format("YYYY-MM-DD")
+    return moment().format("YYYY-MM-DD").split("T")[0]
+}
+
+DateUtil.dateFormat = function(date, foramt) {
+    return moment(date, foramt).format().split("T")[0]
 }
 
 DateUtil.timeFormat = function() {
@@ -22,10 +26,10 @@ DateUtil.dayFormat = function() {
 DateUtil.dateCalculate = function(number, operation, day) {
     switch(operation) {
         case "add":
-            return moment().clone().add(number, day)
+            return moment().clone().add(number, day).format().split("T")[0]
 
         case "subtract":
-            return moment().clone().subtract(number, day)
+            return moment().clone().subtract(number, day).format().split("T")[0]
 
         default:
             ErrorUtil.notImplemented()

@@ -1,3 +1,5 @@
+import DateUtil from '../util/dateUtil'
+
 const TestData = {}
 const userId = 1
 const date = '2022-05'
@@ -12,6 +14,7 @@ TestData[userId] = {
                 [day]: {
                     todo: [
                         {
+                            tileContent: '',
                             content: '',
                             startDate: '',
                             endDaate: '',
@@ -36,3 +39,21 @@ TestData[userId] = {
         }
     }
 }
+
+const myData = create(TestData[userId].container[date].calendar)
+
+function create(calendarSpecJson) {
+    const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
+    days.forEach((e, i) => {
+        calendarSpecJson[e] = {}
+        calendarSpecJson[e].todo = []
+        const todoObj = {}
+        todoObj.tileContent = `Todo Title${i}`
+        todoObj.content = `Todo Content${i}`
+        todoObj.startDate = DateUtil.dateCalculate(i, "add", "days")
+        todoObj.endDaate = '2022-05-27'
+        calendarSpecJson[e].todo.push(todoObj)
+    })
+    return calendarSpecJson
+}
+export default myData
