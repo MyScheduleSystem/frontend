@@ -21,6 +21,8 @@ const Login = ({ onSignUp, onLogIn }) => {
     setLogOpen(!logOpen);
     setRegOpen(!regOpen);
     setBtnOpen(!btnOpen);
+    // Todo -> onSignUp
+    // onSignUp(user)
   }
 
   const userNameHandler = (e) => {

@@ -1,34 +1,29 @@
-const container = {
-    calender: {
-        date: "2022-04",
-        todo: {
-            title: "SomeThing",
-            contents: [],
+const TestData = {}
+const userId = 1
+const date = '2022-05'
+
+TestData[userId] = {
+    container: {
+        year: '',
+        month: '',
+        [date]: {
+            calendar: {
+                todo: [],
+            },
         },
-    },
-    theme: {
-        backgroundColor: "none",
-        color: "none",
-    },
-    padding: "none",
-    margin: "none",
-    fontSize: "",
-    fetchOption: {
-        id: 1,
-        // Todo
-    },
-};
-
-{
-    createTodoContent();
+        theme: {
+            color: '',
+            backgroundColor: '',
+        },
+        boxStyle: {
+            padding: '',
+            margin: '',
+        },
+        fetchOption: {
+            userId: 1,
+            year: '',
+            month: '',
+            themeMode: '',
+        }
+    }
 }
-
-function createTodoContent() {
-    container.calender.todo.contents = new Array(5).fill(null).map((e, i) => {
-        const obj = {};
-        obj.description = `Todo${i}`;
-        return obj;
-    });
-}
-
-export default { container };
