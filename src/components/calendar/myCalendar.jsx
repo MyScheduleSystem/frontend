@@ -8,6 +8,7 @@ import "react-calendar/dist/Calendar.css";
 
 function MyCalendar({ todoList }) {
     const [isClickModal, setIsClickModal] = useState(false);
+    const [showBtn, setShowBtn] = useState(false);
     const [todoItems, setTodoItems] = useState();
     const calendarRef = useRef();
 
@@ -37,8 +38,19 @@ function MyCalendar({ todoList }) {
 
     return (
         <>
-            <Calendar ref={calendarRef} onClickDay={onClickDayHandler} tileContent={setTileContent} />
-            {isClickModal && <MyModal isClickModal={isClickModal} onClose={onCloseHandler} todoItems={todoItems} />}
+            <Calendar 
+                ref={calendarRef} 
+                onClickDay={onClickDayHandler} 
+                tileContent={setTileContent}
+                onOverBtn={setShowBtn}
+                onOutBtn={showBtn}
+            />
+            {isClickModal && 
+                <MyModal 
+                    isClickModal={isClickModal} 
+                    onClose={onCloseHandler} 
+                    todoItems={todoItems} 
+            />}
         </>
     );
 }

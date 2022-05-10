@@ -5,7 +5,7 @@ import {
     Input 
 } from "@mui/material";
 
-function MyModal({ isClickModal, onClose, todoItems }) {
+function MyModal({ isClickModal, onClose, todoItems, onOverBtn, onOutBtn}) {
     const onCloseHandler = () => {
         onClose(false);
     };
@@ -25,7 +25,10 @@ function MyModal({ isClickModal, onClose, todoItems }) {
                         </div>
                     );
                 })}
-                <Input />
+                <div onMouseOver={() => {onOverBtn(true)}} onMouseOut={() => {onOutBtn(false)}}>
+                    {!onOutBtn && <button>+</button>}
+                </div>
+                <Input></Input>
             </Box>
         </Modal>
     );
