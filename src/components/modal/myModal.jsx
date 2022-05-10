@@ -1,5 +1,9 @@
 import React from "react";
-import { Modal, Box } from "@mui/material";
+import { 
+    Modal, 
+    Box, 
+    Input 
+} from "@mui/material";
 
 function MyModal({ isClickModal, onClose, todoItems }) {
     const onCloseHandler = () => {
@@ -7,8 +11,12 @@ function MyModal({ isClickModal, onClose, todoItems }) {
     };
 
     return (
-        <Modal open={isClickModal} onClose={onCloseHandler}>
-            <Box>
+        <Modal 
+            style={modalStyle} 
+            open={isClickModal} 
+            onClose={onCloseHandler}
+        >
+            <Box sx={boxStyle}>
                 {todoItems.map((item, i) => {
                     return (
                         <div key={i}>
@@ -17,9 +25,24 @@ function MyModal({ isClickModal, onClose, todoItems }) {
                         </div>
                     );
                 })}
+                <Input />
             </Box>
         </Modal>
     );
+}
+
+const modalStyle = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    textAlign: 'center',
+}
+
+const boxStyle = {
+    width: 300,
+    height: 300,
+    backgroundColor: 'blue',
+    opacity: [0.9, 0.8, 0.7],
 }
 
 export default MyModal;
