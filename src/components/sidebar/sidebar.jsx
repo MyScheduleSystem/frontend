@@ -53,12 +53,8 @@ function SideBar() {
     ]
 
     return (
-        <Box sx={
-            { 
-                width: '100%',
-            }
-        }>
-            <ListItem>
+        <Box sx={sidebarStyle}>
+            <ListItem sx={sidebarListStyle}>
                 {items.map(item => {
                     return (
                         <ListItemButton key={item.name} onClick={item.onClickItem}>
@@ -69,6 +65,16 @@ function SideBar() {
             </ListItem>
         </Box>
     )
+}
+
+const sidebarStyle = {
+    height: '100%',   
+    position: 'fixed',
+    width: '30%',
+}
+
+const sidebarListStyle = {
+    display: 'block',
 }
 
 export default SideBar
