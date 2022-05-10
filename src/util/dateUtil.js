@@ -1,5 +1,5 @@
 import moment from 'moment'
-import ErrorUtil from './ErrorUtil'
+import ErrorUtil from './errorUtil'
 
 // Object
 const DateUtil = {}
