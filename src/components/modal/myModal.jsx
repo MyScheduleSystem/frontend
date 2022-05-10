@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import MyIcon from "../../icon/MyIcon";
 import { 
     Modal, 
     Box, 
     Input 
 } from "@mui/material";
 
-function MyModal({ isClickModal, onClose, todoItems, onOverBtn, onOutBtn}) {
+function MyModal({ isClickModal, onClose, todoItems }) {
+    const [isShowBtn, setIsShowBtn] = useState(false);
+
     const onCloseHandler = () => {
         onClose(false);
     };
+    
+    const onMouseOverHandelr = () => {
+        setIsShowBtn(true)
+    }
+
+    const onMouseOutHandler = () => {
+        setIsShowBtn(false)
+    }
 
     return (
         <Modal 
@@ -25,10 +36,10 @@ function MyModal({ isClickModal, onClose, todoItems, onOverBtn, onOutBtn}) {
                         </div>
                     );
                 })}
-                <div onMouseOver={() => {onOverBtn(true)}} onMouseOut={() => {onOutBtn(false)}}>
-                    {!onOutBtn && <button>+</button>}
+                <div onMouseOver={onMouseOverHandelr} onMouseOut={onMouseOutHandler}>
+                    {isShowBtn && <MyIcon name='plus' />}
+                    <Input></Input>
                 </div>
-                <Input></Input>
             </Box>
         </Modal>
     );
