@@ -40,8 +40,6 @@ TestData[userId] = {
     }
 }
 
-const myData = create(TestData[userId].container[date].calendar)
-
 function create(calendarSpecJson) {
     const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
     days.forEach((e, i) => {
@@ -56,4 +54,8 @@ function create(calendarSpecJson) {
     })
     return calendarSpecJson
 }
-export default myData
+
+export default function getTodoFetchResult() {
+    const myData = create(TestData[userId].container[date].calendar)
+    return myData
+}
