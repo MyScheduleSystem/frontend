@@ -19,10 +19,10 @@ function MyCalendar({ todoList }) {
         setIsClickModal(closed);
     }
 
-    const onPushContentHandler = (content) => {
-        // error 여기
-        if(!Array.isArray(todoItems)) return
-        setTodoItems((prev) => prev.push(content))
+    const onAddedTodoList = (addedItem) => {
+        const added = addedItem.slice()
+        // 비동기 이슈 왜?
+        setTodoItems((prev) => prev.concat(added))
     }
 
     const setTileContent = (e) => {
@@ -48,7 +48,7 @@ function MyCalendar({ todoList }) {
                 <MyModal 
                     isClickModal={isClickModal} 
                     onClose={onCloseHandler} 
-                    onPushContent={onPushContentHandler}
+                    onAddedList={onAddedTodoList}
                     todoItems={todoItems} 
             />}
         </>

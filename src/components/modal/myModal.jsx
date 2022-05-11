@@ -1,31 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyIcon from "../../icon/MyIcon";
 import { 
     Modal, 
     Box, 
     Input,
     Button,
+    List,
+    ListItem,
+    ListItemText,
 } from "@mui/material";
 
-function MyModal({ isClickModal, onClose, todoItems, onPushContent }) {
+function MyModal({ isClickModal, onClose, onAddedList, todoItems }) {
     const [isInputShow, setIsInputShow] = useState(false)
     const [todoItemList, setTodoItemList] = useState([])
+    const [renderItemList, setRenderItemList] = useState([])
+
+    useEffect(() => {
+        const item = todoItemList.slice()
+        const newArr = todoItems.concat(item)
+        setRenderItemList(newArr)
+    }, [todoItemList])
+
     const onCloseHandler = () => onClose(false)
     const onPlusButtonClickHandler = () => setIsInputShow(true)
 
-    useEffect(() => {
-        setTodoItemList(todoItems)
-        console.log(todoItemList)
-    }, [todoItemList])
-
     const onEnterHandler = (e) => {
         if(e.key !== 'Enter') return
-        const obj = {
-            tileContent: e.target.value,
-            content: e.target.value,
-        }
-        onPushContent(obj)
+        const obj = {}
+        obj.titleContent = `Todo-${e.target.value}`
+        obj.content = e.target.value
+        setTodoItemList([ ...todoItemList, obj ])
+        setIsInputShow(false)
         e.target.value = ''
+    }
+
+    const onSaveButtonClickHandler = () => {
+        const addedItem = todoItemList.slice()
+        onAddedList(addedItem)
+        setTodoItemList(prev => prev = [])
+    }
+
+    const onCancelButtonClickHandler = () => {
     }
 
     return (
@@ -35,11 +50,19 @@ function MyModal({ isClickModal, onClose, todoItems, onPushContent }) {
             onClose={onCloseHandler}
         >
             <Box sx={boxStyle}>
-                {todoItemList.map((item, i) => {
-                    return (
-                        <p key={i}>{item.content}</p>
-                    )
-                })}
+                <Box sx={topBoxStyle}>
+                    <Button onClick={onSaveButtonClickHandler}>Save</Button>
+                    <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
+                </Box>
+                <List>
+                    {renderItemList.map((item, i) => {
+                        return (
+                            <ListItem key={i} sx={listItemStyle}>
+                                <ListItemText sx={listItemTextStyle} primary={item.content} />
+                            </ListItem>
+                        )
+                    })}
+                </List>
                 <Button onClick={onPlusButtonClickHandler}><MyIcon name='plus' /></Button>
                 {isInputShow && <Input autoFocus={true} onKeyPress={onEnterHandler} />}
             </Box>
@@ -48,9 +71,9 @@ function MyModal({ isClickModal, onClose, todoItems, onPushContent }) {
 }
 
 const modalStyle = {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    display: 'flex',
     textAlign: 'center',
 }
 
@@ -59,7 +82,23 @@ const boxStyle = {
     height: '500px',
     backgroundColor: '#fff',
     borderRadius: '10px',
-    opacity: [0.9, 0.8, 0.7],
+}
+
+const listItemStyle = {
+    textAlign: 'center',
+}
+
+const listItemTextStyle = {
+    '&:hover': {
+        transform: 'scale(1.02)',
+        transition: '0.5s',
+    },
+}
+
+const topBoxStyle = {
+    height: '5%',
+    width: '100%',
+    paddingTop: '10px',
 }
 
 export default MyModal;
