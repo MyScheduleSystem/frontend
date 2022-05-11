@@ -17,7 +17,7 @@ TestData[userId] = {
                             tileContent: '',
                             content: '',
                             startDate: '',
-                            endDaate: '',
+                            endDate: '',
                         }
                     ],
                 }
