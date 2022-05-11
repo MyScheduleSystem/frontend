@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import MyIcon from "../../icon/MyIcon";
 import { 
     Modal, 
     Box, 
-    Input 
+    Input,
+    Button,
 } from "@mui/material";
 
-function MyModal({ isClickModal, onClose, todoItems }) {
-    const onCloseHandler = () => {
-        onClose(false);
-    };
+function MyModal({ isClickModal, onClose, todoItems, onPushContent }) {
+    const [isInputShow, setIsInputShow] = useState(false)
+    const [todoItemList, setTodoItemList] = useState([])
+    const onCloseHandler = () => onClose(false)
+    const onPlusButtonClickHandler = () => setIsInputShow(true)
+
+    useEffect(() => {
+        setTodoItemList(todoItems)
+        console.log(todoItemList)
+    }, [todoItemList])
+
+    const onEnterHandler = (e) => {
+        if(e.key !== 'Enter') return
+        const obj = {
+            tileContent: e.target.value,
+            content: e.target.value,
+        }
+        onPushContent(obj)
+        e.target.value = ''
+    }
 
     return (
         <Modal 
@@ -17,15 +35,13 @@ function MyModal({ isClickModal, onClose, todoItems }) {
             onClose={onCloseHandler}
         >
             <Box sx={boxStyle}>
-                {todoItems.map((item, i) => {
+                {todoItemList.map((item, i) => {
                     return (
-                        <div key={i}>
-                            <p>{item.content}</p>
-                            <p>{item.content}</p>
-                        </div>
-                    );
+                        <p key={i}>{item.content}</p>
+                    )
                 })}
-                <Input />
+                <Button onClick={onPlusButtonClickHandler}><MyIcon name='plus' /></Button>
+                {isInputShow && <Input autoFocus={true} onKeyPress={onEnterHandler} />}
             </Box>
         </Modal>
     );
@@ -39,9 +55,10 @@ const modalStyle = {
 }
 
 const boxStyle = {
-    width: 300,
-    height: 300,
-    backgroundColor: 'blue',
+    width: '500px',
+    height: '500px',
+    backgroundColor: '#fff',
+    borderRadius: '10px',
     opacity: [0.9, 0.8, 0.7],
 }
 
