@@ -7,7 +7,7 @@ import myData from "./dev/testData";
 function App() {
     return (
         <div>
-            <SideBar></SideBar>
+            {/* <SideBar></SideBar> */}
             <Routes>  
                 <Route path="/" element={<MyCalendar todoList={myData} />}/> 
             </Routes>
