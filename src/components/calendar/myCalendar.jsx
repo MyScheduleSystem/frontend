@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateUtil from "../../util/dateUtil";
@@ -8,19 +8,22 @@ import "react-calendar/dist/Calendar.css";
 
 function MyCalendar({ todoList }) {
     const [isClickModal, setIsClickModal] = useState(false);
-    const [todoItems, setTodoItems] = useState();
-    const calendarRef = useRef();
+    const [todoItems, setTodoItems] = useState([]);
 
     const onClickDayHandler = (e) => {
-        // console.log(e);
-        // console.log(calendarRef);
         setIsClickModal(true);
         setTodoItemList.call(this, e, todoList, setTodoItems);
-    };
+    }
 
     const onCloseHandler = (closed) => {
         setIsClickModal(closed);
-    };
+    }
+
+    const onPushContentHandler = (content) => {
+        // error 여기
+        if(!Array.isArray(todoItems)) return
+        setTodoItems((prev) => prev.push(content))
+    }
 
     const setTileContent = (e) => {
         const formatedDate = DateUtil.dateFormat(e.date, "YYYY-MM-DD");
@@ -38,7 +41,6 @@ function MyCalendar({ todoList }) {
     return (
         <>
             <Calendar 
-                ref={calendarRef} 
                 onClickDay={onClickDayHandler} 
                 tileContent={setTileContent}
             />
@@ -46,6 +48,7 @@ function MyCalendar({ todoList }) {
                 <MyModal 
                     isClickModal={isClickModal} 
                     onClose={onCloseHandler} 
+                    onPushContent={onPushContentHandler}
                     todoItems={todoItems} 
             />}
         </>
@@ -64,7 +67,6 @@ function setTodoItemList(e, todoList, setTodoItems) {
             }
         });
     });
-    setTodoItems(desc);
+    setTodoItems([ ...desc ]);
 }
-
 export default MyCalendar;
