@@ -3,12 +3,14 @@ import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateUtil from "../../util/dateUtil";
 import MyModal from "../modal/myModal";
+import calenderFetcher from '../../fetcher/calenderSaveFetcher'
 
 import "react-calendar/dist/Calendar.css";
 
-function MyCalendar({ todoList }) {
+function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false);
     const [todoItems, setTodoItems] = useState([]);
+    const todoList = calenderFetcher.getTodoFetchResult()
 
     const onClickDayHandler = (e) => {
         setIsClickModal(true);
