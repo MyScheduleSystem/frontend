@@ -4,9 +4,12 @@ import {
     ListItemButton, 
     ListItemText 
 } from '@mui/material'
+import { useLocation, Link, useMatch } from 'react-router-dom';    
 
 function SideBar() {
     // TODO: Add react router && layout
+    const match = useMatch()
+    console.log(match)
     const items = [
         {
             name: 'Friends',
@@ -51,15 +54,16 @@ function SideBar() {
             },
         },
     ]
-
     return (
         <Box sx={sidebarStyle}>
             <ListItem sx={sidebarListStyle}>
-                {items.map(item => {
+                {items.map((item) => {
                     return (
-                        <ListItemButton key={item.name} onClick={item.onClickItem}>
-                            <ListItemText primary={item.name} />
-                        </ListItemButton>
+                        <Link to={item.path} key={item.name} style={sidebarTextStyle}>
+                            <ListItemButton key={item.name} onClick={item.onClickItem} >
+                                <ListItemText primary={item.name} />
+                            </ListItemButton>
+                        </Link>
                     )
                 })}
             </ListItem>
@@ -75,6 +79,10 @@ const sidebarStyle = {
 
 const sidebarListStyle = {
     display: 'block',
+}
+
+const sidebarTextStyle = {
+    textDecoration: 'none',
 }
 
 export default SideBar
