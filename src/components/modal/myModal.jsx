@@ -1,46 +1,49 @@
 import React, { useState, useEffect } from "react";
-import MyIcon from "../../icon/MyIcon";
+import CardModal from './cardModal'
+import CardItem from '../card/CardItem'
+import EmptyCard from "../card/emptyCard"
 import { 
     Modal, 
     Box, 
-    Input,
     Button,
-    List,
-    ListItem,
-    ListItemText,
 } from "@mui/material";
 
-function MyModal({ isClickModal, onClose, onAddedList, todoItems }) {
-    const [isInputShow, setIsInputShow] = useState(false)
-    const [todoItemList, setTodoItemList] = useState([])
-    const [renderItemList, setRenderItemList] = useState([])
+function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
+    const [isOpenCardModal, setIsOpenCardModal] = useState(false)
+    const [todoItemList] = useState([])
+    // renderItemList가 data를 가지고 있는 것
+    const [renderItemList] = useState([])
 
     useEffect(() => {
         const item = todoItemList.slice()
         const newArr = todoItems.concat(item)
-        setRenderItemList(newArr)
+        renderItemList.push(...newArr)
     }, [todoItemList])
 
     const onCloseHandler = () => onClose(false)
-    const onPlusButtonClickHandler = () => setIsInputShow(true)
 
-    const onEnterHandler = (e) => {
-        if(e.key !== 'Enter') return
-        const obj = {}
-        obj.titleContent = `Todo-${e.target.value}`
-        obj.content = e.target.value
-        setTodoItemList([ ...todoItemList, obj ])
-        setIsInputShow(false)
-        e.target.value = ''
+
+    const onCardModalShow = (isShow) => {
+        setIsOpenCardModal(isShow)
+    }
+
+    const onCardModalCloseHandler = (isClose) => {
+        setIsOpenCardModal(isClose)
+    }
+
+    const onAddTodoItemList = (addedItem) => {
+        todoItemList.push(...addedItem)
     }
 
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
-        onAddedList(addedItem)
-        setTodoItemList(prev => prev = [])
+        // MyCanlendar로 item전달
+        onAddList(addedItem)
+        todoItemList.splice(0, todoItemList.length)
     }
 
     const onCancelButtonClickHandler = () => {
+        onClose(false)
     }
 
     return (
@@ -54,17 +57,19 @@ function MyModal({ isClickModal, onClose, onAddedList, todoItems }) {
                     <Button onClick={onSaveButtonClickHandler}>Save</Button>
                     <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
                 </Box>
-                <List>
-                    {renderItemList.map((item, i) => {
+                <Box sx={cardListStyle}>
+                    {!isOpenCardModal && renderItemList.map((item, i) => {
                         return (
-                            <ListItem key={i} sx={listItemStyle}>
-                                <ListItemText sx={listItemTextStyle} primary={item.content} />
-                            </ListItem>
+                            <CardItem key={i} />
                         )
                     })}
-                </List>
-                <Button onClick={onPlusButtonClickHandler}><MyIcon name='plus' /></Button>
-                {isInputShow && <Input autoFocus={true} onKeyPress={onEnterHandler} />}
+                    <EmptyCard onCardModalShow={onCardModalShow} />
+                </Box>
+                <CardModal 
+                    isCardModalShow={isOpenCardModal} 
+                    cardModalClose={onCardModalCloseHandler}
+                    addTodoItemList={onAddTodoItemList}
+                />
             </Box>
         </Modal>
     );
@@ -78,27 +83,23 @@ const modalStyle = {
 }
 
 const boxStyle = {
-    width: '500px',
-    height: '500px',
+    width: '90%',
+    height: '90%',
     backgroundColor: '#fff',
     borderRadius: '10px',
-}
-
-const listItemStyle = {
-    textAlign: 'center',
-}
-
-const listItemTextStyle = {
-    '&:hover': {
-        transform: 'scale(1.02)',
-        transition: '0.5s',
-    },
+    opacity: '0.95'
 }
 
 const topBoxStyle = {
     height: '5%',
     width: '100%',
     paddingTop: '10px',
+}
+
+const cardListStyle = {
+    display: 'grid',
+    placeItems: 'center',
+    gridTemplateColumns: 'repeat(3, 1fr)',
 }
 
 export default MyModal;
