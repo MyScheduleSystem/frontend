@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateUtil from "../../util/dateUtil";
@@ -8,65 +8,63 @@ import calenderFetcher from '../../fetcher/calenderSaveFetcher'
 import "react-calendar/dist/Calendar.css";
 
 function MyCalendar() {
-    const [isClickModal, setIsClickModal] = useState(false);
-    const [todoItems] = useState([]);
-    const todoList = calenderFetcher.getTodoFetchResult()
+    const [isClickModal, setIsClickModal] = useState(false)
+    const [allTodoItems, setAllTodoItems] = useState({})
+    const [selectedDate, setSelectedDate] = useState(null)
+
+    useEffect(() => {
+        setTodoItemList.call(this, allTodoItems)
+    })
 
     const onClickDayHandler = (e) => {
-        setIsClickModal(true);
-        setTodoItemList.call(this, e, todoList, todoItems);
+        const date = DateUtil.dateFormat(e)
+        setSelectedDate(date)
+        setIsClickModal(true)
     }
 
     const onCloseHandler = (closed) => {
-        setIsClickModal(closed);
+        setIsClickModal(closed)
     }
 
-    const onAddTodoList = (addedItem) => {
-        todoItems.push(...addedItem)
+    const onAddTodoList = (addedItem, cardId) => {
+        // setAllTodoItems에서 오류가 발생한다 ㅠㅠ
+        // allTodoItems[selectedDate][cardId] = []
+        // const newElement = addedItem
+        // setAllTodoItems(() => allTodoItems[selectedDate][cardId].push(...newElement))
     }
-
-    const setTileContent = (e) => {
-        const formatedDate = DateUtil.dateFormat(e.date, "YYYY-MM-DD");
-        const rtnArr = [];
-        Lodash.forEach(todoList, (v) => {
-            v.todo.forEach((item) => {
-                if (item.startDate === formatedDate) {
-                    rtnArr.push(<p key={item.tileContent}>{item.tileContent}</p>);
-                }
-            });
-        });
-        return rtnArr;
-    };
 
     return (
         <>
             <Calendar 
                 onClickDay={onClickDayHandler} 
-                tileContent={setTileContent}
             />
             {isClickModal && 
                 <MyModal 
                     isClickModal={isClickModal} 
                     onClose={onCloseHandler} 
                     onAddList={onAddTodoList}
-                    todoItems={todoItems} 
+                    todoItems={allTodoItems[selectedDate]} 
             />}
         </>
     );
 }
 
-function setTodoItemList(e, todoList, todoItems) {
-    const desc = [];
-    Lodash.forEach(todoList, (v) => {
-        v.todo.forEach((item) => {
-            if (item.startDate === DateUtil.dateFormat(e)) {
-                const obj = {};
-                obj.tileContent = item.tileContent;
-                obj.content = item.content;
-                desc.push(obj);
-            }
-        });
-    });
-    todoItems.push(...desc);
+function setTodoItemList(allTodoItems) {
+    const todoList = calenderFetcher.getTodoFetchResult()
+    Lodash.forEach(todoList, (list, dayKey) => {
+        allTodoItems[dayKey] = {}
+        Lodash.forEach(list, (item, k) => {
+            allTodoItems[dayKey][k] = []
+            item.forEach(value => {
+                allTodoItems[dayKey][k].push({
+                    title: value.title,
+                    startDate: value.startDate,
+                    endDate: value.endDate,
+                    content: value.content,
+                    tileContent: value.tileContent,
+                })
+            })
+        })
+    })
 }
 export default MyCalendar;

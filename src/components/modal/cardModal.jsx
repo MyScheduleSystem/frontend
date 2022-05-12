@@ -15,7 +15,7 @@ import {
 const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
     const [isShowTextField, setIsShowTextField] = useState(false)
     const [todoItemList] = useState([])
-    
+
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
@@ -27,12 +27,13 @@ const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
     const onTitleChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
-        // 이거 어디에 저장할까?
+        // TODO: Title save
     }
 
     const onContentChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
+        // TODO: DatePicker 추가하기
         const contentObj = {}
         contentObj.content = e.target.value
         todoItemList.push(contentObj)
@@ -43,6 +44,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
     const onSaveButtonHandler = () => {
         addTodoItemList(todoItemList)
         cardModalClose(false)
+        todoItemList.splice(0, todoItemList.length)
     }
 
     return (

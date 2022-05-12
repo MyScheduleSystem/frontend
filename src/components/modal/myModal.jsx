@@ -7,21 +7,19 @@ import {
     Box, 
     Button,
 } from "@mui/material";
+import Lodash from 'lodash'
 
 function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
     const [todoItemList] = useState([])
-    // renderItemList가 data를 가지고 있는 것
-    const [renderItemList] = useState([])
+    const [renderItem, setRenderItem] = useState([])
 
     useEffect(() => {
-        const item = todoItemList.slice()
-        const newArr = todoItems.concat(item)
-        renderItemList.push(...newArr)
-    }, [todoItemList])
+        const data = dataForRender(todoItems)
+        setRenderItem(() => data)
+    }, [todoItems])
 
     const onCloseHandler = () => onClose(false)
-
 
     const onCardModalShow = (isShow) => {
         setIsOpenCardModal(isShow)
@@ -37,13 +35,33 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
 
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
-        // MyCanlendar로 item전달
-        onAddList(addedItem)
+        onAddList(addedItem, renderItem.length + 1)
         todoItemList.splice(0, todoItemList.length)
     }
 
     const onCancelButtonClickHandler = () => {
         onClose(false)
+    }
+
+    const dataForRender = (todoItems) => {
+        if(Lodash.size(todoItems) === 0) return []
+        const item = todoItems
+        const rtnArr = []
+        Lodash.forEach(item, (v, k) => {
+            const cardId = k
+            v.forEach(e => {
+                const obj = {}
+                obj.cardId = cardId
+                obj.title = e.title
+                obj.tileContent = e.tileContent
+                obj.content = e.content
+                obj.startDate = e.startDate
+                obj.endDate = e.endDate
+                rtnArr.push(obj)
+            })
+        })
+
+        return rtnArr
     }
 
     return (
@@ -58,9 +76,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                     <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
                 </Box>
                 <Box sx={cardListStyle}>
-                    {!isOpenCardModal && renderItemList.map((item, i) => {
+                    {renderItem.map((item, i) => {
                         return (
-                            <CardItem key={i} />
+                            <CardItem 
+                                key={i} 
+                                cardItem={item}
+                            />
                         )
                     })}
                     <EmptyCard onCardModalShow={onCardModalShow} />

@@ -5,11 +5,11 @@ import {
 
 // TODO: Item 뿌리기
 
-const CardItem = () => {
+const CardItem = ({ cardItem }) => {
     return (
         <Box sx={cardStyle}>
             <Typography color="text.secondary">
-                ㅎㅇㅎㅇ
+                {cardItem.title}
             </Typography>
         </Box>
     )
