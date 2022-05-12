@@ -1,5 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faMinus, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { 
+    faPlus, 
+    faMinus, 
+    faPencil,
+    faHeart,
+    faAngleDown,
+} from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
 // 2022-05-07 FoxMon(김준호)
@@ -23,6 +29,12 @@ function getIconName(name) {
 
         case 'pencil':
             return faPencil
+
+        case 'heart':
+            return faHeart
+
+        case 'expand':
+            return faAngleDown
 
         default:
             ErrorUtil.notImplemented()
