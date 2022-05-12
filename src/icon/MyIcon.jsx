@@ -8,6 +8,7 @@ import {
     faCheck,
     faCheckCircle,
     faExclamationCircle,
+    faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -47,6 +48,9 @@ function getIconName(name) {
 
         case 'excalmationCircle':
             return faExclamationCircle
+
+        case 'bars':
+            return faBars
 
         default:
             ErrorUtil.notImplemented()

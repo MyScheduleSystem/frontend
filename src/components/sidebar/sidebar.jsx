@@ -1,15 +1,18 @@
+import React, { useState } from 'react';
 import { 
     Box,
     ListItem, 
     ListItemButton, 
-    ListItemText 
-} from '@mui/material'
-import { useLocation, Link, useMatch } from 'react-router-dom';    
+    ListItemText ,
+    IconButton,
+} from '@mui/material'    
+import MyIcon from '../../icon/MyIcon';
+import { Link } from 'react-router-dom';
 
 function SideBar() {
     // TODO: Add react router && layout
-    const match = useMatch()
-    console.log(match)
+    const [sidebar, setSidebar] = useState(false);
+    const showSidebar = () => setSidebar(!sidebar)
     const items = [
         {
             name: 'Friends',
@@ -56,17 +59,22 @@ function SideBar() {
     ]
     return (
         <Box sx={sidebarStyle}>
-            <ListItem sx={sidebarListStyle}>
-                {items.map((item) => {
-                    return (
-                        <Link to={item.path} key={item.name} style={sidebarTextStyle}>
-                            <ListItemButton key={item.name} onClick={item.onClickItem} >
-                                <ListItemText primary={item.name} />
-                            </ListItemButton>
-                        </Link>
-                    )
-                })}
-            </ListItem>
+            <IconButton sx={iconButtonStyle} onClick={showSidebar}>
+                <MyIcon name='bars' />
+            </IconButton>
+            {sidebar &&
+                <ListItem sx={sidebarListStyle}>
+                    {items.map((item) => {
+                        return (
+                            <Link to={item.path} style={sidebarTextStyle} key={item.name} >
+                                <ListItemButton onClick={item.onClickItem}>
+                                    <ListItemText primary={item.name} />
+                                </ListItemButton>
+                            </Link>
+                        )
+                    })}
+                </ListItem>
+            }
         </Box>
     )
 }
@@ -83,6 +91,11 @@ const sidebarListStyle = {
 
 const sidebarTextStyle = {
     textDecoration: 'none',
+    color: 'black'
+}
+
+const iconButtonStyle = {
+    mr: '2',
 }
 
 export default SideBar
