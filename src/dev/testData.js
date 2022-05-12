@@ -48,7 +48,7 @@ function create(calendarSpecJson) {
         '12', '13', '14', '15', '16', 
         '17', '18', '19', '20', '21',
     ]
-    let cardId = 1
+    const cardId = 1
     calendarSpecJson = {}
     days.forEach((e, i) => {
         calendarSpecJson[testDays[i]] = {}
@@ -57,9 +57,8 @@ function create(calendarSpecJson) {
         todoObj.tileContent = `Todo Title${i}`
         todoObj.content = `Todo Content${i}`
         todoObj.startDate = DateUtil.dateCalculate(i, "add", "days")
-        todoObj.endDaate = '2022-05-27'
+        todoObj.endDate = '2022-05-27'
         calendarSpecJson[testDays[i]][cardId].push(todoObj)
-        cardId++
     })
     return calendarSpecJson
 }
