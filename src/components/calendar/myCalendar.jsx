@@ -9,22 +9,20 @@ import "react-calendar/dist/Calendar.css";
 
 function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false);
-    const [todoItems, setTodoItems] = useState([]);
+    const [todoItems] = useState([]);
     const todoList = calenderFetcher.getTodoFetchResult()
 
     const onClickDayHandler = (e) => {
         setIsClickModal(true);
-        setTodoItemList.call(this, e, todoList, setTodoItems);
+        setTodoItemList.call(this, e, todoList, todoItems);
     }
 
     const onCloseHandler = (closed) => {
         setIsClickModal(closed);
     }
 
-    const onAddedTodoList = (addedItem) => {
-        const added = addedItem.slice()
-        // 비동기 이슈 왜?
-        setTodoItems((prev) => prev.concat(added))
+    const onAddTodoList = (addedItem) => {
+        todoItems.push(...addedItem)
     }
 
     const setTileContent = (e) => {
@@ -50,14 +48,14 @@ function MyCalendar() {
                 <MyModal 
                     isClickModal={isClickModal} 
                     onClose={onCloseHandler} 
-                    onAddedList={onAddedTodoList}
+                    onAddList={onAddTodoList}
                     todoItems={todoItems} 
             />}
         </>
     );
 }
 
-function setTodoItemList(e, todoList, setTodoItems) {
+function setTodoItemList(e, todoList, todoItems) {
     const desc = [];
     Lodash.forEach(todoList, (v) => {
         v.todo.forEach((item) => {
@@ -69,6 +67,6 @@ function setTodoItemList(e, todoList, setTodoItems) {
             }
         });
     });
-    setTodoItems([ ...desc ]);
+    todoItems.push(...desc);
 }
 export default MyCalendar;
