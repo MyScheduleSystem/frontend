@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateUtil from "../../util/dateUtil";
 import MyModal from "../modal/myModal";
-import calenderFetcher from '../../fetcher/calenderSaveFetcher'
+import calenderFetcher from '../../fetcher/calendarFetcher'
 
 import "react-calendar/dist/Calendar.css";
 
