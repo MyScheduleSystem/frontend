@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CardModal from './cardModal'
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
@@ -11,13 +11,7 @@ import Lodash from 'lodash'
 
 function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
-    const [todoItemList] = useState([])
-    const [renderItem, setRenderItem] = useState([])
-
-    useEffect(() => {
-        const data = dataForRender(todoItems)
-        setRenderItem(() => data)
-    }, [todoItems])
+    const [todoItemList] = useState(dataForRender.call(this, todoItems))
 
     const onCloseHandler = () => onClose(false)
 
@@ -35,33 +29,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
 
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
-        onAddList(addedItem, renderItem.length + 1)
+        onAddList(addedItem)
         todoItemList.splice(0, todoItemList.length)
     }
 
     const onCancelButtonClickHandler = () => {
         onClose(false)
-    }
-
-    const dataForRender = (todoItems) => {
-        if(Lodash.size(todoItems) === 0) return []
-        const item = todoItems
-        const rtnArr = []
-        Lodash.forEach(item, (v, k) => {
-            const cardId = k
-            v.forEach(e => {
-                const obj = {}
-                obj.cardId = cardId
-                obj.title = e.title
-                obj.tileContent = e.tileContent
-                obj.content = e.content
-                obj.startDate = e.startDate
-                obj.endDate = e.endDate
-                rtnArr.push(obj)
-            })
-        })
-
-        return rtnArr
     }
 
     return (
@@ -76,7 +49,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                     <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
                 </Box>
                 <Box sx={cardListStyle}>
-                    {renderItem.map((item, i) => {
+                    {todoItemList.map((item, i) => {
                         return (
                             <CardItem 
                                 key={i} 
@@ -89,11 +62,30 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                 <CardModal 
                     isCardModalShow={isOpenCardModal} 
                     cardModalClose={onCardModalCloseHandler}
-                    addTodoItemList={onAddTodoItemList}
+                    onAddTodoItemList={onAddTodoItemList}
                 />
             </Box>
         </Modal>
     );
+}
+
+const dataForRender = (todoItems) => {
+    if(Lodash.size(todoItems) === 0) return []
+    const items = todoItems
+    const rtnArr = []
+    items.forEach((item, i) => {
+        const cardId = i + 1
+        const obj = {}
+        obj.cardId = cardId
+        obj.title = item.title
+        obj.tileContent = item.tileContent
+        obj.content = item.content
+        obj.startDate = item.startDate
+        obj.endDate = item.endDate
+        rtnArr.push(obj)
+    })
+
+    return rtnArr
 }
 
 const modalStyle = {

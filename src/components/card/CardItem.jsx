@@ -9,7 +9,7 @@ const CardItem = ({ cardItem }) => {
     return (
         <Box sx={cardStyle}>
             <Typography color="text.secondary">
-                {cardItem.title}
+                {cardItem.content}
             </Typography>
         </Box>
     )

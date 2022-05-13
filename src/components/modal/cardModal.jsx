@@ -12,7 +12,7 @@ import {
     Button,
 } from "@mui/material";
 
-const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
+const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItemList }) => {
     const [isShowTextField, setIsShowTextField] = useState(false)
     const [todoItemList] = useState([])
 
@@ -27,7 +27,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
     const onTitleChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
-        // TODO: Title save
+        // 이거 어디에 저장하지?
     }
 
     const onContentChangeHandler = (e) => {
@@ -42,7 +42,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, addTodoItemList }) => {
     }
 
     const onSaveButtonHandler = () => {
-        addTodoItemList(todoItemList)
+        onAddTodoItemList(todoItemList)
         cardModalClose(false)
         todoItemList.splice(0, todoItemList.length)
     }

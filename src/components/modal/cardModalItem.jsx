@@ -19,15 +19,13 @@ const CardModalItem = ({ content, index, updatedContent }) => {
     }
 
     return (
-        <>
-            <TextField 
-                sx={textFieldStyle}
-                variant="filled"
-                disabled={isDisable}
-                onKeyDown={onKeyDownHandler}
-                defaultValue={content}
-            />
-        </>
+        <TextField 
+            sx={textFieldStyle}
+            variant="filled"
+            disabled={isDisable}
+            onKeyDown={onKeyDownHandler}
+            defaultValue={content}
+        />
     )
 }
 

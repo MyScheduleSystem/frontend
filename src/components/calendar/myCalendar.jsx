@@ -9,12 +9,12 @@ import "react-calendar/dist/Calendar.css";
 
 function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false)
-    const [allTodoItems, setAllTodoItems] = useState({})
+    const [allTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
 
     useEffect(() => {
         setTodoItemList.call(this, allTodoItems)
-    })
+    }, [allTodoItems])
 
     const onClickDayHandler = (e) => {
         const date = DateUtil.dateFormat(e)
@@ -26,11 +26,9 @@ function MyCalendar() {
         setIsClickModal(closed)
     }
 
-    const onAddTodoList = (addedItem, cardId) => {
-        // setAllTodoItems에서 오류가 발생한다 ㅠㅠ
-        // allTodoItems[selectedDate][cardId] = []
-        // const newElement = addedItem
-        // setAllTodoItems(() => allTodoItems[selectedDate][cardId].push(...newElement))
+    const onAddTodoList = (addedItem) => {
+        allTodoItems[selectedDate] = addedItem
+        // TODO: Fetch saveed result to server
     }
 
     return (
@@ -52,17 +50,14 @@ function MyCalendar() {
 function setTodoItemList(allTodoItems) {
     const todoList = calenderFetcher.getTodoFetchResult()
     Lodash.forEach(todoList, (list, dayKey) => {
-        allTodoItems[dayKey] = {}
-        Lodash.forEach(list, (item, k) => {
-            allTodoItems[dayKey][k] = []
-            item.forEach(value => {
-                allTodoItems[dayKey][k].push({
-                    title: value.title,
-                    startDate: value.startDate,
-                    endDate: value.endDate,
-                    content: value.content,
-                    tileContent: value.tileContent,
-                })
+        allTodoItems[dayKey] = []
+        list.forEach((item) => {
+            allTodoItems[dayKey].push({
+                title: item.title,
+                startDate: item.startDate,
+                endDate: item.endDate,
+                content: item.content,
+                tileContent: item.tileContent,
             })
         })
     })

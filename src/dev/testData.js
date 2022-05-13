@@ -3,8 +3,6 @@ import DateUtil from '../util/dateUtil'
 const TestData = {}
 const userId = 1
 const date = '2022-05'
-// cardId는 고유해야한다.
-const cardId = 1
 
 TestData[userId] = {
     container: {
@@ -12,17 +10,16 @@ TestData[userId] = {
         month: '',
         [date]: {
             calendar: {
-                [date]: {
-                    [cardId]: [
-                        {
-                            title: '',
-                            tileContent: '',
-                            content: '',
-                            startDate: '',
-                            endDate: '',
-                        }
-                    ],
-                }
+                [date]:[
+                    {
+                        cardId: 1,
+                        title: '',
+                        tileContent: '',
+                        content: '',
+                        startDate: '',
+                        endDate: '',
+                    }
+                ],
             },
         },
         theme: {
@@ -48,18 +45,17 @@ function create(calendarSpecJson) {
         '2022-05-12', '2022-05-13', '2022-05-14', '2022-05-15', '2022-05-16', 
         '2022-05-17', '2022-05-18', '2022-05-19', '2022-05-20', '2022-05-21',
     ]
-    const cardId = 1
     calendarSpecJson = {}
     days.forEach((e, i) => {
-        calendarSpecJson[testDays[i]] = {}
-        calendarSpecJson[testDays[i]][cardId] = []
+        calendarSpecJson[testDays[i]] = []
         const todoObj = {}
+        todoObj.cardId = i + 1
         todoObj.title = `Todo Title${i}`
         todoObj.tileContent = `Todo Tile${i}`
         todoObj.content = `Todo Content${i}`
         todoObj.startDate = DateUtil.dateCalculate(i, "add", "days")
         todoObj.endDate = '2022-05-27'
-        calendarSpecJson[testDays[i]][cardId].push(todoObj)
+        calendarSpecJson[testDays[i]].push(todoObj)
     })
     return calendarSpecJson
 }
