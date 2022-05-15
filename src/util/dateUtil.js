@@ -13,7 +13,11 @@ DateUtil.dateFormat = function(date, foramt) {
 }
 
 DateUtil.timeFormat = function() {
-    return moment().format("hh:mm:ss")
+    return moment().format("HH:mm")
+}
+
+DateUtil.timeFormatToSeconds = function() {
+    return moment().format("HH:mm:ss")
 }
 
 DateUtil.dayFormat = function() {

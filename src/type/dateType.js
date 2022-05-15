@@ -30,5 +30,15 @@ DateType.getDateDay = function(date) {
     return day
 }
 
+DateType.getTime = function() {
+    const time = DateUtil.timeFormat()
+    return time
+}
+
+DateType.getTimeToSeconds = function() {
+    const time = DateUtil.timeFormatToSeconds()
+    return time
+}
+
 Object.freeze(DateType)
 export default DateType
