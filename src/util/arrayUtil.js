@@ -8,14 +8,18 @@ ArrayUtil.removeDuplicate = function(array) {
 }
 
 ArrayUtil.isEmpty = function(array) {
-    const result = (array === undefined) ? true : Lodash.isEmpty(array)
+    const result = Lodash.isEmpty(array)
     return result
 }
 
-ArrayUtil.castToArray = function(a, type) {
-    const result = ArrayUtil.removeDuplicate(Lodash.castArray(a))
+ArrayUtil.castToArray = function(array, type) {
+    const result = ArrayUtil.removeDuplicate(Lodash.castArray(array))
     if(type !== undefined) ErrorUtil.assert(result.every(e => e instanceof type))
     return result
+}
+
+ArrayUtil.size = function(array) {
+    return Lodash.size(array)
 }
 
 Object.freeze(ArrayUtil)
