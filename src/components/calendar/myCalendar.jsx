@@ -34,6 +34,7 @@ function MyCalendar() {
     return (
         <>
             <Calendar 
+                calendarType="US"
                 onClickDay={onClickDayHandler} 
             />
             {isClickModal && 
