@@ -45,4 +45,5 @@ DateUtil.isBetween = function(now, prev, next) {
     return moment(now).isBetween(prev, next)
 }
 
+Object.freeze(DateUtil)
 export default DateUtil
