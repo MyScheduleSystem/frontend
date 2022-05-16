@@ -79,6 +79,11 @@ function SideBar() {
     )
 }
 
+function getFriendsFetch() {
+    const result = getFriendFetchResult()
+    return result
+}
+
 const sidebarStyle = {
     height: '100%',   
     position: 'fixed',
@@ -87,11 +92,6 @@ const sidebarStyle = {
 
 const sidebarListStyle = {
     display: 'block',
-}
-
-function getFriendsFetch() {
-    const result = getFriendFetchResult()
-    return result
 }
 
 export default SideBar
