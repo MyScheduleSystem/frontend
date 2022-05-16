@@ -1,6 +1,28 @@
 # ForntEnd
 
-MyScheduleSystem client repository
+## MyScheduleSystem Project
+
+`
+    Release:
+`
+
+`
+    Project start: npm start
+`
+
+`
+    Contributors: FoxMon, Leo, Velo248
+`
+
+`
+    FrontEnd: FoxMon, Leo, Velo248
+`
+
+`
+    BackEnd: Velo248, FoxMon
+`
+
+#
 
 ## Setting
 
@@ -56,3 +78,9 @@ MyScheduleSystem client repository
     Friend
         Add Friend
         Delete Friend
+
+## Issue
+
+`
+    Contents
+`
