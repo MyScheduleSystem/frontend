@@ -1,9 +1,13 @@
 import { 
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Box,
-    ListItem, 
     ListItemButton, 
-    ListItemText 
+    Typography
 } from '@mui/material'
+import MyIcon from '../../icon/MyIcon';
+import { getFriendFetchResult } from '../../dev/testData'
 
 function SideBar() {
     // TODO: Add react router && layout
@@ -11,6 +15,7 @@ function SideBar() {
         {
             name: 'Friends',
             path: '/friend',
+            friend: getFriendsFetch.call(this),
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -54,17 +59,29 @@ function SideBar() {
 
     return (
         <Box sx={sidebarStyle}>
-            <ListItem sx={sidebarListStyle}>
-                {items.map(item => {
-                    return (
-                        <ListItemButton key={item.name} onClick={item.onClickItem}>
-                            <ListItemText primary={item.name} />
-                        </ListItemButton>
-                    )
-                })}
-            </ListItem>
+            {items.map(item => {
+                return (
+                    <Accordion key={item.name} sx={sidebarListStyle}>
+                        <AccordionSummary expandIcon={<MyIcon name='expand' />}>
+                            <Typography>{item.name}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            {item.friend &&
+                                item.friend.map((f, i) => {
+                                    return <ListItemButton key={i}>{f}</ListItemButton>
+                                })
+                            }
+                        </AccordionDetails>
+                    </Accordion>
+                )
+            })}
         </Box>
     )
+}
+
+function getFriendsFetch() {
+    const result = getFriendFetchResult()
+    return result
 }
 
 const sidebarStyle = {

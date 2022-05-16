@@ -1,4 +1,4 @@
-import getTodoFetchResult from '../dev/testData'
+import { getTodoFetchResult } from '../dev/testData'
 
 const calenderFetcher = {}
 

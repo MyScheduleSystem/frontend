@@ -9,8 +9,9 @@ import {
     faCheckCircle,
     faExclamationCircle,
     faPaperPlane,
+    faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
-import ErrorUtil from "../util/errorUtil"
+import ErrorUtil from "../util/ErrorUtil"
 
 // 2022-05-07 FoxMon(김준호)
 // Solid인 fortawesome만 사용하도록 함.
@@ -52,6 +53,9 @@ function getIconName(name) {
         case 'send':
             return faPaperPlane
 
+        case 'expandOff':
+            return faAngleUp
+            
         default:
             ErrorUtil.notImplemented()
             return
