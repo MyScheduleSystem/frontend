@@ -19,4 +19,5 @@ calenderFetcher.getFetchOptionResult = () => {
     // TODO: fetchOption을 활용해서 잘 fetch 해보자
 }
 
+Object.freeze(calenderFetcher)
 export default calenderFetcher
