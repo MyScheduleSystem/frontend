@@ -1,21 +1,58 @@
-# Client
+# ForntEnd
 
 MyScheduleSystem client repository
 
-Setting
-    TabSize: 4
+## Setting
 
-Language
+    setup > SETUP.md 확인
+
+## Language
+
     JavaScript(ES6)
 
-FrameWork
-    React.js
+## FrameWork
 
-OpenSource
+    React.js
+        - Version: 17.0.2
+
+## OpenSource
+
     fortawesome
     Lodash
     PostCss
+    StyledComponent
     MaterialUi(MUI)
 
-Function
-    개인 스케쥴 관리(수정, 추가, 삭제)
+## JSON Spec
+
+`
+    TODO: ADD
+`
+
+## Function
+
+    MyCalendar
+        Date Pick
+
+    MyModal
+        Create
+        Read
+        Update
+        Delete
+        Share My Schedule
+
+    Card
+        Show My Daily Schedule
+        Update My Daily Schedule
+        Delete My Daily Schedule
+        Create My Daily Schedule
+
+    Sns
+        Sns Read
+        Sns Post
+        Sns Update
+        Sns Delete
+
+    Friend
+        Add Friend
+        Delete Friend

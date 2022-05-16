@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-    faPlus, 
-    faMinus, 
+import {
+    faPlus,
+    faMinus,
     faPencil,
     faHeart,
     faAngleDown,
@@ -11,7 +11,7 @@ import {
     faPaperPlane,
     faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
-import ErrorUtil from "../util/ErrorUtil"
+import ErrorUtil from "../util/errorUtil"
 
 // 2022-05-07 FoxMon(김준호)
 // Solid인 fortawesome만 사용하도록 함.
@@ -40,7 +40,7 @@ function getIconName(name) {
 
         case 'expand':
             return faAngleDown
-        
+
         case 'check':
             return faCheck
 
@@ -49,13 +49,13 @@ function getIconName(name) {
 
         case 'excalmationCircle':
             return faExclamationCircle
-        
+
         case 'send':
             return faPaperPlane
 
         case 'expandOff':
             return faAngleUp
-            
+
         default:
             ErrorUtil.notImplemented()
             return
