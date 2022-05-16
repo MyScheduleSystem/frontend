@@ -22,7 +22,7 @@ class User extends UserType {
 
     getToken() {
         const token = this.storage.getToken()
-        ErrorUtil.assert(token)
+        ErrorUtil.assert(token, 'UserToken is not exist!')
         return token
     }
 

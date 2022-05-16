@@ -5,9 +5,9 @@ ErrorUtil.notImplemented = () => {
     debugger
 }
 
-ErrorUtil.assert = (command) => {
+ErrorUtil.assert = (command, message) => {
     if(!command) {
-        console.log("Assert fail!")
+        console.log(`Assert fail! ${message}`)
         debugger
     }
 }

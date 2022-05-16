@@ -14,7 +14,7 @@ ArrayUtil.isEmpty = function(array) {
 
 ArrayUtil.castToArray = function(array, type) {
     const result = ArrayUtil.removeDuplicate(Lodash.castArray(array))
-    if(type !== undefined) ErrorUtil.assert(result.every(e => e instanceof type))
+    if(type !== undefined) ErrorUtil.assert(result.every(e => e instanceof type), 'All element type must be same!')
     return result
 }
 
