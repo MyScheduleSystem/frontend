@@ -103,7 +103,7 @@ function doFriendsFetchResult() {
 const sidebarStyle = {
     height: '100%',
     position: 'fixed',
-    width: '30%',
+    width: '20%',
     // Scroll
     overflow: 'auto',
 }
