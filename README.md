@@ -57,10 +57,10 @@
         Date Pick
 
     MyModal
-        Create
-        Read
-        Update
-        Delete
+        Create My Schedule
+        Read My Schedule or Friend Schedule
+        Update My Schedule
+        Delete My Schedule
         Share My Schedule
 
     Card
@@ -79,8 +79,14 @@
         Add Friend
         Delete Friend
 
+    User
+        Create User
+        Read User Info
+        Update User
+        Delete User Info
+
 ## Issue
 
 `
-    Contents
+    Contents or Add Source Images
 `
