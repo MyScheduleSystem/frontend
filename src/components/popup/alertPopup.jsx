@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
     Box,
     Dialog,
@@ -9,16 +8,14 @@ import {
     Button,
 } from '@mui/material'
 
-const AlertPopup = ({ message }) => {
-    const [open, setOpen] = useState(true)
-
+const AlertPopup = ({ isShowPopup, setIsShowPopup, message }) => {
     const onCloseButtonClickHandler = () => {
-        setOpen(false)
+        setIsShowPopup(false)
     }
 
     return (
         <Box>
-            <Dialog open={open}>
+            <Dialog open={isShowPopup}>
                 <DialogTitle>
                     Please check your input agin.
                 </DialogTitle>

@@ -1,19 +1,12 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import SideBar from "./components/sidebar/sidebar";
-import MyCalendar from "./components/calendar/myCalendar";
-import MyCard from "./components/card/myCard";
+import Sidebar from './components/sidebar/sidebar'
+
+// TODO: Router는 MyRouter에 있으므로 적절하게 추가
+// App -> MyLayout -> left, right -> left: Sidebar, right: MyCalender
+// MyLayout 안에 MyRouter 추가할 것
 
 function App() {
     return (
-        <div>
-            {/* <SideBar></SideBar> */}
-            {/* <Routes>  
-                <Route path="/" element={<MyCalendar />}/> 
-            </Routes> */}
-            <MyCalendar />
-            {/* <MyCard></MyCard> */}
-        </div>
-    );
+        <Sidebar />
+    )
 }
-export default App;
+export default App
