@@ -44,7 +44,7 @@ function SideBar() {
         },
         {
             name: 'Schedule',
-            path: '/calendar',
+            path: '/',
             icon: <MyIcon name='calendar' />,
             list: <ListItemButton divider={true}><Typography>FoxMon's Schedule</Typography></ListItemButton>,
             onClickItem: (e) => {

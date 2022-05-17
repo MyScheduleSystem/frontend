@@ -1,13 +1,11 @@
 import DateType from "../../type/dateType"
-import { Box,  } from '@mui/material'
+import { Box } from '@mui/material'
 
 function MyCalendarSide() {
-    const date = DateType.creatDate()
-    const month = date.split('-')[1]
-
     return  (
         <Box>
-            <h1>{month}</h1>
+            <h1>{DateType.getMonth(DateType.createDate())}</h1>
+            <p>{DateType.getDay()}</p>
             <p>할일</p>
             <li>운동하기</li>
         </Box>
