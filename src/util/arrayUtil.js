@@ -1,4 +1,4 @@
-import ErrorUtil from './errorUtil'
+import ErrorUtil from './ErrorUtil'
 import Lodash from 'lodash'
 
 const ArrayUtil = {}

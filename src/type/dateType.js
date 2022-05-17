@@ -1,5 +1,5 @@
 import DateUtil from '../util/dateUtil'
-import ErrorUtil from '../util/errorUtil'
+import ErrorUtil from '../util/ErrorUtil'
 
 const DateType = {}
 

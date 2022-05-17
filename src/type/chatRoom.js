@@ -1,7 +1,7 @@
 import ChatRoomType from './chatRoomType'
 import User from './user'
 import ArrayUtil from '../util/arrayUtil'
-import ErrorUtil from '../util/errorUtil'
+import ErrorUtil from '../util/ErrorUtil'
 import Lodash from 'lodash'
 
 class ChatRoom extends ChatRoomType {

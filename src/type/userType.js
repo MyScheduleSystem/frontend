@@ -1,4 +1,4 @@
-import ErrorUtil from '../util/errorUtil'
+import ErrorUtil from '../util/ErrorUtil'
 
 class UserType {
     constructor(uuid, nickname) {

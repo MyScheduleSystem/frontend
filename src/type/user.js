@@ -1,6 +1,6 @@
 import UserType from './userType';
 import Storage from '../storage/storage';
-import ErrorUtil from '../util/errorUtil';
+import ErrorUtil from '../util/ErrorUtil';
 
 class User extends UserType {
     constructor(uuid, nickname, token) {
