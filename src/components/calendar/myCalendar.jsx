@@ -5,8 +5,6 @@ import DateUtil from "../../util/dateUtil";
 import MyModal from "../modal/myModal";
 import calenderFetcher from '../../fetcher/calendarFetcher'
 
-import "react-calendar/dist/Calendar.css";
-
 function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems] = useState({})
