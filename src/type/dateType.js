@@ -4,7 +4,7 @@ import ErrorUtil from '../util/errorUtil'
 const DateType = {}
 
 // YYYY-MM-DD
-DateType.creatDate = function() {
+DateType.createDate = function() {
     const createdDate = DateUtil.dateFormat()
     return createdDate
 }
@@ -38,6 +38,11 @@ DateType.getTime = function() {
 DateType.getTimeToSeconds = function() {
     const time = DateUtil.timeFormatToSeconds()
     return time
+}
+
+DateType.getDay = function() {
+    const day = DateUtil.dayFormat()
+    return day
 }
 
 Object.freeze(DateType)

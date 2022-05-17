@@ -7,6 +7,7 @@ import {
     Typography,
 } from '@mui/material'
 import MyIcon from '../../icon/MyIcon';
+import { Link } from 'react-router-dom';
 import { getFriendFetchResult } from '../../dev/testData'
 
 function SideBar() {
@@ -43,7 +44,7 @@ function SideBar() {
         },
         {
             name: 'Schedule',
-            path: '/schedule',
+            path: '/',
             icon: <MyIcon name='calendar' />,
             list: <ListItemButton divider={true}><Typography>FoxMon's Schedule</Typography></ListItemButton>,
             onClickItem: (e) => {
@@ -87,7 +88,11 @@ function SideBar() {
                         <AccordionSummary expandIcon={<MyIcon name='expand' />}>
                             <Typography>{item.icon} {item.name}</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>{item.list}</AccordionDetails>
+                        <AccordionDetails>
+                            <Link to={item.path} style={sidebarLinkStyle}>
+                                {item.list}
+                            </Link>
+                        </AccordionDetails>
                     </Accordion>
                 )
             })}
@@ -110,6 +115,12 @@ const sidebarStyle = {
 
 const sidebarListStyle = {
     display: 'block',
+    width: '100%',
+}
+
+const sidebarLinkStyle = {
+    textDecoration: 'none',
+    color: 'black',
 }
 
 export default SideBar
