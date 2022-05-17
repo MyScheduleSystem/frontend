@@ -110,6 +110,7 @@ const sidebarStyle = {
 
 const sidebarListStyle = {
     display: 'block',
+    width: '100%',
 }
 
 export default SideBar
