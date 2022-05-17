@@ -1,4 +1,4 @@
-# ForntEnd
+# FrontEnd
 
 ## MyScheduleSystem Project
 
