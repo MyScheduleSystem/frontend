@@ -1,21 +1,33 @@
-import { 
+import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
     Box,
-    ListItemButton, 
-    Typography
+    ListItemButton,
+    Typography,
 } from '@mui/material'
 import MyIcon from '../../icon/MyIcon';
 import { getFriendFetchResult } from '../../dev/testData'
 
 function SideBar() {
-    // TODO: Add react router && layout
     const items = [
         {
             name: 'Friends',
             path: '/friend',
-            friend: getFriendsFetch.call(this),
+            icon: <MyIcon name='friends' />,
+            list: (() => {
+                const friends = doFriendsFetchResult.call(this)
+                return friends.map((f, i) => {
+                    return (
+                        <ListItemButton
+                            key={i}
+                            divider={true}
+                        >
+                            <Typography>{f}</Typography>
+                        </ListItemButton>
+                    )
+                })
+            })(),
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -23,6 +35,8 @@ function SideBar() {
         {
             name: 'ChatRooms',
             path: '/chat',
+            icon: <MyIcon name='chat' />,
+            list: <ListItemButton divider={true}><Typography>FoxMon's ChatRoom</Typography></ListItemButton>,
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -30,6 +44,8 @@ function SideBar() {
         {
             name: 'Schedule',
             path: '/schedule',
+            icon: <MyIcon name='calendar' />,
+            list: <ListItemButton divider={true}><Typography>FoxMon's Schedule</Typography></ListItemButton>,
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -37,6 +53,8 @@ function SideBar() {
         {
             name: 'SignIn',
             path: '/signin',
+            icon: <MyIcon name='signin' />,
+            list: <ListItemButton divider={true}><Typography>Sign in</Typography></ListItemButton>,
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -44,6 +62,8 @@ function SideBar() {
         {
             name: 'SignUp',
             path: '/signup',
+            icon: <MyIcon name='signup' />,
+            list: <ListItemButton divider={true}><Typography>Sign up</Typography></ListItemButton>,
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -51,6 +71,8 @@ function SideBar() {
         {
             name: 'Logout',
             path: '/',
+            icon: <MyIcon name='signout' />,
+            list: <ListItemButton divider={true}><Typography>Logout</Typography></ListItemButton>,
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -63,15 +85,9 @@ function SideBar() {
                 return (
                     <Accordion key={item.name} sx={sidebarListStyle}>
                         <AccordionSummary expandIcon={<MyIcon name='expand' />}>
-                            <Typography>{item.name}</Typography>
+                            <Typography>{item.icon} {item.name}</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
-                            {item.friend &&
-                                item.friend.map((f, i) => {
-                                    return <ListItemButton key={i}>{f}</ListItemButton>
-                                })
-                            }
-                        </AccordionDetails>
+                        <AccordionDetails>{item.list}</AccordionDetails>
                     </Accordion>
                 )
             })}
@@ -79,15 +95,17 @@ function SideBar() {
     )
 }
 
-function getFriendsFetch() {
+function doFriendsFetchResult() {
     const result = getFriendFetchResult()
     return result
 }
 
 const sidebarStyle = {
-    height: '100%',   
+    height: '100%',
     position: 'fixed',
     width: '30%',
+    // Scroll
+    overflow: 'auto',
 }
 
 const sidebarListStyle = {

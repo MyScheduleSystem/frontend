@@ -10,6 +10,14 @@ import {
     faExclamationCircle,
     faPaperPlane,
     faAngleUp,
+    faUserFriends,
+    faCommentAlt,
+    faCalendar,
+    faSignIn,
+    faRegistered,
+    faSignOut,
+
+
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -55,6 +63,24 @@ function getIconName(name) {
 
         case 'expandOff':
             return faAngleUp
+
+        case 'friends':
+            return faUserFriends
+
+        case 'chat':
+            return faCommentAlt
+
+        case 'calendar':
+            return faCalendar
+
+        case 'signin':
+            return faSignIn
+
+        case 'signout':
+            return faSignOut
+
+        case 'signup':
+            return faRegistered
 
         default:
             ErrorUtil.notImplemented()
