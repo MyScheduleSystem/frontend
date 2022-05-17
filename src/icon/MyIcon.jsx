@@ -16,8 +16,8 @@ import {
     faSignIn,
     faRegistered,
     faSignOut,
-
-
+    faUser,
+    faLock,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -81,6 +81,12 @@ function getIconName(name) {
 
         case 'signup':
             return faRegistered
+
+        case 'user':
+            return faUser
+
+        case 'password':
+            return faLock
 
         default:
             ErrorUtil.notImplemented()
