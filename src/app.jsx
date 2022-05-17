@@ -1,14 +1,12 @@
-import React from "react";
-import MyLayout from "./pages/myLayout";
-import MyRouter from "./pages/router/myRouter";
+import Sidebar from './components/sidebar/sidebar'
 
-// Modal Update, Delete 추가 - leo
-// Router 달기 - leo
+// TODO: Router는 MyRouter에 있으므로 적절하게 추가
+// App -> MyLayout -> left, right -> left: Sidebar, right: MyCalender
+// MyLayout 안에 MyRouter 추가할 것
 
 function App() {
     return (
-        <MyLayout Route={<MyRouter />} />
-    );
+        <Sidebar />
+    )
 }
-
-export default App;
+export default App
