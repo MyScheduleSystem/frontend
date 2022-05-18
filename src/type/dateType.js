@@ -9,6 +9,11 @@ DateType.createDate = function() {
     return createdDate
 }
 
+DateType.createDateFormat = function(date, format) {
+    const createdDate = DateUtil.dateFormat(date, format)
+    return createdDate
+}
+
 DateType.getYear = function(date) {
     ErrorUtil.invalidParameter(date)
     ErrorUtil.typeCheck(date, 'string')
@@ -43,6 +48,16 @@ DateType.getTimeToSeconds = function() {
 DateType.getDay = function() {
     const day = DateUtil.dayFormat()
     return day
+}
+
+DateType.castToDay = function(day) {
+    const changedDay = DateUtil.castToDay(day)
+    return changedDay
+}
+
+DateType.castToMonth = function(month) {
+    const changedMonth = DateUtil.castToMonth(month)
+    return changedMonth
 }
 
 Object.freeze(DateType)
