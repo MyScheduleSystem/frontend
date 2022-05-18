@@ -44,6 +44,7 @@
     PostCss
     StyledComponent
     MaterialUi(MUI)
+    OpenWeather API(https://openweathermap.org/)
 
 ## JSON Spec
 
