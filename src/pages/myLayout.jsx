@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components';
-import Sidebar from '../components/sidebar/sidebar';
+import Sidebar from '../components/nav/sidebar';
 import MyCalendar from '../components/calendar/myCalendar';
 import MyCalendarSide from '../components/calendar/myCalendarSide';
 import DateType from '../type/dateType';
