@@ -20,7 +20,9 @@ import {
     faLock,
     faHistory,
     faArchive,
-
+    faBars,
+    faBell,
+    faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -96,6 +98,15 @@ function getIconName(name) {
 
         case 'archive':
             return faArchive
+
+        case 'menu':
+            return faBars
+
+        case 'notification':
+            return faBell
+
+        case 'mail':
+            return faEnvelope
 
         default:
             ErrorUtil.notImplemented()
