@@ -109,6 +109,7 @@ const sidebarStyle = {
     height: '100%',
     position: 'fixed',
     width: '20%',
+    backgroundColor: 'white',
     // Scroll
     overflow: 'auto',
 }

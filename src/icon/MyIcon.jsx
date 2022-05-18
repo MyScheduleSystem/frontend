@@ -18,12 +18,17 @@ import {
     faSignOut,
     faUser,
     faLock,
+    faHistory,
+    faArchive,
+    faBars,
+    faBell,
+    faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
 // 2022-05-07 FoxMon(김준호)
 // Solid인 fortawesome만 사용하도록 함.
-// props: plus, minus, pencil
+// props: plus, minus, pencil(string)
 // 추가할 경우, import에 추가
 
 function MyIcon({ name }) {
@@ -87,6 +92,21 @@ function getIconName(name) {
 
         case 'password':
             return faLock
+
+        case 'history':
+            return faHistory
+
+        case 'archive':
+            return faArchive
+
+        case 'menu':
+            return faBars
+
+        case 'notification':
+            return faBell
+
+        case 'mail':
+            return faEnvelope
 
         default:
             ErrorUtil.notImplemented()

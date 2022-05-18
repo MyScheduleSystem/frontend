@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import styled from 'styled-components';
-import Sidebar from '../components/sidebar/sidebar';
 import MyCalendar from '../components/calendar/myCalendar';
 import MyCalendarSide from '../components/calendar/myCalendarSide';
 import DateType from '../type/dateType';
@@ -20,9 +19,6 @@ const MyLayout = () => {
 
     return (
         <Box sx={boxSizeStyle}>
-            <Box sx={sidebarBoxStyle}>
-                <Sidebar />
-            </Box>
             <Box sx={myCalendarBoxStyle}>
                 <MyCalendarBoxDiv>
                     <MyCalendarSide date={sideDate} />
@@ -38,14 +34,8 @@ const boxSizeStyle = {
     height: '100%',
 }
 
-const sidebarBoxStyle = {
-    width: '20%',
-    height: '100%',
-    float: 'left',
-}
-
 const myCalendarBoxStyle = {
-    width: '80%',
+    width: '100%',
     height: '100%',
     float: 'right',
     textAlign: 'center',
@@ -53,7 +43,7 @@ const myCalendarBoxStyle = {
 
 const MyCalendarBoxDiv = styled.div`
     border-radius: 10px;
-    width: 80%;
+    width: 60%;
     // height가 뭔가 이상한데?
     height: 78vh;
     display: inline-block;
