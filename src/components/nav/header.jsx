@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import SideBar from './sidebar'
+import MyIcon from '../../icon/MyIcon'
 import {
     Box,
     AppBar,
@@ -5,58 +8,76 @@ import {
     Toolbar,
     Typography,
     Badge,
+    Drawer,
 } from '@mui/material'
-import MyIcon from '../../icon/MyIcon'
 
 const Header = () => {
+    const [drawer, setDrawer] = useState({ left: false })
+
+    const onDrawerButtonClickHanlder = (direction, value) => (e) => {
+        if(e.type === 'keydown' && (e.key === 'Tab' || e.key ==='Shift')) return
+        setDrawer({ ...drawer, [direction]: value })
+    }
+
     return (
-        <Box sx={headerBoxStyle}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        sx={iconButtonStyle}
-                    >
-                        <MyIcon name="menu" />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap={true}
-                        component="div"
-                        sx={logoStyle}
-                    >
-                        MSS
-                    </Typography>
-                    <Box sx={middleBoxStyle} />
-                    <Box sx={menuInfoStyle}>
+        <Box role="presentation">
+            <Drawer
+                anchor='left'
+                hideBackdrop={false}
+                open={drawer.left}
+                onClose={onDrawerButtonClickHanlder('left', false)}
+            >
+                <SideBar />
+            </Drawer>
+            <Box sx={headerBoxStyle}>
+                <AppBar position="static">
+                    <Toolbar>
                         <IconButton
                             size="large"
+                            edge="start"
                             color="inherit"
+                            onClick={onDrawerButtonClickHanlder('left', true)}
+                            sx={iconButtonStyle}
                         >
-                            <Badge badgeContent={4} color="error">
-                                <MyIcon name="mail" />
-                            </Badge>
+                            <MyIcon name="menu" />
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            color="inherit"
+                        <Typography
+                            variant="h6"
+                            noWrap={true}
+                            component="div"
+                            sx={logoStyle}
                         >
-                            <Badge badgeContent={17} color="error">
-                                <MyIcon name="notification" />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            color="inherit"
-                        >
-                            <MyIcon name="user" />
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
+                            MSS
+                        </Typography>
+                        <Box sx={middleBoxStyle} />
+                        <Box sx={menuInfoStyle}>
+                            <IconButton
+                                size="large"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={4} color="error">
+                                    <MyIcon name="mail" />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="large"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={17} color="error">
+                                    <MyIcon name="notification" />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                color="inherit"
+                            >
+                                <MyIcon name="user" />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+            </Box>
         </Box>
     )
 }
