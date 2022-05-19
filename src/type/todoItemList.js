@@ -1,13 +1,35 @@
 import ArrayUtil from "../util/arrayUtil"
-import TodoItem from "./todoItem"
 import ErrorUtil from "../util/errorUtil"
+import TodoItem from "./todoItem"
+
+class _TodoItemList {
+    constructor(todoItemListArray) {
+        this.$_todoItemListArray = todoItemListArray
+    }
+
+    todoItemListObject() {
+        const listObj = {}
+        this.$_todoItemListArray.forEach((item) => {
+            listObj[item.getTitle()] = {
+                content: item.getContent(),
+                startDate: item.getStartDate(),
+                endDate: item.getEndDate(),
+            }
+        })
+        return listObj
+    }
+
+    friendListArray() {
+        return this.$_todoItemListArray
+    }
+}
 
 const TodoItemList = {}
 
 TodoItemList.createTodoItemList = function(array) {
     const tdArr = ArrayUtil.createArray(array, TodoItem)
     ErrorUtil.invalidParameter(ArrayUtil.size(tdArr) > 1)
-    return tdArr
+    return new _TodoItemList(tdArr)
 }
 
 TodoItemList.createTodoStringList = function(array) {
