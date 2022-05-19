@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CardModal from './cardModal'
+import CardEditModal from "./cardEditModal";
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
 import { 
@@ -12,6 +13,8 @@ import Lodash from 'lodash'
 function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
     const [todoItemList] = useState(dataForRender.call(this, todoItems))
+    const [editMode, setEditmode] = useState(false)
+    const [editTodoItem, setEditTodoItem] = useState({})
 
     const onCloseHandler = () => onClose(false)
 
@@ -23,8 +26,11 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setIsOpenCardModal(isClose)
     }
 
-    const onAddTodoItemList = (addedItem) => {
-        todoItemList.push(...addedItem)
+    const onAddTodoItem = (addedItem) => {
+        todoItemList.push({
+            title: addedItem.title,
+            content: addedItem.content,
+        })
     }
 
     const onSaveButtonClickHandler = () => {
@@ -35,6 +41,18 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
 
     const onCancelButtonClickHandler = () => {
         onClose(false)
+    }
+
+    const onEditModeEnter = (isClicked, item) => {
+        setEditmode(isClicked)
+        const obj = {}
+        obj.title = item[0]
+        obj.content = item[1]
+        setEditTodoItem(() => Object.assign(editTodoItem, obj))
+    }
+
+    const onEditModeExit = (isClose) => {
+        setEditmode(isClose)
     }
 
     return (
@@ -54,6 +72,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                             <CardItem 
                                 key={i} 
                                 cardItem={item}
+                                onEditModeEnter={onEditModeEnter}
                             />
                         )
                     })}
@@ -62,7 +81,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                 <CardModal 
                     isCardModalShow={isOpenCardModal} 
                     cardModalClose={onCardModalCloseHandler}
-                    onAddTodoItemList={onAddTodoItemList}
+                    onAddTodoItem={onAddTodoItem}
+                />
+                <CardEditModal 
+                    editTodoItem={editTodoItem}
+                    isCardModalShow={editMode} 
+                    cardModalClose={onEditModeExit}
                 />
             </Box>
         </Modal>

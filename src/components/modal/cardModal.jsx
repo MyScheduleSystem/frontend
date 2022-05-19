@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import MyIcon from '../../icon/MyIcon'
-import CardModalItem from './cardModalItem';
+import CardModalItem from './cardModalItem'
 import { 
     Dialog, 
     DialogContent,
@@ -12,39 +12,36 @@ import {
     Button,
 } from "@mui/material";
 
-const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItemList }) => {
-    const [isShowTextField, setIsShowTextField] = useState(false)
-    const [todoItemList] = useState([])
+const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
+    const [todoItemTitle, setTodoItemTitle] = useState('')
+    const [todoItemContent, setTodoItemContent] = useState('')
     
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
 
-    const onPlusButtonClickHandler = () => {
-        setIsShowTextField(true)
-    }
-
     const onTitleChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
-        // 이거 어디에 저장하지?
+        const title = e.target.value
+        setTodoItemTitle(title)
     }
 
     const onContentChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
         // TODO: DatePicker 추가하기
-        const contentObj = {}
-        contentObj.content = e.target.value
-        todoItemList.push(contentObj)
-        setIsShowTextField(false)
-        e.target.value = ''
+        const content = e.target.value
+        setTodoItemContent(content)
     }
 
     const onSaveButtonHandler = () => {
-        onAddTodoItemList(todoItemList)
+        const itemObj = {}
+        itemObj.title = todoItemTitle
+        itemObj.content = todoItemContent
+        onAddTodoItem(itemObj)
         cardModalClose(false)
-        todoItemList.splice(0, todoItemList.length)
+        setTodoItemContent('')
     }
 
     return (
@@ -60,34 +57,26 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItemList }) => {
                     <CardHeader 
                         avatar={<Avatar sx={avtarStyle}>T</Avatar>}
                         title={
-                            <TextField 
-                                label="Enter todo title" 
-                                variant="outlined"
-                                sx={headerStyle} 
-                                onKeyDown={onTitleChangeHandler}
-                            />
+                            !todoItemTitle ? 
+                                <TextField 
+                                    label="Enter todo title" 
+                                    variant="outlined"
+                                    sx={headerStyle} 
+                                    onKeyDown={onTitleChangeHandler}
+                                /> :
+                                <CardModalItem content={todoItemTitle} />
                         }
                     />
                     <CardContent>
-                        {todoItemList.map((item, i) => {
-                            return (
-                                // TODO Item 전달하고 어떻게 디자인 할지
-                                <CardModalItem key={i} content={item.content} />
-                            )
-                        })}
-                        {isShowTextField &&
-                            <TextField 
-                                label="Enter todo contents" 
-                                variant="outlined"
-                                autoFocus={true}
-                                sx={contentStyle} 
-                                onKeyDown={onContentChangeHandler}
-                            />
-                        }
+                        <CardModalItem content={todoItemContent} />
+                        {!todoItemContent && <TextField 
+                            label="Enter todo contents" 
+                            variant="outlined"
+                            autoFocus={true}
+                            sx={contentStyle} 
+                            onKeyDown={onContentChangeHandler}
+                        />}
                     </CardContent>
-                    <Button onClick={onPlusButtonClickHandler}>
-                        <MyIcon name='plus' />
-                    </Button>
                 </Card>
             </DialogContent>
             <Button 

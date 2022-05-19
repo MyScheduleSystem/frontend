@@ -19,13 +19,13 @@ const CardModalItem = ({ content }) => {
     
     return (
         <>
-            <TextField
+            {content && <TextField
                 sx={textFieldStyle}
                 variant="filled"
                 disabled={isDisable}
                 onKeyDown={onKeyDownHandler}
                 defaultValue={content}
-            />
+            />}
         </>
     )
 }
