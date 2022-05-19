@@ -9,6 +9,14 @@ class ItemType {
         ErrorUtil.typeCheck(this.endDate, 'string')
     }
 
+    getStartDate() {
+        return this.startDate
+    }
+
+    getEndDate() {
+        return this.endDate
+    }
+
     calculateDestinationDay() {
         return DateType.dateFromDate(this.startDate, this.endDate, 'days')
     }
