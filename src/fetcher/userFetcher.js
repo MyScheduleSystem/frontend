@@ -12,6 +12,14 @@ userFetcher.signin = async function(user) {
     return data
 }
 
+userFetcher.signup = async(user) => {
+    ErrorUtil.invalidParameter(user)
+    const { username, password, name, email } = user
+    const { data } = await axios.post(`${baseUrl}/user/signup`, { username, password, name, email })
+    if(!data) return
+    return data
+}
+
 // TODO: signup
 
 Object.freeze(userFetcher)

@@ -5,7 +5,7 @@ import {
 
 // TODO: add delete, update
 
-const CardModalItem = ({ content, index, updatedContent }) => {
+const CardModalItem = ({ content }) => {
     const [isDisable, setIsDisable] = useState(true)
 
     const onKeyDownHandler = (e) => {
@@ -14,18 +14,19 @@ const CardModalItem = ({ content, index, updatedContent }) => {
             setIsDisable(true)
             return
         }
-        updatedContent(e.target.value)
         setIsDisable(true)
     }
-
+    
     return (
-        <TextField 
-            sx={textFieldStyle}
-            variant="filled"
-            disabled={isDisable}
-            onKeyDown={onKeyDownHandler}
-            defaultValue={content}
-        />
+        <>
+            <TextField
+                sx={textFieldStyle}
+                variant="filled"
+                disabled={isDisable}
+                onKeyDown={onKeyDownHandler}
+                defaultValue={content}
+            />
+        </>
     )
 }
 

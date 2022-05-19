@@ -15,7 +15,7 @@ import {
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItemList }) => {
     const [isShowTextField, setIsShowTextField] = useState(false)
     const [todoItemList] = useState([])
-
+    
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
@@ -72,10 +72,10 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItemList }) => {
                         {todoItemList.map((item, i) => {
                             return (
                                 // TODO Item 전달하고 어떻게 디자인 할지
-                                <CardModalItem key={i} content={item.content} index={i} />
+                                <CardModalItem key={i} content={item.content} />
                             )
                         })}
-                        {isShowTextField && 
+                        {isShowTextField &&
                             <TextField 
                                 label="Enter todo contents" 
                                 variant="outlined"
