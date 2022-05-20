@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import MyIcon from '../../icon/MyIcon';
 import { Link } from 'react-router-dom';
-import { createFriendsList } from '../../dev/testData'
+import { createFriendsList, createChatRoomList } from '../../dev/testData'
 import Lodash from 'lodash'
 
 function SideBar() {
@@ -38,7 +38,19 @@ function SideBar() {
             name: 'ChatRooms',
             path: '/chat',
             icon: <MyIcon name='chat' />,
-            list: <ListItemButton divider={true}><Typography>FoxMon's ChatRoom</Typography></ListItemButton>,
+            list: (() => {
+                const chatRooms = doChatRoomFetchResult.call(this)
+                return chatRooms.allChatRooms.map((c) => {
+                    return (
+                        <ListItemButton
+                            key={c.uuid}
+                            divider={true}
+                        >
+                            <Typography>{c.name}</Typography>
+                        </ListItemButton>
+                    )
+                })
+            })(),
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -101,12 +113,24 @@ function SideBar() {
     )
 }
 
+// 하나의 Fetch에서 관리하는건 어떨까?
 function doFriendsFetchResult() {
     const friendList = createFriendsList()
     const fetchResult = {}
     fetchResult.allFriends = friendList.friendListArray()
     fetchResult.target = {}
     Lodash.forEach(friendList.friendListObject(), (v, k) => {
+        fetchResult.target[k] = v
+    })
+    return fetchResult
+}
+
+function doChatRoomFetchResult() {
+    const chatRoomList = createChatRoomList()
+    const fetchResult = {}
+    fetchResult.allChatRooms = chatRoomList.chatRoomList()
+    fetchResult.target = {}
+    Lodash.forEach(chatRoomList.asChatRoomObject(), (v, k) => {
         fetchResult.target[k] = v
     })
     return fetchResult

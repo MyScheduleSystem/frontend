@@ -1,5 +1,8 @@
+import ChatRoom from '../type/chatRoom'
+import ChatRoomList from '../type/chatRoomList'
 import Friend from '../type/friend'
 import FriendList from '../type/friendList'
+import User from '../type/user'
 import DateUtil from '../util/dateUtil'
 
 const TestData = {}
@@ -77,4 +80,18 @@ export function createFriendsList() {
     }
     const fArr = FriendList.createFriendList(arr)
     return fArr
+}
+
+export function createChatRoomList() {
+    const name = `FoxMon's Chat Room`
+    const arr = []
+    const users = []
+    for(let i = 0; i < 5; i++) {
+        users.push(new User(i, `FoxMon${i}`, `1234@@!1234${i + 100}`))
+    }
+    for(let i = 0; i < 10; i++) {
+        arr.push(new ChatRoom(i + 1, `${name}${i + 1}`, users))
+    }
+    const cArr = ChatRoomList.createChatRoomList(arr)
+    return cArr
 }

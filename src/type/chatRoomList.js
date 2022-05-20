@@ -12,7 +12,7 @@ class _ChatRoomList {
         this.$_chatRoomList.forEach(e => {
             obj[e.uuid] = {
                 name: e.name,
-                user: e.users
+                users: e.users
             }
         })
         return obj
