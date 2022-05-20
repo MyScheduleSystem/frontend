@@ -63,21 +63,8 @@ function create(calendarSpecJson) {
     return calendarSpecJson
 }
 
-function createFriends(friendsArr) {
-    const friends = ['FoxMon1', 'FoxMon2', 'FoxMon3', 'FoxMon4', 'FoxMon5',]
-    friends.forEach((e) => {
-        friendsArr.push(e)
-    })
-    return [...new Set(friendsArr)]
-}
-
 export function getTodoFetchResult() {
     const myData = create(TestData[userId].container[date].calendar)
-    return myData
-}
-
-export function getFriendFetchResult() {
-    const myData = createFriends(TestData[userId].friend)
     return myData
 }
 
