@@ -36,7 +36,7 @@ TodoItemList.createTodoStringList = function(array) {
     ErrorUtil.assert(!ArrayUtil.isEmpty(array), 'Array must be filled!')
     const tArr = array.map(item => item.content)
     tArr.every(e => ErrorUtil.typeCheck(e, 'string'))
-    ErrorUtil.aseert(ArrayUtil.size(tArr) > 1, 'Array size > 1')
+    ErrorUtil.assert(ArrayUtil.size(tArr) > 1, 'Array size > 1')
     return tArr
 }
 
