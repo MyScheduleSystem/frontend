@@ -59,8 +59,8 @@ const wrapperBox = {
 }
 
 const monthStyle = {
-    fontSize: '10rem',
-    marginTop: '2rem',
+    fontSize: '8.5rem',
+    marginTop: '0.8rem',
 }
 
 const yearStyle = {
