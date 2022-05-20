@@ -28,7 +28,7 @@ const TodoItemList = {}
 
 TodoItemList.createTodoItemList = function(array) {
     const tdArr = ArrayUtil.createArray(array, TodoItem)
-    ErrorUtil.invalidParameter(ArrayUtil.size(tdArr) > 1)
+    ErrorUtil.assert(ArrayUtil.size(tdArr) > 1, 'Array size > 1')
     return new _TodoItemList(tdArr)
 }
 
@@ -36,7 +36,7 @@ TodoItemList.createTodoStringList = function(array) {
     ErrorUtil.assert(!ArrayUtil.isEmpty(array), 'Array must be filled!')
     const tArr = array.map(item => item.content)
     tArr.every(e => ErrorUtil.typeCheck(e, 'string'))
-    ErrorUtil.invalidParameter(ArrayUtil.size(tArr) > 1)
+    ErrorUtil.aseert(ArrayUtil.size(tArr) > 1, 'Array size > 1')
     return tArr
 }
 

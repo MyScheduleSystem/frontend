@@ -5,7 +5,6 @@ import Friend from "./friend"
 class _FriendList {
     constructor(friendListArray) {
         this.$_friendListArray = friendListArray
-        this.$_friendListArray.every(e => ErrorUtil.invalidParameter(e.createdAt))
     }
 
     friendListObject() {
@@ -28,7 +27,7 @@ const FriendList = {}
 
 FriendList.createFriendList = function(array) {
     const fArr = ArrayUtil.createArray(array, Friend)
-    ErrorUtil.invalidParameter(ArrayUtil.size(fArr) > 1)
+    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, 'Array size > 1')
     return new _FriendList(fArr)
 }
 
@@ -36,7 +35,7 @@ FriendList.createFriendStringList = function(array) {
     ErrorUtil.assert(!ArrayUtil.isEmpty(array), 'Array must be filled!')
     const fArr = array.map(friend => friend.getFriendNickname)
     fArr.every(e => ErrorUtil.typeCheck(e, 'string'))
-    ErrorUtil.invalidParameter(ArrayUtil.size(fArr) > 1)
+    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, 'Array size > 1')
     return fArr
 }
 
