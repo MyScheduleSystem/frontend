@@ -41,6 +41,25 @@ DateUtil.dateCalculate = function(number, operation, day) {
     }
 }
 
+DateUtil.dateFromDate = function(start, end, operation) {
+    const startDate = moment(start)
+    const endDate = moment(end)
+
+    switch(operation) {
+        case 'days':
+            return endDate.diff(startDate, 'days').toString()
+
+        case 'weeks':
+            return endDate.diff(startDate, 'weeks').toString()
+
+        case 'months':
+            return endDate.diff(startDate, 'months').toString()
+
+        default:
+            ErrorUtil.notImplemented()
+    }
+}
+
 DateUtil.isSame = function(current, compare) {
     return moment(current).isSame(compare)
 }

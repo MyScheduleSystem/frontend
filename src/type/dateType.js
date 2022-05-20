@@ -50,6 +50,11 @@ DateType.getDay = function() {
     return day
 }
 
+DateType.dateFromDate = function(start, end, op) {
+    const result = DateUtil.dateFromDate(start, end, op)
+    return result
+}
+
 DateType.castToDay = function(day) {
     const changedDay = DateUtil.castToDay(day)
     return changedDay

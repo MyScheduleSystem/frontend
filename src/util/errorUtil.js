@@ -23,5 +23,9 @@ ErrorUtil.typeCheck = (param, type) => {
     if(typeof param !== type) debugger
 }
 
+ErrorUtil.instanceCheck = (param, type) => {
+    if(!(param instanceof type)) debugger
+}
+
 Object.freeze(ErrorUtil)
 export default ErrorUtil

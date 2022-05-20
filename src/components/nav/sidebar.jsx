@@ -8,7 +8,8 @@ import {
 } from '@mui/material'
 import MyIcon from '../../icon/MyIcon';
 import { Link } from 'react-router-dom';
-import { getFriendFetchResult } from '../../dev/testData'
+import { createFriendsList, createChatRoomList } from '../../dev/testData'
+import Lodash from 'lodash'
 
 function SideBar() {
     const items = [
@@ -18,13 +19,13 @@ function SideBar() {
             icon: <MyIcon name='friends' />,
             list: (() => {
                 const friends = doFriendsFetchResult.call(this)
-                return friends.map((f, i) => {
+                return friends.allFriends.map((f) => {
                     return (
                         <ListItemButton
-                            key={i}
+                            key={f.friendUuid}
                             divider={true}
                         >
-                            <Typography>{f}</Typography>
+                            <Typography>{f.friendNickname}</Typography>
                         </ListItemButton>
                     )
                 })
@@ -37,7 +38,19 @@ function SideBar() {
             name: 'ChatRooms',
             path: '/chat',
             icon: <MyIcon name='chat' />,
-            list: <ListItemButton divider={true}><Typography>FoxMon's ChatRoom</Typography></ListItemButton>,
+            list: (() => {
+                const chatRooms = doChatRoomFetchResult.call(this)
+                return chatRooms.allChatRooms.map((c) => {
+                    return (
+                        <ListItemButton
+                            key={c.uuid}
+                            divider={true}
+                        >
+                            <Typography>{c.name}</Typography>
+                        </ListItemButton>
+                    )
+                })
+            })(),
             onClickItem: (e) => {
                 console.log(e)
             },
@@ -100,9 +113,27 @@ function SideBar() {
     )
 }
 
+// 하나의 Fetch에서 관리하는건 어떨까?
 function doFriendsFetchResult() {
-    const result = getFriendFetchResult()
-    return result
+    const friendList = createFriendsList()
+    const fetchResult = {}
+    fetchResult.allFriends = friendList.friendListArray()
+    fetchResult.target = {}
+    Lodash.forEach(friendList.friendListObject(), (v, k) => {
+        fetchResult.target[k] = v
+    })
+    return fetchResult
+}
+
+function doChatRoomFetchResult() {
+    const chatRoomList = createChatRoomList()
+    const fetchResult = {}
+    fetchResult.allChatRooms = chatRoomList.chatRoomList()
+    fetchResult.target = {}
+    Lodash.forEach(chatRoomList.asChatRoomObject(), (v, k) => {
+        fetchResult.target[k] = v
+    })
+    return fetchResult
 }
 
 const sidebarStyle = {
