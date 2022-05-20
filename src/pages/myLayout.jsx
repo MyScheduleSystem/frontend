@@ -43,16 +43,16 @@ const myCalendarBoxStyle = {
 
 const MyCalendarBoxDiv = styled.div`
     border-radius: 10px;
-    width: 60%;
+    width: 55%;
     // height가 뭔가 이상한데?
-    height: 78vh;
+    height: 68vh;
     display: inline-block;
-    margin-top: 4rem;
-    background-color: #e9e9e9;
+    margin-top: 8rem;
+    background-color: #F8F8FF;
+    box-shadow: 20px 10px 3px -3px black;
 
     .react-calendar__navigation button {
         all: unset;
-        font-weight: bold;
         margin: 1rem;
         font-size: 2rem;
     }
@@ -64,12 +64,16 @@ const MyCalendarBoxDiv = styled.div`
     .react-calendar__month-view__weekdays {
         margin-top: 1.5rem;
         font-weight: bold;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
+    }
+
+    .react-calendar__month-view__weekdays abbr{
+        text-decoration: none;
     }
 
     .react-calendar__month-view__days button {
         all: unset;
-        margin-top: 3rem
+        margin-top: 2.5rem
     }
 
     .react-calendar__month-view__days button:hover {

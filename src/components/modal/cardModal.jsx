@@ -41,6 +41,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         itemObj.content = todoItemContent
         onAddTodoItem(itemObj)
         cardModalClose(false)
+        setTodoItemTitle('')
         setTodoItemContent('')
     }
 
