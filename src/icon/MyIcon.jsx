@@ -8,7 +8,8 @@ import {
     faSignOut, faUser, faLock,
     faHistory, faArchive, faBars,
     faBell, faEnvelope, faRadio,
-    faXmark,
+    faXmark, faEllipsisV, faShareAlt,
+    faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -48,7 +49,10 @@ function getIconName(name) {
         case 'mail': return faEnvelope
         case 'radio': return faRadio
         case 'delete': return faXmark
-        
+        case 'option': return faEllipsisV
+        case 'share': return faShareAlt
+        case 'comment': return faComment
+
         default:
             ErrorUtil.notImplemented()
             return
