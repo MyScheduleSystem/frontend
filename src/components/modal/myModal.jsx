@@ -12,7 +12,7 @@ import Lodash from 'lodash'
 
 function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
-    const [todoItemList] = useState(dataForRender.call(this, todoItems))
+    const [todoItemList, setTodoItemList] = useState(dataForRender.call(this, todoItems))
     const [editMode, setEditmode] = useState(false)
     const [editTodoItem, setEditTodoItem] = useState({})
 
@@ -51,14 +51,24 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setEditTodoItem(() => Object.assign(editTodoItem, obj))
     }
 
+    const onEditTodoItem = (prev, editedItem) => {
+        const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
+        todoItemList[find] = editedItem
+        setTodoItemList(() => [...todoItemList])
+    }
+
     const onEditModeExit = (isClose) => {
         setEditmode(isClose)
     }
 
+    const onRemoveCardHandelr = (i) => {
+        setTodoItemList(() => todoItemList.filter((e, index) => i !== index))
+    }
+
     return (
         <Modal 
-            style={modalStyle} 
-            open={isClickModal} 
+            style={modalStyle}
+            open={isClickModal}
             onClose={onCloseHandler}
         >
             <Box sx={boxStyle}>
@@ -69,10 +79,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                 <Box sx={cardListStyle}>
                     {todoItemList.map((item, i) => {
                         return (
-                            <CardItem 
-                                key={i} 
+                            <CardItem
+                                key={i}
+                                index={i}
                                 cardItem={item}
                                 onEditModeEnter={onEditModeEnter}
+                                onRemoveCard={onRemoveCardHandelr}
                             />
                         )
                     })}
@@ -83,9 +95,10 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                     cardModalClose={onCardModalCloseHandler}
                     onAddTodoItem={onAddTodoItem}
                 />
-                <CardEditModal 
+                <CardEditModal
                     editTodoItem={editTodoItem}
                     isCardModalShow={editMode} 
+                    onEditTodoItem={onEditTodoItem}
                     cardModalClose={onEditModeExit}
                 />
             </Box>
@@ -108,7 +121,6 @@ const dataForRender = (todoItems) => {
         obj.endDate = item.endDate
         rtnArr.push(obj)
     })
-
     return rtnArr
 }
 

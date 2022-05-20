@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import MyIcon from '../../icon/MyIcon'
+import CardEditModalItem from './cardEditModalItem';
 import { 
     Dialog, 
     DialogContent,
@@ -9,24 +11,36 @@ import {
     TextField,
     Button,
 } from "@mui/material";
+import Lodash from 'lodash'
 
-const CardEditModal = ({ editTodoItem, isCardModalShow, cardModalClose }) => {
+const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModalClose }) => {
+    const [todoEditTitle, setTodoEditTitle] = useState('')
+    const [todoEditContent, setTodoEditContent] = useState('')
+
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
 
-    const onTitleChangeHandler = (e) => {
+    const onEditTitleChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
+        const editTitle = e.target.value
+        setTodoEditTitle(editTitle)
     }
 
-    const onContentChangeHandler = (e) => {
+    const onEditContentChangeHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
         // TODO: DatePicker 추가하기
+        const editContent = e.target.value
+        setTodoEditContent(editContent)
     }
 
     const onSaveButtonHandler = () => {
+        const prev = Lodash.cloneDeep(editTodoItem)
+        editTodoItem.title = todoEditTitle
+        editTodoItem.content = todoEditContent
+        onEditTodoItem(prev, editTodoItem)
         cardModalClose(false)
     }
 
@@ -43,25 +57,26 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, cardModalClose }) => {
                     <CardHeader 
                         avatar={<Avatar sx={avtarStyle}>T</Avatar>}
                         title={
-                            <TextField 
+                            !todoEditTitle ?
+                            <TextField
                                 label="Enter todo contents" 
                                 variant="outlined"
-                                autoFocus={true}
                                 sx={contentStyle} 
                                 defaultValue={editTodoItem.title}
-                                onKeyDown={onTitleChangeHandler}
-                            />
+                                onKeyDown={onEditTitleChangeHandler}
+                            /> :
+                            <CardEditModalItem content={todoEditTitle}/>
                         }
                     />
                     <CardContent>
-                        <TextField 
+                        <CardEditModalItem content={todoEditContent} />
+                        {!todoEditContent && <TextField 
                             label="Enter todo contents" 
                             variant="outlined"
-                            autoFocus={true}
                             sx={contentStyle} 
                             defaultValue={editTodoItem.content}
-                            onKeyDown={onContentChangeHandler}
-                        />
+                            onKeyDown={onEditContentChangeHandler}
+                        />}
                     </CardContent>
                 </Card>
             </DialogContent>
