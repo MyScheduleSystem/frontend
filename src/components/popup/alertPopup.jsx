@@ -1,3 +1,4 @@
+import MyIcon from '../../icon/MyIcon'
 import {
     Box,
     Dialog,
@@ -17,7 +18,7 @@ const AlertPopup = ({ isShowPopup, setIsShowPopup, message }) => {
         <Box>
             <Dialog open={isShowPopup}>
                 <DialogTitle>
-                    Please check your input agin.
+                    <MyIcon name='excalmationCircle' /> Please check your input agin.
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
