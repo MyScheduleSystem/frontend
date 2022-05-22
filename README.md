@@ -91,6 +91,15 @@
         Update User
         Delete User Info
 
+## Function
+    구현해야할 기능
+        Date Picker 추가
+        useMemo와 useCallback 도입하기
+        Card UI 이대로 괜찮은가?
+        Calender위에 완료한 TODO, 완료 못한 TODO 추가
+        추상화 안된 Data 찾아서 추상화 한 후, 리팩토링
+
+
 ## Issue
 
 `
