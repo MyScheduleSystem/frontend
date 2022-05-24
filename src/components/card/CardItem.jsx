@@ -55,19 +55,20 @@ const cardStyle = {
     textAlign: 'center',
     width: '300px',
     height: '300px',
-    border: 'solid',
-    borderRadius: '10px',
+    boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
+    border: '1px solid #eeeeee',
+    borderRadius: '8px',
 }
 
 const titleStyle = {
+    marginTop: '1rem',
     height: '20%',
 }
 
 const contentStyle = {
-    height: '70%',
+    height: '60%',
 }
 
 const removeBtnStyle = {
-    height: '10%',
-    
+    height: '20%',
 }
