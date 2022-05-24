@@ -4,8 +4,13 @@ import ErrorUtil from '../util/errorUtil'
 const DateType = {}
 
 // YYYY-MM-DD
-DateType.creatDate = function() {
+DateType.createDate = function() {
     const createdDate = DateUtil.dateFormat()
+    return createdDate
+}
+
+DateType.createDateFormat = function(date, format) {
+    const createdDate = DateUtil.dateFormat(date, format)
     return createdDate
 }
 
@@ -38,6 +43,26 @@ DateType.getTime = function() {
 DateType.getTimeToSeconds = function() {
     const time = DateUtil.timeFormatToSeconds()
     return time
+}
+
+DateType.getDay = function() {
+    const day = DateUtil.dayFormat()
+    return day
+}
+
+DateType.dateFromDate = function(start, end, op) {
+    const result = DateUtil.dateFromDate(start, end, op)
+    return result
+}
+
+DateType.castToDay = function(day) {
+    const changedDay = DateUtil.castToDay(day)
+    return changedDay
+}
+
+DateType.castToMonth = function(month) {
+    const changedMonth = DateUtil.castToMonth(month)
+    return changedMonth
 }
 
 Object.freeze(DateType)

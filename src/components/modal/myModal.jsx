@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CardModal from './cardModal'
+import CardEditModal from "./cardEditModal";
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
 import { 
@@ -11,7 +12,9 @@ import Lodash from 'lodash'
 
 function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
-    const [todoItemList] = useState(dataForRender.call(this, todoItems))
+    const [todoItemList, setTodoItemList] = useState(dataForRender.call(this, todoItems))
+    const [editMode, setEditmode] = useState(false)
+    const [editTodoItem, setEditTodoItem] = useState({})
 
     const onCloseHandler = () => onClose(false)
 
@@ -23,8 +26,11 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setIsOpenCardModal(isClose)
     }
 
-    const onAddTodoItemList = (addedItem) => {
-        todoItemList.push(...addedItem)
+    const onAddTodoItem = (addedItem) => {
+        todoItemList.push({
+            title: addedItem.title,
+            content: addedItem.content,
+        })
     }
 
     const onSaveButtonClickHandler = () => {
@@ -37,10 +43,32 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         onClose(false)
     }
 
+    const onEditModeEnter = (isClicked, item) => {
+        setEditmode(isClicked)
+        const obj = {}
+        obj.title = item[0]
+        obj.content = item[1]
+        setEditTodoItem(() => Object.assign(editTodoItem, obj))
+    }
+
+    const onEditTodoItem = (prev, editedItem) => {
+        const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
+        todoItemList[find] = editedItem
+        setTodoItemList(() => [...todoItemList])
+    }
+
+    const onEditModeExit = (isClose) => {
+        setEditmode(isClose)
+    }
+
+    const onRemoveCardHandelr = (i) => {
+        setTodoItemList(() => todoItemList.filter((e, index) => i !== index))
+    }
+
     return (
         <Modal 
-            style={modalStyle} 
-            open={isClickModal} 
+            style={modalStyle}
+            open={isClickModal}
             onClose={onCloseHandler}
         >
             <Box sx={boxStyle}>
@@ -51,9 +79,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                 <Box sx={cardListStyle}>
                     {todoItemList.map((item, i) => {
                         return (
-                            <CardItem 
-                                key={i} 
+                            <CardItem
+                                key={i}
+                                index={i}
                                 cardItem={item}
+                                onEditModeEnter={onEditModeEnter}
+                                onRemoveCard={onRemoveCardHandelr}
                             />
                         )
                     })}
@@ -62,7 +93,13 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                 <CardModal 
                     isCardModalShow={isOpenCardModal} 
                     cardModalClose={onCardModalCloseHandler}
-                    onAddTodoItemList={onAddTodoItemList}
+                    onAddTodoItem={onAddTodoItem}
+                />
+                <CardEditModal
+                    editTodoItem={editTodoItem}
+                    isCardModalShow={editMode} 
+                    onEditTodoItem={onEditTodoItem}
+                    cardModalClose={onEditModeExit}
                 />
             </Box>
         </Modal>
@@ -84,7 +121,6 @@ const dataForRender = (todoItems) => {
         obj.endDate = item.endDate
         rtnArr.push(obj)
     })
-
     return rtnArr
 }
 

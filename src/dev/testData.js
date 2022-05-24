@@ -1,3 +1,8 @@
+import ChatRoom from '../type/chatRoom'
+import ChatRoomList from '../type/chatRoomList'
+import Friend from '../type/friend'
+import FriendList from '../type/friendList'
+import User from '../type/user'
 import DateUtil from '../util/dateUtil'
 
 const TestData = {}
@@ -43,7 +48,7 @@ TestData[userId] = {
 function create(calendarSpecJson) {
     const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
     const testDays = [
-        '2022-05-12', '2022-05-13', '2022-05-14', '2022-05-15', '2022-05-16', 
+        '2022-05-12', '2022-05-13', '2022-05-14', '2022-05-15', '2022-05-16',
         '2022-05-17', '2022-05-18', '2022-05-19', '2022-05-20', '2022-05-21',
     ]
     calendarSpecJson = {}
@@ -60,20 +65,33 @@ function create(calendarSpecJson) {
     })
     return calendarSpecJson
 }
-function createFriends(friendsArr) {
-    const friends = ['FoxMon1', 'FoxMon2', 'FoxMon3', 'FoxMon4', 'FoxMon5',]
-    friends.forEach((e) => {
-        friendsArr.push(e)
-    })
-    return [...new Set(friendsArr)]
-}
 
 export function getTodoFetchResult() {
     const myData = create(TestData[userId].container[date].calendar)
     return myData
 }
 
-export function getFriendFetchResult() {
-    const myData = createFriends(TestData[userId].friend)
-    return myData
+export function createFriendsList() {
+    const name = 'FoxMon'
+    const createdAt = '2022-05-20'
+    const arr = []
+    for(let i = 0; i < 10; i++) {
+        arr.push(new Friend(i + 1, `${name}${i + 1}`, createdAt))
+    }
+    const fArr = FriendList.createFriendList(arr)
+    return fArr
+}
+
+export function createChatRoomList() {
+    const name = `FoxMon's Chat Room`
+    const arr = []
+    const users = []
+    for(let i = 0; i < 5; i++) {
+        users.push(new User(i, `FoxMon${i}`, `1234@@!1234${i + 100}`))
+    }
+    for(let i = 0; i < 10; i++) {
+        arr.push(new ChatRoom(i + 1, `${name}${i + 1}`, users))
+    }
+    const cArr = ChatRoomList.createChatRoomList(arr)
+    return cArr
 }

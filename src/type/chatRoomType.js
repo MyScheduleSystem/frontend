@@ -1,5 +1,6 @@
 class ChatRoomType {
-    constructor(name) {
+    constructor(uuid, name) {
+        this.uuid = uuid
         this.name = name
         this.isGroupChat = null
     }
@@ -11,6 +12,10 @@ class ChatRoomType {
 
     getChatRoomName() {
         return this.name
+    }
+
+    getUuid() {
+        return this.uuid
     }
 }
 
