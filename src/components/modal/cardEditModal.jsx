@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import MyIcon from '../../icon/MyIcon'
 import { 
     Dialog, 
@@ -13,30 +13,17 @@ import {
 import Lodash from 'lodash'
 
 const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModalClose }) => {
-    const [todoEditTitle, setTodoEditTitle] = useState('')
-    const [todoEditContent, setTodoEditContent] = useState('')
+    const titleRef = useRef()
+    const contentRef = useRef()
 
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
 
-    const onEditTitleChangeHandler = (e) => {
-        if(!e.target.value) return
-        const editTitle = e.target.value
-        setTodoEditTitle(editTitle)
-    }
-
-    const onEditContentChangeHandler = (e) => {
-        if(!e.target.value) return
-        // TODO: DatePicker 추가하기
-        const editContent = e.target.value
-        setTodoEditContent(editContent)
-    }
-
     const onSaveButtonHandler = () => {
         const prev = Lodash.cloneDeep(editTodoItem)
-        editTodoItem.title = todoEditTitle
-        editTodoItem.content = todoEditContent
+        editTodoItem.title = titleRef.current.value
+        editTodoItem.content = contentRef.current.value
         onEditTodoItem(prev, editTodoItem)
         cardModalClose(false)
     }
@@ -55,23 +42,23 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
                         avatar={<Avatar sx={avtarStyle}>T</Avatar>}
                         title={
                             <TextField
+                                inputRef={titleRef}
                                 label="Enter todo title" 
                                 variant="outlined"
                                 sx={titleStyle} 
                                 defaultValue={editTodoItem.title}
-                                onKeyDown={onEditTitleChangeHandler}
                             />
                         }
                     />
                     <CardContent>
                         <TextField 
+                            inputRef={contentRef}
                             label="Enter todo contents" 
                             variant="outlined"
                             multiline
                             rows={8}
                             sx={contentStyle} 
                             defaultValue={editTodoItem.content}
-                            onKeyDown={onEditContentChangeHandler}
                         />
                     </CardContent>
                 </Card>
