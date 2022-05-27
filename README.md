@@ -51,6 +51,8 @@
 
     OpenWeather API(https://openweathermap.org/)
 
+    Google Charts API(https://developers.google.com/chart)
+
 ## JSON Spec
 
 `
