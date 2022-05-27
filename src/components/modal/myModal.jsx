@@ -3,6 +3,7 @@ import CardModal from './cardModal'
 import CardEditModal from "./cardEditModal";
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
+import CheckPopup from "../popup/checkPopup";
 import { 
     Modal, 
     Box, 
@@ -15,6 +16,8 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [todoItemList, setTodoItemList] = useState(dataForRender.call(this, todoItems))
     const [editMode, setEditmode] = useState(false)
     const [editTodoItem, setEditTodoItem] = useState({})
+    const [isOpenAlert, setIsOpenAlert] = useState(false)
+    const [removeIndex, setRemoveIndex] = useState()
 
     const onCloseHandler = () => onClose(false)
 
@@ -47,7 +50,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setEditmode(isClicked)
         const obj = {}
         obj.title = item[0]
-        obj.content = item[1]
+        obj.content = item[2]
         setEditTodoItem(() => Object.assign(editTodoItem, obj))
     }
 
@@ -61,48 +64,61 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setEditmode(isClose)
     }
 
-    const onRemoveCardHandelr = (i) => {
-        setTodoItemList(() => todoItemList.filter((e, index) => i !== index))
+    const onRemoveCardHandler = (i, isOpen) => {
+        setIsOpenAlert(isOpen)
+        setRemoveIndex(i)
+    }
+
+    const onRemoveEventHandler = (isChecked) => {
+        if(isChecked) setTodoItemList(() => todoItemList.filter((e, index) => removeIndex !== index))
+        setIsOpenAlert(false)
     }
 
     return (
-        <Modal 
-            style={modalStyle}
-            open={isClickModal}
-            onClose={onCloseHandler}
-        >
-            <Box sx={boxStyle}>
-                <Box sx={topBoxStyle}>
-                    <Button onClick={onSaveButtonClickHandler}>Save</Button>
-                    <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
+        <>
+            <CheckPopup 
+                message="Warning"
+                isShowPopup={isOpenAlert}
+                checkPopupEvent={onRemoveEventHandler}
+            />
+            <Modal 
+                style={modalStyle}
+                open={isClickModal}
+                onClose={onCloseHandler}
+            >
+                <Box sx={boxStyle}>
+                    <Box sx={topBoxStyle}>
+                        <Button onClick={onSaveButtonClickHandler}>Save</Button>
+                        <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
+                    </Box>
+                    <Box sx={cardListStyle}>
+                        {todoItemList.map((item, i) => {
+                            return (
+                                <CardItem
+                                    key={i}
+                                    index={i}
+                                    cardItem={item}
+                                    onEditModeEnter={onEditModeEnter}
+                                    onRemoveCard={onRemoveCardHandler}
+                                />
+                            )
+                        })}
+                        <EmptyCard onCardModalShow={onCardModalShow} />
+                    </Box>
+                    <CardModal 
+                        isCardModalShow={isOpenCardModal} 
+                        cardModalClose={onCardModalCloseHandler}
+                        onAddTodoItem={onAddTodoItem}
+                    />
+                    <CardEditModal
+                        editTodoItem={editTodoItem}
+                        isCardModalShow={editMode} 
+                        onEditTodoItem={onEditTodoItem}
+                        cardModalClose={onEditModeExit}
+                    />
                 </Box>
-                <Box sx={cardListStyle}>
-                    {todoItemList.map((item, i) => {
-                        return (
-                            <CardItem
-                                key={i}
-                                index={i}
-                                cardItem={item}
-                                onEditModeEnter={onEditModeEnter}
-                                onRemoveCard={onRemoveCardHandelr}
-                            />
-                        )
-                    })}
-                    <EmptyCard onCardModalShow={onCardModalShow} />
-                </Box>
-                <CardModal 
-                    isCardModalShow={isOpenCardModal} 
-                    cardModalClose={onCardModalCloseHandler}
-                    onAddTodoItem={onAddTodoItem}
-                />
-                <CardEditModal
-                    editTodoItem={editTodoItem}
-                    isCardModalShow={editMode} 
-                    onEditTodoItem={onEditTodoItem}
-                    cardModalClose={onEditModeExit}
-                />
-            </Box>
-        </Modal>
+            </Modal>
+        </>
     );
 }
 
@@ -136,11 +152,12 @@ const boxStyle = {
     height: '90%',
     backgroundColor: '#fff',
     borderRadius: '10px',
-    opacity: '0.95'
+    opacity: '0.95',
+    overflow: 'auto',
 }
 
 const topBoxStyle = {
-    height: '5%',
+    height: '8%',
     width: '100%',
     paddingTop: '10px',
 }
@@ -148,7 +165,7 @@ const topBoxStyle = {
 const cardListStyle = {
     display: 'grid',
     placeItems: 'center',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(4, 1fr)',
 }
 
 export default MyModal;

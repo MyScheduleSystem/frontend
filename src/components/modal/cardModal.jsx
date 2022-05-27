@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import MyIcon from '../../icon/MyIcon'
-import CardModalItem from './cardModalItem'
+import AlertPopup from '../popup/alertPopup'
 import { 
     Dialog, 
     DialogContent,
@@ -13,80 +13,79 @@ import {
 } from "@mui/material";
 
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
-    const [todoItemTitle, setTodoItemTitle] = useState('')
-    const [todoItemContent, setTodoItemContent] = useState('')
-    
+    const [isOpen, setIsOpen] = useState(false)
+    const titleRef = useRef()
+    const contentRef = useRef()
+
     const onCloseCardModal = () => {
         cardModalClose(false)
     }
 
-    const onTitleChangeHandler = (e) => {
-        if(e.key !== "Enter") return
-        if(!e.target.value) return
-        const title = e.target.value
-        setTodoItemTitle(title)
-    }
-
-    const onContentChangeHandler = (e) => {
-        if(e.key !== "Enter") return
-        if(!e.target.value) return
-        // TODO: DatePicker 추가하기
-        const content = e.target.value
-        setTodoItemContent(content)
-    }
-
-    const onSaveButtonHandler = () => {
+    const onSaveButtonHandler = (e) => {
+        e.preventDefault()
         const itemObj = {}
-        itemObj.title = todoItemTitle
-        itemObj.content = todoItemContent
+        if(!titleRef.current.value || !contentRef.current.value) {
+            setIsOpen(true)
+            return
+        }
+        itemObj.title = titleRef.current.value
+        itemObj.content = contentRef.current.value
         onAddTodoItem(itemObj)
+        titleRef.current.value = ''
+        contentRef.current.value = ''
         cardModalClose(false)
-        setTodoItemTitle('')
-        setTodoItemContent('')
+    }
+
+    const onIsOpenEvent = (isChecked) => {
+        setIsOpen(isChecked)
     }
 
     return (
-        <Dialog
-            sx={dialogStyle}
-            open={isCardModalShow}
-            onClose={onCloseCardModal}
-        >
-            <DialogContent 
-                sx={dialogContentStyle}
+        <>
+            <AlertPopup 
+                isShowPopup={isOpen} 
+                setIsShowPopup={onIsOpenEvent}
+                message="Please check your input agin!!"
+            />
+            <Dialog
+                sx={dialogStyle}
+                open={isCardModalShow}
+                onClose={onCloseCardModal}
             >
-                <Card sx={cardStyle}>
-                    <CardHeader 
-                        avatar={<Avatar sx={avtarStyle}>T</Avatar>}
-                        title={
-                            !todoItemTitle ? 
-                                <TextField 
+                <DialogContent>
+                    <Card sx={cardStyle}>
+                        <CardHeader 
+                            avatar={<Avatar sx={avtarStyle}>T</Avatar>}
+                            title={
+                                <TextField
                                     label="Enter todo title" 
+                                    inputRef={titleRef}
                                     variant="outlined"
                                     sx={headerStyle} 
-                                    onKeyDown={onTitleChangeHandler}
-                                /> :
-                                <CardModalItem content={todoItemTitle} />
-                        }
-                    />
-                    <CardContent>
-                        <CardModalItem content={todoItemContent} />
-                        {!todoItemContent && <TextField 
-                            label="Enter todo contents" 
-                            variant="outlined"
-                            autoFocus={true}
-                            sx={contentStyle} 
-                            onKeyDown={onContentChangeHandler}
-                        />}
-                    </CardContent>
-                </Card>
-            </DialogContent>
-            <Button 
+                                />
+                            }
+                        />
+                        <CardContent>
+                            {<TextField 
+                                label="Enter todo contents" 
+                                variant="outlined"
+                                inputRef={contentRef}
+                                multiline
+                                rows={8}
+                                autoFocus={true}
+                                sx={contentStyle} 
+                            />}
+                        </CardContent>
+                    </Card>
+                </DialogContent>
+                <Button 
                 sx={buttonStyle}
                 onClick={onSaveButtonHandler}
             >
                 <MyIcon name='checkCircle' />
             </Button>
         </Dialog>
+        </>
     )
 }
 
@@ -94,11 +93,7 @@ const dialogStyle = {
     '& .MuiDialog-paper': { 
         width: '80%', 
         height: '80%', 
-    }
-}
-
-const dialogContentStyle = {
-    // TODO Height & Scroll
+    },
 }
 
 const cardStyle = {

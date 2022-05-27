@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import MyIcon from '../../icon/MyIcon'
-import CardEditModalItem from './cardEditModalItem';
 import { 
     Dialog, 
     DialogContent,
@@ -22,14 +21,12 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
     }
 
     const onEditTitleChangeHandler = (e) => {
-        if(e.key !== "Enter") return
         if(!e.target.value) return
         const editTitle = e.target.value
         setTodoEditTitle(editTitle)
     }
 
     const onEditContentChangeHandler = (e) => {
-        if(e.key !== "Enter") return
         if(!e.target.value) return
         // TODO: DatePicker 추가하기
         const editContent = e.target.value
@@ -57,26 +54,25 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
                     <CardHeader 
                         avatar={<Avatar sx={avtarStyle}>T</Avatar>}
                         title={
-                            !todoEditTitle ?
                             <TextField
-                                label="Enter todo contents" 
+                                label="Enter todo title" 
                                 variant="outlined"
-                                sx={contentStyle} 
+                                sx={titleStyle} 
                                 defaultValue={editTodoItem.title}
                                 onKeyDown={onEditTitleChangeHandler}
-                            /> :
-                            <CardEditModalItem content={todoEditTitle}/>
+                            />
                         }
                     />
                     <CardContent>
-                        <CardEditModalItem content={todoEditContent} />
-                        {!todoEditContent && <TextField 
+                        <TextField 
                             label="Enter todo contents" 
                             variant="outlined"
+                            multiline
+                            rows={8}
                             sx={contentStyle} 
                             defaultValue={editTodoItem.content}
                             onKeyDown={onEditContentChangeHandler}
-                        />}
+                        />
                     </CardContent>
                 </Card>
             </DialogContent>
@@ -107,6 +103,10 @@ const cardStyle = {
 
 const avtarStyle = {
     bgColor: 'blue[500]'
+}
+
+const titleStyle = {
+    width: '100%',
 }
 
 const contentStyle = {

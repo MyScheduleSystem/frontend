@@ -7,16 +7,16 @@ import {
     Button,
 } from '@mui/material'
 
-function CheckPopup({ isShowPopup, setIsShowPopup }) {
+function CheckPopup({ message, isShowPopup, checkPopupEvent }) {
     const onCloseButtonClickHandler = (isChecked) => () => {
-        setIsShowPopup(false)
+        checkPopupEvent(isChecked)
     }
 
     return (
         <Box>
             <Dialog open={isShowPopup}>
                 <DialogTitle>
-                    <MyIcon name='excalmationCircle' /> Warning
+                    <MyIcon name='excalmationCircle' /> {message}
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={onCloseButtonClickHandler(true)}>
