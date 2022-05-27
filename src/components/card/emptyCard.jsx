@@ -20,12 +20,13 @@ const EmptyCard = ({ onCardModalShow }) => {
 }
 
 const cardStyle = {
+    marginTop: '25px',
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
     width: '300px',
-    height: '300px',
+    height: '280px',
     border: 'dotted',
     borderRadius: '10px',
 }

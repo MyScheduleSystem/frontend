@@ -55,7 +55,7 @@ const wrapperBox = {
     height: '100%',
     float: 'left',
     color: '#fff',
-    backgroundColor: 'orange',
+    backgroundColor: '#1976D2',
 }
 
 const monthStyle = {

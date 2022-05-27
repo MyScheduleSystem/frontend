@@ -42,14 +42,15 @@ const myCalendarBoxStyle = {
 }
 
 const MyCalendarBoxDiv = styled.div`
+    margin-right: 35rem;
     border-radius: 10px;
     width: 55%;
-    // height가 뭔가 이상한데?
-    height: 68vh;
+    height: 72vh;
     display: inline-block;
-    margin-top: 8rem;
+    margin-top: 5rem;
     background-color: #F8F8FF;
-    box-shadow: 20px 10px 3px -3px black;
+    box-shadow: 0 10px 5px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eeeeee;
 
     .react-calendar__navigation button {
         all: unset;
@@ -73,7 +74,7 @@ const MyCalendarBoxDiv = styled.div`
 
     .react-calendar__month-view__days button {
         all: unset;
-        margin-top: 2.5rem
+        margin-top: 2.5rem;
     }
 
     .react-calendar__month-view__days button:hover {

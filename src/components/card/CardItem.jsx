@@ -1,8 +1,12 @@
 import { useRef } from 'react'
 import { 
-    Box, 
-    Typography,
+    Card, 
     Button,
+    Typography,
+    CardHeader,
+    CardContent,
+    Avatar,
+    CardMedia,
 } from "@mui/material";
 import MyIcon from '../../icon/MyIcon';
 
@@ -19,32 +23,44 @@ const CardItem = ({ index, cardItem, onEditModeEnter, onRemoveCard }) => {
     }
     
     const onRemoveCardHandler = (e) => {
-        e.stopPropagation() 
-        onRemoveCard(index)
+        e.stopPropagation()
+        onRemoveCard(index, true)
     }
 
-    return (
-        <Box 
+    return ( // 카드 UI변경
+        <Card 
             ref={boxRef}
             sx={cardStyle} 
             onClick={onClickHandler(true)}
         >
-            <Typography
-                sx={titleStyle} 
-                variant="h4">
-                {cardItem.title}
-            </Typography>
-            <Typography
-                sx={contentStyle}
-                variant="h6">
-                {cardItem.content}
-            </Typography>
-            <Button
-                sx={removeBtnStyle} 
-                onClick={onRemoveCardHandler}>
-                <MyIcon name="delete" />
-            </Button>
-        </Box>
+            <CardHeader
+                avatar={<Avatar />}
+                sx={titleStyle}
+                title={cardItem.title}
+                alt='Modal Card'
+                action={                       
+                <Button
+                    sx={buttonStyle}
+                    onClick={onRemoveCardHandler}>
+                    <MyIcon name="delete" />
+                </Button>
+                }>
+            </CardHeader>
+            <CardMedia
+                component="img"
+                height={100}
+                image={`/images/schedule.jpg`}
+            >
+
+            </CardMedia>
+            <CardContent>
+                <Typography
+                    sx={contentStyle}
+                    variant="body2">
+                    {cardItem.content}
+                </Typography>
+            </CardContent>
+        </Card>
     )
 }
 
@@ -53,21 +69,24 @@ export default CardItem
 const cardStyle = {
     alignItems: 'center',
     textAlign: 'center',
+    marginTop: '20px',
     width: '300px',
-    height: '300px',
-    border: 'solid',
-    borderRadius: '10px',
+    height: '280px',
+    boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
+    border: '1px solid #eeeeee',
+    borderRadius: '8px',
 }
 
 const titleStyle = {
-    height: '20%',
+    height: '10%',
+    width: '70%',
 }
 
 const contentStyle = {
-    height: '70%',
+    height: '30%',
 }
 
-const removeBtnStyle = {
-    height: '10%',
-    
+const buttonStyle = {
+    minWidth: '10px',
+    left: '52px',
 }
