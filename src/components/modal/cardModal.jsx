@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import MyIcon from '../../icon/MyIcon'
 import AlertPopup from '../popup/alertPopup'
-import { 
-    Dialog, 
+import {
+    Dialog,
     DialogContent,
-    Card, 
+    Card,
     CardHeader,
     CardContent,
     Avatar,
@@ -14,6 +14,7 @@ import {
 
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [isValidTitle, setIsValidTtile] = useState(false)
     const titleRef = useRef()
     const contentRef = useRef()
 
@@ -40,10 +41,31 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         setIsOpen(isChecked)
     }
 
+    const onTitleChangeHandler = useCallback((e) => {
+        if(validateForTitle(e.target.value)) {
+            titleRef.current.labels[0].innerText = "Please check your title!"
+            setIsValidTtile(true)
+            return
+        }
+        titleRef.current.labels[0].innerText = "Enter todo title!"
+        setIsValidTtile(false)
+    }, [])
+
+    const validateForTitle = (titleStr) => {
+        const isValid = (function() {
+            const title = titleStr.trim()
+            if(title.length < 4 || title.length === 0) return true
+            const special = ['#', '$', '|', '`']
+            if(!special.every((e) => !title.includes(e))) return  true
+            return false
+        })()
+        return isValid
+    }
+
     return (
         <>
-            <AlertPopup 
-                isShowPopup={isOpen} 
+            <AlertPopup
+                isShowPopup={isOpen}
                 setIsShowPopup={onIsOpenEvent}
                 message="Please check your input agin!!"
             />
@@ -54,31 +76,33 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
             >
                 <DialogContent>
                     <Card sx={cardStyle}>
-                        <CardHeader 
+                        <CardHeader
                             avatar={<Avatar sx={avtarStyle}>T</Avatar>}
                             title={
                                 <TextField
-                                    label="Enter todo title" 
+                                    error={isValidTitle}
+                                    label="Enter todo title"
                                     inputRef={titleRef}
                                     variant="outlined"
-                                    sx={headerStyle} 
+                                    sx={headerStyle}
+                                    onChange={onTitleChangeHandler}
                                 />
                             }
                         />
                         <CardContent>
-                            {<TextField 
-                                label="Enter todo contents" 
+                            <TextField
+                                label="Enter todo contents"
                                 variant="outlined"
                                 inputRef={contentRef}
                                 multiline
                                 rows={8}
                                 autoFocus={true}
-                                sx={contentStyle} 
-                            />}
+                                sx={contentStyle}
+                            />
                         </CardContent>
                     </Card>
                 </DialogContent>
-                <Button 
+                <Button
                 sx={buttonStyle}
                 onClick={onSaveButtonHandler}
             >
@@ -90,9 +114,9 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
 }
 
 const dialogStyle = {
-    '& .MuiDialog-paper': { 
-        width: '80%', 
-        height: '80%', 
+    '& .MuiDialog-paper': {
+        width: '80%',
+        height: '80%',
     },
 }
 
