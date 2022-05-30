@@ -1,9 +1,10 @@
-import { useRef } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import MyIcon from '../../icon/MyIcon'
-import { 
-    Dialog, 
+import AlertPopup from '../popup/alertPopup';
+import {
+    Dialog,
     DialogContent,
-    Card, 
+    Card,
     CardHeader,
     CardContent,
     Avatar,
@@ -13,6 +14,8 @@ import {
 import Lodash from 'lodash'
 
 const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModalClose }) => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [isValidTitle, setIsValidTitle] = useState(false)
     const titleRef = useRef()
     const contentRef = useRef()
 
@@ -22,61 +25,99 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
 
     const onSaveButtonHandler = () => {
         const prev = Lodash.cloneDeep(editTodoItem)
+        if(!titleRef.current.value || !contentRef.current.value) {
+            setIsOpen(true)
+            return
+        }
         editTodoItem.title = titleRef.current.value
         editTodoItem.content = contentRef.current.value
         onEditTodoItem(prev, editTodoItem)
         cardModalClose(false)
     }
 
+    const onIsOpenEvent = (isChecked) => {
+        setIsOpen(isChecked)
+    }
+
+    const onTitleChangeHandler = useCallback((e) => {
+        if(validateForTitle(e.target.value)) {
+            titleRef.current.labels[0].innerText = "Please check your title!"
+            setIsValidTitle(true)
+            return
+        }
+        titleRef.current.labels[0].innerText = "Enter todo title!"
+        setIsValidTitle(false)
+    }, [])
+
+    const validateForTitle = (titleStr) => {
+        const isValid = (function() {
+            const title = titleStr.trim()
+            if(title.length < 4 || title.length === 0) return true
+            const special = ['#', '$', '|', '`']
+            if(!special.every((e) => !title.includes(e))) return  true
+            return false
+        })()
+        return isValid
+    }
+
     return (
-        <Dialog
-            sx={dialogStyle}
-            open={isCardModalShow}
-            onClose={onCloseCardModal}
-        >
-            <DialogContent 
-                sx={dialogContentStyle}
+        <>
+            <AlertPopup
+                isShowPopup={isOpen}
+                setIsShowPopup={onIsOpenEvent}
+                message="Please check your input agin!!"
+            />
+            <Dialog
+                sx={dialogStyle}
+                open={isCardModalShow}
+                onClose={onCloseCardModal}
             >
-                <Card sx={cardStyle}>
-                    <CardHeader 
-                        avatar={<Avatar sx={avtarStyle}>T</Avatar>}
-                        title={
-                            <TextField
-                                inputRef={titleRef}
-                                label="Enter todo title" 
-                                variant="outlined"
-                                sx={titleStyle} 
-                                defaultValue={editTodoItem.title}
-                            />
-                        }
-                    />
-                    <CardContent>
-                        <TextField 
-                            inputRef={contentRef}
-                            label="Enter todo contents" 
-                            variant="outlined"
-                            multiline
-                            rows={8}
-                            sx={contentStyle} 
-                            defaultValue={editTodoItem.content}
+                <DialogContent
+                    sx={dialogContentStyle}
+                >
+                    <Card sx={cardStyle}>
+                        <CardHeader
+                            avatar={<Avatar sx={avtarStyle}>T</Avatar>}
+                            title={
+                                <TextField
+                                    error={isValidTitle}
+                                    inputRef={titleRef}
+                                    label="Enter todo title"
+                                    variant="outlined"
+                                    sx={titleStyle}
+                                    defaultValue={editTodoItem.title}
+                                    onChange={onTitleChangeHandler}
+                                />
+                            }
                         />
-                    </CardContent>
-                </Card>
-            </DialogContent>
-            <Button 
-                sx={buttonStyle}
-                onClick={onSaveButtonHandler}
-            >
-                <MyIcon name='checkCircle' />
-            </Button>
-        </Dialog>
+                        <CardContent>
+                            <TextField
+                                inputRef={contentRef}
+                                label="Enter todo contents"
+                                variant="outlined"
+                                multiline
+                                rows={8}
+                                sx={contentStyle}
+                                defaultValue={editTodoItem.content}
+                            />
+                        </CardContent>
+                    </Card>
+                </DialogContent>
+                <Button
+                    sx={buttonStyle}
+                    onClick={onSaveButtonHandler}
+                >
+                    <MyIcon name='checkCircle' />
+                </Button>
+            </Dialog>
+        </>
     )
 }
 
 const dialogStyle = {
-    '& .MuiDialog-paper': { 
-        width: '80%', 
-        height: '80%', 
+    '& .MuiDialog-paper': {
+        width: '80%',
+        height: '80%',
     }
 }
 
