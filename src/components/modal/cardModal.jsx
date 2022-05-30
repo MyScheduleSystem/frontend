@@ -103,11 +103,11 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                     </Card>
                 </DialogContent>
                 <Button
-                sx={buttonStyle}
-                onClick={onSaveButtonHandler}
-            >
-                <MyIcon name='checkCircle' />
-            </Button>
+                    sx={buttonStyle}
+                    onClick={onSaveButtonHandler}
+                >
+                    <MyIcon name='checkCircle' />
+                </Button>
         </Dialog>
         </>
     )
