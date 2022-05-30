@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MyCalendar from '../components/calendar/myCalendar';
 import MyCalendarSide from '../components/calendar/myCalendarSide';
 import DateType from '../type/dateType';
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 
 // TODO: Divide left, right
 const MyLayout = () => {
@@ -18,34 +18,25 @@ const MyLayout = () => {
     }
 
     return (
-        <Box sx={boxSizeStyle}>
-            <Box sx={myCalendarBoxStyle}>
-                <MyCalendarBoxDiv>
-                    <MyCalendarSide date={sideDate} />
-                    <MyCalendar onActiveStartDateChange={onActiveStartDateChange} />
-                </MyCalendarBoxDiv>
-            </Box>
-        </Box>
+        <Container sx={boxSizeStyle}>
+            <MyCalendarBoxDiv>
+                <MyCalendarSide date={sideDate} />
+                <MyCalendar onActiveStartDateChange={onActiveStartDateChange} />
+            </MyCalendarBoxDiv>
+        </Container>
     )
 }
 
 const boxSizeStyle = {
     width: '100%',
     height: '100%',
-}
-
-const myCalendarBoxStyle = {
-    width: '100%',
-    height: '100%',
-    float: 'right',
     textAlign: 'center',
 }
 
 const MyCalendarBoxDiv = styled.div`
-    margin-right: 35rem;
     border-radius: 10px;
     width: 55%;
-    height: 72vh;
+    height: 100%;
     display: inline-block;
     margin-top: 5rem;
     background-color: #F8F8FF;
@@ -59,7 +50,7 @@ const MyCalendarBoxDiv = styled.div`
     }
 
     .react-calendar__month-view {
-        width: 100%;
+        /* width: 100%; */
     }
 
     .react-calendar__month-view__weekdays {
