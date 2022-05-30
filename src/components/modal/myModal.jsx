@@ -51,7 +51,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         const obj = {}
         obj.title = item[0]
         obj.content = item[2]
-        setEditTodoItem(() => Object.assign(editTodoItem, obj))
+        setEditTodoItem(() => Lodash.cloneDeep(obj))
     }
 
     const onEditTodoItem = (prev, editedItem) => {
@@ -60,7 +60,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setTodoItemList(() => [...todoItemList])
     }
 
-    const onEditModeExit = (isClose) => {
+    const onEditModeExit = (isClose) => {   
         setEditmode(isClose)
     }
 
