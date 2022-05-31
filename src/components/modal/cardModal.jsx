@@ -10,7 +10,7 @@ import {
     Avatar,
     TextField,
     Button,
-} from "@mui/material";
+} from "@mui/material"
 
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const [isOpen, setIsOpen] = useState(false)

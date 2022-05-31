@@ -22,8 +22,6 @@
     BackEnd: Velo248, FoxMon
 `
 
-#
-
 ## Setting
 
     setup > SETUP.md 확인
@@ -31,11 +29,6 @@
 ## Language
 
     JavaScript(ES6)
-
-## FrameWork
-
-    React.js
-        - Version: 17.0.2
 
 ## OpenSource
 
@@ -52,6 +45,15 @@
     OpenWeather API(https://openweathermap.org/)
 
     Google Charts API(https://developers.google.com/chart)
+
+## CheckList
+```
+불변성 유지
+
+불필요한 렌더링
+
+setState의 동작 이해
+```
 
 ## JSON Spec
 
