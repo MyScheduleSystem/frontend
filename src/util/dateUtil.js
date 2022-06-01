@@ -8,7 +8,7 @@ DateUtil.dateFormat = function() {
     return moment().format("YYYY-MM-DD").split("T")[0]
 }
 
-DateUtil.dateFormat = function(date, foramt) {
+DateUtil.dateFormatForCustom = function(date, foramt) {
     return moment(date, foramt).format().split("T")[0]
 }
 

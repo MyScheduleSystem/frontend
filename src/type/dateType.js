@@ -10,7 +10,7 @@ DateType.createDate = function() {
 }
 
 DateType.createDateFormat = function(date, format) {
-    const createdDate = DateUtil.dateFormat(date, format)
+    const createdDate = DateUtil.dateFormatForCustom(date, format)
     return createdDate
 }
 
