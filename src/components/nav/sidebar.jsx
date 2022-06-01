@@ -1,3 +1,9 @@
+import { useState } from 'react'
+import MyIcon from '../../icon/MyIcon'
+import MyInfoPopup from '../popup/myInfoPopup'
+import { Link } from 'react-router-dom'
+import { createFriendsList, createChatRoomList } from '../../dev/testData'
+import Lodash from 'lodash'
 import {
     Accordion,
     AccordionDetails,
@@ -6,33 +12,40 @@ import {
     ListItemButton,
     Typography,
 } from '@mui/material'
-import MyIcon from '../../icon/MyIcon';
-import { Link } from 'react-router-dom';
-import { createFriendsList, createChatRoomList } from '../../dev/testData'
-import Lodash from 'lodash'
 
+// 대대적인 수정
 function SideBar() {
+    const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
+
     const items = [
         {
             name: 'Friends',
-            path: '/friend',
             icon: <MyIcon name='friends' />,
             list: (() => {
                 const friends = doFriendsFetchResult.call(this)
-                return friends.allFriends.map((f) => {
+                return friends.allFriends.map((f, i) => {
+                    const onClickFriendButtonHandler = (isChecked, index) => () => {
+                        setIsOpenUserPopup(isChecked)
+                    }
+
+                    const onCloseFriendButtonHandler = (isChecked) => setIsOpenUserPopup(isChecked)
                     return (
-                        <ListItemButton
-                            key={f.friendUuid}
-                            divider={true}
-                        >
-                            <Typography>{f.friendNickname}</Typography>
-                        </ListItemButton>
+                        <Box key={f.friendUuid}>
+                            <ListItemButton
+                                divider={true}
+                                onClick={onClickFriendButtonHandler(true, i)}
+                            >
+                                <Typography>{f.friendNickname}</Typography>
+                            </ListItemButton>
+                            <MyInfoPopup 
+                                isClickInfo={isOpenUserPopup} 
+                                onClose={onCloseFriendButtonHandler}
+                                user={friends.allFriends[i]}
+                            />
+                        </Box>
                     )
                 })
             })(),
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
         {
             name: 'ChatRooms',
@@ -51,45 +64,30 @@ function SideBar() {
                     )
                 })
             })(),
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
         {
             name: 'Schedule',
             path: '/',
             icon: <MyIcon name='calendar' />,
             list: <ListItemButton divider={true}><Typography>FoxMon's Schedule</Typography></ListItemButton>,
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
         {
             name: 'SignIn',
             path: '/signin',
             icon: <MyIcon name='signin' />,
             list: <ListItemButton divider={true}><Typography>Sign in</Typography></ListItemButton>,
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
         {
             name: 'SignUp',
             path: '/signup',
             icon: <MyIcon name='signup' />,
             list: <ListItemButton divider={true}><Typography>Sign up</Typography></ListItemButton>,
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
         {
             name: 'Logout',
             path: '/',
             icon: <MyIcon name='signout' />,
             list: <ListItemButton divider={true}><Typography>Logout</Typography></ListItemButton>,
-            onClickItem: (e) => {
-                console.log(e)
-            },
         },
     ]
 
@@ -102,9 +100,10 @@ function SideBar() {
                             <Typography>{item.icon} {item.name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Link to={item.path} style={sidebarLinkStyle}>
-                                {item.list}
-                            </Link>
+                            {item.name !== 'Friends' ?
+                                <Link to={item.path} style={sidebarLinkStyle}>{item.list}</Link> :
+                                item.list
+                            }
                         </AccordionDetails>
                     </Accordion>
                 )
