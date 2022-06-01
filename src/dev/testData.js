@@ -73,10 +73,10 @@ export function getTodoFetchResult() {
 
 export function createFriendsList() {
     const name = 'FoxMon'
-    const createdAt = '2022-05-20'
+    // const createdAt = '2022-05-20'
     const arr = []
     for(let i = 0; i < 10; i++) {
-        arr.push(new Friend(i + 1, `${name}${i + 1}`, createdAt))
+        arr.push(new Friend(i + 1, `${name}${i + 1}`))
     }
     const fArr = FriendList.createFriendList(arr)
     return fArr

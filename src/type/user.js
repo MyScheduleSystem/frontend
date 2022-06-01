@@ -3,9 +3,9 @@ import Storage from '../storage/storage';
 import ErrorUtil from '../util/errorUtil';
 
 class User extends UserType {
-    constructor(uuid, nickname, token) {
+    constructor(uuid, nickname, token, infoMessage) {
         ErrorUtil.invalidParameter(token)
-        super(uuid, nickname)
+        super(uuid, nickname, infoMessage)
         this.token = token
         this.storage = new Storage(this.nickname) 
     }
