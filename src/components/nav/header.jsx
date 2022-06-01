@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SideBar from './sidebar'
 import MyIcon from '../../icon/MyIcon'
+import MyInfoPopup from '../popup/myInfoPopup'
 import {
     Box,
     AppBar,
@@ -10,13 +11,20 @@ import {
     Badge,
     Drawer,
 } from '@mui/material'
+import { createFriendsList } from '../../dev/testData'
+const testMyInfo = createFriendsList().$_friendListArray[0]
 
 const Header = () => {
     const [drawer, setDrawer] = useState({ left: false })
+    const [isClickInfo, setIsClickInfo] = useState(false)
 
     const onDrawerButtonClickHanlder = (direction, value) => (e) => {
         if(e.type === 'keydown' && (e.key === 'Tab' || e.key ==='Shift')) return
         setDrawer({ ...drawer, [direction]: value })
+    }
+
+    const onCloseHandler = (closed) => {
+        setIsClickInfo(closed)
     }
 
     return (
@@ -71,6 +79,7 @@ const Header = () => {
                                 size="large"
                                 edge="end"
                                 color="inherit"
+                                onClick={() => setIsClickInfo(true)}
                             >
                                 <MyIcon name="user" />
                             </IconButton>
@@ -78,6 +87,11 @@ const Header = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
+            <MyInfoPopup 
+                isClickInfo={isClickInfo}
+                onClose={onCloseHandler}
+                user={testMyInfo}
+            />
         </Box>
     )
 }
