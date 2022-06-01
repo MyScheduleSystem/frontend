@@ -35,7 +35,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const onSaveButtonHandler = (e) => {
         e.preventDefault()
         const itemObj = {}
-        if(!titleRef.current.value || !contentRef.current.value || !isValidTitle || !isValieStartDate || !isValieEndDate) {
+        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValieStartDate || isValieEndDate) {
             setIsOpen(true)
             return
         }
@@ -44,6 +44,8 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         onAddTodoItem(itemObj)
         titleRef.current.value = ''
         contentRef.current.value = ''
+        setStartDate(DateType.createDate())
+        setEndDate(DateType.createDate())
         cardModalClose(false)
     }
 
@@ -54,20 +56,23 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const onChangeStartDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setStartDate(date)
+        if(parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
+            setIsValidStartDate(true)
+            startRef.current.labels[0].innerText = "Please check your start date!"
+        } else {
+            setIsValidStartDate(false)
+            startRef.current.labels[0].innerText = "Start Date"
+        }
     }
 
     const onChangeEndDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setEndDate(date)
         if(parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
-            setIsValidStartDate(true)
             setIsValidEndtDate(true)
-            startRef.current.labels[0].innerText = "Please check your start date!"
             endRef.current.labels[0].innerText = "Please check your end date!"
         } else {
-            setIsValidStartDate(false)
             setIsValidEndtDate(false)
-            startRef.current.labels[0].innerText = "Start Date"
             endRef.current.labels[0].innerText = "End Date"
         }
     }

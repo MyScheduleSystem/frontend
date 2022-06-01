@@ -35,13 +35,15 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
 
     const onSaveButtonHandler = () => {
         const prev = Lodash.cloneDeep(editTodoItem)
-        if(!titleRef.current.value || !contentRef.current.value || !isValidTitle || !isValieStartDate || !isValieEndDate) {
+        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValieStartDate || isValieEndDate) {
             setIsOpen(true)
             return
         }
         editTodoItem.title = titleRef.current.value
         editTodoItem.content = contentRef.current.value
         onEditTodoItem(prev, editTodoItem)
+        setStartDate(DateType.createDate())
+        setEndDate(DateType.createDate())
         cardModalClose(false)
     }
 
@@ -52,20 +54,23 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
     const onChangeStartDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setStartDate(date)
+        if(parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
+            setIsValidStartDate(true)
+            startRef.current.labels[0].innerText = "Please check your start date!"
+        } else {
+            setIsValidStartDate(false)
+            startRef.current.labels[0].innerText = "Start Date"
+        }
     }
 
     const onChangeEndDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setEndDate(date)
         if(parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
-            setIsValidStartDate(true)
             setIsValidEndtDate(true)
-            startRef.current.labels[0].innerText = "Please check your start date!"
             endRef.current.labels[0].innerText = "Please check your end date!"
         } else {
-            setIsValidStartDate(false)
             setIsValidEndtDate(false)
-            startRef.current.labels[0].innerText = "Start Date"
             endRef.current.labels[0].innerText = "End Date"
         }
     }
@@ -134,7 +139,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
                                 label="End Date"
                                 value={endDate}
                                 onChange={onChangeEndDateHandler}
-                                renderInput={(params) => <TextField {...params} error={setIsValidEndtDate} />}
+                                renderInput={(params) => <TextField {...params} error={isValieEndDate} />}
                             />
                         </LocalizationProvider>
                         <CardContent>
