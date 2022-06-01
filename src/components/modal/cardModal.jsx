@@ -11,8 +11,14 @@ import {
     TextField,
     Button,
 } from "@mui/material"
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import DateType from '../../type/dateType'
 
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
+    const [startDate, setStartDate] = useState(DateType.createDate)
+    const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
     const [isValidTitle, setIsValidTtile] = useState(false)
     const titleRef = useRef()
@@ -39,6 +45,14 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
 
     const onIsOpenEvent = (isChecked) => {
         setIsOpen(isChecked)
+    }
+
+    const onChangeStartDateHandler = (newValue) => {
+        setStartDate(newValue)
+    }
+
+    const onChangeEndDateHandler = (newValue) => {
+        setEndDate(newValue)
     }
 
     const onTitleChangeHandler = useCallback((e) => {
@@ -89,6 +103,20 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                                 />
                             }
                         />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                                label="Start Date"
+                                value={startDate}
+                                onChange={onChangeStartDateHandler}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                            <DesktopDatePicker
+                                label="End Date"
+                                value={endDate}
+                                onChange={onChangeEndDateHandler}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
                         <CardContent>
                             <TextField
                                 label="Enter todo contents"

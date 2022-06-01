@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback } from 'react'
 import MyIcon from '../../icon/MyIcon'
-import AlertPopup from '../popup/alertPopup';
+import AlertPopup from '../popup/alertPopup'
 import {
     Dialog,
     DialogContent,
@@ -10,10 +10,16 @@ import {
     Avatar,
     TextField,
     Button,
-} from "@mui/material";
+} from "@mui/material"
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import DateType from '../../type/dateType'
 import Lodash from 'lodash'
 
 const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModalClose }) => {
+    const [startDate, setStartDate] = useState(DateType.createDate)
+    const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
     const [isValidTitle, setIsValidTitle] = useState(false)
     const titleRef = useRef()
@@ -37,6 +43,14 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
 
     const onIsOpenEvent = (isChecked) => {
         setIsOpen(isChecked)
+    }
+
+    const onChangeStartDateHandler = (newValue) => {
+        setStartDate(newValue)
+    }
+
+    const onChangeEndDateHandler = (newValue) => {
+        setEndDate(newValue)
     }
 
     const onTitleChangeHandler = useCallback((e) => {
@@ -90,6 +104,20 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
                                 />
                             }
                         />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                                label="Start Date"
+                                value={startDate}
+                                onChange={onChangeStartDateHandler}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                            <DesktopDatePicker
+                                label="End Date"
+                                value={endDate}
+                                onChange={onChangeEndDateHandler}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
                         <CardContent>
                             <TextField
                                 inputRef={contentRef}
