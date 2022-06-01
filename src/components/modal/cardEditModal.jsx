@@ -61,7 +61,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
             setIsValidStartDate(true)
             setIsValidEndtDate(true)
             startRef.current.labels[0].innerText = "Please check your start date!"
-            endRef.current.labels[0].innerText = "Please check your start date!"
+            endRef.current.labels[0].innerText = "Please check your end date!"
         } else {
             setIsValidStartDate(false)
             setIsValidEndtDate(false)
