@@ -10,13 +10,23 @@ import {
     Avatar,
     TextField,
     Button,
-} from "@mui/material";
+} from "@mui/material"
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import DateType from '../../type/dateType'
 
 const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
+    const [startDate, setStartDate] = useState(DateType.createDate)
+    const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
     const [isValidTitle, setIsValidTtile] = useState(false)
+    const [isValieStartDate, setIsValidStartDate] = useState(false)
+    const [isValieEndDate, setIsValidEndtDate] = useState(false)
     const titleRef = useRef()
     const contentRef = useRef()
+    const startRef = useRef()
+    const endRef = useRef()
 
     const onCloseCardModal = () => {
         cardModalClose(false)
@@ -25,7 +35,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const onSaveButtonHandler = (e) => {
         e.preventDefault()
         const itemObj = {}
-        if(!titleRef.current.value || !contentRef.current.value) {
+        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValieStartDate || isValieEndDate) {
             setIsOpen(true)
             return
         }
@@ -34,11 +44,37 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         onAddTodoItem(itemObj)
         titleRef.current.value = ''
         contentRef.current.value = ''
+        setStartDate(DateType.createDate())
+        setEndDate(DateType.createDate())
         cardModalClose(false)
     }
 
     const onIsOpenEvent = (isChecked) => {
         setIsOpen(isChecked)
+    }
+
+    const onChangeStartDateHandler = (newValue) => {
+        const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
+        setStartDate(date)
+        if(parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
+            setIsValidStartDate(true)
+            startRef.current.labels[0].innerText = "Please check your start date!"
+        } else {
+            setIsValidStartDate(false)
+            startRef.current.labels[0].innerText = "Start Date"
+        }
+    }
+
+    const onChangeEndDateHandler = (newValue) => {
+        const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
+        setEndDate(date)
+        if(parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
+            setIsValidEndtDate(true)
+            endRef.current.labels[0].innerText = "Please check your end date!"
+        } else {
+            setIsValidEndtDate(false)
+            endRef.current.labels[0].innerText = "End Date"
+        }
     }
 
     const onTitleChangeHandler = useCallback((e) => {
@@ -89,6 +125,22 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                                 />
                             }
                         />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                                inputRef={startRef}
+                                label="Start Date"
+                                value={startDate}
+                                onChange={onChangeStartDateHandler}
+                                renderInput={(params) => <TextField {...params} error={isValieStartDate} />}
+                            />
+                            <DesktopDatePicker
+                                inputRef={endRef}
+                                label="End Date"
+                                value={endDate}
+                                onChange={onChangeEndDateHandler}
+                                renderInput={(params) => <TextField {...params} error={isValieEndDate} />}
+                            />
+                        </LocalizationProvider>
                         <CardContent>
                             <TextField
                                 label="Enter todo contents"
