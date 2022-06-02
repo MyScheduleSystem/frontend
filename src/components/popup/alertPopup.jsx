@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 
 const AlertPopup = ({ isShowPopup, setIsShowPopup, message }) => {
-    const onCloseButtonClickHandler = () => {
-        setIsShowPopup(false)
+    const onCloseButtonClickHandler = (isChecked) => () => {
+        setIsShowPopup(isChecked)
     }
 
     return (
@@ -28,7 +28,7 @@ const AlertPopup = ({ isShowPopup, setIsShowPopup, message }) => {
                 <DialogActions>
                     <Button
                         autoFocus={true}
-                        onClick={onCloseButtonClickHandler}
+                        onClick={onCloseButtonClickHandler(false)}
                     >
                         Cancel
                     </Button>
