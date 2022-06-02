@@ -21,8 +21,8 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
     const [isValidTitle, setIsValidTtile] = useState(false)
-    const [isValieStartDate, setIsValidStartDate] = useState(false)
-    const [isValieEndDate, setIsValidEndtDate] = useState(false)
+    const [isValidStartDate, setIsValidStartDate] = useState(false)
+    const [isValidEndDate, setIsValidEndtDate] = useState(false)
     const titleRef = useRef()
     const contentRef = useRef()
     const startRef = useRef()
@@ -35,7 +35,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const onSaveButtonHandler = (e) => {
         e.preventDefault()
         const itemObj = {}
-        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValieStartDate || isValieEndDate) {
+        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValidStartDate || isValidEndDate) {
             setIsOpen(true)
             return
         }
@@ -60,6 +60,10 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
             setIsValidStartDate(true)
             startRef.current.labels[0].innerText = "Please check your start date!"
         } else {
+            if(isValidEndDate) {
+                setIsValidEndtDate(false)
+                endRef.current.labels[0].innerText = "End Date"
+            }
             setIsValidStartDate(false)
             startRef.current.labels[0].innerText = "Start Date"
         }
@@ -72,6 +76,10 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
             setIsValidEndtDate(true)
             endRef.current.labels[0].innerText = "Please check your end date!"
         } else {
+            if(isValidStartDate) {
+                setIsValidStartDate(false)
+                startRef.current.labels[0].innerText = "Start Date"
+            }
             setIsValidEndtDate(false)
             endRef.current.labels[0].innerText = "End Date"
         }
@@ -131,14 +139,14 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                                 label="Start Date"
                                 value={startDate}
                                 onChange={onChangeStartDateHandler}
-                                renderInput={(params) => <TextField {...params} error={isValieStartDate} />}
+                                renderInput={(params) => <TextField {...params} error={isValidStartDate} />}
                             />
                             <DesktopDatePicker
                                 inputRef={endRef}
                                 label="End Date"
                                 value={endDate}
                                 onChange={onChangeEndDateHandler}
-                                renderInput={(params) => <TextField {...params} error={isValieEndDate} />}
+                                renderInput={(params) => <TextField {...params} error={isValidEndDate} />}
                             />
                         </LocalizationProvider>
                         <CardContent>
