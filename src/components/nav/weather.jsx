@@ -22,18 +22,22 @@ const Weather = () => {
         setWeatherImage.call(this, weather.weatherInfo, setWeatherImg)
     }, [weather, weatherImg])
 
-    // Menu에 들어가야 하는건 뭘까?
-    // Card로 날씨를 이쁘게 꾸미면 이쁘지 않을까?
-    // 날씨 이미지를 구해야 할듯?
+    // 날씨 정보 API 확인해서 전부 추가할 것
     return (
         <Paper sx={menuStyle}>
-            <Typography variant="h6"><MyIcon name='radio' /> MSS Weather</Typography>
+            <Typography variant="h6" align='center'><MyIcon name='radio' /> MSS</Typography>
             <MenuList variant='menu'>
                 <MenuItem>
                     <Typography variant="inherit">DashBoard</Typography>
                 </MenuItem>
                 <MenuItem>
                     <Typography variant="inherit">Account</Typography>
+                </MenuItem>
+                <MenuItem>
+                    <Typography variant="inherit">Direct Message</Typography>
+                </MenuItem>
+                <MenuItem>
+                    <Typography variant="inherit">MSS Timeline</Typography>
                 </MenuItem>
             </MenuList>
             <Card>
@@ -80,13 +84,16 @@ function doWeatherFetch(weather, setWeather) {
 }
 
 function setWeatherImage(weather, setWeatherImg) {
-    const url = weatherFetcher.getWeatherImage(weather)
+    // TODO: 없는 날씨의 경우 이미지가 나오지 않으며 debugger 걸림
+    // 날씨 이미지 총 9개. 공식문서 들어가서 5개만 더 추가하면 됨
+    const forTest = "Clear"
+    const url = weatherFetcher.getWeatherImage(forTest)
     setWeatherImg(url)
 }
 
 const menuStyle = {
     width: '20%',
-    height: '100vh',
+    height: '100%',
     positin: 'fixed',
     float: 'right',
 }
