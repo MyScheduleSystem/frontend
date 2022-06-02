@@ -30,15 +30,15 @@ const SigninForm = () => {
         }
         setUser(() => Object.assign(user, userInfo))
         userFetcher.signin(user)
-        .then((response) => {
-            // 성공 시 Link to 이동
-            const result = Object.assign({}, response)
-            setIsShowPopup(false)
-            console.log(result)
-        })
-        .catch(() => {
-            setIsShowPopup(true)
-        })
+            .then((response) => {
+                // 성공 시 Link to 이동
+                const result = Object.assign({}, response)
+                setIsShowPopup(false)
+                console.log(result)
+            })
+            .catch(() => {
+                setIsShowPopup(true)
+            })
     }
 
     const onPopupCloseHanlder = (value) => {
