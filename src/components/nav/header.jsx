@@ -27,7 +27,7 @@ const Header = () => {
         setIsClickInfo(closed)
     }
 
-    const onClickIconHandler = () => {
+    const onClickUserIconBtnHandler = () => {
         setIsClickInfo(true)
     }
 
@@ -83,7 +83,7 @@ const Header = () => {
                                 size="large"
                                 edge="end"
                                 color="inherit"
-                                onClick={onClickIconHandler}
+                                onClick={onClickUserIconBtnHandler}
                             >
                                 <MyIcon name="user" />
                             </IconButton>
