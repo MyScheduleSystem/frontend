@@ -27,6 +27,10 @@ const Header = () => {
         setIsClickInfo(closed)
     }
 
+    const onClickIconHandler = () => {
+        setIsClickInfo(true)
+    }
+
     return (
         <Box role="presentation">
             <Drawer
@@ -79,7 +83,7 @@ const Header = () => {
                                 size="large"
                                 edge="end"
                                 color="inherit"
-                                onClick={() => setIsClickInfo(true)}
+                                onClick={onClickIconHandler}
                             >
                                 <MyIcon name="user" />
                             </IconButton>
