@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateType from "../../type/dateType";
 import MyModal from "../modal/myModal";
-import calenderFetcher from '../../fetcher/calendarFetcher';
+import calenderFetcher from '../../fetcher/calendarFetcher'
 
 function MyCalendar({ onActiveStartDateChange }) {
     const [isClickModal, setIsClickModal] = useState(false)
@@ -56,7 +56,7 @@ function MyCalendar({ onActiveStartDateChange }) {
                     onClose={onCloseHandler}
                     onAddList={onAddTodoList}
                     todoItems={allTodoItems[selectedDate]}
-            />}
+                />}
         </>
     );
 }

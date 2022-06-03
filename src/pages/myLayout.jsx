@@ -21,7 +21,7 @@ const MyLayout = () => {
         <Container sx={boxSizeStyle}>
             <MyCalendarBoxDiv>
                 <MyCalendarSide date={sideDate} />
-                <MyCalendar onActiveStartDateChange={onActiveStartDateChange} />
+                <MyCalendar onActiveStartDateChange={onActiveStartDateChange}/>
             </MyCalendarBoxDiv>
         </Container>
     )
@@ -35,13 +35,14 @@ const boxSizeStyle = {
 
 const MyCalendarBoxDiv = styled.div`
     border-radius: 10px;
-    width: 55%;
+    width: 70%;
     height: 100%;
     display: inline-block;
     margin-top: 5rem;
     background-color: #F8F8FF;
     box-shadow: 0 10px 5px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #eeeeee;
+    margin-left: -10rem;
 
     .react-calendar__navigation button {
         all: unset;

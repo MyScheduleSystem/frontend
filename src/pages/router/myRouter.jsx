@@ -15,8 +15,6 @@ const MyRouter = () => {
                 <Route path="/" element={<MyLayout />}/>
                 <Route path="/signin" element={<SigninForm />}/>
                 <Route path="/signup" element={<SignupForm />}/>
-                <Route path="/profile/:username" />
-                <Route path="/schedule-sns" />
                 <Route path="/chat" element={<MyChatRoom />} />
             </Routes>
         </>

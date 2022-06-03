@@ -1,10 +1,11 @@
 import ErrorUtil from '../util/errorUtil'
 
 class UserType {
-    constructor(uuid, nickname) {
+    constructor(uuid, nickname, infoMessage) {
         ErrorUtil.invalidParameter(uuid)
         this.uuid = uuid
         this.nickname = nickname
+        this.infoMessage = infoMessage
     }
 
     getId() {
@@ -13,6 +14,10 @@ class UserType {
 
     getNickname() {
         return this.nickname
+    }
+
+    getInfoMessage() {
+        return this.infoMessage
     }
 }
 
