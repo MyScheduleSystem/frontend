@@ -3,9 +3,9 @@ import Calendar from "react-calendar";
 import Lodash from "lodash";
 import DateType from "../../type/dateType";
 import MyModal from "../modal/myModal";
-import calenderFetcher from '../../fetcher/calendarFetcher';
+import calenderFetcher from '../../fetcher/calendarFetcher'
 
-function MyCalendar({ onActiveStartDateChange, onAddTodoItemEvent }) {
+function MyCalendar({ onActiveStartDateChange }) {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
@@ -39,7 +39,6 @@ function MyCalendar({ onActiveStartDateChange, onAddTodoItemEvent }) {
     }
 
     const onAddTodoList = (addedItem) => {
-        onAddTodoItemEvent(addedItem)
         allTodoItems[selectedDate] = addedItem
         // TODO: Fetch saveed result to server
     }
@@ -57,7 +56,7 @@ function MyCalendar({ onActiveStartDateChange, onAddTodoItemEvent }) {
                     onClose={onCloseHandler}
                     onAddList={onAddTodoList}
                     todoItems={allTodoItems[selectedDate]}
-            />}
+                />}
         </>
     );
 }

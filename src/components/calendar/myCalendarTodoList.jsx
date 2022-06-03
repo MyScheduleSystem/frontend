@@ -1,57 +1,25 @@
 import { 
     Box,
-    Checkbox, 
     List, 
     ListItem, 
     ListItemText, 
     ListSubheader, 
-    Divider } 
-from '@mui/material'
-import { useState } from 'react'
+}  from '@mui/material'
 
-const MyCalendarTodoList = ({ todoItem }) => {
-    const [toDoChecked, setTodoCheked] = useState([])
-
-    const toggleHandler = (value) => () => {
-        const currentIndex = toDoChecked.indexOf(value)
-        const newChecked = [...toDoChecked]
-        if (currentIndex === -1) {
-            newChecked.push(value)
-        } else {
-            newChecked.splice(currentIndex, 1)
-        }
-        setTodoCheked(newChecked)
-    }
-
+const MyCalendarTodoList = ({ todoItems }) => {
     return (
         <Box sx={todoListBoxStyle}>
-            <List sx={todoListStyle} subheader={<ListSubheader>TodoList</ListSubheader>}>
-                {todoItem.map((value) => {
-                    const labelId = value
-                    return (
+            <List 
+                sx={todoListStyle} 
+                subheader={
+                    <ListSubheader>TodoList</ListSubheader>
+                }
+            >
+                {todoItems.map((value, i) => {
+                    return ( 
                         <ListItem 
-                            key={value}
-                            secondaryAction={
-                                <Checkbox 
-                                    edge='end'
-                                    onChange={toggleHandler(value)}
-                                    checked={toDoChecked.indexOf(value) !== -1}
-                                    inputProps={{ 'aria-labelledby': labelId }}
-                                />
-                            }
-                            disabledPadding
+                            key={i}
                         >
-                            <ListItemText id={labelId} secondary={value.title} />
-                        </ListItem>
-                    )
-                })}
-            </List>
-            <Divider />
-            <List sx={todoListStyle} subheader={<ListSubheader>Completed List</ListSubheader>}>
-                {toDoChecked.map((value) => {
-                    console.log(value)
-                    return (
-                        <ListItem key={value}>
                             <ListItemText secondary={value.title} />
                         </ListItem>
                     )

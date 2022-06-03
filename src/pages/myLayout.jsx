@@ -2,7 +2,6 @@ import { useState } from 'react'
 import styled from 'styled-components';
 import MyCalendar from '../components/calendar/myCalendar';
 import MyCalendarSide from '../components/calendar/myCalendarSide';
-import MyCalendarTodoList from '../components/calendar/myCalendarTodoList'
 import DateType from '../type/dateType';
 import { Container } from '@mui/material';
 
@@ -13,23 +12,17 @@ const MyLayout = () => {
         month: DateType.getMonth(DateType.createDate()),
         day: DateType.getDay(),
     })
-    const [todoItem, setTodoItem] = useState([])
 
     const onActiveStartDateChange = (value) => {
         setSideDate(value)
-    }
-
-    const onAddTodoItemEvent = (title) => {
-        setTodoItem(title)
     }
 
     return (
         <Container sx={boxSizeStyle}>
             <MyCalendarBoxDiv>
                 <MyCalendarSide date={sideDate} />
-                <MyCalendar onActiveStartDateChange={onActiveStartDateChange} onAddTodoItemEvent={onAddTodoItemEvent} />
+                <MyCalendar onActiveStartDateChange={onActiveStartDateChange}/>
             </MyCalendarBoxDiv>
-            <MyCalendarTodoList todoItem={todoItem} />
         </Container>
     )
 }
