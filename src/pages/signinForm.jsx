@@ -3,6 +3,7 @@ import AlertPopup from '../components/popup/alertPopup'
 import MyIcon from '../icon/MyIcon'
 import userFetcher from '../fetcher/userFetcher'
 import {
+    Container,
     Box,
     FormGroup,
     FormControl,
@@ -16,6 +17,10 @@ import {
 
 const SigninForm = () => {
     const [user, setUser] = useState({})
+    const [isValidUserInfo, setIsValidUserInfo] = useState({
+        username: false,
+        password: false,
+    })
     const [isShowPopup, setIsShowPopup] = useState(false)
     const textRef = useRef()
     const passwordRef = useRef()
@@ -25,9 +30,25 @@ const SigninForm = () => {
         userInfo.username = textRef.current.value
         userInfo.password = passwordRef.current.value
         if(!userInfo.username || !userInfo.password) {
+            if(!userInfo.username) {
+                setIsValidUserInfo((prev) => {
+                    return { ...prev, username: true }
+                })
+            }
+            if(!userInfo.password) {
+                setIsValidUserInfo((prev) => {
+                    return { ...prev, password: true }
+                })
+            }
             setIsShowPopup(true)
             return
         }
+        setIsValidUserInfo((prev) => {
+            return { ...prev, username: false }
+        })
+        setIsValidUserInfo((prev) => {
+            return { ...prev, password: false }
+        })
         setUser(() => Object.assign(user, userInfo))
         userFetcher.signin(user)
             .then((response) => {
@@ -50,7 +71,7 @@ const SigninForm = () => {
     }
 
     return (
-        <Box sx={signinContainer}>
+        <Container sx={signinContainer}>
             <FormGroup sx={formStyle}>
                 <FormControl variants="standard" sx={formControltyle}>
                     <InputLabel>
@@ -58,6 +79,7 @@ const SigninForm = () => {
                     </InputLabel>
                     <Input
                         type="text"
+                        error={isValidUserInfo.username}
                         inputRef={textRef}
                         startAdornment={
                             <InputAdornment position="start">
@@ -72,6 +94,7 @@ const SigninForm = () => {
                     </InputLabel>
                     <Input
                         type="password"
+                        error={isValidUserInfo.password}
                         inputRef={passwordRef}
                         startAdornment={
                             <InputAdornment position="start">
@@ -86,21 +109,20 @@ const SigninForm = () => {
                     <Typography>NO ACCOUNT ?</Typography>
                     <Divider />
                     <Button onClick={onRegisterButtonClickHandler}>register</Button>
-                    {isShowPopup &&
-                        <AlertPopup
-                            isShowPopup={isShowPopup}
-                            setIsShowPopup={onPopupCloseHanlder}
-                            message="Check your input information"
-                        />
-                    }
+                    <AlertPopup
+                        isShowPopup={isShowPopup}
+                        setIsShowPopup={onPopupCloseHanlder}
+                        message="Check your input information"
+                    />
                 </Box>
             </FormGroup>
-        </Box>
+        </Container>
     )
 }
 
-// TODO: width 조절
 const signinContainer = {
+    marginTop: '8rem',
+    textAlign: 'center',
     border: 1,
     width: '50%',
 }
