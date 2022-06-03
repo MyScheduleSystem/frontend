@@ -50,10 +50,11 @@ const modalStyle = {
 const boxStyle = {
     width: '20%',
     height: '80%',
-    backgroundColor: '#e9ecef',
+    backgroundImage: "linear-gradient(to right, #4880EC, #019CAD)",
     // background: 'url(/images/schedule.jpg)',
     borderRadius: '10px',
     overflow: 'auto',
+    
 }
 
 const listStyle = {

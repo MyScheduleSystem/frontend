@@ -5,7 +5,7 @@ import DateType from "../../type/dateType";
 import MyModal from "../modal/myModal";
 import calenderFetcher from '../../fetcher/calendarFetcher';
 
-function MyCalendar({ onActiveStartDateChange }) {
+function MyCalendar({ onActiveStartDateChange, onAddTodoItemEvent }) {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
@@ -39,6 +39,7 @@ function MyCalendar({ onActiveStartDateChange }) {
     }
 
     const onAddTodoList = (addedItem) => {
+        onAddTodoItemEvent(addedItem)
         allTodoItems[selectedDate] = addedItem
         // TODO: Fetch saveed result to server
     }

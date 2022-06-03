@@ -95,7 +95,7 @@ function SideBar() {
         <Box sx={sidebarStyle}>
             {items.map(item => {
                 return (
-                    <Accordion key={item.name} sx={sidebarListStyle}>
+                    <Accordion key={item.name} sx={sidebarListStyle} disableGutters={false}>
                         <AccordionSummary expandIcon={<MyIcon name='expand' />}>
                             <Typography>{item.icon} {item.name}</Typography>
                         </AccordionSummary>
