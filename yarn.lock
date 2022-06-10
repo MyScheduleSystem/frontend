@@ -2318,7 +2318,7 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wojtekmaj/date-utils@^1.0.2":
+"@wojtekmaj/date-utils@^1.0.0", "@wojtekmaj/date-utils@^1.0.2":
   "integrity" "sha512-1VPkkTBk07gMR1fjpBtse4G+oJqpmE+0gUFB0dg3VIL7qJmUVaBoD/vlzMm/jNeOPfvlmerl1lpnsZyBUFIRuw=="
   "resolved" "https://registry.npmjs.org/@wojtekmaj/date-utils/-/date-utils-1.0.3.tgz"
   "version" "1.0.3"
@@ -5151,7 +5151,7 @@
   dependencies:
     "pump" "^3.0.0"
 
-"get-user-locale@^1.2.0":
+"get-user-locale@^1.2.0", "get-user-locale@^1.4.0":
   "integrity" "sha512-gQo03lP1OArHLKlnoglqrGGl7b04u2EP9Xutmp72cMdtrrSD7ZgIsCsUKZynYWLDkVJW33Cj3pliP7uP0UonHQ=="
   "resolved" "https://registry.npmjs.org/get-user-locale/-/get-user-locale-1.4.0.tgz"
   "version" "1.4.0"
@@ -8615,6 +8615,16 @@
     "merge-class-names" "^1.1.1"
     "prop-types" "^15.6.0"
 
+"react-clock@^3.1.0":
+  "integrity" "sha512-KLV3pDBcETc7lHPPqK6EpRaPS8NA3STAes+zIdfr7IY67vYgYc3brOAnGC9IcgA4X4xNPnLZwwaLJXmHrQ/MnQ=="
+  "resolved" "https://registry.npmjs.org/react-clock/-/react-clock-3.1.0.tgz"
+  "version" "3.1.0"
+  dependencies:
+    "@wojtekmaj/date-utils" "^1.0.0"
+    "get-user-locale" "^1.4.0"
+    "merge-class-names" "^1.1.1"
+    "prop-types" "^15.6.0"
+
 "react-dev-utils@^11.0.3":
   "integrity" "sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A=="
   "version" "11.0.4"
@@ -8644,7 +8654,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2", "react-dom@^17.0.2 || ^18.0.0", "react-dom@>= 16.8.0", "react-dom@>=16.3.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
+"react-dom@*", "react-dom@^15.5.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2", "react-dom@^17.0.2 || ^18.0.0", "react-dom@>= 16.8.0", "react-dom@>=16.3.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "version" "17.0.2"
   dependencies:
@@ -8769,7 +8779,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.2", "react@^17.0.2 || ^18.0.0", "react@>= 16", "react@>= 16.8.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.x", "react@17.0.2":
+"react@*", "react@^15.5.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.2", "react@^17.0.2 || ^18.0.0", "react@>= 16", "react@>= 16.8.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.x", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "version" "17.0.2"
   dependencies:

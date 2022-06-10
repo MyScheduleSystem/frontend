@@ -3,14 +3,14 @@ import MyLayout from '../myLayout'
 import SigninForm from '../signinForm'
 import SignupForm from '../signupForm'
 import Header from '../../components/nav/header'
-import Weather from '../../components/nav/weather'
+import RightSidebar from '../../components/nav/rightSidebar'
 import MyChatRoom from '../../components/chat/myChatRoom'
 
 const MyRouter = () => {
     return (
         <>
             <Header />
-            <Weather />
+            <RightSidebar />
             <Routes>
                 <Route path="/" element={<MyLayout />}/>
                 <Route path="/signin" element={<SigninForm />}/>
