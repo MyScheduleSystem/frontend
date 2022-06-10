@@ -1,3 +1,4 @@
+import WeatherIcon from '../icon/weatherIcon'
 import axios from 'axios'
 import ErrorUtil from '../util/errorUtil'
 
@@ -41,21 +42,8 @@ weatherFetcher.getWeatherInformation = async function() {
     return result
 }
 
-weatherFetcher.getWeatherImage = function(weather) {
-    // image가 좀 어둡다. 따라서 public에 있는 이미지를 사용해도 괜찮을 것 같다.
-    // const imgUrl = `http://openweathermap.org/img/w/${icon}.png`
-    const imgUrl = getCondition(weather)
-    return imgUrl
-}
-
-function getCondition(weatherInfo) {
-    switch(weatherInfo) {
-        case 'Clouds': return process.env.PUBLIC_URL + '/images/cloudy.png'
-        case 'Rain': return process.env.PUBLIC_URL + '/images/rain.png'
-        case 'Snow': return process.env.PUBLIC_URL + '/images/snowy.png'
-        case 'Clear': return process.env.PUBLIC_URL + '/images/sunny.png'
-        default: ErrorUtil.notImplemented()
-    }
+weatherFetcher.getWeatherIcon = function(weather) {
+    return <WeatherIcon weather={weather} />
 }
 
 Object.freeze(weatherFetcher)

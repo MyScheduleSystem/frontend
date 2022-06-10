@@ -5,7 +5,6 @@ import {
     MenuItem,
     Typography,
     Card,
-    CardMedia,
     CardContent,
     CardActions,
     Button,
@@ -15,12 +14,10 @@ import weatherFetcher from '../../fetcher/weatherFetcher'
 
 const Weather = () => {
     const [weather, setWeather] = useState({})
-    const [weatherImg, setWeatherImg] = useState()
 
     useEffect(() => {
         doWeatherFetch.call(this, weather, setWeather)
-        setWeatherImage.call(this, weather.weatherInfo, setWeatherImg)
-    }, [weather, weatherImg])
+    }, [weather])
 
     // 날씨 정보 API 확인해서 전부 추가할 것
     return (
@@ -41,12 +38,9 @@ const Weather = () => {
                 </MenuItem>
             </MenuList>
             <Card>
-                <CardMedia
-                    component="img"
-                    height="220"
-                    image={weatherImg}
-                    alt="weather image"
-                />
+                <CardContent sx={iconStyle}>
+                    {weatherFetcher.getWeatherIcon(weather.weatherInfo)}
+                </CardContent>
                 <CardContent>
                     <Typography
                         gutterBottom={true}
@@ -59,8 +53,8 @@ const Weather = () => {
                         variant="body2"
                         color="text.secondary"
                     >
-                        Today's: Cloudy. But I wish your happy day.
-                        Good luck.
+                        I wish your happy day.
+                        Good luck. For more information. Contact: FoxMon's team.
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -83,19 +77,16 @@ function doWeatherFetch(weather, setWeather) {
         })
 }
 
-function setWeatherImage(weather, setWeatherImg) {
-    // TODO: 없는 날씨의 경우 이미지가 나오지 않으며 debugger 걸림
-    // 날씨 이미지 총 9개. 공식문서 들어가서 5개만 더 추가하면 됨
-    const forTest = "Clear"
-    const url = weatherFetcher.getWeatherImage(forTest)
-    setWeatherImg(url)
-}
-
 const menuStyle = {
     width: '20%',
     height: '100%',
     positin: 'fixed',
     float: 'right',
+}
+
+const iconStyle = {
+    fontSize: '100px',
+    textAlign: 'center',
 }
 
 export default Weather
