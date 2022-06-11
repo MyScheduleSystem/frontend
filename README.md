@@ -4,6 +4,8 @@
 
 `
     Release:
+
+    BackEnd: firebase
 `
 
 `
@@ -16,10 +18,6 @@
 
 `
     FrontEnd: FoxMon, Leo, Velo248
-`
-
-`
-    BackEnd: Velo248, FoxMon
 `
 
 ## Setting
@@ -38,6 +36,8 @@
 
     PostCss
 
+    firebase
+
     StyledComponent
 
     MaterialUi(MUI)
@@ -50,9 +50,15 @@
 ```
 불변성 유지
 
-불필요한 렌더링
+불필요한 렌더링 자제
 
-setState의 동작 이해
+일관성 유지
+
+로직이 반복되지는 않는가?
+
+forEach, map, filter, every 등 이러한 함수들이 적절하게 사용되고 있는가?
+
+useState(setState의) 동작 이해
 ```
 
 ## JSON Spec
@@ -98,6 +104,12 @@ setState의 동작 이해
         Delete User Info
         Show User popup
 
+    Chatroom
+        Create chatroom
+        Show charoom list
+        React charoom's user list
+        Delete chatroom
+
     Validation
         User validation
         Card validation
@@ -129,4 +141,17 @@ setState의 동작 이해
         - 따라서 재사용 가능한 함수는 useCallback을 통해 다시 만들지 않고 재사용 가능하도록 다뤄보자.
             ex) onTitleChangeHandler = (e) => {} 이 부분을 onTitleChangeHandler = useCallback((e) => {}, []) 이렇게 변경했다. => 메모이제이션된 콜백을 반환한다.
         - 두 번째 전달되는 parameter는 의존성 값을 전달한다. 즉 이 부분이 변경된다면 callback의 의존성이 변경된다는 의미이다.
+```
+
+## 개발 회고록
+### 2022-06-11
+```
+BackEnd를 Node express에서 firebase로 바꾸기로 결정했다.
+    - MyScheduleSystem은 우리가 지속적으로 사용할 서비스이기 때문에 추후 유지보수적인 면에 있어 firebase가 좋다고 판단했다.
+
+firebase 공식문서와 구글링을 통해 사용법을 익혀가고 있다.
+
+firebase로 바꿈으로서 수정돼야 할 코드들이 많이 존재했다.
+
+프로젝트가 완성되는 날까지 화이팅..!
 ```
