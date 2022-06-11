@@ -18,7 +18,7 @@ import {
 const SigninForm = () => {
     const [user, setUser] = useState({})
     const [isValidUserInfo, setIsValidUserInfo] = useState({
-        username: false,
+        email: false,
         password: false,
     })
     const [isShowPopup, setIsShowPopup] = useState(false)
@@ -27,12 +27,22 @@ const SigninForm = () => {
 
     const onSigninButtonClickHandler = () => {
         const userInfo = {}
-        userInfo.username = textRef.current.value
+        userInfo.email = textRef.current.value
         userInfo.password = passwordRef.current.value
-        if(!userInfo.username || !userInfo.password) {
-            if(!userInfo.username) {
+        // email 정규식 google 참고
+        const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+        const email = userInfo.email.trim()
+        if(!emailRegex.test(email)) {
+            setIsValidUserInfo((prev) => {
+                return { ...prev, email: true }
+            })
+            setIsShowPopup(true)
+            return
+        }
+        if(!userInfo.email || !userInfo.password) {
+            if(!userInfo.email) {
                 setIsValidUserInfo((prev) => {
-                    return { ...prev, username: true }
+                    return { ...prev, email: true }
                 })
             }
             if(!userInfo.password) {
@@ -44,22 +54,22 @@ const SigninForm = () => {
             return
         }
         setIsValidUserInfo((prev) => {
-            return { ...prev, username: false }
+            return { ...prev, email: false }
         })
         setIsValidUserInfo((prev) => {
             return { ...prev, password: false }
         })
         setUser(() => Object.assign(user, userInfo))
-        userFetcher.signin(user)
-            .then((response) => {
-                // 성공 시 Link to 이동
-                const result = Object.assign({}, response)
-                setIsShowPopup(false)
-                console.log(result)
-            })
-            .catch(() => {
-                setIsShowPopup(true)
-            })
+        // userFetcher.signin(user)
+        //     .then((response) => {
+        //         // 성공 시 Link to 이동
+        //         const result = Object.assign({}, response)
+        //         setIsShowPopup(false)
+        //         console.log(result)
+        //     })
+        //     .catch(() => {
+        //         setIsShowPopup(true)
+        //     })
     }
 
     const onPopupCloseHanlder = (value) => {
@@ -75,11 +85,11 @@ const SigninForm = () => {
             <FormGroup sx={formStyle}>
                 <FormControl variants="standard" sx={formControltyle}>
                     <InputLabel>
-                        With a start your username
+                        With a start your email
                     </InputLabel>
                     <Input
-                        type="text"
-                        error={isValidUserInfo.username}
+                        type="email"
+                        error={isValidUserInfo.email}
                         inputRef={textRef}
                         startAdornment={
                             <InputAdornment position="start">
