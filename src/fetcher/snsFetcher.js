@@ -1,38 +1,51 @@
-import axios from 'axios'
-import ErrorUtil from '../util/errorUtil'
+import {
+    doc,
+    onSnapShot,
+    collection,
+    query,
+} from 'firebase/firestore'
+import firestore from '../service/firebase'
 
 const snsFetcher = {}
 
-class _SnsFetcher {
-    constructor(user, socket) {
-        this.user = user
-        this.socket = socket
-        // 환경변수에 저장해야 하는건가?
-        this.socketToken = 'myScheduleServiceSns'
-    }
-
-    getHeaders() {
-        const header = this.user.getToken()
-        ErrorUtil.assert(header, 'Authorization header must be exist!')
-        return {
-            Authorization: `Barer ${header}`
-        }
-    }
-
-    onSync(callback) {
-        return this.socket.onSync(this.socketToken, callback)
-    }
-
-    async sendSns(message) {
-        // TODO: send sns
-        ErrorUtil.notImplemented()
-    }
+// Event for local data changes
+snsFetcher.snapshotForSnsMetadata = function() {
+    onSnapShot(snsDocumentOfFirestore, (doc) => {
+        const src = doc.metadata.hasPendingWrites ? "Local": "Server"
+        console.log(src)
+    })
 }
 
-snsFetcher.createSnsFetcher = function(user, socket) {
-    ErrorUtil.invalidParameter(user)
-    ErrorUtil.invalidParameter(socket)
-    return _SnsFetcher(user, socket)
+// Event for metadata changes
+snsFetcher.snapshotForSnsMetadataChange = function() {
+    return onSnapShot(
+        snsDocumentOfFirestore(),
+        { includeMetadataChanges: true },
+        (doc) => {
+            console.log(doc)
+        }
+    )
+}
+
+// Event for multi docs in collection
+snsFetcher.snapshotForSns = function() {
+    const all = onSnapShot(allScheduleSnsQuery, (querySnapshot) => {
+        const result = []
+        querySnapshot.forEach((q) => result.push(q.data().name))
+        console.log(result)
+    })
+    console.log(all)
+}
+
+function snsDocumentOfFirestore() {
+    // TODO: add document id
+    const docId = ''
+    const store = doc(firestore, "schedulesns", docId)
+    return store
+}
+
+function allScheduleSnsQuery() {
+    return query(collection(firestore, "schedulesns"))
 }
 
 Object.freeze(snsFetcher)
