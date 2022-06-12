@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import CardModal from './cardModal'
-import CardEditModal from "./cardEditModal";
+import CardEditModal from "./cardEditModal"
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
-import CheckPopup from "../popup/checkPopup";
+import CheckPopup from "../popup/checkPopup"
 import {
     Modal,
     Box,
@@ -41,7 +41,6 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
         onAddListEvent(addedItem)
-        todoItemList.splice(0, todoItemList.length)
     }
 
     const onCancelButtonClickHandler = () => {
