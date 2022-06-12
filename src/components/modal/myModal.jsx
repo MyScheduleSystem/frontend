@@ -4,9 +4,9 @@ import CardEditModal from "./cardEditModal";
 import CardItem from '../card/CardItem'
 import EmptyCard from "../card/emptyCard"
 import CheckPopup from "../popup/checkPopup";
-import { 
-    Modal, 
-    Box, 
+import {
+    Modal,
+    Box,
     Button,
 } from "@mui/material";
 import Lodash from 'lodash'
@@ -60,7 +60,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setTodoItemList(() => [...todoItemList])
     }
 
-    const onEditModeExit = (isClose) => {   
+    const onEditModeExit = (isClose) => {
         setEditmode(isClose)
     }
 
@@ -76,12 +76,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
 
     return (
         <>
-            <CheckPopup 
+            <CheckPopup
                 message="Warning"
                 isShowPopup={isOpenAlert}
                 checkPopupEvent={onRemoveEventHandler}
             />
-            <Modal 
+            <Modal
                 style={modalStyle}
                 open={isClickModal}
                 onClose={onCloseHandler}
@@ -105,14 +105,14 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                         })}
                         <EmptyCard onCardModalShow={onCardModalShow} />
                     </Box>
-                    <CardModal 
-                        isCardModalShow={isOpenCardModal} 
+                    <CardModal
+                        isCardModalShow={isOpenCardModal}
                         cardModalClose={onCardModalCloseHandler}
                         onAddTodoItem={onAddTodoItem}
                     />
                     <CardEditModal
                         editTodoItem={editTodoItem}
-                        isCardModalShow={editMode} 
+                        isCardModalShow={editMode}
                         onEditTodoItem={onEditTodoItem}
                         cardModalClose={onEditModeExit}
                     />
@@ -127,11 +127,8 @@ const dataForRender = (todoItems) => {
     const items = todoItems
     const rtnArr = []
     items.forEach((item, i) => {
-        const cardId = i + 1
         const obj = {}
-        obj.cardId = cardId
         obj.title = item.title
-        obj.tileContent = item.tileContent
         obj.content = item.content
         obj.startDate = item.startDate
         obj.endDate = item.endDate

@@ -27,13 +27,14 @@ DateUtil.dayFormat = function() {
 // input: date, number, operation, days, months, years
 // output: (add, subtract) date
 // ex) 1, days => add 1 days
-DateUtil.dateCalculate = function(number, operation, day) {
+// need to fix
+DateUtil.dateCalculate = function(date, number, operation, day) {
     switch(operation) {
         case "add":
-            return moment().clone().add(number, day).format().split("T")[0]
+            return moment(date).add(number, day).format("YYYY-MM-DD").split("T")[0]
 
         case "subtract":
-            return moment().clone().subtract(number, day).format().split("T")[0]
+            return moment(date).subtract(number, day).format("YYYY-MM-DD").split("T")[0]
 
         default:
             ErrorUtil.notImplemented()

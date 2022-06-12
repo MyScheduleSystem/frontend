@@ -5,6 +5,7 @@ import FriendList from '../type/friendList'
 import User from '../type/user'
 import DateUtil from '../util/dateUtil'
 import Notify from '../type/notify'
+import TodoItem from '../type/todoItem'
 
 const TestData = {}
 const userId = 1
@@ -19,9 +20,7 @@ TestData[userId] = {
             calendar: {
                 [date]:[
                     {
-                        cardId: 1,
                         title: '',
-                        tileContent: '',
                         content: '',
                         startDate: '',
                         endDate: '',
@@ -47,22 +46,23 @@ TestData[userId] = {
 }
 
 function create(calendarSpecJson) {
-    const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
     const testDays = [
-        '2022-05-12', '2022-05-13', '2022-05-14', '2022-05-15', '2022-05-16',
-        '2022-05-17', '2022-05-18', '2022-05-19', '2022-05-20', '2022-05-21',
+        '2022-06-01', '2022-06-02', '2022-06-03', '2022-06-04', '2022-06-05',
+        '2022-06-06', '2022-06-07', '2022-06-08', '2022-06-09', '2022-06-10',
+        '2022-06-11', '2022-06-12', '2022-06-13', '2022-06-14', '2022-06-15',
+        '2022-06-16', '2022-06-17', '2022-06-18', '2022-06-19', '2022-06-22',
+        '2022-06-23', '2022-06-24', '2022-06-25', '2022-06-26', '2022-06-27',
+        '2022-06-28', '2022-06-29', '2022-06-30',
     ]
     calendarSpecJson = {}
-    days.forEach((e, i) => {
-        calendarSpecJson[testDays[i]] = []
+    testDays.forEach((e, i) => {
+        calendarSpecJson[e] = []
         const todoObj = {}
-        todoObj.cardId = i + 1
         todoObj.title = `Todo Title${i}`
-        todoObj.tileContent = `Todo Tile${i}`
         todoObj.content = `Todo Content${i}`
-        todoObj.startDate = DateUtil.dateCalculate(i, "add", "days")
-        todoObj.endDate = '2022-05-27'
-        calendarSpecJson[testDays[i]].push(todoObj)
+        todoObj.startDate = e
+        todoObj.endDate = DateUtil.dateCalculate(e, i, 'add', 'days')
+        calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate))
     })
     return calendarSpecJson
 }

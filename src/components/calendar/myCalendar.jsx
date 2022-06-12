@@ -71,7 +71,6 @@ function setTodoItemList(allTodoItems) {
                 startDate: item.startDate,
                 endDate: item.endDate,
                 content: item.content,
-                tileContent: item.tileContent,
             })
         })
     })
