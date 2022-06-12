@@ -121,7 +121,7 @@ const SigninForm = () => {
                     <Button onClick={onRegisterButtonClickHandler}>register</Button>
                     <AlertPopup
                         isShowPopup={isShowPopup}
-                        setIsShowPopup={onPopupCloseHanlder}
+                        setIsShowPopupEvent={onPopupCloseHanlder}
                         message="Check your input information"
                     />
                 </Box>

@@ -16,7 +16,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import DateType from '../../type/dateType'
 
-const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
+const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent }) => {
     const [startDate, setStartDate] = useState(DateType.createDate)
     const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
@@ -29,10 +29,10 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
     const endRef = useRef()
 
     const onCloseCardModal = () => {
-        cardModalClose(false)
+        onCardModalCloseEvent(false)
     }
 
-    const onSaveButtonHandler = (e) => {
+    const onSaveButtonClickEventHandler = (e) => {
         e.preventDefault()
         const itemObj = {}
         if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValidStartDate || isValidEndDate) {
@@ -41,19 +41,21 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         }
         itemObj.title = titleRef.current.value
         itemObj.content = contentRef.current.value
-        onAddTodoItem(itemObj)
+        itemObj.startDate = startDate
+        itemObj.endDate = endDate
+        onAddTodoItemEvent(itemObj)
         titleRef.current.value = ''
         contentRef.current.value = ''
         setStartDate(DateType.createDate())
         setEndDate(DateType.createDate())
-        cardModalClose(false)
+        onCardModalCloseEvent(false)
     }
 
-    const onIsOpenEvent = (isChecked) => {
+    const onIsOpenEventHandler = (isChecked) => {
         setIsOpen(isChecked)
     }
 
-    const onChangeStartDateHandler = (newValue) => {
+    const onChangeStartDateEventHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setStartDate(date)
         if(parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
@@ -69,7 +71,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         }
     }
 
-    const onChangeEndDateHandler = (newValue) => {
+    const onChangeEndDateEventHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setEndDate(date)
         if(parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
@@ -85,7 +87,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         }
     }
 
-    const onTitleChangeHandler = useCallback((e) => {
+    const onTitleChangeEventHandler = useCallback((e) => {
         if(validateForTitle(e.target.value)) {
             titleRef.current.labels[0].innerText = "Please check your title!"
             setIsValidTtile(true)
@@ -110,7 +112,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
         <>
             <AlertPopup
                 isShowPopup={isOpen}
-                setIsShowPopup={onIsOpenEvent}
+                setIsShowPopupEvent={onIsOpenEventHandler}
                 message="Please check your input agin!!"
             />
             <Dialog
@@ -129,7 +131,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                                     inputRef={titleRef}
                                     variant="outlined"
                                     sx={headerStyle}
-                                    onChange={onTitleChangeHandler}
+                                    onChange={onTitleChangeEventHandler}
                                 />
                             }
                         />
@@ -138,14 +140,14 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                                 inputRef={startRef}
                                 label="Start Date"
                                 value={startDate}
-                                onChange={onChangeStartDateHandler}
+                                onChange={onChangeStartDateEventHandler}
                                 renderInput={(params) => <TextField {...params} error={isValidStartDate} />}
                             />
                             <DesktopDatePicker
                                 inputRef={endRef}
                                 label="End Date"
                                 value={endDate}
-                                onChange={onChangeEndDateHandler}
+                                onChange={onChangeEndDateEventHandler}
                                 renderInput={(params) => <TextField {...params} error={isValidEndDate} />}
                             />
                         </LocalizationProvider>
@@ -164,7 +166,7 @@ const CardModal = ({ isCardModalShow, cardModalClose, onAddTodoItem }) => {
                 </DialogContent>
                 <Button
                     sx={buttonStyle}
-                    onClick={onSaveButtonHandler}
+                    onClick={onSaveButtonClickEventHandler}
                 >
                     <MyIcon name='checkCircle' />
                 </Button>

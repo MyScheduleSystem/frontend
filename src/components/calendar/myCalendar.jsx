@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
-import Lodash from "lodash";
-import DateType from "../../type/dateType";
-import MyModal from "../modal/myModal";
+import { useState, useEffect } from "react"
+import Calendar from "react-calendar"
+import Lodash from "lodash"
+import DateType from "../../type/dateType"
+import MyModal from "../modal/myModal"
 import calenderFetcher from '../../fetcher/calendarFetcher'
+import TodoItem from "../../type/todoItem"
 
-function MyCalendar({ onActiveStartDateChange }) {
+function MyCalendar({ onActiveStartDateChangeEvent }) {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
@@ -14,13 +15,13 @@ function MyCalendar({ onActiveStartDateChange }) {
         setTodoItemList.call(this, allTodoItems)
     }, [allTodoItems])
 
-    const onClickDayHandler = (e) => {
+    const onClickDayEventHandler = (e) => {
         const date = DateType.createDateFormat(e, 'YYYY-MM-DD')
         setSelectedDate(date)
         setIsClickModal(true)
     }
 
-    const onClickMonthHanlder = (e) => {
+    const onClickMonthEventHanlder = (e) => {
         // e.action => event
         // next, prev => month
         // next2, prev2 => year
@@ -31,15 +32,16 @@ function MyCalendar({ onActiveStartDateChange }) {
         rtnObj.year = yearString
         rtnObj.month = dateString
         rtnObj.day = dayString
-        onActiveStartDateChange(rtnObj)
+        onActiveStartDateChangeEvent(rtnObj)
     }
 
-    const onCloseHandler = (closed) => {
+    const onCloseEventHandler = (closed) => {
         setIsClickModal(closed)
     }
 
-    const onAddTodoList = (addedItem) => {
-        allTodoItems[selectedDate] = addedItem
+    const onAddTodoListEventHandler = (addedItem) => {
+        const arr = addedItem.map(e => new TodoItem(e.title, e.content, e.startDate, e.endDate))
+        allTodoItems[selectedDate] = arr
         // TODO: Fetch saveed result to server
     }
 
@@ -47,14 +49,14 @@ function MyCalendar({ onActiveStartDateChange }) {
         <>
             <Calendar
                 calendarType="US"
-                onClickDay={onClickDayHandler}
-                onActiveStartDateChange={onClickMonthHanlder}
+                onClickDay={onClickDayEventHandler}
+                onActiveStartDateChange={onClickMonthEventHanlder}
             />
             {isClickModal &&
                 <MyModal
                     isClickModal={isClickModal}
-                    onClose={onCloseHandler}
-                    onAddList={onAddTodoList}
+                    onCloseEvent={onCloseEventHandler}
+                    onAddListEvent={onAddTodoListEventHandler}
                     todoItems={allTodoItems[selectedDate]}
                 />}
         </>
@@ -66,12 +68,8 @@ function setTodoItemList(allTodoItems) {
     Lodash.forEach(todoList, (list, dayKey) => {
         allTodoItems[dayKey] = []
         list.forEach((item) => {
-            allTodoItems[dayKey].push({
-                title: item.title,
-                startDate: item.startDate,
-                endDate: item.endDate,
-                content: item.content,
-            })
+            const obj = new TodoItem(item.title, item.content, item.startDate, item.endDate)
+            allTodoItems[dayKey].push(obj)
         })
     })
 }

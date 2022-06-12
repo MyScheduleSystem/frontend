@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Lodash from 'lodash'
 
-function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
+function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
     const [todoItemList, setTodoItemList] = useState(dataForRender.call(this, todoItems))
     const [editMode, setEditmode] = useState(false)
@@ -19,7 +19,7 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
     const [isOpenAlert, setIsOpenAlert] = useState(false)
     const [removeIndex, setRemoveIndex] = useState()
 
-    const onCloseHandler = () => onClose(false)
+    const onCloseEventHandler = () => onCloseEvent(false)
 
     const onCardModalShow = (isShow) => {
         setIsOpenCardModal(isShow)
@@ -33,20 +33,22 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         todoItemList.push({
             title: addedItem.title,
             content: addedItem.content,
+            startDate: addedItem.startDate,
+            endDate: addedItem.endDate,
         })
     }
 
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
-        onAddList(addedItem)
+        onAddListEvent(addedItem)
         todoItemList.splice(0, todoItemList.length)
     }
 
     const onCancelButtonClickHandler = () => {
-        onClose(false)
+        onCloseEvent(false)
     }
 
-    const onEditModeEnter = (isClicked, item) => {
+    const onEditModeEnterEventHandler = (isClicked, item) => {
         setEditmode(isClicked)
         const obj = {}
         obj.title = item[0]
@@ -54,17 +56,17 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
         setEditTodoItem(() => Lodash.cloneDeep(obj))
     }
 
-    const onEditTodoItem = (prev, editedItem) => {
+    const onEditTodoItemEventHandler = (prev, editedItem) => {
         const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
         todoItemList[find] = editedItem
         setTodoItemList(() => [...todoItemList])
     }
 
-    const onEditModeExit = (isClose) => {
+    const onEditModeExitEventHandler = (isClose) => {
         setEditmode(isClose)
     }
 
-    const onRemoveCardHandler = (i, isOpen) => {
+    const onRemoveCardEventHandler = (i, isOpen) => {
         setIsOpenAlert(isOpen)
         setRemoveIndex(i)
     }
@@ -79,12 +81,12 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
             <CheckPopup
                 message="Warning"
                 isShowPopup={isOpenAlert}
-                checkPopupEvent={onRemoveEventHandler}
+                onCheckPopupEvent={onRemoveEventHandler}
             />
             <Modal
                 style={modalStyle}
                 open={isClickModal}
-                onClose={onCloseHandler}
+                onClose={onCloseEventHandler}
             >
                 <Box sx={boxStyle}>
                     <Box sx={topBoxStyle}>
@@ -98,8 +100,8 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                                     key={i}
                                     index={i}
                                     cardItem={item}
-                                    onEditModeEnter={onEditModeEnter}
-                                    onRemoveCard={onRemoveCardHandler}
+                                    onEditModeEnterEvent={onEditModeEnterEventHandler}
+                                    onRemoveCardEvent={onRemoveCardEventHandler}
                                 />
                             )
                         })}
@@ -107,14 +109,14 @@ function MyModal({ isClickModal, onClose, onAddList, todoItems }) {
                     </Box>
                     <CardModal
                         isCardModalShow={isOpenCardModal}
-                        cardModalClose={onCardModalCloseHandler}
-                        onAddTodoItem={onAddTodoItem}
+                        onCardModalCloseEvent={onCardModalCloseHandler}
+                        onAddTodoItemEvent={onAddTodoItem}
                     />
                     <CardEditModal
                         editTodoItem={editTodoItem}
                         isCardModalShow={editMode}
-                        onEditTodoItem={onEditTodoItem}
-                        cardModalClose={onEditModeExit}
+                        onEditTodoItemEvent={onEditTodoItemEventHandler}
+                        onCardModalCloseEvent={onEditModeExitEventHandler}
                     />
                 </Box>
             </Modal>

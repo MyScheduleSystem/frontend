@@ -13,7 +13,7 @@ const MyLayout = () => {
         day: DateType.getDay(),
     })
 
-    const onActiveStartDateChange = (value) => {
+    const onActiveStartDateChangeEventHandler = (value) => {
         setSideDate(value)
     }
 
@@ -21,7 +21,7 @@ const MyLayout = () => {
         <Container sx={boxSizeStyle}>
             <MyCalendarBoxDiv>
                 <MyCalendarSide date={sideDate} />
-                <MyCalendar onActiveStartDateChange={onActiveStartDateChange}/>
+                <MyCalendar onActiveStartDateChangeEvent={onActiveStartDateChangeEventHandler}/>
             </MyCalendarBoxDiv>
         </Container>
     )

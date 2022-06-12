@@ -1,6 +1,6 @@
 import { useRef } from 'react'
-import { 
-    Card, 
+import {
+    Card,
     Button,
     Typography,
     CardHeader,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import MyIcon from '../../icon/MyIcon';
 
-const CardItem = ({ index, cardItem, onEditModeEnter, onRemoveCard }) => {
+const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) => {
     const boxRef = useRef()
 
     const onClickHandler = (isClicked) => () => {
@@ -19,18 +19,18 @@ const CardItem = ({ index, cardItem, onEditModeEnter, onRemoveCard }) => {
         children.forEach((e) => {
             item.push(e.innerText)
         })
-        onEditModeEnter(isClicked, item)
+        onEditModeEnterEvent(isClicked, item)
     }
-    
+
     const onRemoveCardHandler = (e) => {
         e.stopPropagation()
-        onRemoveCard(index, true)
+        onRemoveCardEvent(index, true)
     }
 
     return ( // 카드 UI변경
-        <Card 
+        <Card
             ref={boxRef}
-            sx={cardStyle} 
+            sx={cardStyle}
             onClick={onClickHandler(true)}
         >
             <CardHeader
@@ -38,7 +38,7 @@ const CardItem = ({ index, cardItem, onEditModeEnter, onRemoveCard }) => {
                 sx={titleStyle}
                 title={cardItem.title}
                 alt='Modal Card'
-                action={                       
+                action={
                 <Button
                     sx={buttonStyle}
                     onClick={onRemoveCardHandler}>

@@ -163,7 +163,7 @@ const SignupForm = () => {
         }
     }
 
-    const onSetIsShowPopupEvent = (isChecked) => {
+    const onSetIsShowPopupEventHandler = (isChecked) => {
         setIsOpenPopup(isChecked)
     }
 
@@ -247,7 +247,7 @@ const SignupForm = () => {
             </Container>
             <AlertPopup
                 isShowPopup={isOpenPopup}
-                setIsShowPopup={onSetIsShowPopupEvent}
+                setIsShowPopupEvent={onSetIsShowPopupEventHandler}
                 message="Check your account information!!"
             />
         </Container>

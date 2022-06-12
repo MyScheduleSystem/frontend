@@ -17,7 +17,7 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import DateType from '../../type/dateType'
 import Lodash from 'lodash'
 
-const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModalClose }) => {
+const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onCardModalCloseEvent }) => {
     const [startDate, setStartDate] = useState(DateType.createDate)
     const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +30,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
     const endRef = useRef()
 
     const onCloseCardModal = () => {
-        cardModalClose(false)
+        onCardModalCloseEvent(false)
     }
 
     const onSaveButtonHandler = () => {
@@ -41,10 +41,10 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
         }
         editTodoItem.title = titleRef.current.value
         editTodoItem.content = contentRef.current.value
-        onEditTodoItem(prev, editTodoItem)
+        onEditTodoItemEvent(prev, editTodoItem)
         setStartDate(DateType.createDate())
         setEndDate(DateType.createDate())
-        cardModalClose(false)
+        onCardModalCloseEvent(false)
     }
 
     const onIsOpenEvent = (isChecked) => {
@@ -100,7 +100,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItem, cardModa
         <>
             <AlertPopup
                 isShowPopup={isOpen}
-                setIsShowPopup={onIsOpenEvent}
+                setIsShowPopupEvent={onIsOpenEvent}
                 message="Please check your input agin!!"
             />
             <Dialog

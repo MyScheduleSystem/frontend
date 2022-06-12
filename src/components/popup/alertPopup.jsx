@@ -9,9 +9,9 @@ import {
     Button,
 } from '@mui/material'
 
-const AlertPopup = ({ isShowPopup, setIsShowPopup, message }) => {
+const AlertPopup = ({ isShowPopup, setIsShowPopupEvent, message }) => {
     const onCloseButtonClickHandler = (isChecked) => () => {
-        setIsShowPopup(isChecked)
+        setIsShowPopupEvent(isChecked)
     }
 
     return (

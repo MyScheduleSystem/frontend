@@ -7,9 +7,9 @@ import {
     Button,
 } from '@mui/material'
 
-function CheckPopup({ message, isShowPopup, checkPopupEvent }) {
+function CheckPopup({ message, isShowPopup, onCheckPopupEvent }) {
     const onCloseButtonClickHandler = (isChecked) => () => {
-        checkPopupEvent(isChecked)
+        onCheckPopupEvent(isChecked)
     }
 
     return (

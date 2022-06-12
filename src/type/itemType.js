@@ -4,9 +4,9 @@ import ErrorUtil from '../util/errorUtil'
 class ItemType {
     constructor(startDate, endDate) {
         this.startDate = startDate
-        ErrorUtil.typeCheck(this.startDate, 'string')
         this.endDate = endDate
-        ErrorUtil.typeCheck(this.endDate, 'string')
+        ErrorUtil.typeCheck(startDate, 'string')
+        ErrorUtil.typeCheck(endDate, 'string')
     }
 
     getStartDate() {
