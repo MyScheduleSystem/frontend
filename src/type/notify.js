@@ -1,7 +1,7 @@
 import ItemType from "./itemType";
 
 class Notify extends ItemType {
-    constructor(startDate, endDate, isChecked, message) {
+    constructor(startDate, isChecked, message, endDate) {
         super(startDate, endDate)
         this.isChecked = isChecked
         this.message = message
@@ -16,4 +16,5 @@ class Notify extends ItemType {
     }
 }
 
+Object.freeze(Notify)
 export default Notify
