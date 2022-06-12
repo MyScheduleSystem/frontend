@@ -10,13 +10,21 @@ import {
     Typography,
     Badge,
     Drawer,
+    Menu,
+    MenuItem,
+    ListItemText,
 } from '@mui/material'
 import { createFriendsList } from '../../dev/testData'
+import { createNotify } from '../../dev/testData'
+
 const testMyInfo = createFriendsList().$_friendListArray[0]
+const testNotifyInfo = doFetchUserNotification()
 
 const Header = () => {
     const [drawer, setDrawer] = useState({ left: false })
     const [isClickInfo, setIsClickInfo] = useState(false)
+    const [notiAnchorEl, setNotiAnchorEl] = useState(null)
+    const isOpenMenu = Boolean(notiAnchorEl)
 
     const onDrawerButtonClickHanlder = (direction, value) => (e) => {
         if(e.type === 'keydown' && (e.key === 'Tab' || e.key ==='Shift')) return
@@ -29,6 +37,14 @@ const Header = () => {
 
     const onClickUserIconBtnHandler = () => {
         setIsClickInfo(true)
+    }
+
+    const onNotificationButtonClickHandler = (e) => {
+        setNotiAnchorEl(e.currentTarget)
+    }
+
+    const onMenuButtonClickHandler = () => {
+        setNotiAnchorEl(null)
     }
 
     return (
@@ -74,6 +90,7 @@ const Header = () => {
                             <IconButton
                                 size="large"
                                 color="inherit"
+                                onClick={onNotificationButtonClickHandler}
                             >
                                 <Badge badgeContent={17} color="error">
                                     <MyIcon name="notification" />
@@ -91,13 +108,43 @@ const Header = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
-            <MyInfoPopup 
+            <MyInfoPopup
                 isClickInfo={isClickInfo}
                 onClose={onCloseHandler}
                 user={testMyInfo}
             />
+            <Menu
+                anchorEl={notiAnchorEl}
+                open={isOpenMenu}
+                onClose={onMenuButtonClickHandler}
+            >
+                {testNotifyInfo.map((e, i) => {
+                    return (
+                        <MenuItem
+                            key={i}
+                            sx={notificationStyle(e.isChecked)}
+                            onClick={onMenuButtonClickHandler}
+                        >
+                            <ListItemText
+                                align="left"
+                                primary={e.message}
+                            />
+                            <ListItemText
+                                align="right"
+                                secondary={e.startDate}
+                            />
+                        </MenuItem>
+                    )
+                })}
+            </Menu>
         </Box>
     )
+}
+
+// TODO: 추후에는 어떤 User의 Notification인지 판별하는 로직도 필요
+function doFetchUserNotification() {
+    const notiArr = createNotify()
+    return notiArr
 }
 
 const headerBoxStyle = {
@@ -122,6 +169,16 @@ const menuInfoStyle = {
         xs: 'none',
         md: 'flex',
     }
+}
+
+const notificationStyle = (isChecked) => {
+    const obj = {
+        display: {
+            md: 'block',
+        },
+        background: isChecked === false ? '#fffff0' : 'transparent',
+    }
+    return obj
 }
 
 export default Header
