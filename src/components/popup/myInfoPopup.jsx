@@ -1,4 +1,4 @@
-import { 
+import {
     Modal,
     Box,
     List,
@@ -10,14 +10,14 @@ import {
 } from '@mui/material'
 import MyIcon from '../../icon/MyIcon'
 
-const MyInfoPopup = ({ isClickInfo, onClose, user }) => {
-    const onCloseHandler = () => onClose(false)
+const MyInfoPopup = ({ isClickInfo, onCloseEvent, user }) => {
+    const onCloseEventHandler = () => onCloseEvent(false)
 
     return (
-        <Modal 
-            open={isClickInfo} 
+        <Modal
+            open={isClickInfo}
             sx={modalStyle}
-            onClose={onCloseHandler}
+            onClose={onCloseEventHandler}
         >
             <Box sx={boxStyle}>
                 <List sx={listStyle}>
@@ -26,8 +26,8 @@ const MyInfoPopup = ({ isClickInfo, onClose, user }) => {
                             <Avatar alt='profile' sx={avatarSizeStyle}/>
                         </ListItemAvatar>
                     </ListItem>
-                    <ListItemText 
-                        primary={user.friendNickname} 
+                    <ListItemText
+                        primary={user.friendNickname}
                         secondary='프로필명 아직 없음'
                     />
                 </List>
@@ -54,7 +54,7 @@ const boxStyle = {
     // background: 'url(/images/schedule.jpg)',
     borderRadius: '10px',
     overflow: 'auto',
-    
+
 }
 
 const listStyle = {

@@ -37,9 +37,9 @@ function SideBar() {
                             >
                                 <Typography>{f.friendNickname}</Typography>
                             </ListItemButton>
-                            <MyInfoPopup 
-                                isClickInfo={isOpenUserPopup} 
-                                onClose={onCloseFriendButtonHandler}
+                            <MyInfoPopup
+                                isClickInfo={isOpenUserPopup}
+                                onCloseEvent={onCloseFriendButtonHandler}
                                 user={friends.allFriends[i]}
                             />
                         </Box>

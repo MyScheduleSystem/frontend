@@ -31,7 +31,7 @@ const Header = () => {
         setDrawer({ ...drawer, [direction]: value })
     }
 
-    const onCloseHandler = (closed) => {
+    const onCloseEventHandler = (closed) => {
         setIsClickInfo(closed)
     }
 
@@ -110,7 +110,7 @@ const Header = () => {
             </Box>
             <MyInfoPopup
                 isClickInfo={isClickInfo}
-                onClose={onCloseHandler}
+                onCloseEvent={onCloseEventHandler}
                 user={testMyInfo}
             />
             <Menu
