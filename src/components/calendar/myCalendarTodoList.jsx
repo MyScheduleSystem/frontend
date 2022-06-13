@@ -2,7 +2,7 @@ import MyCalendarCompleteList from './myCalendarCompleteList'
 import { 
     Box,
     List, 
-    ListSubheader,
+    ListItemText,
 }  from '@mui/material'
 
 const MyCalendarTodoList = ({ todoItems }) => {
@@ -14,16 +14,16 @@ const MyCalendarTodoList = ({ todoItems }) => {
                     <List 
                         key={i}
                         sx={todoListStyle}
-                        subheader={<ListSubheader>Completed</ListSubheader>}
                     >
+                        <ListItemText primary="Completed" />
                         <MyCalendarCompleteList item={item} />
                     </List> :
                     <List 
                         key={i}
                         sx={todoListStyle}
-                        subheader={<ListSubheader>Uncompleted</ListSubheader>}
                     >
-                    <MyCalendarCompleteList item={item} /> 
+                        <ListItemText primary="Uncompleted" />
+                        <MyCalendarCompleteList item={item} /> 
                 </List>
             )})}
         </Box>
