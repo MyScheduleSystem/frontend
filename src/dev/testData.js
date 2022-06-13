@@ -66,7 +66,6 @@ function create(calendarSpecJson) {
         calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate, todoObj.isCompleted))
     })
     calendarSpecJson['2022-06-13'].push(new TodoItem('Todo test100', 'Todo test100', '2022-06-13', '2022-06-13', false))
-    console.log(calendarSpecJson)
     return calendarSpecJson
 }
 
