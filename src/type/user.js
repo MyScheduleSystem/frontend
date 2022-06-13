@@ -10,10 +10,10 @@ class User extends UserType {
     }
 }
 
-User.createStorage = function(uuid, token) {
+User.createStorage = function(uuid, obj) {
     ErrorUtil.invalidParameter(uuid)
-    ErrorUtil.invalidParameter(token)
-    const storage = new Storage(uuid, token)
+    ErrorUtil.invalidParameter(obj)
+    const storage = new Storage(uuid, obj)
     return storage
 }
 

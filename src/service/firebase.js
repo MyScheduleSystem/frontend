@@ -11,5 +11,4 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig)
 const firestore = getFirestore(firebaseApp)
 
-Object.freeze(firestore)
 export default firestore

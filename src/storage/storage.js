@@ -1,16 +1,16 @@
 import ErrorUtil from "../util/errorUtil"
 
 class Storage {
-    constructor(uuid, token) {
+    constructor(uuid, obj) {
         this.uuid = uuid
-        this.token = token
+        this.obj = obj
     }
 
     save() {
         // Storage를 제대로 생성하지 않고 save만 사용하는 경우. 예외처리
         ErrorUtil.invalidParameter(this.uuid)
-        ErrorUtil.invalidParameter(this.token)
-        localStorage.setItem(this.uuid, this.token)
+        ErrorUtil.invalidParameter(this.obj)
+        localStorage.setItem(this.uuid, JSON.stringify(this.obj))
     }
 
     getToken() {
