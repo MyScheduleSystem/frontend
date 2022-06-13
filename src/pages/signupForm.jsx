@@ -100,13 +100,12 @@ const SignupForm = () => {
             setIsOpenPopup(true)
             return
         }
-        userFetcher.signup(user)
-            .then((response) => {
-                const result = Object.assign({}, response)
-                console.log(result)
-                // 이후에 어디로 이동?
-            })
-            .catch(setIsOpenPopup(true))
+        const signupResult = userFetcher.signup(user)
+        if(signupResult) {
+            // TODO: 이동
+        } else {
+            setIsOpenPopup(true)
+        }
     }
 
     const validateForUserInfo = (target, value) => {

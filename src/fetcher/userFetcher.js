@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from "firebase/firestore"
 import firestore from '../service/firebase'
 import User from '../type/user'
 
@@ -18,12 +18,30 @@ userFetcher.signin = async function(user) {
         .catch(error => console.error(error))
 }
 
+// TODO: 400에러가 있는데 도무지 이유를 모르겠다.
+// firestore password 해시처리
 userFetcher.signup = async (user) => {
     const auth = getAuth()
     createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             const userObj = userCredential.user
-            createUserDocument(userObj)
+            return userObj
+        })
+        .then((userObj) => {
+            setDoc(doc(firestore, 'user', `${userObj.uid}`), {
+                uuid: `${userObj.uid}`,
+                usernmae: user.username,
+                name: user.name,
+                email: user.email,
+                password: user.password,
+            })
+            const obj = {}
+            obj.uuid = `${userObj.uid}`
+            obj.username = user.username
+            obj.name = user.name
+            obj.email = user.email
+            const storage = User.createStorage(obj.uuid, obj)
+            storage.save()
         })
         .catch(error => console.error(error))
 }
@@ -33,15 +51,6 @@ userFetcher.signout = () => {
     signOut(auth)
         .then(() => User.clearStorage())
         .catch(error => console.error(error))
-}
-
-async function createUserDocument(userObj) {
-    await setDoc(doc(firestore, "users", userObj), {
-        usernmae: userObj.username,
-        name: userObj.name,
-        email: userObj.email,
-        password: userObj.password,
-    })
 }
 
 Object.freeze(userFetcher)
