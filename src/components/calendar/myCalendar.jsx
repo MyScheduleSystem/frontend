@@ -5,15 +5,16 @@ import DateType from "../../type/dateType"
 import MyModal from "../modal/myModal"
 import calenderFetcher from '../../fetcher/calendarFetcher'
 import TodoItem from "../../type/todoItem"
+import MyCalendarTodoList from "./myCalendarTodoList"
 
 function MyCalendar({ onActiveStartDateChangeEvent }) {
     const [isClickModal, setIsClickModal] = useState(false)
-    const [allTodoItems] = useState({})
+    const [allTodoItems, setAllTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
 
     useEffect(() => {
-        setTodoItemList.call(this, allTodoItems)
-    }, [allTodoItems])
+        setTodoItemList.call(this, setAllTodoItems)
+    }, [])
 
     const onClickDayEventHandler = (e) => {
         const date = DateType.createDateFormat(e, 'YYYY-MM-DD')
@@ -59,18 +60,23 @@ function MyCalendar({ onActiveStartDateChangeEvent }) {
                     onAddListEvent={onAddTodoListEventHandler}
                     todoItems={allTodoItems[selectedDate]}
                 />}
+            <MyCalendarTodoList
+                todoItems={allTodoItems[DateType.createDate()]}
+            />
         </>
     );
 }
 
-function setTodoItemList(allTodoItems) {
+function setTodoItemList(setAllTodoItems) {
     const todoList = calenderFetcher.getTodoFetchResult()
+    const todoObj = {}
     Lodash.forEach(todoList, (list, dayKey) => {
-        allTodoItems[dayKey] = []
+        todoObj[dayKey] = []
         list.forEach((item) => {
-            const obj = new TodoItem(item.title, item.content, item.startDate, item.endDate)
-            allTodoItems[dayKey].push(obj)
+            const obj = new TodoItem(item.title, item.content, item.startDate, item.endDate, item.isCompleted)
+            todoObj[dayKey].push(obj)
         })
     })
+    setAllTodoItems(() => Lodash.cloneDeep(todoObj))
 }
 export default MyCalendar;

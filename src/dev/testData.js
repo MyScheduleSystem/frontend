@@ -62,8 +62,11 @@ function create(calendarSpecJson) {
         todoObj.content = `Todo Content${i}`
         todoObj.startDate = e
         todoObj.endDate = DateUtil.dateCalculate(e, i, 'add', 'days')
-        calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate))
+        todoObj.isCompleted = (i % 2 === 0) ? true : false
+        calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate, todoObj.isCompleted))
     })
+    calendarSpecJson['2022-06-13'].push(new TodoItem('Todo test100', 'Todo test100', '2022-06-13', '2022-06-13', false))
+    console.log(calendarSpecJson)
     return calendarSpecJson
 }
 
