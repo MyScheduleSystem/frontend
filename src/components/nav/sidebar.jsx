@@ -13,7 +13,6 @@ import {
     Typography,
 } from '@mui/material'
 
-// 대대적인 수정
 function SideBar({ isOpen }) {
     const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
 
