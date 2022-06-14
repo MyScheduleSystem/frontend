@@ -3,32 +3,97 @@ import SideBar from './sidebar'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
 import {
-    Box,
-    AppBar,
-    IconButton,
-    Toolbar,
-    Typography,
-    Badge,
-    Drawer,
-    Menu,
-    MenuItem,
-    ListItemText,
+    Box, IconButton, Divider,
+    Toolbar, Typography, Badge,
+    Menu, MenuItem, ListItemText,
+    styled,
 } from '@mui/material'
+import MuiDrawer from '@mui/material/Drawer'
+import MuiAppBar from '@mui/material/AppBar'
 import { createFriendsList } from '../../dev/testData'
 import { createNotify } from '../../dev/testData'
 
 const testMyInfo = createFriendsList().$_friendListArray[0]
 const testNotifyInfo = doFetchUserNotification()
 
+const drawerWidth = 240
+
+const openedMixin = (theme, drawerWidth) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+})
+
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(8)} + 1px )`,
+    },
+})
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+}))
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+        ...openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+        ...closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+    }),
+)
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+    })(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}))
+
 const Header = () => {
-    const [drawer, setDrawer] = useState({ left: false })
     const [isClickInfo, setIsClickInfo] = useState(false)
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
+    const [isOpen, setIsOpen] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
 
-    const onDrawerButtonClickHanlder = (direction, value) => (e) => {
-        if(e.type === 'keydown' && (e.key === 'Tab' || e.key ==='Shift')) return
-        setDrawer({ ...drawer, [direction]: value })
+    const onDrawerOpenEventHandler = (open) => () => {
+        setIsOpen(open)
+    }
+
+    const onDrawerCloseEvnetHandler = (open) => () => {
+        setIsOpen(open)
     }
 
     const onCloseEventHandler = (closed) => {
@@ -49,36 +114,25 @@ const Header = () => {
 
     return (
         <Box role="presentation">
-            <Drawer
-                anchor='left'
-                hideBackdrop={false}
-                open={drawer.left}
-                onClose={onDrawerButtonClickHanlder('left', false)}
-            >
-                <SideBar />
-            </Drawer>
             <Box sx={headerBoxStyle}>
-                <AppBar position="static">
+                <AppBar position="fixed" open={isOpen}>
                     <Toolbar>
                         <IconButton
-                            size="large"
-                            edge="start"
                             color="inherit"
-                            onClick={onDrawerButtonClickHanlder('left', true)}
-                            sx={iconButtonStyle}
+                            edge="start"
+                            onClick={onDrawerOpenEventHandler(true)}
+                            sx={iconButtonStyle(isOpen)}
                         >
                             <MyIcon name="menu" />
                         </IconButton>
                         <Typography
                             variant="h6"
-                            noWrap={true}
+                            noWrap
                             component="div"
-                            sx={logoStyle}
                         >
                             MSS
                         </Typography>
-                        <Box sx={middleBoxStyle} />
-                        <Box sx={menuInfoStyle}>
+                        <Box component="div" sx={menuInfoStyle}>
                             <IconButton
                                 size="large"
                                 color="inherit"
@@ -107,6 +161,16 @@ const Header = () => {
                         </Box>
                     </Toolbar>
                 </AppBar>
+                <Drawer variant='permanent' open={isOpen}>
+                    <DrawerHeader>
+                        <IconButton onClick={onDrawerCloseEvnetHandler(false)}>
+                            My schedule menu
+                            <MyIcon name='left' />
+                        </IconButton>
+                    </DrawerHeader>
+                    <Divider />
+                    <SideBar isOpen={isOpen} />
+                </Drawer>
             </Box>
             <MyInfoPopup
                 isClickInfo={isClickInfo}
@@ -148,23 +212,19 @@ function doFetchUserNotification() {
 }
 
 const headerBoxStyle = {
-    flexGrow: 1,
+    display: 'flex',
 }
 
-const iconButtonStyle = {
-    mr: 2,
-}
-
-const logoStyle = {
-    xs: 'none',
-    sm: 'block',
-}
-
-const middleBoxStyle = {
-    flexGrow: 1,
+const iconButtonStyle = (open) => {
+    return {
+        marginRight: '5',
+        ...(open && { display: 'none' }),
+    }
 }
 
 const menuInfoStyle = {
+    position: 'absolute',
+    right: '10px',
     display: {
         xs: 'none',
         md: 'flex',

@@ -13,8 +13,7 @@ import {
     Typography,
 } from '@mui/material'
 
-// 대대적인 수정
-function SideBar() {
+function SideBar({ isOpen }) {
     const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
 
     const items = [
@@ -24,11 +23,13 @@ function SideBar() {
             list: (() => {
                 const friends = doFriendsFetchResult.call(this)
                 return friends.allFriends.map((f, i) => {
-                    const onClickFriendButtonHandler = (isChecked, index) => () => {
+                    const onClickFriendButtonHandler = (isChecked) => () => {
                         setIsOpenUserPopup(isChecked)
                     }
 
-                    const onCloseFriendButtonHandler = (isChecked) => setIsOpenUserPopup(isChecked)
+                    const onCloseFriendButtonHandler = (isChecked) => {
+                        setIsOpenUserPopup(isChecked)
+                    }
                     return (
                         <Box key={f.friendUuid}>
                             <ListItemButton
@@ -96,12 +97,17 @@ function SideBar() {
             {items.map(item => {
                 return (
                     <Accordion key={item.name} sx={sidebarListStyle} disableGutters={false}>
-                        <AccordionSummary expandIcon={<MyIcon name='expand' />}>
-                            <Typography>{item.icon} {item.name}</Typography>
+                        <AccordionSummary expandIcon={isOpen && <MyIcon name='expand' />}>
+                            <Typography>{item.icon} {isOpen && item.name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             {item.name !== 'Friends' ?
-                                <Link to={item.path} style={sidebarLinkStyle}>{item.list}</Link> :
+                                <Link 
+                                    to={item.path} 
+                                    style={sidebarLinkStyle}
+                                >
+                                    {item.list}
+                                </Link> :
                                 item.list
                             }
                         </AccordionDetails>
@@ -137,10 +143,7 @@ function doChatRoomFetchResult() {
 
 const sidebarStyle = {
     height: '100%',
-    position: 'fixed',
-    width: '20%',
     backgroundColor: 'white',
-    // Scroll
     overflow: 'auto',
 }
 

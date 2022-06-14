@@ -9,7 +9,7 @@ import {
     faHistory, faArchive, faBars,
     faBell, faEnvelope, faRadio,
     faXmark, faEllipsisV, faShareAlt,
-    faComment,
+    faComment, faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import ErrorUtil from "../util/errorUtil"
 
@@ -52,6 +52,7 @@ function getIconName(name) {
         case 'option': return faEllipsisV
         case 'share': return faShareAlt
         case 'comment': return faComment
+        case 'left': return faAngleLeft
 
         default:
             ErrorUtil.notImplemented()
