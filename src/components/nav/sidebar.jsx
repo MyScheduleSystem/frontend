@@ -73,18 +73,6 @@ function SideBar({ isOpen }) {
             list: <ListItemButton divider={true}><Typography>FoxMon's Schedule</Typography></ListItemButton>,
         },
         {
-            name: 'SignIn',
-            path: '/signin',
-            icon: <MyIcon name='signin' />,
-            list: <ListItemButton divider={true}><Typography>Sign in</Typography></ListItemButton>,
-        },
-        {
-            name: 'SignUp',
-            path: '/signup',
-            icon: <MyIcon name='signup' />,
-            list: <ListItemButton divider={true}><Typography>Sign up</Typography></ListItemButton>,
-        },
-        {
             name: 'Logout',
             path: '/',
             icon: <MyIcon name='signout' />,
@@ -102,8 +90,8 @@ function SideBar({ isOpen }) {
                         </AccordionSummary>
                         <AccordionDetails>
                             {item.name !== 'Friends' ?
-                                <Link 
-                                    to={item.path} 
+                                <Link
+                                    to={item.path}
                                     style={sidebarLinkStyle}
                                 >
                                     {item.list}
