@@ -114,6 +114,10 @@ useState(setState의) 동작 이해
         User validation
         Card validation
 
+    Sidebar
+        View friends profile
+        Logout my acount
+
 
 ## Issue
 
@@ -141,6 +145,9 @@ useState(setState의) 동작 이해
         - 따라서 재사용 가능한 함수는 useCallback을 통해 다시 만들지 않고 재사용 가능하도록 다뤄보자.
             ex) onTitleChangeHandler = (e) => {} 이 부분을 onTitleChangeHandler = useCallback((e) => {}, []) 이렇게 변경했다. => 메모이제이션된 콜백을 반환한다.
         - 두 번째 전달되는 parameter는 의존성 값을 전달한다. 즉 이 부분이 변경된다면 callback의 의존성이 변경된다는 의미이다.
+
+    Sidebar menu중 Friends List에 friend name 클릭시 제대로 된 index가 가져오질 않음 (미해결) 
+
 ```
 
 ## 개발 회고록
@@ -154,4 +161,14 @@ firebase 공식문서와 구글링을 통해 사용법을 익혀가고 있다.
 firebase로 바꿈으로서 수정돼야 할 코드들이 많이 존재했다.
 
 프로젝트가 완성되는 날까지 화이팅..!
+```
+### 2022-06-14
+```
+
+header에 menu 아이콘을 통해 sidebar를 열었을때 동작이 부드럽게 열리지 않았다.
+    - Sidebar에 Drawer를 바꿔서 동작이 부드럽게 만들었다.
+
+Drawer를 바꾸고 보니 아직 UI를 손봐야 할 부분이 많이 있었다.
+
+이제 캘린더 부분의 완성이 눈앞에 보인다.
 ```
