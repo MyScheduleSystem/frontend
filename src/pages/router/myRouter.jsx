@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 import MyLayout from '../myLayout'
-import SigninForm from '../signinForm'
-import SignupForm from '../signupForm'
 import Header from '../../components/nav/header'
 import RightSidebar from '../../components/nav/rightSidebar'
 import MyChatRoom from '../../components/chat/myChatRoom'
@@ -13,8 +11,6 @@ const MyRouter = () => {
             <RightSidebar />
             <Routes>
                 <Route path="/" element={<MyLayout />}/>
-                <Route path="/signin" element={<SigninForm />}/>
-                <Route path="/signup" element={<SignupForm />}/>
                 <Route path="/chat" element={<MyChatRoom />} />
             </Routes>
         </>
