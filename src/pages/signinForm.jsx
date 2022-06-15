@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import AlertPopup from '../components/popup/alertPopup'
 import MyIcon from '../icon/MyIcon'
-import userFetcher from '../fetcher/userFetcher'
 import {
     Container,
     Box,
@@ -15,8 +14,7 @@ import {
     Divider,
 } from '@mui/material'
 
-const SigninForm = () => {
-    const [user, setUser] = useState({})
+const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent }) => {
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         email: false,
         password: false,
@@ -59,25 +57,16 @@ const SigninForm = () => {
         setIsValidUserInfo((prev) => {
             return { ...prev, password: false }
         })
-        setUser(() => Object.assign(user, userInfo))
-        userFetcher.signin(user)
-            .then((response) => {
-                // 성공 시 Link to 이동
-                const result = Object.assign({}, response)
-                setIsShowPopup(false)
-                console.log(result)
-            })
-            .catch(() => {
-                setIsShowPopup(true)
-            })
+        onSigninEvent(userInfo)
+        setIsShowPopup(isUserFailed)
     }
 
     const onPopupCloseHanlder = (value) => {
         setIsShowPopup(value)
     }
 
-    const onRegisterButtonClickHandler = () => {
-        // 클릭 시 Link to 이동
+    const onRegisterButtonClickHandler = (isChecked) => () => {
+        onClickUserServiceButtonEvent(isChecked)
     }
 
     return (
@@ -118,7 +107,7 @@ const SigninForm = () => {
                     <Divider />
                     <Typography>NO ACCOUNT ?</Typography>
                     <Divider />
-                    <Button onClick={onRegisterButtonClickHandler}>register</Button>
+                    <Button onClick={onRegisterButtonClickHandler(false)}>register</Button>
                     <AlertPopup
                         isShowPopup={isShowPopup}
                         setIsShowPopupEvent={onPopupCloseHanlder}
