@@ -72,9 +72,4 @@ const avatarSizeStyle = {
     height: '85px',
 }
 
-const myIconStyle = {
-    color: 'white',
-    fontSize: 'fa-2x',
-}
-
 export default MyInfoPopup
