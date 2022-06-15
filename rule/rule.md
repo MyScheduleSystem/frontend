@@ -22,6 +22,8 @@
                     return sum
             })()
         ```
+    - 세미콜론
+        * 우리는 사용하지 말자... ㅠㅠ
 2. 함수
     - 이름
         * React 내에서 관리하는 event 함수의 경우 onClickEventHandler와 같이 명명한다. (onNameEventHandler => on ~~~ EventHandler 와 같이 명명함.)
@@ -31,6 +33,26 @@
         ex) onClickEvent()
         ```
     - 컴포넌트 밖에서 관리되는 함수의 경우 call, bind를 활용하도록 한다.
+    - map, forEach, filter, every, some, reduce을 최대한 활용한다.
+        * 적절한 상황에 적절한 함수를 호출하여 사용하도록 한다.
+        ```
+            ex) Bad!
+            const arr = [1, 2, 3, 4, 5]
+            let sum = 0
+            for(let i = 0; i < arr.length; i++) {
+                sum += arr[i]
+            }
+
+            ex) Good!
+            const arr = [1, 2, 3, 4, 5]
+            const sum = arr.reduce((acc, cur, i) => { return acc += cur }, 0)
+
+            or
+
+            const arr = [1, 2, 3, 4, 5]
+            let sum = 0
+            arr.forEach(e => sum += e)
+        ```
 3. state, props
     - 상위 컴포넌트에서 하위 컴포넌트로는 props로 전달한다.
     - 히위 컴포넌트에서 상위 컴포넌트로는 전달 받은 함수의 파라미터로 값을 전달한다.
@@ -38,3 +60,8 @@
         * 즉 하위 컴포넌트에서 상위 컴포넌트로부터 전달받은 props를 변경하지 않는다.
     - state를 남용하지 않도록 한다.
         * 꼭 state로 사용해야 하는가? 다시 한 번 더 생각해 보도록 한다.
+4. Git & README.md
+    - 본인이 변경하지 않은 파일은 pull request(PR)에 포함시키지 않는다.
+        * 굳이 띄어쓰기 들여쓰기 한 파일들을 PR에 포함될 이유가 없지 않을까?
+    - 회고록은 돌아가면서 한 명 씩 작성하도록 한다.
+    - 본인이 직면한 어려운 문제들은 README.md에 문제상황 및 해결방법을 기록하도록 한다.
