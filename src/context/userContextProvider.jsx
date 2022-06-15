@@ -5,7 +5,8 @@ import SigninForm from '../pages/signinForm'
 
 const UserContext = createContext({})
 
-// react 자식 component => children이라는 이름
+// react 자식 component => children이라는 이름.
+// children props는 하위 컴포넌트가 어떻게 구성되어 있는지 모를 때 사용.
 function UserContextProvider({ children }) {
     const [userObj, setUserObj] = useState(null)
     const [isSignin, setIsSignin] = useState(false)
