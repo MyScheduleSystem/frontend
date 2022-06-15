@@ -45,7 +45,7 @@ const RightSideBar = () => {
                     </MenuItem>
                 </MenuList>
                 <Card>
-                <Clock value={nowTime} size="100" />
+                <Clock value={nowTime} size={100} />
                     <CardContent sx={iconStyle}>
                         {weatherFetcher.getWeatherIcon(weather.weatherInfo)}
                     </CardContent>
