@@ -50,8 +50,7 @@ const modalStyle = {
 const boxStyle = {
     width: '20%',
     height: '80%',
-    backgroundImage: "linear-gradient(to right, #4880EC, #019CAD)",
-    // background: 'url(/images/schedule.jpg)',
+    backgroundColor: '#E9ECEF',
     borderRadius: '10px',
     overflow: 'auto',
 
@@ -71,6 +70,11 @@ const ListItemAvatarStyle = {
 const avatarSizeStyle = {
     width: '85px',
     height: '85px',
+}
+
+const myIconStyle = {
+    color: 'white',
+    fontSize: 'fa-2x',
 }
 
 export default MyInfoPopup
