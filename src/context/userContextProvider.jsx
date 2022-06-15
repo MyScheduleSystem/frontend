@@ -28,7 +28,7 @@ function UserContextProvider({ children }) {
         else setIsUserFailed(true)
     }
 
-    const onSigninEventHandler = async (user) => {
+    const onSigninEventHandler = (user) => {
         const obj = {}
         obj.email = user.email
         obj.password = user.password
