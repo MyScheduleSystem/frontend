@@ -12,10 +12,9 @@ import {
     Button,
     Divider,
 } from '@mui/material'
-import userFetcher from '../fetcher/userFetcher'
 import Lodash from 'lodash'
 
-const SignupForm = () => {
+const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent }) => {
     const [isOpenPopup, setIsOpenPopup] = useState(false)
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         username: false,
@@ -100,12 +99,12 @@ const SignupForm = () => {
             setIsOpenPopup(true)
             return
         }
-        const signupResult = userFetcher.signup(user)
-        if(signupResult) {
-            // TODO: 이동
-        } else {
-            setIsOpenPopup(true)
-        }
+        onSignupEvent(user)
+        setIsOpenPopup(isUserFailed)
+    }
+
+    const onClickLoginButtonHandler = (isChecked) => () => {
+        onClickUserServiceButtonEvent(isChecked)
     }
 
     const validateForUserInfo = (target, value) => {
@@ -239,7 +238,7 @@ const SignupForm = () => {
                             register
                         </Button>
                         <Divider/>
-                        <Button>login</Button>
+                        <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
                         <Divider/>
                     </Box>
                 </FormGroup>
