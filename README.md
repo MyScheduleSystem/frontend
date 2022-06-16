@@ -147,7 +147,6 @@ useState(setState의) 동작 이해
         - 두 번째 전달되는 parameter는 의존성 값을 전달한다. 즉 이 부분이 변경된다면 callback의 의존성이 변경된다는 의미이다.
 
     Sidebar menu중 Friends List에 friend name 클릭시 제대로 된 index가 가져오질 않음 (미해결) 
-
 ```
 
 ## 개발 회고록
@@ -162,9 +161,9 @@ firebase로 바꿈으로서 수정돼야 할 코드들이 많이 존재했다.
 
 프로젝트가 완성되는 날까지 화이팅..!
 ```
-### 2022-06-14
-```
 
+### 2022-06-14 (Leo)
+```
 header에 menu 아이콘을 통해 sidebar를 열었을때 동작이 부드럽게 열리지 않았다.
     - Sidebar에 Drawer를 바꿔서 동작이 부드럽게 만들었다.
 

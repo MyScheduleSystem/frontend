@@ -92,10 +92,10 @@ const boxSizeStyle = {
 }
 
 const menuStyle = {
-    marginTop: '5rem',
+    marginTop: '4.5rem',
     width: '20%',
     height: '100%',
-    positin: 'fixed',
+    positin: 'absolute',
     float: 'right',
 }
 

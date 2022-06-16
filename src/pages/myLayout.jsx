@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import MyCalendar from '../components/calendar/myCalendar'
 import { Container } from '@mui/material'
 
-// TODO: Divide left, right
 const MyLayout = () => {
     return (
         <Container sx={boxSizeStyle}>
