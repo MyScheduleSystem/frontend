@@ -95,7 +95,7 @@ const Header = () => {
         setIsOpen(open)
     }
 
-    const onDrawerCloseEvnetHandler = (open) => () => {
+    const onDrawerCloseEventHandler = (open) => () => {
         setIsOpen(open)
     }
 
@@ -172,7 +172,7 @@ const Header = () => {
                 </AppBar>
                 <Drawer variant='permanent' open={isOpen}>
                     <DrawerHeader>
-                        <IconButton onClick={onDrawerCloseEvnetHandler(false)}>
+                        <IconButton onClick={onDrawerCloseEventHandler(false)}>
                             My schedule menu
                             <MyIcon name='left' />
                         </IconButton>
