@@ -151,7 +151,7 @@ useState(setState의) 동작 이해
 ```
 
 ## 개발 회고록
-### 2022-06-11
+### 2022-06-11 (FoxMon)
 ```
 BackEnd를 Node express에서 firebase로 바꾸기로 결정했다.
     - MyScheduleSystem은 우리가 지속적으로 사용할 서비스이기 때문에 추후 유지보수적인 면에 있어 firebase가 좋다고 판단했다.

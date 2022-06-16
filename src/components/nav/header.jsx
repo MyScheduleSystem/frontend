@@ -146,7 +146,7 @@ const Header = () => {
                                 color="inherit"
                                 onClick={onNotificationButtonClickHandler}
                             >
-                                <Badge badgeContent={17} color="error">
+                                <Badge badgeContent={testNotifyInfo.length} color="error">
                                     <MyIcon name="notification" />
                                 </Badge>
                             </IconButton>
