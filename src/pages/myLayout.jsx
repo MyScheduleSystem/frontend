@@ -1,27 +1,12 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import MyCalendar from '../components/calendar/myCalendar'
-import MyCalendarSide from '../components/calendar/myCalendarSide'
-import DateType from '../type/dateType'
 import { Container } from '@mui/material'
 
-// TODO: Divide left, right
 const MyLayout = () => {
-    const [sideDate, setSideDate] = useState({
-        year: DateType.getYear(DateType.createDate()),
-        month: DateType.getMonth(DateType.createDate()),
-        day: DateType.getDay(),
-    })
-
-    const onActiveStartDateChange = (value) => {
-        setSideDate(value)
-    }
-
     return (
         <Container sx={boxSizeStyle}>
             <MyCalendarBoxDiv>
-                <MyCalendarSide date={sideDate} />
-                <MyCalendar onActiveStartDateChange={onActiveStartDateChange}/>
+                <MyCalendar />
             </MyCalendarBoxDiv>
         </Container>
     )
@@ -35,15 +20,13 @@ const boxSizeStyle = {
 
 const MyCalendarBoxDiv = styled.div`
     border-radius: 10px;
-    width: 80%;
+    width: 90%;
     height: 100%;
     display: flex;
-    margin-top: 5rem;
+    margin-top: 6rem;
     margin-left: -4rem;
-    background-color: #F8F8FF;
-    box-shadow: 0 10px 5px 5px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eeeeee;
     float: left;
+    /* align-items: stretch; */
 
     .react-calendar__navigation button {
         all: unset;

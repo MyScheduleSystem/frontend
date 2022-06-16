@@ -37,6 +37,7 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
                 avatar={<Avatar />}
                 sx={titleStyle}
                 title={cardItem.title}
+                subheader={cardItem.startDate}
                 alt='Modal Card'
                 action={
                 <Button

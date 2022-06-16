@@ -6,11 +6,18 @@ import MyModal from "../modal/myModal"
 import calenderFetcher from '../../fetcher/calendarFetcher'
 import TodoItem from "../../type/todoItem"
 import MyCalendarTodoList from "./myCalendarTodoList"
+import MyCalendarSide from "./myCalendarSide"
+import { Box } from "@mui/material"
 
-function MyCalendar({ onActiveStartDateChangeEvent }) {
+function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems, setAllTodoItems] = useState({})
     const [selectedDate, setSelectedDate] = useState(null)
+    const [sideDate, setSideDate] = useState({
+        year: DateType.getYear(DateType.createDate()),
+        month: DateType.getMonth(DateType.createDate()),
+        day: DateType.getDay(),
+    })
 
     useEffect(() => {
         setTodoItemList.call(this, setAllTodoItems)
@@ -33,7 +40,7 @@ function MyCalendar({ onActiveStartDateChangeEvent }) {
         rtnObj.year = yearString
         rtnObj.month = dateString
         rtnObj.day = dayString
-        onActiveStartDateChangeEvent(rtnObj)
+        setSideDate(rtnObj)
     }
 
     const onCloseEventHandler = (closed) => {
@@ -47,23 +54,28 @@ function MyCalendar({ onActiveStartDateChangeEvent }) {
     }
 
     return (
-        <>
-            <Calendar
-                calendarType="US"
-                onClickDay={onClickDayEventHandler}
-                onActiveStartDateChange={onClickMonthEventHanlder}
-            />
-            {isClickModal &&
-                <MyModal
-                    isClickModal={isClickModal}
-                    onCloseEvent={onCloseEventHandler}
-                    onAddListEvent={onAddTodoListEventHandler}
-                    todoItems={allTodoItems[selectedDate]}
-                />}
-            <MyCalendarTodoList
-                todoItems={allTodoItems[DateType.createDate()]}
-            />
-        </>
+        <Box sx={mainBoxSizeStyle}>
+            <Box sx={myCalendarBoxStyle}>
+                <MyCalendarSide date={sideDate} />
+                <Calendar
+                    calendarType="US"
+                    onClickDay={onClickDayEventHandler}
+                    onActiveStartDateChange={onClickMonthEventHanlder}
+                />
+                {isClickModal &&
+                    <MyModal
+                        isClickModal={isClickModal}
+                        onCloseEvent={onCloseEventHandler}
+                        onAddListEvent={onAddTodoListEventHandler}
+                        todoItems={allTodoItems[selectedDate]}
+                    />}
+            </Box>
+            <Box sx={myTodoListStyle}>
+                <MyCalendarTodoList
+                    todoItems={allTodoItems[DateType.createDate()]}
+                />
+            </Box>
+        </Box>
     );
 }
 
@@ -80,3 +92,23 @@ function setTodoItemList(setAllTodoItems) {
     setAllTodoItems(() => Lodash.cloneDeep(todoObj))
 }
 export default MyCalendar;
+
+const mainBoxSizeStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',  
+    width: '100%',
+}
+
+const myCalendarBoxStyle = {
+    width: '75%',
+    boxShadow: '5px 10px 5px 5px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#F8F8FF',
+    border: '1px solid #eeeeee',
+    borderRadius: '10px',
+    height: '100%',
+}
+
+const myTodoListStyle = {
+    width: '23%',
+    height: '100%',
+}
