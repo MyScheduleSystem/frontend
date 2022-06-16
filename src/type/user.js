@@ -17,6 +17,10 @@ User.createStorage = function(uuid, obj) {
     return storage
 }
 
+User.userPersistence = function(uuid) {
+    return Storage.checkPersistenceUser(uuid)
+}
+
 User.clearStorage = function() {
     new Storage().clear()
 }
