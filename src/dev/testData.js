@@ -6,6 +6,7 @@ import User from '../type/user'
 import DateUtil from '../util/dateUtil'
 import Notify from '../type/notify'
 import TodoItem from '../type/todoItem'
+import Message from '../type/message'
 
 const TestData = {}
 const userId = 1
@@ -112,4 +113,20 @@ export function createNotify() {
         nArr.push(obj)
     })
     return nArr
+}
+
+export function createMessage() {
+    const testDays = [
+        '2022-05-12', '2022-05-13', '2022-05-14', '2022-05-15', '2022-05-16',
+        '2022-05-17', '2022-05-18', '2022-05-19', '2022-05-20',
+    ]
+    const isChecked = false
+    const message = "Arrived Message!"
+    const friendName = 'FoxMon'
+    const mArr =  []
+    testDays.forEach((d, i) => {
+        const obj = new Message(`${message}${i}`, `${friendName}${i}`, isChecked, d, d)
+        mArr.push(obj)
+    })
+    return mArr
 }

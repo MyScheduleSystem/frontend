@@ -6,15 +6,16 @@ import {
     Box, IconButton, Divider,
     Toolbar, Typography, Badge,
     Menu, MenuItem, ListItemText,
-    styled,
+    styled, List, ListItemButton
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
 import { createFriendsList } from '../../dev/testData'
-import { createNotify } from '../../dev/testData'
+import { createNotify, createMessage } from '../../dev/testData'
 
 const testMyInfo = createFriendsList().$_friendListArray[0]
 const testNotifyInfo = doFetchUserNotification()
+const testMsg = doFetchMessage()
 
 const drawerWidth = 240
 
@@ -85,14 +86,16 @@ const AppBar = styled(MuiAppBar, {
 const Header = () => {
     const [isClickInfo, setIsClickInfo] = useState(false)
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
+    const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
+    const isOepnMsg = Boolean(msgAnchorEl)
 
     const onDrawerOpenEventHandler = (open) => () => {
         setIsOpen(open)
     }
 
-    const onDrawerCloseEvnetHandler = (open) => () => {
+    const onDrawerCloseEventHandler = (open) => () => {
         setIsOpen(open)
     }
 
@@ -100,16 +103,21 @@ const Header = () => {
         setIsClickInfo(closed)
     }
 
-    const onClickUserIconBtnHandler = () => {
+    const onClickUserIconButtonEventHandler = () => {
         setIsClickInfo(true)
     }
 
-    const onNotificationButtonClickHandler = (e) => {
+    const onNotificationButtonClickEventHandler = (e) => {
         setNotiAnchorEl(e.currentTarget)
     }
 
-    const onMenuButtonClickHandler = () => {
+    const onMenuButtonClickEventHandler = () => {
         setNotiAnchorEl(null)
+        setMsgAnchorEl(null)
+    }
+
+    const onMessageButtonClickEventHandler = (e) => {
+        setMsgAnchorEl(e.currentTarget)
     }
 
     return (
@@ -136,15 +144,16 @@ const Header = () => {
                             <IconButton
                                 size="large"
                                 color="inherit"
+                                onClick={onMessageButtonClickEventHandler}
                             >
-                                <Badge badgeContent={4} color="error">
+                                <Badge badgeContent={testMsg.length} color="error">
                                     <MyIcon name="mail" />
                                 </Badge>
                             </IconButton>
                             <IconButton
                                 size="large"
                                 color="inherit"
-                                onClick={onNotificationButtonClickHandler}
+                                onClick={onNotificationButtonClickEventHandler}
                             >
                                 <Badge badgeContent={testNotifyInfo.length} color="error">
                                     <MyIcon name="notification" />
@@ -154,7 +163,7 @@ const Header = () => {
                                 size="large"
                                 edge="end"
                                 color="inherit"
-                                onClick={onClickUserIconBtnHandler}
+                                onClick={onClickUserIconButtonEventHandler}
                             >
                                 <MyIcon name="user" />
                             </IconButton>
@@ -163,7 +172,7 @@ const Header = () => {
                 </AppBar>
                 <Drawer variant='permanent' open={isOpen}>
                     <DrawerHeader>
-                        <IconButton onClick={onDrawerCloseEvnetHandler(false)}>
+                        <IconButton onClick={onDrawerCloseEventHandler(false)}>
                             My schedule menu
                             <MyIcon name='left' />
                         </IconButton>
@@ -180,14 +189,14 @@ const Header = () => {
             <Menu
                 anchorEl={notiAnchorEl}
                 open={isOpenMenu}
-                onClose={onMenuButtonClickHandler}
+                onClose={onMenuButtonClickEventHandler}
             >
                 {testNotifyInfo.map((e, i) => {
                     return (
                         <MenuItem
                             key={i}
-                            sx={notificationStyle(e.isChecked)}
-                            onClick={onMenuButtonClickHandler}
+                            sx={listItemButtonStyle(e.isChecked)}
+                            onClick={onMenuButtonClickEventHandler}
                         >
                             <ListItemText
                                 align="left"
@@ -201,6 +210,42 @@ const Header = () => {
                     )
                 })}
             </Menu>
+            <Menu
+                anchorEl={msgAnchorEl}
+                open={isOepnMsg}
+                onClose={onMenuButtonClickEventHandler}
+            >
+                <List sx={msgStyle}>
+                    {testMsg.map((item, i) => {
+                        // TODO: user avatar 추가
+                        return (
+                            <ListItemButton
+                                key={i} 
+                                sx={listItemButtonStyle(item.isChecked)}
+                                alignItems="flex-start"
+                            >
+                                <ListItemText
+                                    primary={item.getFriendName()}
+                                    secondary={
+                                        <Typography
+                                            sx={msgFriendNameStyle}
+                                            component="span"
+                                            variant="body2"
+                                            color="text.primary"
+                                        >
+                                            {item.getMessage()}
+                                        </Typography>
+                                    }
+                                />
+                                <ListItemText
+                                    align="left"
+                                    secondary={item.startDate}
+                                />
+                            </ListItemButton>
+                        )}
+                    )}
+                </List>
+            </Menu>
         </Box>
     )
 }
@@ -209,6 +254,11 @@ const Header = () => {
 function doFetchUserNotification() {
     const notiArr = createNotify()
     return notiArr
+}
+
+function doFetchMessage() {
+    const msgArr = createMessage()
+    return msgArr
 }
 
 const headerBoxStyle = {
@@ -231,7 +281,7 @@ const menuInfoStyle = {
     }
 }
 
-const notificationStyle = (isChecked) => {
+const listItemButtonStyle = (isChecked) => {
     const obj = {
         display: {
             md: 'block',
@@ -241,4 +291,13 @@ const notificationStyle = (isChecked) => {
     return obj
 }
 
+const msgStyle = {
+    width: '100%', 
+    maxWidth: 360, 
+    bgcolor: 'background.paper',
+}
+
+const msgFriendNameStyle = {
+    display: 'inline',
+}
 export default Header

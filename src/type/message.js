@@ -1,0 +1,25 @@
+import ItemType from "./itemType"
+
+class Message extends ItemType {
+    constructor(msg, friendName, isChecked, startDate, endDate) {
+        super(startDate, endDate)
+        this.msg = msg
+        this.friendName = friendName
+        this.isChecked = isChecked
+    }
+
+    getMessage() {
+        return this.msg
+    }
+
+    getIsChecked() {
+        return this.isChecked
+    }
+
+    getFriendName() {
+        return this.friendName
+    }
+}
+
+Object.freeze(Message)
+export default Message
