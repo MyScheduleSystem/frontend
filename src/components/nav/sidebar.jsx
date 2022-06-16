@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
 import { Link } from 'react-router-dom'
 import { createFriendsList, createChatRoomList } from '../../dev/testData'
-import Lodash from 'lodash'
 import {
     Accordion,
     AccordionDetails,
@@ -12,10 +11,17 @@ import {
     ListItemButton,
     Typography,
 } from '@mui/material'
+import { UserContext } from '../../context/userContextProvider'
+import Lodash from 'lodash'
 
 function SideBar({ isOpen }) {
     const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
     const [selectedFriendIndex, setSelectedFriendIndex] = useState(0)
+    const { onSignoutButtonClickHandler } = useContext(UserContext)
+
+    const onSignoutBtnClickHandler = () => {
+        onSignoutButtonClickHandler()
+    }
 
     const items = [
         {
@@ -78,7 +84,7 @@ function SideBar({ isOpen }) {
             name: 'Logout',
             path: '/',
             icon: <MyIcon name='signout' />,
-            list: <ListItemButton divider={true}><Typography>Logout</Typography></ListItemButton>,
+            list: <ListItemButton divider={true} onClick={onSignoutBtnClickHandler}><Typography>Logout</Typography></ListItemButton>,
         },
     ]
 
