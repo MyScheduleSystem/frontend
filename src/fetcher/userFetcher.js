@@ -1,4 +1,8 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from 'firebase/auth'
 import { doc, setDoc } from "firebase/firestore"
 import firestore from '../service/firebase'
 import User from '../type/user'
@@ -11,9 +15,15 @@ userFetcher.signin = async function(user) {
         .then((userCredential) => {
             const userObj = userCredential.user
             const uuid = userObj.uid
-            const token = userObj.getIdToken()
-            const createdUser = User.createStorage(uuid, token)
+            const token = userObj.accessToken
+            const obj = {}
+            obj.uuid = uuid
+            obj.token = token
+            obj.email = user.email
+            const createdUser = User.createStorage(uuid, obj)
+            userStorageFetcher.createUserStorage(createdUser)
             createdUser.save()
+            return createdUser
         })
         .catch(error => console.error(error))
 }
@@ -40,18 +50,32 @@ userFetcher.signup = async (user) => {
             obj.username = user.username
             obj.name = user.name
             obj.email = user.email
-            const storage = User.createStorage(obj.uuid, obj)
-            storage.save()
         })
         .catch(error => console.error(error))
 }
 
-userFetcher.signout = () => {
-    const auth = getAuth()
-    signOut(auth)
-        .then(() => User.clearStorage())
-        .catch(error => console.error(error))
+userFetcher.signout = async () => {
+    User.clearStorage()
+}
+
+userFetcher.loginPersistence = () => {
+    if(userStorageFetcher.storage) {
+        const uuid = userStorageFetcher.uuid
+        const obj = User.userPersistence(uuid)
+        return obj
+    }
+    return null
+}
+
+const userStorageFetcher = {}
+
+userStorageFetcher.createUserStorage = (storage) => {
+    userStorageFetcher.uuid = storage.uuid
+    userStorageFetcher.storage = storage
 }
 
 Object.freeze(userFetcher)
-export default userFetcher
+export {
+    userFetcher,
+    userStorageFetcher,
+}
