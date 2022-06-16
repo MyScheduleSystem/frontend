@@ -103,15 +103,15 @@ const Header = () => {
         setIsClickInfo(closed)
     }
 
-    const onClickUserIconBtnHandler = () => {
+    const onClickUserIconButtonEventHandler = () => {
         setIsClickInfo(true)
     }
 
-    const onNotificationButtonClickHandler = (e) => {
+    const onNotificationButtonClickEventHandler = (e) => {
         setNotiAnchorEl(e.currentTarget)
     }
 
-    const onMenuButtonClickHandler = () => {
+    const onMenuButtonClickEventHandler = () => {
         setNotiAnchorEl(null)
         setMsgAnchorEl(null)
     }
@@ -153,7 +153,7 @@ const Header = () => {
                             <IconButton
                                 size="large"
                                 color="inherit"
-                                onClick={onNotificationButtonClickHandler}
+                                onClick={onNotificationButtonClickEventHandler}
                             >
                                 <Badge badgeContent={testNotifyInfo.length} color="error">
                                     <MyIcon name="notification" />
@@ -163,7 +163,7 @@ const Header = () => {
                                 size="large"
                                 edge="end"
                                 color="inherit"
-                                onClick={onClickUserIconBtnHandler}
+                                onClick={onClickUserIconButtonEventHandler}
                             >
                                 <MyIcon name="user" />
                             </IconButton>
@@ -189,14 +189,14 @@ const Header = () => {
             <Menu
                 anchorEl={notiAnchorEl}
                 open={isOpenMenu}
-                onClose={onMenuButtonClickHandler}
+                onClose={onMenuButtonClickEventHandler}
             >
                 {testNotifyInfo.map((e, i) => {
                     return (
                         <MenuItem
                             key={i}
                             sx={listItemButtonStyle(e.isChecked)}
-                            onClick={onMenuButtonClickHandler}
+                            onClick={onMenuButtonClickEventHandler}
                         >
                             <ListItemText
                                 align="left"
@@ -213,7 +213,7 @@ const Header = () => {
             <Menu
                 anchorEl={msgAnchorEl}
                 open={isOepnMsg}
-                onClose={onMenuButtonClickHandler}
+                onClose={onMenuButtonClickEventHandler}
             >
                 <List sx={msgStyle}>
                     {testMsg.map((item, i) => {
