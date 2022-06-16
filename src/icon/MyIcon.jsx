@@ -61,5 +61,3 @@ function getIconName(name) {
 }
 
 export default MyIcon
-
-var ob = {}
