@@ -15,6 +15,7 @@ import {
 
 function SideBar({ isOpen }) {
     const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
+    const [selectedFriendIndex, setSelectedFriendIndex] = useState(0)
 
     const items = [
         {
@@ -23,7 +24,8 @@ function SideBar({ isOpen }) {
             list: (() => {
                 const friends = doFriendsFetchResult.call(this)
                 return friends.allFriends.map((f, i) => {
-                    const onClickFriendButtonHandler = (isChecked) => () => {
+                    const onClickFriendButtonHandler = (isChecked, i) => () => {
+                        setSelectedFriendIndex(i)
                         setIsOpenUserPopup(isChecked)
                     }
 
@@ -41,7 +43,7 @@ function SideBar({ isOpen }) {
                             <MyInfoPopup
                                 isClickInfo={isOpenUserPopup}
                                 onCloseEvent={onCloseFriendButtonHandler}
-                                user={friends.allFriends[i]}
+                                user={friends.allFriends[selectedFriendIndex]}
                             />
                         </Box>
                     )
