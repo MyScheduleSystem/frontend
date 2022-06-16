@@ -10,7 +10,7 @@ import {
     faBell, faEnvelope, faRadio,
     faXmark, faEllipsisV, faShareAlt,
     faComment, faAngleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 import ErrorUtil from "../util/errorUtil"
 
 // 2022-05-07 FoxMon(김준호)
@@ -61,3 +61,5 @@ function getIconName(name) {
 }
 
 export default MyIcon
+
+var ob = {}
