@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react"
+import {
+    useState,
+    useEffect,
+    useCallback,
+} from "react"
 import Calendar from "react-calendar"
 import Lodash from "lodash"
 import DateType from "../../type/dateType"
@@ -43,15 +47,15 @@ function MyCalendar() {
         setSideDate(rtnObj)
     }
 
-    const onCloseEventHandler = (closed) => {
+    const onCloseEventHandler = useCallback((closed) => {
         setIsClickModal(closed)
-    }
+    }, [])
 
-    const onAddTodoListEventHandler = (addedItem) => {
+    const onAddTodoListEventHandler = useCallback((addedItem) => {
         const arr = addedItem.map(e => new TodoItem(e.title, e.content, e.startDate, e.endDate))
         allTodoItems[selectedDate] = arr
         // TODO: Fetch saveed result to server
-    }
+    }, [allTodoItems, selectedDate])
 
     return (
         <Box sx={mainBoxSizeStyle}>
@@ -95,7 +99,7 @@ export default MyCalendar;
 
 const mainBoxSizeStyle = {
     display: 'flex',
-    justifyContent: 'space-between',  
+    justifyContent: 'space-between',
     width: '100%',
 }
 
