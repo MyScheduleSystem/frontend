@@ -23,7 +23,7 @@ function UserContextProvider({ children }) {
     }, [])
 
     // google 로그인을 권장한 후, 추가적인 user의 정보를 수집해야 할 것 같다.
-    const onSignupEventHandler = (user) => {
+    const onSignupEventHandler = useCallback((user) => {
         const obj = {}
         obj.username = user.username
         obj.name = user.name
@@ -33,16 +33,16 @@ function UserContextProvider({ children }) {
         // TODO: 성공 시 어떻게?
         if(result) return
         else setIsUserFailed(true)
-    }
+    }, [])
 
-    const onSigninEventHandler = (user) => {
+    const onSigninEventHandler = useCallback((user) => {
         const obj = {}
         obj.email = user.email
         obj.password = user.password
         const result = userFetcher.signin(obj)
         if(result) setUserObj(() => Object.assign({}, userFetcher.loginPersistence()))
         else setIsUserFailed(true)
-    }
+    }, [])
 
     const onSignoutButtonClickHandler = useCallback(() => {
         userFetcher
