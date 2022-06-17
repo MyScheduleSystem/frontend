@@ -5,7 +5,7 @@ import ErrorUtil from '../util/errorUtil';
 class User extends UserType {
     constructor(uuid, nickname, token, infoMessage, email, name) {
         ErrorUtil.invalidParameter(token)
-        super(uuid, nickname, infoMessage, email, name)
+        super(uuid, nickname, infoMessage, email, name, 'user')
         this.token = token
     }
 }
