@@ -146,7 +146,9 @@ useState(setState의) 동작 이해
             ex) onTitleChangeHandler = (e) => {} 이 부분을 onTitleChangeHandler = useCallback((e) => {}, []) 이렇게 변경했다. => 메모이제이션된 콜백을 반환한다.
         - 두 번째 전달되는 parameter는 의존성 값을 전달한다. 즉 이 부분이 변경된다면 callback의 의존성이 변경된다는 의미이다.
 
-    Sidebar menu중 Friends List에 friend name 클릭시 제대로 된 index가 가져오질 않음 (미해결) 
+    Sidebar menu중 Friends List에 friend name 클릭시 제대로 된 index가 가져오질 않음 (미해결) => 이거 해결 됐음(state로 해결했음. 내용 추가 필요).
+
+    Logout 실행 후 새로고침 하면 signinForm이 나오지 않고 calendar가 나오는 오류 발생 (미해결)
 ```
 
 ## 개발 회고록
