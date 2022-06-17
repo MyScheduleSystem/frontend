@@ -16,12 +16,16 @@ class Storage {
     getToken() {
         // uuid 없이 token에 접근하려는 경우 예외처리
         ErrorUtil.invalidParameter(this.uuid)
-        return localStorage.getItem(this.uuid)
+        return JSON.parse(localStorage.getItem(this.uuid))
     }
 
     clear() {
         localStorage.clear()
     }
+}
+
+Storage.checkPersistenceUser = function(uuid) {
+    return JSON.parse(localStorage.getItem(uuid))
 }
 
 Object.freeze(Storage)
