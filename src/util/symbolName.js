@@ -8,7 +8,7 @@ class SymbolName {
 }
 
 SymbolName.freezeObject = function(obj, thisObj) {
-    if(obj.constructor == thisObj) {
+    if(obj.constructor === thisObj) {
         Object.freeze(obj)
     }
 }
