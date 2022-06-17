@@ -1,9 +1,11 @@
 import ArrayUtil from "../util/arrayUtil"
 import ErrorUtil from "../util/errorUtil"
+import SymbolName from "../util/symbolName"
 import Friend from "./friend"
 
-class _FriendList {
+class _FriendList extends SymbolName {
     constructor(friendListArray) {
+        super('friendList')
         this.$_friendListArray = friendListArray
     }
 
