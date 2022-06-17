@@ -5,7 +5,7 @@ import ErrorUtil from '../util/errorUtil'
 
 class ChatRoom extends ChatRoomType {
     constructor(uuid, name, users) {
-        super(uuid, name)
+        super(uuid, name, 'chatRoom')
         // Users는 반드시 있어야 한다.
         ErrorUtil.assert(ArrayUtil.isEmpty(users) === false, 'User must be exist!')
         // 모든 Users는 User의 타입과 같아야 한다.
