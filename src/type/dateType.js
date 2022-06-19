@@ -65,5 +65,14 @@ DateType.castToMonth = function(month) {
     return changedMonth
 }
 
+DateType.isBetween = function(now, prev, next) {
+    const between =  DateUtil.isBetween(now, prev, next)
+    return between
+}
+
+DateType.lastDayOfMonth = function(day) {
+    
+}
+
 Object.freeze(DateType)
 export default DateType

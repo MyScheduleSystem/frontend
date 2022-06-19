@@ -51,9 +51,9 @@ function create(calendarSpecJson) {
         '2022-06-01', '2022-06-02', '2022-06-03', '2022-06-04', '2022-06-05',
         '2022-06-06', '2022-06-07', '2022-06-08', '2022-06-09', '2022-06-10',
         '2022-06-11', '2022-06-12', '2022-06-13', '2022-06-14', '2022-06-15',
-        '2022-06-16', '2022-06-17', '2022-06-18', '2022-06-19', '2022-06-22',
-        '2022-06-23', '2022-06-24', '2022-06-25', '2022-06-26', '2022-06-27',
-        '2022-06-28', '2022-06-29', '2022-06-30',
+        '2022-06-16', '2022-06-17', '2022-06-18', '2022-06-19', '2022-06-20',
+        '2022-06-21', '2022-06-22', '2022-06-23', '2022-06-24', '2022-06-25', 
+        '2022-06-26', '2022-06-27', '2022-06-28', '2022-06-29', '2022-06-30',
     ]
     calendarSpecJson = {}
     testDays.forEach((e, i) => {
@@ -66,7 +66,11 @@ function create(calendarSpecJson) {
         todoObj.isCompleted = (i % 2 === 0) ? true : false
         calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate, todoObj.isCompleted))
     })
-    calendarSpecJson['2022-06-13'].push(new TodoItem('Todo test100', 'Todo test100', '2022-06-13', '2022-06-13', false))
+    calendarSpecJson['2022-06-19'] = []
+    calendarSpecJson['2022-06-19'].push(new TodoItem('Todo test velo', 'Todo test100', '2022-06-19', '2022-06-20', false))
+    calendarSpecJson['2022-06-22'] = []
+    calendarSpecJson['2022-06-22'].push(new TodoItem('Todo test velo', 'Todo test100', '2022-06-22', '2022-06-23', false))
+    // console.log(calendarSpecJson)
     return calendarSpecJson
 }
 

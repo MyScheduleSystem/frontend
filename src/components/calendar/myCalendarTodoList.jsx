@@ -6,6 +6,7 @@ import {
 }  from '@mui/material'
 
 const MyCalendarTodoList = ({ todoItems }) => {
+    console.log(todoItems['2022-06-22'])
     return (
         <Box sx={todoListBoxStyle}>
             {todoItems && todoItems.map((item, i) => {
@@ -29,6 +30,7 @@ const MyCalendarTodoList = ({ todoItems }) => {
         </Box>
     )
 }
+
 
 const todoListBoxStyle = {
     boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0.1)',
