@@ -2,15 +2,20 @@ import UserActionType from './action/userActionType'
 import ErrorUtil from "../util/errorUtil"
 
 const UserReducer = {}
+
+UserReducer.type = "userReducer"
+
 const UserInitialState = {}
 
-UserReducer.name = "userReducer"
+UserInitialState.type = "userInitialState"
+UserInitialState.refreshToken = null
+UserInitialState.accessToken = null
+UserInitialState.authenticated = false
 
-UserReducer.initUserReducerState = function() {
+UserReducer.clearUserState = function() {
     UserInitialState.refreshToken = null
     UserInitialState.accessToken = null
     UserInitialState.authenticated = false
-    return UserInitialState
 }
 
 // input: action => object,
@@ -18,13 +23,13 @@ UserReducer.initUserReducerState = function() {
 // access => authenticated: true, rejected => authenticated: false
 UserReducer.userReducer = function(state, action) {
     switch(action.type) {
-        case UserActionType.type.signin:
+        case UserActionType.type.signup:
             ErrorUtil.invalidParameter(action.result)
             return {
                 authenticated: action.result,
             }
 
-        case UserActionType.type.signup:
+        case UserActionType.type.signin:
             ErrorUtil.invalidParameter(action.accessToken)
             ErrorUtil.invalidParameter(action.refreshToken)
             ErrorUtil.invalidParameter(action.result)
@@ -36,6 +41,7 @@ UserReducer.userReducer = function(state, action) {
             }
 
         case UserActionType.type.signout:
+            UserReducer.clearUserState()
             return null
 
         default:
