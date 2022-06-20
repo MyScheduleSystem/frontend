@@ -12,6 +12,7 @@ import {
     InputLabel,
     Button,
     Divider,
+    CardMedia,
 } from '@mui/material'
 import Lodash from 'lodash'
 
@@ -176,6 +177,11 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
                 ]}
             />
             <Container sx={signupContainer}>
+                <CardMedia
+                    sx={cardMediaFontStyle}
+                    component="img"
+                    image={`/images/mss.png`}
+                />
                 <FormGroup sx={formStyle}>
                     <FormControl variants="standard" sx={formControltyle}>
                         <InputLabel>
@@ -265,7 +271,7 @@ const container = {
 }
 
 const signupContainer = {
-    marginTop: '4rem',
+    marginTop: '2rem',
     border: 1,
     width: '50%',
     boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
@@ -282,6 +288,13 @@ const formControltyle = {
 const buttonBoxStyle = {
     border: 1,
     textAlign: 'center',
+}
+
+const cardMediaFontStyle = {
+    margin: '0 auto',
+    mb: 2,
+    mt: 2,
+    width: '250px',
 }
 
 export default SignupForm
