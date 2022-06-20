@@ -1,9 +1,11 @@
 import ChatRoom from "./chatRoom"
 import ErrorUtil from "../util/errorUtil"
 import ArrayUtil from "../util/arrayUtil"
+import SymbolName from "../util/symbolName"
 
-class _ChatRoomList {
+class _ChatRoomList extends SymbolName {
     constructor(chatRoomList) {
+        super('chatRoomList')
         this.$_chatRoomList = chatRoomList
     }
 

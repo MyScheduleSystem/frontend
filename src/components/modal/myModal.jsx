@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState, useCallback } from "react"
 import CardModal from './cardModal'
 import CardEditModal from "./cardEditModal"
 import CardItem from '../card/CardItem'
@@ -25,18 +25,18 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
         setIsOpenCardModal(isShow)
     }
 
-    const onCardModalCloseHandler = (isClose) => {
+    const onCardModalCloseHandler = useCallback((isClose) => {
         setIsOpenCardModal(isClose)
-    }
+    }, [])
 
-    const onAddTodoItem = (addedItem) => {
+    const onAddTodoItemEventHandler = useCallback((addedItem) => {
         todoItemList.push({
             title: addedItem.title,
             content: addedItem.content,
             startDate: addedItem.startDate,
             endDate: addedItem.endDate,
         })
-    }
+    }, [todoItemList])
 
     const onSaveButtonClickHandler = () => {
         const addedItem = todoItemList.slice()
@@ -47,33 +47,33 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
         onCloseEvent(false)
     }
 
-    const onEditModeEnterEventHandler = (isClicked, item) => {
+    const onEditModeEnterEventHandler = useCallback((isClicked, item) => {
         setEditmode(isClicked)
         const obj = {}
         obj.title = item[0]
         obj.content = item[2]
         setEditTodoItem(() => Lodash.cloneDeep(obj))
-    }
+    }, [])
 
-    const onEditTodoItemEventHandler = (prev, editedItem) => {
+    const onEditTodoItemEventHandler = useCallback((prev, editedItem) => {
         const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
         todoItemList[find] = editedItem
         setTodoItemList(() => [...todoItemList])
-    }
+    }, [todoItemList])
 
-    const onEditModeExitEventHandler = (isClose) => {
+    const onEditModeExitEventHandler = useCallback((isClose) => {
         setEditmode(isClose)
-    }
+    }, [])
 
-    const onRemoveCardEventHandler = (i, isOpen) => {
+    const onRemoveCardEventHandler = useCallback((i, isOpen) => {
         setIsOpenAlert(isOpen)
         setRemoveIndex(i)
-    }
+    }, [])
 
-    const onRemoveEventHandler = (isChecked) => {
+    const onRemoveEventHandler = useCallback((isChecked) => {
         if(isChecked) setTodoItemList(() => todoItemList.filter((e, index) => removeIndex !== index))
         setIsOpenAlert(false)
-    }
+    }, [todoItemList, removeIndex])
 
     return (
         <>
@@ -109,7 +109,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
                     <CardModal
                         isCardModalShow={isOpenCardModal}
                         onCardModalCloseEvent={onCardModalCloseHandler}
-                        onAddTodoItemEvent={onAddTodoItem}
+                        onAddTodoItemEvent={onAddTodoItemEventHandler}
                     />
                     <CardEditModal
                         editTodoItem={editTodoItem}

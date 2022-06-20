@@ -1,7 +1,9 @@
+import SymbolName from '../util/symbolName'
 import ErrorUtil from '../util/errorUtil'
 
-class UserType {
-    constructor(uuid, nickname, infoMessage, email, name) {
+class UserType extends SymbolName {
+    constructor(uuid, nickname, infoMessage, email, name, typeName) {
+        super(typeName)
         ErrorUtil.invalidParameter(uuid)
         this.uuid = uuid
         this.nickname = nickname

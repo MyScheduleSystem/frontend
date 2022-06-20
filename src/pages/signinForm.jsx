@@ -11,7 +11,7 @@ import {
     InputLabel,
     Typography,
     Button,
-    Divider,
+    CardMedia,
 } from '@mui/material'
 
 const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent }) => {
@@ -71,42 +71,62 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
 
     return (
         <Container sx={signinContainer}>
-            <FormGroup sx={formStyle}>
-                <FormControl variants="standard" sx={formControltyle}>
-                    <InputLabel>
-                        With a start your email
-                    </InputLabel>
-                    <Input
-                        type="email"
-                        error={isValidUserInfo.email}
-                        inputRef={textRef}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <MyIcon name="user" />
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
-                <FormControl variants="standard" sx={formControltyle}>
-                    <InputLabel>
-                        Enter your password
-                    </InputLabel>
-                    <Input
-                        type="password"
-                        error={isValidUserInfo.password}
-                        inputRef={passwordRef}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <MyIcon name="password" />
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
-                <Box sx={buttonBoxStyle}>
-                    <Button onClick={onSigninButtonClickHandler}>login</Button>
-                    <Divider />
-                    <Typography>NO ACCOUNT ?</Typography>
-                    <Divider />
+            <Box>
+                <CardMedia
+                    sx={imgBoxStyle}
+                    component="img"
+                    image={`/images/signin.png`}
+                />
+            </Box>
+            <Box sx={signinBoxStyle}>
+                <Box sx={signinFormStyle}>
+                    <FormGroup sx={formStyle}>
+                        <CardMedia
+                            sx={cardMediaFontStyle}
+                            component="img"
+                            image={`/images/mss.png`}
+                        />
+                        <FormControl variants="outlined" sx={formControltyle}>
+                            <InputLabel> With a start your email </InputLabel>
+                            <Input
+                                type="email"
+                                error={isValidUserInfo.email}
+                                inputRef={textRef}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <MyIcon name="user" />
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <FormControl variants="standard" sx={formControltyle}>
+                            <InputLabel>
+                                Enter your password
+                            </InputLabel>
+                            <Input
+                                type="password"
+                                error={isValidUserInfo.password}
+                                inputRef={passwordRef}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <MyIcon name="password" />
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <Button 
+                            variant="contained" 
+                            onClick={onSigninButtonClickHandler}
+                        >
+                            login
+                        </Button>
+                        <Button>Login From Google</Button>
+                        <Button>Forgive Password</Button>
+                        
+                    </FormGroup>
+                </Box>
+                <Box sx={signupBoxStyle}>
+                    <Typography>NO ACCOUNT?</Typography>
                     <Button onClick={onRegisterButtonClickHandler(false)}>register</Button>
                     <AlertPopup
                         isShowPopup={isShowPopup}
@@ -114,29 +134,55 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                         message="Check your input information"
                     />
                 </Box>
-            </FormGroup>
+            </Box>
         </Container>
     )
 }
 
 const signinContainer = {
-    marginTop: '8rem',
-    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '5rem',
+    width: '48%',
+    height: '100%',
+}
+
+const signinBoxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+}
+
+const signinFormStyle = {
     border: 1,
-    width: '50%',
+    height: '80%',
+}
+
+const signupBoxStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 1,
+    height: '15%',
+}
+
+const imgBoxStyle = {
+    width: '90%',
+    height: '100%',
+    objectFit: 'cover',
+}
+
+const cardMediaFontStyle = {
+    width: '250px',
 }
 
 const formStyle = {
-    margin: '10px',
+    margin: '45px',
 }
 
 const formControltyle = {
+    marginTop: '1rem',
     marginBottom: '10px',
-}
-
-const buttonBoxStyle = {
-    border: 1,
-    textAlign: 'center',
 }
 
 export default SigninForm

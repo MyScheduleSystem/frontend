@@ -3,11 +3,15 @@ import {
     useState,
     useMemo,
     useCallback,
-    useEffect,
+    useReducer,
 } from 'react'
 import SignupForm from '../pages/signupForm'
 import SigninForm from '../pages/signinForm'
-import { userFetcher } from '../fetcher/userFetcher'
+import UserActionType from '../reducer/action/userActionType'
+import { UserReducer, UserInitialState } from '../reducer/userReducer'
+import userFetcher from '../fetcher/userFetcher'
+import User from '../type/user'
+import Lodash from 'lodash'
 
 export const UserContext = createContext({})
 
@@ -17,37 +21,51 @@ function UserContextProvider({ children }) {
     const [userObj, setUserObj] = useState(null)
     const [isSignin, setIsSignin] = useState(false)
     const [isUserFailed, setIsUserFailed] = useState(false)
-
-    useEffect(() => {
-        setUserObj(() => Object.assign({}, userFetcher.loginPersistence()))
-    }, [])
+    const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
 
     // google 로그인을 권장한 후, 추가적인 user의 정보를 수집해야 할 것 같다.
-    const onSignupEventHandler = (user) => {
+    const onSignupEventHandler = useCallback((user) => {
         const obj = {}
         obj.username = user.username
         obj.name = user.name
         obj.email = user.email
         obj.password = user.password
         const result = userFetcher.signup(obj)
-        // TODO: 성공 시 어떻게?
-        if(result) return
+        if(result) setIsSignin(true)
         else setIsUserFailed(true)
-    }
+    }, [])
 
-    const onSigninEventHandler = (user) => {
+    const onSigninEventHandler = useCallback(async (user) => {
         const obj = {}
         obj.email = user.email
         obj.password = user.password
-        const result = userFetcher.signin(obj)
-        if(result) setUserObj(() => Object.assign({}, userFetcher.loginPersistence()))
-        else setIsUserFailed(true)
-    }
+        const response = await userFetcher.signin(obj)
+        if(!response.authenticated) {
+            setIsUserFailed(true)
+            return
+        }
+        const userObj = {}
+        userObj.fetchOption = {}
+        userObj.refreshToken = response.refreshToken
+        userObj.accessToken = response.accessToken
+        userObj.authenticated = response.authenticated
+        userObj.fetchOption.uuid = response.uuid
+        userDispatch({
+            type: UserActionType.type.signin,
+            state: userState,
+            action: userObj,
+        })
+        User.saveRefreshStorage(userState.refreshToken)
+        setUserObj(Lodash.cloneDeep(userState))
+    }, [userState])
 
     const onSignoutButtonClickHandler = useCallback(() => {
         userFetcher
             .signout()
-            .then(() => setUserObj(null))
+            .then(() => {
+                setUserObj(null)
+                userDispatch({ type: UserActionType.type.signout })
+            })
     }, [])
 
     const onClickUserServiceButtonEvent = (isChecked) => {
@@ -61,7 +79,7 @@ function UserContextProvider({ children }) {
 
     return (
         <UserContext.Provider value={userContextObj}>
-            {userObj ?
+            {User.checkForUserPersistence() ?
                 children :
                 isSignin === false ?
                     <SignupForm

@@ -95,7 +95,7 @@ export function createChatRoomList() {
     const arr = []
     const users = []
     for(let i = 0; i < 5; i++) {
-        users.push(new User(i, `FoxMon${i}`, `1234@@!1234${i + 100}`))
+        users.push(new User(i, `FoxMon${i}`, '상메1', `FoxMon@1234${i + 100}`, `FoxMon${i + 1}`))
     }
     for(let i = 0; i < 10; i++) {
         arr.push(new ChatRoom(i + 1, `${name}${i + 1}`, users))
