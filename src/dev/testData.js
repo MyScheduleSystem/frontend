@@ -68,6 +68,7 @@ function create(calendarSpecJson) {
     })
     calendarSpecJson['2022-06-19'] = []
     calendarSpecJson['2022-06-19'].push(new TodoItem('Todo test velo', 'Todo test100', '2022-06-19', '2022-06-20', false))
+    calendarSpecJson['2022-06-19'].push(new TodoItem('Todo test velo', 'Todo test100', '2022-06-19', '2022-06-30', false))
     calendarSpecJson['2022-06-22'] = []
     calendarSpecJson['2022-06-22'].push(new TodoItem('Todo test velo', 'Todo test100', '2022-06-22', '2022-06-23', false))
     // console.log(calendarSpecJson)
