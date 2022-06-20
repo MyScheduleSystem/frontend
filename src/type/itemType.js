@@ -1,8 +1,10 @@
+import SymbolName from '../util/symbolName'
 import DateType from './dateType'
 import ErrorUtil from '../util/errorUtil'
 
-class ItemType {
-    constructor(startDate, endDate) {
+class ItemType extends SymbolName {
+    constructor(startDate, endDate, name) {
+        super(name)
         this.startDate = startDate
         this.endDate = endDate
         ErrorUtil.typeCheck(startDate, 'string')
@@ -22,4 +24,5 @@ class ItemType {
     }
 }
 
+Object.freeze(ItemType)
 export default ItemType

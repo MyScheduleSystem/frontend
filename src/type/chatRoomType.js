@@ -1,5 +1,8 @@
-class ChatRoomType {
-    constructor(uuid, name) {
+import SymbolName from "../util/symbolName"
+
+class ChatRoomType extends SymbolName {
+    constructor(uuid, name, typeName) {
+        super(typeName)
         this.uuid = uuid
         this.name = name
         this.isGroupChat = null
@@ -19,4 +22,5 @@ class ChatRoomType {
     }
 }
 
+Object.freeze(ChatRoomType)
 export default ChatRoomType

@@ -3,26 +3,22 @@ import Storage from '../storage/storage';
 import ErrorUtil from '../util/errorUtil';
 
 class User extends UserType {
-    constructor(uuid, nickname, token, infoMessage, email, name) {
-        ErrorUtil.invalidParameter(token)
-        super(uuid, nickname, infoMessage, email, name)
-        this.token = token
+    constructor(uuid, nickname, infoMessage, email, name) {
+        super(uuid, nickname, infoMessage, email, name, 'user')
+        ErrorUtil.invalidParameter(uuid)
     }
 }
 
-User.createStorage = function(uuid, obj) {
-    ErrorUtil.invalidParameter(uuid)
-    ErrorUtil.invalidParameter(obj)
-    const storage = new Storage(uuid, obj)
-    return storage
+User.saveRefreshStorage = function(refreshToken) {
+    Storage.saveRefershToken(refreshToken)
 }
 
-User.userPersistence = function(uuid) {
-    return Storage.checkPersistenceUser(uuid)
+User.checkForUserPersistence = function() {
+    return Storage.checkPersistenceUser()
 }
 
 User.clearStorage = function() {
-    new Storage().clear()
+    Storage.clear()
 }
 
 Object.freeze(User)
