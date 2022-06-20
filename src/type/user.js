@@ -13,8 +13,8 @@ User.saveRefreshStorage = function(refreshToken) {
     Storage.saveRefershToken(refreshToken)
 }
 
-User.checkForUserPersistence = function(uuid) {
-    return Storage.checkPersistenceUser(uuid)
+User.checkForUserPersistence = function() {
+    return Storage.checkPersistenceUser()
 }
 
 User.clearStorage = function() {
