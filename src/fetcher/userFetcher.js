@@ -11,25 +11,24 @@ const userFetcher = {}
 
 userFetcher.signin = async function(user) {
     const auth = getAuth()
-    signInWithEmailAndPassword(auth, user.email, user.password)
+    return signInWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             const userObj = userCredential.user
             const uuid = userObj.uid
             const token = userObj.accessToken
+            const refreshToken = userObj.stsTokenManager.refreshToken
             const obj = {}
             obj.uuid = uuid
-            obj.token = token
-            obj.email = user.email
-            const createdUser = User.createStorage(uuid, obj)
-            userStorageFetcher.createUserStorage(createdUser)
-            createdUser.save()
-            return createdUser
+            obj.refreshToken = refreshToken
+            obj.accessToken = token
+            obj.authenticated = true
+            return obj
         })
         .catch(error => console.error(error))
 }
 
 // TODO: 400에러가 있는데 도무지 이유를 모르겠다.
-// firestore password 해시처리
+// TODO: firestore password 해시처리
 userFetcher.signup = async (user) => {
     const auth = getAuth()
     createUserWithEmailAndPassword(auth, user.email, user.password)
