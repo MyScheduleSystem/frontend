@@ -57,24 +57,5 @@ userFetcher.signout = async () => {
     User.clearStorage()
 }
 
-userFetcher.loginPersistence = () => {
-    if(userStorageFetcher.storage) {
-        const uuid = userStorageFetcher.uuid
-        const obj = User.userPersistence(uuid)
-        return obj
-    }
-    return null
-}
-
-const userStorageFetcher = {}
-
-userStorageFetcher.createUserStorage = (storage) => {
-    userStorageFetcher.uuid = storage.uuid
-    userStorageFetcher.storage = storage
-}
-
 Object.freeze(userFetcher)
-export {
-    userFetcher,
-    userStorageFetcher,
-}
+export default userFetcher

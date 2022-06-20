@@ -18,6 +18,8 @@ UserReducer.clearUserState = function() {
     UserInitialState.refreshToken = null
     UserInitialState.accessToken = null
     UserInitialState.authenticated = false
+    UserInitialState.fetchOption = {}
+    UserInitialState.fetchOption.uuid = null
 }
 
 // input: action => object,
@@ -25,11 +27,6 @@ UserReducer.clearUserState = function() {
 // access => authenticated: true, rejected => authenticated: false
 UserReducer.userReducer = function(state, action) {
     switch(action.type) {
-        case UserActionType.type.signup:
-            return {
-                authenticated: action.result,
-            }
-
         case UserActionType.type.signin: {
             const obj = action.action
             ErrorUtil.invalidParameter(obj.accessToken)
