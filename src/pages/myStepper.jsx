@@ -8,6 +8,7 @@ import {
     Button,
 } from '@mui/material'
 
+// props: steps => Array
 function MyStepper({ steps }) {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState({})
@@ -105,19 +106,19 @@ function MyStepper({ steps }) {
                         </Button>
                         {activeStep !== steps.length &&
                             (completed[activeStep] ? (
-                            <Typography
-                                variant="caption"
-                                sx={completedStyle}
-                            >
-                                Step {activeStep + 1} already completed
-                            </Typography>
+                                <Typography
+                                    variant="caption"
+                                    sx={completedStyle}
+                                >
+                                    Step {activeStep + 1} already completed
+                                </Typography>
                             ) : (
-                            <Button onClick={onCompletedButtonClickEventHandler}>
-                                {compledtedStepLength() === totalStepLength() - 1
-                                    ? 'Finish'
-                                    : 'Complete Step'}
-                            </Button>
-                        ))}
+                                <Button onClick={onCompletedButtonClickEventHandler}>
+                                    {compledtedStepLength() === totalStepLength() - 1
+                                        ? 'Finish'
+                                        : 'Complete Step'}
+                                </Button>
+                            ))}
                     </Box>
                 </Box>
             )}
