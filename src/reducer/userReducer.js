@@ -36,7 +36,7 @@ UserReducer.userReducer = function(state, action) {
             ErrorUtil.invalidParameter(obj.refreshToken)
             ErrorUtil.invalidParameter(obj.fetchOption.uuid)
             state.accessToken = obj.accessToken
-            state.refreshToken = obj.refreshToekn
+            state.refreshToken = obj.refreshToken
             state.fetchOption.uuid = obj.fetchOption.uuid
             state.authenticated = obj.authenticated
             return {
