@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback } from 'react'
 import MyIcon from '../icon/MyIcon'
+import MyStepper from './myStepper'
 import AlertPopup from '../components/popup/alertPopup'
 import {
     Container,
@@ -167,6 +168,13 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
 
     return (
         <Container sx={container}>
+            <MyStepper
+                steps={[
+                        'Create with Google',
+                        'Enter your information',
+                        'Create MSS account!',
+                ]}
+            />
             <Container sx={signupContainer}>
                 <FormGroup sx={formStyle}>
                     <FormControl variants="standard" sx={formControltyle}>
@@ -257,7 +265,7 @@ const container = {
 }
 
 const signupContainer = {
-    marginTop: '8rem',
+    marginTop: '4rem',
     border: 1,
     width: '50%',
     boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
