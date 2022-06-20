@@ -6,7 +6,7 @@ import {
     Divider,
 }  from '@mui/material'
 
-const MyCalendarCompleteList = ({ item }) => {
+const MyCalendarUnCompleteList = ({ item }) => {
     return (
         <Box sx={todoListBoxStyle}>
             {item.map((e, i) => {
@@ -32,4 +32,4 @@ const todoListBoxStyle = {
     borderRadius: "10px 10px 10px 10px",
 }
 
-export default MyCalendarCompleteList
+export default MyCalendarUnCompleteList

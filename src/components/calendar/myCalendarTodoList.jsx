@@ -1,36 +1,52 @@
+import { useCallback } from 'react'
 import MyCalendarCompleteList from './myCalendarCompleteList'
+import MyCalendarUnCompleteList from './myCalendarUnCompleteList'
 import { 
     Box,
     List, 
     ListItemText,
 }  from '@mui/material'
+import DateType from "../../type/dateType"
+import Lodash from 'lodash'
 
 const MyCalendarTodoList = ({ todoItems }) => {
-    console.log(todoItems['2022-06-22'])
+    const dataForCompletedRender = useCallback((todoItems) => {
+        const arr = []
+        Lodash.forEach(todoItems, (todo) => {
+            todo.forEach(e => {
+                if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate) && e.isCompleted) {
+                    arr.push(e)
+                }
+            })
+        })
+        return arr
+    }, [])
+
+    const dataForUnCompletedRender = useCallback((todoItems) => {
+        const arr = []
+        Lodash.forEach(todoItems, (todo) => {
+            todo.forEach(e => {
+                if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate) && !e.isCompleted) {
+                    arr.push(e)
+                }
+            })
+        })
+        return arr
+    }, [])
+
     return (
         <Box sx={todoListBoxStyle}>
-            {todoItems && todoItems.map((item, i) => {
-                return (
-                    item.isCompleted ? 
-                    <List 
-                        key={i}
-                        sx={todoListStyle}
-                    >
-                        <ListItemText primary="Completed" />
-                        <MyCalendarCompleteList item={item} />
-                    </List> :
-                    <List 
-                        key={i}
-                        sx={todoListStyle}
-                    >
-                        <ListItemText primary="Uncompleted" />
-                        <MyCalendarCompleteList item={item} /> 
-                </List>
-            )})}
+            <List sx={todoListStyle}>
+                <ListItemText primary="Completed" />
+                <MyCalendarCompleteList item={dataForCompletedRender(todoItems)} />
+            </List>
+            <List sx={todoListStyle}>
+                <ListItemText primary="UnCompleted" />
+                <MyCalendarUnCompleteList item={dataForUnCompletedRender(todoItems)} />
+            </List>
         </Box>
     )
 }
-
 
 const todoListBoxStyle = {
     boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0.1)',

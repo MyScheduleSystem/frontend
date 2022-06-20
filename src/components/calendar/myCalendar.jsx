@@ -16,7 +16,6 @@ import { Box } from "@mui/material"
 function MyCalendar() {
     const [isClickModal, setIsClickModal] = useState(false)
     const [allTodoItems, setAllTodoItems] = useState({})
-    const [todoListItems, setTodoListItems] = useState([])
     const [selectedDate, setSelectedDate] = useState(null)
     const [sideDate, setSideDate] = useState({
         year: DateType.getYear(DateType.createDate()),
@@ -26,7 +25,6 @@ function MyCalendar() {
 
     useEffect(() => {
         setTodoItemList.call(this, setAllTodoItems)
-        setTodoList.call(this, setTodoListItems)
     }, [])
 
     const onClickDayEventHandler = (e) => {
@@ -78,8 +76,7 @@ function MyCalendar() {
             </Box>
             <Box sx={myTodoListStyle}>
                 <MyCalendarTodoList
-                    // todoItems={allTodoItems[DateType.createDate()]}
-                    todoItems={todoListItems}
+                    todoItems={allTodoItems}
                 />
             </Box>
         </Box>
@@ -97,24 +94,6 @@ function setTodoItemList(setAllTodoItems) {
         })
     })
     setAllTodoItems(() => Lodash.cloneDeep(todoObj))
-}
-
-function setTodoList(setTodoListItems) {
-    const todoList = calenderFetcher.getTodoFetchResult()
-    const todoArr = []
-    Lodash.forEach(todoList, (list, dayKey) => {
-        list.forEach((item) => {
-            if(DateType.isBetween(item.startDate, DateType.createDate(), '2022-06-30')){
-                todoArr[dayKey] = []
-                const obj = new TodoItem(item.title, item.content, item.startDate, item.endDate, item.isCompleted)
-                obj.today = DateType.createDate()
-                todoArr[dayKey].push(obj)
-            }
-            else return
-        })
-    })
-    console.log(todoArr)
-    setTodoListItems(todoArr)
 }
 
 export default MyCalendar;
