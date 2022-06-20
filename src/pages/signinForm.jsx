@@ -114,15 +114,15 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                                 }
                             />
                         </FormControl>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             onClick={onSigninButtonClickHandler}
                         >
                             login
                         </Button>
                         <Button>Login From Google</Button>
-                        <Button>Forgive Password</Button>
-                        
+                        <Button>Forgot Password</Button>
+
                     </FormGroup>
                 </Box>
                 <Box sx={signupBoxStyle}>
