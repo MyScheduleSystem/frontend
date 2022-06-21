@@ -1,3 +1,5 @@
+import { useState, useRef } from 'react'
+import MyIcon from '../../icon/MyIcon'
 import {
     Modal,
     Box,
@@ -7,11 +9,28 @@ import {
     Avatar,
     ListItemText,
     Divider,
+    Button,
+    Input,
 } from '@mui/material'
-import MyIcon from '../../icon/MyIcon'
 
-const MyInfoPopup = ({ isClickInfo, onCloseEvent, user }) => {
+const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent }) => {
+    const [imageUpload, setImageUpload] = useState('')
+    const imageInput  = useRef()
+
     const onCloseEventHandler = () => onCloseEvent(false)
+
+    const onChangeImageUploaderEventHandler = (e) => {
+        setImageUpload(e.target.files[0])
+    }
+
+    const onClickImageUploaderEventHandler = () => {
+        onClickImageUploaderEvent(imageUpload)
+    }
+
+    const onClickImageUploaderButtonHandler = () => {
+        console.log(imageInput)
+        imageInput.current.click()
+    }
 
     return (
         <Modal
@@ -33,7 +52,19 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user }) => {
                 </List>
                 <Box>
                     <Divider />
-                    <MyIcon name='chat' />
+                    <Button>
+                        <MyIcon name='chat' />
+                    </Button>
+                    <Input 
+                        type='file'
+                        inputRef={imageInput}
+                        sx={uploadImageInputStyle}
+                        onChange={onChangeImageUploaderEventHandler} 
+                    />
+                    <Button onClick={onClickImageUploaderButtonHandler}>
+                        <MyIcon name='upload' />
+                    </Button>
+                    <Button onClick={onClickImageUploaderEventHandler}>확인</Button>
                 </Box>
             </Box>
         </Modal>
@@ -70,6 +101,10 @@ const ListItemAvatarStyle = {
 const avatarSizeStyle = {
     width: '85px',
     height: '85px',
+}
+
+const uploadImageInputStyle = {
+    display: 'none',
 }
 
 export default MyInfoPopup
