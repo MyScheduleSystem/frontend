@@ -9,13 +9,12 @@ import {
 } from '@mui/material'
 
 // props: steps => Array
-function MyStepper({ steps }) {
+function MyStepper({
+    steps, onStepButtonClickEvent, onResetButtonClickEvent,
+    onNextButtonClickEvent, onBackButtonClickEvent
+}) {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState({})
-
-    const totalStepLength = totalStepCount.bind(this, steps)
-
-    const compledtedStepLength = compledtedStep.bind(this, completed)
 
     const isLastActiveStep = isLastStep.bind(this, activeStep, steps)
 
@@ -23,15 +22,20 @@ function MyStepper({ steps }) {
 
     const onStepButtonClickEventHandler = (step) => () => {
         setActiveStep(step)
+        onStepButtonClickEvent(step)
     }
 
     const onResetButtonClickEventHandler = () => {
         setActiveStep(0)
         setCompleted({})
+        onResetButtonClickEvent(0)
     }
 
     const onBackButtonClickEventHandler = () => {
-        setActiveStep((prev) => prev - 1)
+        setActiveStep((prev) => {
+            onBackButtonClickEvent(prev - 1)
+            return prev - 1
+        })
     }
 
     const onNextButtonClickEventHandler = () => {
@@ -39,13 +43,7 @@ function MyStepper({ steps }) {
             steps.findIndex((step, i) => !(i in completed)) :
             activeStep + 1
         setActiveStep(newActiveStep)
-    }
-
-    const onCompletedButtonClickEventHandler = () => {
-        const newCompleted = completed
-        newCompleted[activeStep] = true
-        setCompleted(newCompleted)
-        onNextButtonClickEventHandler()
+        onNextButtonClickEvent(newActiveStep)
     }
 
     return (
@@ -104,21 +102,6 @@ function MyStepper({ steps }) {
                         >
                             Next
                         </Button>
-                        {activeStep !== steps.length &&
-                            (completed[activeStep] ? (
-                                <Typography
-                                    variant="caption"
-                                    sx={completedStyle}
-                                >
-                                    Step {activeStep + 1} already completed
-                                </Typography>
-                            ) : (
-                                <Button onClick={onCompletedButtonClickEventHandler}>
-                                    {compledtedStepLength() === totalStepLength() - 1
-                                        ? 'Finish'
-                                        : 'Complete Step'}
-                                </Button>
-                            ))}
                     </Box>
                 </Box>
             )}
@@ -143,6 +126,7 @@ function allStepsCompleted(completed, steps) {
 }
 
 const boxStyle = {
+    margin: '0 auto',
     marginTop: '3rem',
     width: '100%',
 }
@@ -153,6 +137,8 @@ const typographyStyle = {
 }
 
 const buttonBoxStyle = {
+    width: '70%',
+    margin: '0 auto',
     display: 'flex',
     flexDirection: 'row',
     pt: 2,
@@ -164,10 +150,6 @@ const buttonStyle = {
 
 const backNextButtonStyle = {
     mr: 2,
-}
-
-const completedStyle = {
-    display: 'inline-block',
 }
 
 export default MyStepper
