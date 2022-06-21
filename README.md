@@ -42,6 +42,8 @@
 
     MaterialUi(MUI)
 
+    Cloudinary API(https://cloudinary.com/documentation)
+
     OpenWeather API(https://openweathermap.org/)
 
     Google Charts API(https://developers.google.com/chart)
@@ -117,6 +119,11 @@ useState(setState의) 동작 이해
     Sidebar
         View friends profile
         Logout my acount
+    
+    Header
+        View My Info
+        View My Alarm
+        View My Notify
 
 
 ## Issue
@@ -149,6 +156,11 @@ useState(setState의) 동작 이해
     Sidebar menu중 Friends List에 friend name 클릭시 제대로 된 index가 가져오질 않음 (미해결) => 이거 해결 됐음(state로 해결했음. 내용 추가 필요).
 
     Logout 실행 후 새로고침 하면 signinForm이 나오지 않고 calendar가 나오는 오류 발생 (미해결)
+
+    Image Upload 기능 구현중 Axios 데이터 전달오류 (해결)
+        - Cloudinary Upload Presets Name Mode에서 오류발견
+        Signed Mode Name을 가져오지 말고 Unsigned Mode Name을
+        가져오자.
 ```
 
 ## 개발 회고록
@@ -172,4 +184,17 @@ header에 menu 아이콘을 통해 sidebar를 열었을때 동작이 부드럽�
 Drawer를 바꾸고 보니 아직 UI를 손봐야 할 부분이 많이 있었다.
 
 이제 캘린더 부분의 완성이 눈앞에 보인다.
+```
+
+### 2022-06-21 (Leo)
+```
+글자수세기 / 맞춤법 검사 내용 입력
+SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 위해
+Cloudinary API를 가져와 구현하였다.
+
+구현 중 Preset Name을 잘 못 가져와서 조금 헤매었지만 해결하여 기능
+구현에는 성공하였다.
+
+다음으로는 Image를 Cloudinary에 User에 Uuid로 폴더를 구분하여 각각
+맞는 폴더에 저장하는 것을 구현해보자!
 ```
