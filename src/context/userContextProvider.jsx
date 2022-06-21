@@ -23,14 +23,13 @@ function UserContextProvider({ children }) {
     const [isUserFailed, setIsUserFailed] = useState(false)
     const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
 
-    // google 로그인을 권장한 후, 추가적인 user의 정보를 수집해야 할 것 같다.
-    const onSignupEventHandler = useCallback((user) => {
+    const onSignupEventHandler = useCallback(async (user) => {
         const obj = {}
         obj.username = user.username
         obj.name = user.name
         obj.email = user.email
         obj.password = user.password
-        const result = userFetcher.signup(obj)
+        const result = await userFetcher.signup(obj)
         if(result) setIsSignin(true)
         else setIsUserFailed(true)
     }, [])
