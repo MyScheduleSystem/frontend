@@ -10,8 +10,8 @@ import {
 
 // props: steps => Array
 function MyStepper({
-    steps, onStepButtonClickEvent, onResetButtonClickEvent,
-    onNextButtonClickEvent, onBackButtonClickEvent
+    steps, isNextButtonDisable, onStepButtonClickEvent,
+    onResetButtonClickEvent, onNextButtonClickEvent, onBackButtonClickEvent
 }) {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState({})
@@ -96,7 +96,7 @@ function MyStepper({
                         </Button>
                         <Box sx={buttonStyle} />
                         <Button
-                            disabled={isLastActiveStep()}
+                            disabled={isNextButtonDisable || isLastActiveStep()}
                             onClick={onNextButtonClickEventHandler}
                             sx={backNextButtonStyle}
                         >

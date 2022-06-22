@@ -61,15 +61,13 @@ userFetcher.signout = async () => {
     User.clearStorage()
 }
 
-userFetcher.signupWithGoogle = function() {
+userFetcher.signupWithGoogle = async function() {
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider()
-    ErrorUtil.notImplemented()
-    // 이거 뭔가 넘어가는게 이상한데?
-    signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider)
         .then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
-            console.log(credential)
+            return credential ? true : false
         })
         .catch(e => console.log(e))
 }

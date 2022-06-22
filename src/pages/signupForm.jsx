@@ -30,6 +30,7 @@ const steps = [
 
 const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent }) => {
     const [isOpenPopup, setIsOpenPopup] = useState(false)
+    const [isNextButtonDisable, setIsNextButtonDisable] = useState(true)
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         username: false,
         name: false,
@@ -144,6 +145,15 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
 
     const onGoogleButtonClickEventHandler = () => {
         userFetcher.signupWithGoogle()
+            .then((isGoogleAuth) => {
+                if(!isGoogleAuth) {
+                    setIsOpenPopup(true)
+                    setIsNextButtonDisable(true)
+                }
+                setIsOpenPopup(false)
+                setIsNextButtonDisable(false)
+            })
+            .catch(e => console.error(e))
     }
 
     const onGithubButtonClickEventHandler = () => {
@@ -209,6 +219,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
         <Container sx={container}>
             <MyStepper
                 steps={steps}
+                isNextButtonDisable={isNextButtonDisable}
                 onStepButtonClickEvent={onStepButtonClickEventHandler}
                 onResetButtonClickEvent={onResetButtonClickEventHandler}
                 onNextButtonClickEvent={onNextButtonClickEventHandler}
