@@ -28,7 +28,6 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
     }
 
     const onClickImageUploaderButtonHandler = () => {
-        console.log(imageInput)
         imageInput.current.click()
     }
 
