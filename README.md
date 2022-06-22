@@ -42,6 +42,8 @@
 
     MaterialUi(MUI)
 
+    Cloudinary API(https://cloudinary.com/documentation)
+
     OpenWeather API(https://openweathermap.org/)
 
     Google Charts API(https://developers.google.com/chart)
@@ -118,6 +120,11 @@ useState(setState의) 동작 이해
         View friends profile
         Logout my acount
 
+    Header
+        View My Info
+        View My Alarm
+        View My Notify
+
     UserContextProvider
         userReducer
         UserContext
@@ -182,6 +189,10 @@ useState(setState의) 동작 이해
             Component 바깥에 작성할 수도 있고 다른 file에서도 불러와 사용할 수 있다.
                 * 즉 useState의 대체 함수라고도 볼 수 있다.
                 * 이러한 상태변화 로직을 사용하기 위해선 dispatch를 사용해야함.
+
+    Image Upload 기능 구현중 Axios 데이터 전달오류 (해결)
+        - Cloudinary Upload Presets Name Mode에서 오류발견
+            Signed Mode Name을 가져오지 말고 Unsigned Mode Name을가져오자.
 ```
 
 ## 개발 회고록
@@ -214,4 +225,13 @@ reduer를 도입했다. 처음 사용해보는 reducer였기 때문에 공부하
 action과 type이 뭔가 Redux와 비슷한 느낌..?
 
 열심히 다듬어서 꼭 우리가 사용하는 날이 도래했으면 좋겠다!
+```
+
+### 2022-06-21 (Leo)
+```
+SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 위해 Cloudinary API를 가져와 구현하였다.
+
+구현 중 Preset Name을 잘 못 가져와서 조금 헤매었지만 해결하여 기능구현에는 성공하였다.
+
+다음으로는 Image를 Cloudinary에 User에 Uuid로 폴더를 구분하여 각각 맞는 폴더에 저장하는 것을 구현해보자!
 ```
