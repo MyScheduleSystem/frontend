@@ -57,6 +57,10 @@ function MyCalendar() {
         // TODO: Fetch saveed result to server
     }, [allTodoItems, selectedDate])
 
+    const onCompletedEventHandler = (e) => {
+        console.log(e)
+    }
+
     return (
         <Box sx={mainBoxSizeStyle}>
             <Box sx={myCalendarBoxStyle}>
@@ -76,7 +80,8 @@ function MyCalendar() {
             </Box>
             <Box sx={myTodoListStyle}>
                 <MyCalendarTodoList
-                    todoItems={allTodoItems[DateType.createDate()]}
+                    todoItems={allTodoItems}
+                    onCompletedEvent={onCompletedEventHandler}
                 />
             </Box>
         </Box>
@@ -95,6 +100,7 @@ function setTodoItemList(setAllTodoItems) {
     })
     setAllTodoItems(() => Lodash.cloneDeep(todoObj))
 }
+
 export default MyCalendar;
 
 const mainBoxSizeStyle = {
@@ -113,6 +119,6 @@ const myCalendarBoxStyle = {
 }
 
 const myTodoListStyle = {
-    width: '23%',
+    width: '33%',
     height: '100%',
 }
