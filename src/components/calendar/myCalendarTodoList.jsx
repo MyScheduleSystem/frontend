@@ -9,11 +9,15 @@ import {
 import DateType from "../../type/dateType"
 import Lodash from 'lodash'
 
-const MyCalendarTodoList = ({ todoItems }) => {
+const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
+    console.log(todoItems)
     const dataForCompletedRender = useCallback((todoItems) => {
         const arr = []
         Lodash.forEach(todoItems, (todo) => {
             todo.forEach(e => {
+                // if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate)) {
+                //     arr.push(e)
+                // }
                 if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate) && e.isCompleted) {
                     arr.push(e)
                 }
@@ -34,14 +38,23 @@ const MyCalendarTodoList = ({ todoItems }) => {
         return arr
     }, [])
 
+    const onCompletedEventHandler = (e) => {
+        onCompletedEvent(e)
+        console.log(e)
+    }
+
+
     return (
         <Box sx={todoListBoxStyle}>
             <List sx={todoListStyle}>
                 <ListItemText primary="Completed" />
-                <MyCalendarCompleteList item={dataForCompletedRender(todoItems)} />
+                <MyCalendarCompleteList 
+                    item={todoItems}
+                    onCompletedEvent={onCompletedEventHandler} />
             </List>
             <List sx={todoListStyle}>
                 <ListItemText primary="UnCompleted" />
+                {/* <MyCalendarCompleteList item={dataForCompletedRender(todoItems)} /> */}
                 <MyCalendarUnCompleteList item={dataForUnCompletedRender(todoItems)} />
             </List>
         </Box>
@@ -55,7 +68,7 @@ const todoListBoxStyle = {
 }
 
 const todoListStyle = {
-    width: '14rem',
+    width: '22rem',
     height: '13rem',
     bgColor: 'background.paper',
 }
