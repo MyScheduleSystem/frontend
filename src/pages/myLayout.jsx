@@ -12,6 +12,7 @@ const MyLayout = () => {
     )
 }
 
+// TODO: 반응형 수정 필요
 const boxSizeStyle = {
     width: '100%',
     height: '100%',
@@ -24,9 +25,8 @@ const MyCalendarBoxDiv = styled.div`
     height: 100%;
     display: flex;
     margin-top: 6rem;
-    margin-left: -4rem;
+    margin-left: -10rem;
     float: left;
-    /* align-items: stretch; */
 
     .react-calendar__navigation button {
         all: unset;
