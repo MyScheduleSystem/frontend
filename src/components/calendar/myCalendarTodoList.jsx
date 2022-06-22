@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import MyCalendarCompleteList from './myCalendarCompleteList'
-import MyCalendarUnCompleteList from './myCalendarUnCompleteList'
 import { 
     Box,
     List, 
@@ -10,14 +9,10 @@ import DateType from "../../type/dateType"
 import Lodash from 'lodash'
 
 const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
-    console.log(todoItems)
     const dataForCompletedRender = useCallback((todoItems) => {
         const arr = []
         Lodash.forEach(todoItems, (todo) => {
             todo.forEach(e => {
-                // if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate)) {
-                //     arr.push(e)
-                // }
                 if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate) && e.isCompleted) {
                     arr.push(e)
                 }
@@ -40,22 +35,25 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
 
     const onCompletedEventHandler = (e) => {
         onCompletedEvent(e)
-        console.log(e)
     }
 
 
     return (
         <Box sx={todoListBoxStyle}>
             <List sx={todoListStyle}>
-                <ListItemText primary="Completed" />
+                <ListItemText primary="Uncompleted" />
                 <MyCalendarCompleteList 
-                    item={todoItems}
-                    onCompletedEvent={onCompletedEventHandler} />
+                    item={dataForUnCompletedRender(todoItems)}
+                    onCompletedEvent={onCompletedEventHandler} 
+                />
             </List>
             <List sx={todoListStyle}>
-                <ListItemText primary="UnCompleted" />
-                {/* <MyCalendarCompleteList item={dataForCompletedRender(todoItems)} /> */}
-                <MyCalendarUnCompleteList item={dataForUnCompletedRender(todoItems)} />
+                <ListItemText primary="Completed" />
+                <MyCalendarCompleteList 
+                    item={dataForCompletedRender(todoItems)}
+                    onCompletedEvent={onCompletedEventHandler} 
+                />
+                     
             </List>
         </Box>
     )

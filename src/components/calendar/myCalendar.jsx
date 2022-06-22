@@ -58,7 +58,21 @@ function MyCalendar() {
     }, [allTodoItems, selectedDate])
 
     const onCompletedEventHandler = (e) => {
-        console.log(e)
+        const obj = {}
+        Lodash.forEach(allTodoItems, (data, dayKey) => {
+            obj[dayKey] = []
+            data.forEach(todo => {
+                if((todo.startDate === e.startDate) && (todo.endDate === e.endDate) && (todo.title === e.title)){
+                    const newObj = e
+                    obj[dayKey].push(newObj)
+                    return
+                }
+                const newObj = new TodoItem(todo.title, todo.content, todo.startDate, todo.endDate, todo.isCompleted)
+                obj[dayKey].push(newObj)
+            })
+        })
+        setAllTodoItems(() => Lodash.cloneDeep(obj))
+        // console.log(allTodoItems)
     }
 
     return (

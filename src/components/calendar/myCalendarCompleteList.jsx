@@ -1,4 +1,3 @@
-import React, { useCallback } from 'react'
 import { 
     Box,
     Container,
@@ -8,31 +7,18 @@ import {
     Grid,
     Button,
 }  from '@mui/material'
-import DateType from "../../type/dateType"
-import Lodash from 'lodash'
+import TodoItem from '../../type/todoItem'
 
 const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
-    const dataForCompletedRender = useCallback((todoItems) => {
-        const arr = []
-        Lodash.forEach(todoItems, (todo) => {
-            todo.forEach(e => {
-                if(DateType.isBetween(DateType.createDate(), e.startDate, e.endDate) && e.isCompleted) {
-                    arr.push(e)
-                }
-            })
-        })
-        return arr
-    }, [])
-
-    const onCompletedEventHandler = (e) => {
-        onCompletedEvent(e)
+    const onCompletedEventHandler = (e) => () => {
+        const newObj = new TodoItem(e.title, e.content, e.startDate, e.endDate, !(e.isCompleted))
+        onCompletedEvent(newObj)
     }
     
     return (
         <Box sx={todoListBoxStyle}>
-            {dataForCompletedRender(item).map((e, i) => {
+            {item.map((e, i) => {
                 return (
-                    // e.isCompleted ? 
                         <Container key={i}>
                             <Grid container>
                                 <Grid item xs={2}>
@@ -48,12 +34,17 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
                                             <ListItemText secondary={e.endDate} />
                                         </Grid>
                                     </Grid>
-
                                     <ListItemText secondary={e.content} />
                                 </Grid>
-                                <Grid item xs={1}>
-                                    <Button onClick={()=>onCompletedEventHandler(e)}>TEXT</Button>
-                                </Grid>
+                                {e.isCompleted ? 
+                                    <Grid item xs={1}>
+                                        <Button onClick={onCompletedEventHandler(e)}>Down</Button>
+                                    </Grid> :
+                                    <Grid item xs={1}>
+                                        <Button onClick={onCompletedEventHandler(e)}>Up</Button>
+                                    </Grid>
+                                }
+
                             </Grid>
                             <Divider />
                         </Container> 
