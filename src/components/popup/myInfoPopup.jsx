@@ -1,30 +1,26 @@
 import { useState, useRef } from 'react'
 import MyIcon from '../../icon/MyIcon'
 import {
-    Modal,
-    Box,
-    List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
-    Divider,
-    Button,
+    Modal, Box, List,
+    ListItem, ListItemAvatar, Avatar,
+    ListItemText, Divider, Button,
     Input,
 } from '@mui/material'
 
 const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent }) => {
     const [imageUpload, setImageUpload] = useState('')
+    const [imageFolderName, setImageFolderName] = useState('')
     const imageInput  = useRef()
 
     const onCloseEventHandler = () => onCloseEvent(false)
 
     const onChangeImageUploaderEventHandler = (e) => {
         setImageUpload(e.target.files[0])
+        setImageFolderName(user.friendUuid)
     }
 
     const onClickImageUploaderEventHandler = () => {
-        onClickImageUploaderEvent(imageUpload)
+        onClickImageUploaderEvent(imageUpload, imageFolderName)
     }
 
     const onClickImageUploaderButtonHandler = () => {

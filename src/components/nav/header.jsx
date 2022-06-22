@@ -121,8 +121,8 @@ const Header = () => {
         setMsgAnchorEl(e.currentTarget)
     }
 
-    const onClickImageUploaderEventHandler = useCallback((img) => {
-        imageUploader.imageUpload(img)
+    const onClickImageUploaderEventHandler = useCallback((img, folderName) => {
+        imageUploader.imageUpload(img, folderName)
     }, [])
 
     return (
