@@ -24,8 +24,7 @@ import Lodash from 'lodash'
 
 const steps = [
     'Create with Google',
-    'Enter your information',
-    'Create MSS account !',
+    'Enter your information & Create MSS account !',
 ]
 
 const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent }) => {
@@ -245,78 +244,78 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
                 }
                 <FormGroup sx={formStyle}>
                     {signupAcitveStep === 1 &&
-                    <React.Fragment>
-                        <FormControl variants="standard" sx={formControltyle}>
-                            <InputLabel>
-                                With a start your username
-                            </InputLabel>
-                            <Input
-                                type="text"
-                                error={isValidUserInfo.username}
-                                inputRef={usernameRef}
-                                onChange={onUsernameChangeHandler}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <MyIcon name="user" />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <FormControl variants="standard" sx={formControltyle}>
-                            <InputLabel>
-                                With a start your name
-                            </InputLabel>
-                            <Input
-                                type="text"
-                                error={isValidUserInfo.name}
-                                inputRef={nameRef}
-                                onChange={onNameChangeHandler}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <MyIcon name="user" />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <FormControl variants="standard" sx={formControltyle}>
-                            <InputLabel>
-                                With a start your email
-                            </InputLabel>
-                            <Input
-                                type="email"
-                                error={isValidUserInfo.email}
-                                inputRef={emailRef}
-                                onChange={onEmailChangeHandler}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <MyIcon name="user" />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <FormControl variants="standard" sx={formControltyle}>
-                            <InputLabel>
-                                Enter your password
-                            </InputLabel>
-                            <Input
-                                type="password"
-                                error={isValidUserInfo.password}
-                                inputRef={passwordRef}
-                                onChange={onPasswordChangeHandler}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <MyIcon name="password" />
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
+                        <React.Fragment>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your username
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.username}
+                                    inputRef={usernameRef}
+                                    onChange={onUsernameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your name
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.name}
+                                    inputRef={nameRef}
+                                    onChange={onNameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your email
+                                </InputLabel>
+                                <Input
+                                    type="email"
+                                    error={isValidUserInfo.email}
+                                    inputRef={emailRef}
+                                    onChange={onEmailChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    Enter your password
+                                </InputLabel>
+                                <Input
+                                    type="password"
+                                    error={isValidUserInfo.password}
+                                    inputRef={passwordRef}
+                                    onChange={onPasswordChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="password" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                        <Box sx={buttonBoxStyle}>
+                            <Button onClick={onClickRegisterButtonHandler}>register</Button>
+                            <Divider/>
+                            <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
+                            <Divider/>
+                        </Box>
                     </React.Fragment>}
-                    {signupAcitveStep === 2 && <Box sx={buttonBoxStyle}>
-                        <Button onClick={onClickRegisterButtonHandler}>register</Button>
-                        <Divider/>
-                        <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
-                        <Divider/>
-                    </Box>}
                 </FormGroup>
             </Container>
             <AlertPopup
