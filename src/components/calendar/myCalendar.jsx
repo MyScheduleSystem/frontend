@@ -57,12 +57,12 @@ function MyCalendar() {
         // TODO: Fetch saveed result to server
     }, [allTodoItems, selectedDate])
 
-    const onCompletedEventHandler = (e) => {
+    const onCompletedEventHandler = useCallback((e) => {
         const obj = {}
         Lodash.forEach(allTodoItems, (data, dayKey) => {
             obj[dayKey] = []
             data.forEach(todo => {
-                if((todo.startDate === e.startDate) && (todo.endDate === e.endDate) && (todo.title === e.title)){
+                if((todo.startDate === e.startDate) && (todo.endDate === e.endDate) && (todo.title === e.title)) {
                     const newObj = e
                     obj[dayKey].push(newObj)
                     return
@@ -72,8 +72,7 @@ function MyCalendar() {
             })
         })
         setAllTodoItems(() => Lodash.cloneDeep(obj))
-        // console.log(allTodoItems)
-    }
+    }, [allTodoItems])
 
     return (
         <Box sx={mainBoxSizeStyle}>
