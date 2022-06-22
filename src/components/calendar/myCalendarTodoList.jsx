@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import MyCalendarCompleteList from './myCalendarCompleteList'
 import { 
     Box,
@@ -9,7 +8,7 @@ import DateType from "../../type/dateType"
 import Lodash from 'lodash'
 
 const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
-    const dataForCompletedRender = useCallback((todoItems) => {
+    const dataForCompletedRender = (todoItems) => {
         const arr = []
         Lodash.forEach(todoItems, (todo) => {
             todo.forEach(e => {
@@ -19,9 +18,9 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
             })
         })
         return arr
-    }, [])
+    }
 
-    const dataForUnCompletedRender = useCallback((todoItems) => {
+    const dataForUnCompletedRender = (todoItems) => {
         const arr = []
         Lodash.forEach(todoItems, (todo) => {
             todo.forEach(e => {
@@ -31,12 +30,11 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
             })
         })
         return arr
-    }, [])
+    }
 
     const onCompletedEventHandler = (e) => {
         onCompletedEvent(e)
     }
-
 
     return (
         <Box sx={todoListBoxStyle}>
@@ -53,7 +51,6 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
                     item={dataForCompletedRender(todoItems)}
                     onCompletedEvent={onCompletedEventHandler} 
                 />
-                     
             </List>
         </Box>
     )

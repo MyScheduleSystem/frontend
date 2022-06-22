@@ -11,7 +11,7 @@ import TodoItem from '../../type/todoItem'
 
 const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
     const onCompletedEventHandler = (e) => () => {
-        const newObj = new TodoItem(e.title, e.content, e.startDate, e.endDate, !(e.isCompleted))
+        const newObj = new TodoItem(e.title, e.content, e.startDate, e.endDate, !e.isCompleted)
         onCompletedEvent(newObj)
     }
     
@@ -19,14 +19,14 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
         <Box sx={todoListBoxStyle}>
             {item.map((e, i) => {
                 return (
-                        <Container key={i}>
-                            <Grid container>
-                                <Grid item xs={2}>
-                                    <Avatar alt='schedule' src='../../public/images.schedule.jpg' sx={{width: '50px', height: '50px', margin: 3}} />
-                                </Grid>
-                                <Grid item xs={8} sx={{marginLeft: 1}}>
-                                    <ListItemText primary={e.title} />
-                                    <Grid container sx={{marginLeft: 1.5}}>
+                    <Container key={i}>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Avatar alt='schedule' sx={avatarStyle} />
+                            </Grid>
+                            <Grid item xs={8} sx={mainGridStyle}>
+                                <ListItemText primary={e.title} />
+                                    <Grid container sx={dateGridStyle}>
                                         <Grid item xs={6}>
                                             <ListItemText secondary={e.startDate} />
                                         </Grid>
@@ -34,24 +34,36 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
                                             <ListItemText secondary={e.endDate} />
                                         </Grid>
                                     </Grid>
-                                    <ListItemText secondary={e.content} />
-                                </Grid>
-                                {e.isCompleted ? 
-                                    <Grid item xs={1}>
-                                        <Button onClick={onCompletedEventHandler(e)}>Down</Button>
-                                    </Grid> :
-                                    <Grid item xs={1}>
-                                        <Button onClick={onCompletedEventHandler(e)}>Up</Button>
-                                    </Grid>
-                                }
-
+                                <ListItemText secondary={e.content} />
                             </Grid>
-                            <Divider />
-                        </Container> 
-                )
-            })}
+                            {e.isCompleted ? 
+                                <Grid item xs={1}>
+                                    <Button onClick={onCompletedEventHandler(e)}>Up</Button>
+                                </Grid> :
+                                <Grid item xs={1}>
+                                    <Button onClick={onCompletedEventHandler(e)}>Down</Button>
+                                </Grid>
+                            }
+                        </Grid>
+                        <Divider />
+                    </Container> 
+                )})}
         </Box>
     )
+}
+
+const dateGridStyle = {
+    marginLeft: 1.5,
+}
+
+const mainGridStyle = {
+    marginLeft: 1,
+}
+
+const avatarStyle = {
+    width: '50px', 
+    height: '50px', 
+    margin: 3,
 }
 
 const todoListBoxStyle = {

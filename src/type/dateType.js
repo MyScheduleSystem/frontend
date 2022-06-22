@@ -68,7 +68,7 @@ DateType.castToMonth = function(month) {
 DateType.isBetween = function(now, prev, next) {
     ErrorUtil.typeCheck(now, 'string')
     ErrorUtil.typeCheck(prev, 'string')
-    // ErrorUtil.typeCheck(next, 'string')
+    ErrorUtil.typeCheck(next, 'string')
     const between =  DateUtil.isBetween(now, prev, next)
     return between
 }
