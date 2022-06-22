@@ -2,10 +2,13 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from 'firebase/auth'
 import { doc, setDoc } from "firebase/firestore"
 import firestore from '../service/firebase'
 import User from '../type/user'
+import ErrorUtil from '../util/errorUtil'
 
 const userFetcher = {}
 
@@ -31,7 +34,7 @@ userFetcher.signin = async function(user) {
 // TODO: firestore password 해시처리
 userFetcher.signup = async (user) => {
     const auth = getAuth()
-    createUserWithEmailAndPassword(auth, user.email, user.password)
+    return createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             const userObj = userCredential.user
             return userObj
@@ -49,12 +52,28 @@ userFetcher.signup = async (user) => {
             obj.username = user.username
             obj.name = user.name
             obj.email = user.email
+            return obj
         })
         .catch(error => console.error(error))
 }
 
 userFetcher.signout = async () => {
     User.clearStorage()
+}
+
+userFetcher.signupWithGoogle = async function() {
+    const auth = getAuth()
+    const googleProvider = new GoogleAuthProvider()
+    return signInWithPopup(auth, googleProvider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            return credential ? true : false
+        })
+        .catch(e => console.log(e))
+}
+
+userFetcher.signupWithGithub = function() {
+    ErrorUtil.notImplemented()
 }
 
 Object.freeze(userFetcher)
