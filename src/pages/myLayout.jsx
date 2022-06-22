@@ -20,7 +20,7 @@ const boxSizeStyle = {
 
 const MyCalendarBoxDiv = styled.div`
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     height: 100%;
     display: flex;
     margin-top: 6rem;
