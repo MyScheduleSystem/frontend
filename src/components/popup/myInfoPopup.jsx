@@ -1,17 +1,29 @@
-import {
-    Modal,
-    Box,
-    List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
-    Divider,
-} from '@mui/material'
+import { useState, useRef } from 'react'
 import MyIcon from '../../icon/MyIcon'
+import {
+    Modal, Box, List,
+    ListItem, ListItemAvatar, Avatar,
+    ListItemText, Divider, Button,
+    Input,
+} from '@mui/material'
 
-const MyInfoPopup = ({ isClickInfo, onCloseEvent, user }) => {
+const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent }) => {
+    const [imageUpload, setImageUpload] = useState('')
+    const imageInput  = useRef()
+
     const onCloseEventHandler = () => onCloseEvent(false)
+
+    const onChangeImageUploaderEventHandler = (e) => {
+        setImageUpload(e.target.files[0])
+    }
+
+    const onClickImageUploaderEventHandler = () => {
+        onClickImageUploaderEvent(imageUpload, user.friendUuid)
+    }
+
+    const onClickImageUploaderButtonHandler = () => {
+        imageInput.current.click()
+    }
 
     return (
         <Modal
@@ -33,7 +45,19 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user }) => {
                 </List>
                 <Box>
                     <Divider />
-                    <MyIcon name='chat' />
+                    <Button>
+                        <MyIcon name='chat' />
+                    </Button>
+                    <Input 
+                        type='file'
+                        inputRef={imageInput}
+                        sx={uploadImageInputStyle}
+                        onChange={onChangeImageUploaderEventHandler} 
+                    />
+                    <Button onClick={onClickImageUploaderButtonHandler}>
+                        <MyIcon name='upload' />
+                    </Button>
+                    <Button onClick={onClickImageUploaderEventHandler}>확인</Button>
                 </Box>
             </Box>
         </Modal>
@@ -70,6 +94,10 @@ const ListItemAvatarStyle = {
 const avatarSizeStyle = {
     width: '85px',
     height: '85px',
+}
+
+const uploadImageInputStyle = {
+    display: 'none',
 }
 
 export default MyInfoPopup

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import SideBar from './sidebar'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
+import imageUploader from '../../service/imageUploaderService'
 import { createFriendsList } from '../../dev/testData'
 import { createNotify, createMessage } from '../../dev/testData'
 
@@ -120,6 +121,10 @@ const Header = () => {
         setMsgAnchorEl(e.currentTarget)
     }
 
+    const onClickImageUploaderEventHandler = useCallback((img, folderName) => {
+        imageUploader.imageUpload(img, folderName)
+    }, [])
+
     return (
         <Box role="presentation">
             <Box sx={headerBoxStyle}>
@@ -185,6 +190,7 @@ const Header = () => {
                 isClickInfo={isClickInfo}
                 onCloseEvent={onCloseEventHandler}
                 user={testMyInfo}
+                onClickImageUploaderEvent={onClickImageUploaderEventHandler}
             />
             <Menu
                 anchorEl={notiAnchorEl}
