@@ -9,18 +9,16 @@ import {
 
 const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent }) => {
     const [imageUpload, setImageUpload] = useState('')
-    const [imageFolderName, setImageFolderName] = useState('')
     const imageInput  = useRef()
 
     const onCloseEventHandler = () => onCloseEvent(false)
 
     const onChangeImageUploaderEventHandler = (e) => {
         setImageUpload(e.target.files[0])
-        setImageFolderName(user.friendUuid)
     }
 
     const onClickImageUploaderEventHandler = () => {
-        onClickImageUploaderEvent(imageUpload, imageFolderName)
+        onClickImageUploaderEvent(imageUpload, user.friendUuid)
     }
 
     const onClickImageUploaderButtonHandler = () => {
