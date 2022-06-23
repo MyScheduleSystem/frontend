@@ -7,7 +7,7 @@ import Calendar from "react-calendar"
 import Lodash from "lodash"
 import DateType from "../../type/dateType"
 import MyModal from "../modal/myModal"
-import calenderFetcher from '../../fetcher/calendarFetcher'
+import calendarFetcher from '../../fetcher/calendarFetcher'
 import TodoItem from "../../type/todoItem"
 import MyCalendarTodoList from "./myCalendarTodoList"
 import MyCalendarSide from "./myCalendarSide"
@@ -102,7 +102,7 @@ function MyCalendar() {
 }
 
 function setTodoItemList(setAllTodoItems) {
-    const todoList = calenderFetcher.getTodoFetchResult()
+    const todoList = calendarFetcher.getTodoFetchResult()
     const todoObj = {}
     Lodash.forEach(todoList, (list, dayKey) => {
         todoObj[dayKey] = []
