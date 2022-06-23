@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import SideBar from './sidebar'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
@@ -138,13 +139,9 @@ const Header = () => {
                         >
                             <MyIcon name="menu" />
                         </IconButton>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                        >
-                            MSS
-                        </Typography>
+                        <IconButton>
+                            <Link to='/' style={logoButtonStyle}>MSS</Link>
+                        </IconButton>
                         <Box component="div" sx={menuInfoStyle}>
                             <IconButton
                                 size="large"
@@ -226,7 +223,7 @@ const Header = () => {
                         // TODO: user avatar 추가
                         return (
                             <ListItemButton
-                                key={i} 
+                                key={i}
                                 sx={listItemButtonStyle(item.isChecked)}
                                 alignItems="flex-start"
                             >
@@ -278,6 +275,11 @@ const iconButtonStyle = (open) => {
     }
 }
 
+const logoButtonStyle = {
+    color: '#fff',
+    textDecoration: 'none',
+}
+
 const menuInfoStyle = {
     position: 'absolute',
     right: '10px',
@@ -298,8 +300,8 @@ const listItemButtonStyle = (isChecked) => {
 }
 
 const msgStyle = {
-    width: '100%', 
-    maxWidth: 360, 
+    width: '100%',
+    maxWidth: 360,
     bgcolor: 'background.paper',
 }
 

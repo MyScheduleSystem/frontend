@@ -10,19 +10,14 @@ import {
     CardActions,
     Button,
 } from '@mui/material'
-import Clock from 'react-clock'
 import MyIcon from '../../icon/MyIcon'
 import weatherFetcher from '../../fetcher/weatherFetcher'
-import 'react-clock/dist/Clock.css';
 
 const RightSideBar = () => {
-    const [nowTime, setNowTime] = useState(new Date())
     const [weather, setWeather] = useState({})
 
     useEffect(() => {
-        const interval = setInterval(() => setNowTime(new Date()), 1000)
         doWeatherFetch.call(this, weather, setWeather)
-        return () => clearInterval(interval)
     }, [weather])
 
     // 날씨 정보 API 확인해서 전부 추가할 것
@@ -45,7 +40,6 @@ const RightSideBar = () => {
                     </MenuItem>
                 </MenuList>
                 <Card>
-                <Clock value={nowTime} size={100} />
                     <CardContent sx={iconStyle}>
                         {weatherFetcher.getWeatherIcon(weather.weatherInfo)}
                     </CardContent>
