@@ -1,4 +1,9 @@
-import { useState, useContext } from 'react'
+import {
+    useState,
+    useContext,
+    useCallback,
+} from 'react'
+import FriendList from './list/friendList'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
 import { Link } from 'react-router-dom'
@@ -16,8 +21,19 @@ import Lodash from 'lodash'
 
 function SideBar({ isOpen }) {
     const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
-    const [selectedFriendIndex, setSelectedFriendIndex] = useState(0)
+    const [friendIndex, setIsFriendIndex] = useState(0)
     const { onSignoutButtonClickHandler } = useContext(UserContext)
+
+    const friends = doFriendsFetchResult.call(this)
+
+    const onClickFriendButtonClickEventHandler = useCallback((isChecked, index) => {
+        setIsOpenUserPopup(isChecked)
+        setIsFriendIndex(index)
+    }, [])
+
+    const onCloseEventHandler = useCallback((checked) => {
+        setIsOpenUserPopup(checked)
+    }, [])
 
     const onSignoutBtnClickHandler = () => {
         onSignoutButtonClickHandler()
@@ -27,34 +43,10 @@ function SideBar({ isOpen }) {
         {
             name: 'Friends',
             icon: <MyIcon name='friends' />,
-            list: (() => {
-                const friends = doFriendsFetchResult.call(this)
-                return friends.allFriends.map((f, i) => {
-                    const onClickFriendButtonHandler = (isChecked, i) => () => {
-                        setSelectedFriendIndex(i)
-                        setIsOpenUserPopup(isChecked)
-                    }
-
-                    const onCloseFriendButtonHandler = (isChecked) => {
-                        setIsOpenUserPopup(isChecked)
-                    }
-                    return (
-                        <Box key={f.friendUuid}>
-                            <ListItemButton
-                                divider={true}
-                                onClick={onClickFriendButtonHandler(true, i)}
-                            >
-                                <Typography>{f.friendNickname}</Typography>
-                            </ListItemButton>
-                            <MyInfoPopup
-                                isClickInfo={isOpenUserPopup}
-                                onCloseEvent={onCloseFriendButtonHandler}
-                                user={friends.allFriends[selectedFriendIndex]}
-                            />
-                        </Box>
-                    )
-                })
-            })(),
+            list: <FriendList
+                friends={friends.allFriends}
+                onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+            />
         },
         {
             name: 'ChatRooms',
@@ -110,6 +102,11 @@ function SideBar({ isOpen }) {
                     </Accordion>
                 )
             })}
+            <MyInfoPopup
+                isClickInfo={isOpenUserPopup}
+                onCloseEvent={onCloseEventHandler}
+                user={friends.allFriends[friendIndex]}
+            />
         </Box>
     )
 }
