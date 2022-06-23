@@ -1,4 +1,4 @@
-import React, {
+import {
     useState,
     useContext,
     useCallback,
@@ -140,4 +140,4 @@ const sidebarLinkStyle = {
     color: 'black',
 }
 
-export default React.memo(SideBar)
+export default SideBar
