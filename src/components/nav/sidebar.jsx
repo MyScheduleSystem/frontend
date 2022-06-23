@@ -1,9 +1,10 @@
-import {
+import React, {
     useState,
     useContext,
     useCallback,
 } from 'react'
 import FriendList from './list/friendList'
+import ChatRoomList from './list/chatRoomList'
 import MyIcon from '../../icon/MyIcon'
 import MyInfoPopup from '../popup/myInfoPopup'
 import { Link } from 'react-router-dom'
@@ -25,6 +26,7 @@ function SideBar({ isOpen }) {
     const { onSignoutButtonClickHandler } = useContext(UserContext)
 
     const friends = doFriendsFetchResult.call(this)
+    const chatRooms = doChatRoomFetchResult.call(this)
 
     const onClickFriendButtonClickEventHandler = useCallback((isChecked, index) => {
         setIsOpenUserPopup(isChecked)
@@ -52,19 +54,7 @@ function SideBar({ isOpen }) {
             name: 'ChatRooms',
             path: '/chat',
             icon: <MyIcon name='chat' />,
-            list: (() => {
-                const chatRooms = doChatRoomFetchResult.call(this)
-                return chatRooms.allChatRooms.map((c) => {
-                    return (
-                        <ListItemButton
-                            key={c.uuid}
-                            divider={true}
-                        >
-                            <Typography>{c.name}</Typography>
-                        </ListItemButton>
-                    )
-                })
-            })(),
+            list: <ChatRoomList chatRoom={chatRooms.allChatRooms} />,
         },
         {
             name: 'Schedule',
@@ -150,4 +140,4 @@ const sidebarLinkStyle = {
     color: 'black',
 }
 
-export default SideBar
+export default React.memo(SideBar)
