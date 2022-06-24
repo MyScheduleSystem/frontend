@@ -4,7 +4,7 @@ import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
-} from 'firebase/auth'
+} from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import firestore from '../service/firebase'
 import User from '../type/user'
