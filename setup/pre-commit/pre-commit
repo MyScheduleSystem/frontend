@@ -13,7 +13,7 @@ IFS=$'\n\t'
 # Based also on @jancimajek's one liner in that Gist.
 #
 
-cd frontend
+# cd src
 
 # ESLint staged changes only
 git diff --diff-filter=d --cached --name-only -z -- '*.js' '*.jsx' '*.vue' \
