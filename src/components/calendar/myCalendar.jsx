@@ -98,7 +98,7 @@ function MyCalendar() {
                 />
             </Box>
         </Box>
-    );
+    )
 }
 
 function setTodoItemList(setAllTodoItems) {
@@ -114,7 +114,7 @@ function setTodoItemList(setAllTodoItems) {
     setAllTodoItems(() => Lodash.cloneDeep(todoObj))
 }
 
-export default MyCalendar;
+export default MyCalendar
 
 const mainBoxSizeStyle = {
     display: 'flex',

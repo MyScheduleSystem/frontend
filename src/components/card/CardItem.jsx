@@ -7,8 +7,8 @@ import {
     CardContent,
     Avatar,
     CardMedia,
-} from "@mui/material";
-import MyIcon from '../../icon/MyIcon';
+} from "@mui/material"
+import MyIcon from '../../icon/MyIcon'
 
 const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) => {
     const boxRef = useRef()

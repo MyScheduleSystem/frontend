@@ -1,9 +1,9 @@
-import MyIcon from '../../icon/MyIcon';
+import MyIcon from '../../icon/MyIcon'
 import { 
     Box, 
     Button,
     Typography,
-} from "@mui/material";
+} from "@mui/material"
 
 const EmptyCard = ({ onCardModalShow }) => {
     const onPlusButtonClickHandler = () => {
