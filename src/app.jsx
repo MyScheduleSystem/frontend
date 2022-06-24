@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import MyRouter from "./pages/router/myRouter"
 
 function App() {
@@ -7,4 +7,4 @@ function App() {
     )
 }
 
-export default App;
+export default App
