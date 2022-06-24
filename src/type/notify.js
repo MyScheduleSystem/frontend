@@ -1,4 +1,4 @@
-import ItemType from "./itemType";
+import ItemType from "./itemType"
 
 class Notify extends ItemType {
     constructor(startDate, isChecked, message, endDate) {

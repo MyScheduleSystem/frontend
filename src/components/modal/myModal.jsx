@@ -8,7 +8,7 @@ import {
     Modal,
     Box,
     Button,
-} from "@mui/material";
+} from "@mui/material"
 import Lodash from 'lodash'
 
 function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
@@ -120,7 +120,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
                 </Box>
             </Modal>
         </>
-    );
+    )
 }
 
 const dataForRender = (todoItems) => {
@@ -166,4 +166,4 @@ const cardListStyle = {
     gridTemplateColumns: 'repeat(4, 1fr)',
 }
 
-export default MyModal;
+export default MyModal
