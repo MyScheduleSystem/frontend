@@ -1,11 +1,11 @@
-import WeatherIcon from '../icon/weatherIcon'
-import axios from 'axios'
-import ErrorUtil from '../util/errorUtil'
+import WeatherIcon from "../icon/weatherIcon"
+import axios from "axios"
+import ErrorUtil from "../util/errorUtil"
 
 const latitude = 36.9078
 const longtitude = 127.7669
-const exclude = 'hourly,daily'
-const baseUrl = 'https://api.openweathermap.org/data/2.5/onecall'
+const exclude = "hourly,daily"
+const baseUrl = "https://api.openweathermap.org/data/2.5/onecall"
 const key = process.env.REACT_APP_OPEN_WEATHER_KEY
 
 const weatherFetcher = {}

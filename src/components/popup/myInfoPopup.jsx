@@ -1,14 +1,14 @@
-import { useState, useRef } from 'react'
-import MyIcon from '../../icon/MyIcon'
+import { useState, useRef } from "react"
+import MyIcon from "../../icon/myIcon"
 import {
     Modal, Box, List,
     ListItem, ListItemAvatar, Avatar,
     ListItemText, Divider, Button,
     Input,
-} from '@mui/material'
+} from "@mui/material"
 
 const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent }) => {
-    const [imageUpload, setImageUpload] = useState('')
+    const [imageUpload, setImageUpload] = useState("")
     const imageInput  = useRef()
 
     const onCloseEventHandler = () => onCloseEvent(false)
@@ -35,27 +35,27 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                 <List sx={listStyle}>
                     <ListItem sx={ListItemAvatarStyle}>
                         <ListItemAvatar>
-                            <Avatar alt='profile' sx={avatarSizeStyle}/>
+                            <Avatar alt="profile" sx={avatarSizeStyle}/>
                         </ListItemAvatar>
                     </ListItem>
                     <ListItemText
                         primary={user.friendNickname}
-                        secondary='프로필명 아직 없음'
+                        secondary="프로필명 아직 없음"
                     />
                 </List>
                 <Box>
                     <Divider />
                     <Button>
-                        <MyIcon name='chat' />
+                        <MyIcon name="chat" />
                     </Button>
-                    <Input 
-                        type='file'
+                    <Input
+                        type="file"
                         inputRef={imageInput}
                         sx={uploadImageInputStyle}
-                        onChange={onChangeImageUploaderEventHandler} 
+                        onChange={onChangeImageUploaderEventHandler}
                     />
                     <Button onClick={onClickImageUploaderButtonHandler}>
-                        <MyIcon name='upload' />
+                        <MyIcon name="upload" />
                     </Button>
                     <Button onClick={onClickImageUploaderEventHandler}>확인</Button>
                 </Box>
@@ -65,39 +65,39 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
 }
 
 const modalStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
 }
 
 const boxStyle = {
-    width: '20%',
-    height: '80%',
-    backgroundColor: '#E9ECEF',
-    borderRadius: '10px',
-    overflow: 'auto',
+    width: "20%",
+    height: "80%",
+    backgroundColor: "#E9ECEF",
+    borderRadius: "10px",
+    overflow: "auto",
 
 }
 
 const listStyle = {
-    width: '100%',
-    maxWidth: '360',
-    bgColor: 'background.paper'
+    width: "100%",
+    maxWidth: "360",
+    bgColor: "background.paper"
 }
 
 const ListItemAvatarStyle = {
-    justifyContent: 'center',
-    marginTop: '19rem',
+    justifyContent: "center",
+    marginTop: "19rem",
 }
 
 const avatarSizeStyle = {
-    width: '85px',
-    height: '85px',
+    width: "85px",
+    height: "85px",
 }
 
 const uploadImageInputStyle = {
-    display: 'none',
+    display: "none",
 }
 
 export default MyInfoPopup

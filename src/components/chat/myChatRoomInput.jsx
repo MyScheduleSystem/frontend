@@ -1,12 +1,12 @@
-import { useRef } from 'react'
-import MyIcon from '../../icon/MyIcon'
+import { useRef } from "react"
+import MyIcon from "../../icon/myIcon"
 import {
     Grid,
     ListItem,
     ListItemText,
     TextField,
-} from '@mui/material'
-import DateType from '../../type/dateType'
+} from "@mui/material"
+import DateType from "../../type/dateType"
 
 const MyChatRoomInput = () => {
     const textFieldRef = useRef()
@@ -26,20 +26,20 @@ const MyChatRoomInput = () => {
 
     return (
         <Grid container={true}>
-            <Grid 
-                item={true} 
+            <Grid
+                item={true}
                 xs={11}
             >
-                <TextField 
+                <TextField
                     ref={textFieldRef}
-                    fullWidth={true} 
-                    label="Enter your message" 
+                    fullWidth={true}
+                    label="Enter your message"
                     onKeyDown={onMessageKeyDownHandler}
                 />
             </Grid>
-            <Grid 
+            <Grid
                 item={true}
-                xs={1} 
+                xs={1}
                 align="right"
             >
                 <ListItem button={true} onClick={onSendButtonClickHandler}>

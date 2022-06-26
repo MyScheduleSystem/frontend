@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef } from "react"
 import {
     Card,
     Button,
@@ -8,7 +8,7 @@ import {
     Avatar,
     CardMedia,
 } from "@mui/material"
-import MyIcon from '../../icon/MyIcon'
+import MyIcon from "../../icon/myIcon"
 
 const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) => {
     const boxRef = useRef()
@@ -38,7 +38,7 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
                 sx={titleStyle}
                 title={cardItem.title}
                 subheader={cardItem.startDate}
-                alt='Modal Card'
+                alt="Modal Card"
                 action={
                 <Button
                     sx={buttonStyle}
@@ -50,7 +50,7 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
             <CardMedia
                 component="img"
                 height={100}
-                image={`/images/schedule.jpg`}
+                image={"/images/schedule.jpg"}
             >
 
             </CardMedia>
@@ -68,26 +68,26 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
 export default CardItem
 
 const cardStyle = {
-    alignItems: 'center',
-    textAlign: 'center',
-    marginTop: '20px',
-    width: '300px',
-    height: '280px',
-    boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
-    border: '1px solid #eeeeee',
-    borderRadius: '8px',
+    alignItems: "center",
+    textAlign: "center",
+    marginTop: "20px",
+    width: "300px",
+    height: "280px",
+    boxShadow: "0 10px 5px 5px rgba(0, 0, 0, 0.1)",
+    border: "1px solid #eeeeee",
+    borderRadius: "8px",
 }
 
 const titleStyle = {
-    height: '10%',
-    width: '70%',
+    height: "10%",
+    width: "70%",
 }
 
 const contentStyle = {
-    height: '30%',
+    height: "30%",
 }
 
 const buttonStyle = {
-    minWidth: '10px',
-    left: '52px',
+    minWidth: "10px",
+    left: "52px",
 }

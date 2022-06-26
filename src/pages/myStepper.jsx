@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react"
 import {
     Box,
     Stepper,
@@ -6,7 +6,7 @@ import {
     StepButton,
     Typography,
     Button,
-} from '@mui/material'
+} from "@mui/material"
 
 // props: steps => Array
 function MyStepper({
@@ -81,7 +81,7 @@ function MyStepper({
             ) : (
                 <Box>
                     <Typography
-                        variant='h6'
+                        variant="h6"
                         sx={typographyStyle}
                     >
                         {steps[activeStep]}
@@ -126,9 +126,9 @@ function allStepsCompleted(completed, steps) {
 }
 
 const boxStyle = {
-    margin: '0 auto',
-    marginTop: '3rem',
-    width: '100%',
+    margin: "0 auto",
+    marginTop: "3rem",
+    width: "100%",
 }
 
 const typographyStyle = {
@@ -137,15 +137,15 @@ const typographyStyle = {
 }
 
 const buttonBoxStyle = {
-    width: '70%',
-    margin: '0 auto',
-    display: 'flex',
-    flexDirection: 'row',
+    width: "70%",
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "row",
     pt: 2,
 }
 
 const buttonStyle = {
-    flex: '1 1 auto',
+    flex: "1 1 auto",
 }
 
 const backNextButtonStyle = {

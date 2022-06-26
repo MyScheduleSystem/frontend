@@ -1,14 +1,14 @@
-import SymbolName from '../util/symbolName'
-import DateType from './dateType'
-import ErrorUtil from '../util/errorUtil'
+import SymbolName from "../util/symbolName"
+import DateType from "./dateType"
+import ErrorUtil from "../util/errorUtil"
 
 class ItemType extends SymbolName {
     constructor(startDate, endDate, name) {
         super(name)
         this.startDate = startDate
         this.endDate = endDate
-        ErrorUtil.typeCheck(startDate, 'string')
-        ErrorUtil.typeCheck(endDate, 'string')
+        ErrorUtil.typeCheck(startDate, "string")
+        ErrorUtil.typeCheck(endDate, "string")
     }
 
     getStartDate() {
@@ -20,7 +20,7 @@ class ItemType extends SymbolName {
     }
 
     calculateDestinationDay() {
-        return DateType.dateFromDate(this.startDate, this.endDate, 'days')
+        return DateType.dateFromDate(this.startDate, this.endDate, "days")
     }
 }
 

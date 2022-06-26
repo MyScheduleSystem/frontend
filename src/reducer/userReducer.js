@@ -1,4 +1,4 @@
-import UserActionType from './action/userActionType'
+import UserActionType from "./action/userActionType"
 import ErrorUtil from "../util/errorUtil"
 
 const UserReducer = {}

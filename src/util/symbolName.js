@@ -1,8 +1,8 @@
-import ErrorUtil from './errorUtil'
+import ErrorUtil from "./errorUtil"
 
 class SymbolName {
     constructor(name) {
-        ErrorUtil.invalidParameter(typeof name === 'string')
+        ErrorUtil.invalidParameter(typeof name === "string")
         this.name = name
     }
 }

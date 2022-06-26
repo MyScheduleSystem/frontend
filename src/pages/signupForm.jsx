@@ -2,11 +2,11 @@ import React, {
     useRef,
     useState,
     useCallback,
-} from 'react'
-import MyIcon from '../icon/MyIcon'
-import MyStepper from './myStepper'
-import AlertPopup from '../components/popup/alertPopup'
-import userFetcher from '../fetcher/userFetcher'
+} from "react"
+import MyIcon from "../icon/myIcon"
+import MyStepper from "./myStepper"
+import AlertPopup from "../components/popup/alertPopup"
+import userFetcher from "../fetcher/userFetcher"
 import {
     Container,
     Box,
@@ -19,12 +19,12 @@ import {
     Divider,
     CardMedia,
     Typography,
-} from '@mui/material'
-import Lodash from 'lodash'
+} from "@mui/material"
+import Lodash from "lodash"
 
 const steps = [
-    'Create with Google',
-    'Enter your information & Create MSS account !',
+    "Create with Google",
+    "Enter your information & Create MSS account !",
 ]
 
 const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent }) => {
@@ -43,7 +43,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
     const passwordRef = useRef()
 
     const onUsernameChangeHandler = useCallback((e) => {
-        if(validateForUserInfo('username', e.target.value)) {
+        if(validateForUserInfo("username", e.target.value)) {
             setIsValidUserInfo((prev) => {
                 return { ...prev, username: true }
             })
@@ -55,7 +55,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
     }, [])
 
     const onNameChangeHandler = useCallback((e) => {
-        if(validateForUserInfo('name', e.target.value)) {
+        if(validateForUserInfo("name", e.target.value)) {
             setIsValidUserInfo((prev) => {
                 return { ...prev, name: true }
             })
@@ -67,7 +67,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
     }, [])
 
     const onEmailChangeHandler = useCallback((e) => {
-        if(validateForUserInfo('email', e.target.value)) {
+        if(validateForUserInfo("email", e.target.value)) {
             setIsValidUserInfo((prev) => {
                 return { ...prev, email: true }
             })
@@ -79,7 +79,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
     }, [])
 
     const onPasswordChangeHandler = useCallback((e) => {
-        if(validateForUserInfo('password', e.target.value)) {
+        if(validateForUserInfo("password", e.target.value)) {
             setIsValidUserInfo((prev) => {
                 return { ...prev, password: true }
             })
@@ -105,7 +105,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
         user.email = emailRef.current.value
         user.password = passwordRef.current.value
         Lodash.forEach(user, (v, k) => {
-            if(v === '') {
+            if(v === "") {
                 checkInfo = true
                 return
             }
@@ -162,29 +162,29 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
 
     const validateForUserInfo = (target, value) => {
         switch(target) {
-            case 'username': {
+            case "username": {
                 const isValid = (() => {
                     const name = value.trim()
                     if(name.length !== value.length) return true
                     if(name.length < 4 || name.length === 0) return true
-                    if(!(['!', '@', '$', '%', '`', ',', '.', ' '].every((e) => !name.includes(e)))) return true
+                    if(!(["!", "@", "$", "%", "`", ",", ".", " "].every((e) => !name.includes(e)))) return true
                     return false
                 })()
                 return isValid
             }
 
-            case 'name': {
+            case "name": {
                 const isValid = (() => {
                     const name = value.trim()
                     if(name.length !== value.length) return true
                     if(name.length === 0) return true
-                    if(!(['!', '@', '$', '%', '`', ',', '.', ' '].every((e) => !name.includes(e)))) return true
+                    if(!(["!", "@", "$", "%", "`", ",", ".", " "].every((e) => !name.includes(e)))) return true
                     return false
                 })()
                 return isValid
             }
 
-            case 'email': {
+            case "email": {
                 const isValid = (() => {
                     // email 정규식 google 참고
                     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
@@ -196,7 +196,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
                 return isValid
             }
 
-            case 'password': {
+            case "password": {
                 const isValid = (() => {
                     // password 정규식 google 참고 ( 특수문자 + 영문자 + 숫자 )
                     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
@@ -228,13 +228,13 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
                 <CardMedia
                     sx={cardMediaFontStyle}
                     component="img"
-                    image={`/images/mss.png`}
+                    image={"/images/mss.png"}
                 />
                 {signupAcitveStep === 0 &&
                     <Box sx={signupStyle}>
                         <Typography
                             sx={typographyStyle}
-                            variant='h4'
+                            variant="h4"
                         >
                             Social Accounts
                         </Typography>
@@ -328,42 +328,42 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
 }
 
 const container = {
-    textAlign: 'center',
+    textAlign: "center",
 }
 
 const signupContainer = {
-    marginTop: '2rem',
+    marginTop: "2rem",
     border: 1,
-    width: '50%',
-    boxShadow: '0 10px 5px 5px rgba(0, 0, 0, 0.1)',
+    width: "50%",
+    boxShadow: "0 10px 5px 5px rgba(0, 0, 0, 0.1)",
 }
 
 const signupStyle = {
-    padding: '1rem',
+    padding: "1rem",
 }
 
 const typographyStyle = {
-    mb: '1rem',
+    mb: "1rem",
 }
 
 const formStyle = {
-    margin: '10px',
+    margin: "10px",
 }
 
 const formControltyle = {
-    marginBottom: '10px',
+    marginBottom: "10px",
 }
 
 const buttonBoxStyle = {
     border: 1,
-    textAlign: 'center',
+    textAlign: "center",
 }
 
 const cardMediaFontStyle = {
-    margin: '0 auto',
+    margin: "0 auto",
     mb: 2,
     mt: 2,
-    width: '250px',
+    width: "250px",
 }
 
 export default SignupForm

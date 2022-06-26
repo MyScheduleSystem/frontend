@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react'
-import AlertPopup from '../components/popup/alertPopup'
-import MyIcon from '../icon/MyIcon'
+import { useState, useRef } from "react"
+import AlertPopup from "../components/popup/alertPopup"
+import MyIcon from "../icon/myIcon"
 import {
     Container,
     Box,
@@ -12,7 +12,7 @@ import {
     Typography,
     Button,
     CardMedia,
-} from '@mui/material'
+} from "@mui/material"
 
 const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent }) => {
     const [isValidUserInfo, setIsValidUserInfo] = useState({
@@ -75,7 +75,7 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                 <CardMedia
                     sx={imgBoxStyle}
                     component="img"
-                    image={`/images/signin.png`}
+                    image={"/images/signin.png"}
                 />
             </Box>
             <Box sx={signinBoxStyle}>
@@ -84,7 +84,7 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                         <CardMedia
                             sx={cardMediaFontStyle}
                             component="img"
-                            image={`/images/mss.png`}
+                            image={"/images/mss.png"}
                         />
                         <FormControl variants="outlined" sx={formControltyle}>
                             <InputLabel> With a start your email </InputLabel>
@@ -140,49 +140,49 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
 }
 
 const signinContainer = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '5rem',
-    width: '48%',
-    height: '100%',
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "5rem",
+    width: "48%",
+    height: "100%",
 }
 
 const signinBoxStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
 }
 
 const signinFormStyle = {
     border: 1,
-    height: '80%',
+    height: "80%",
 }
 
 const signupBoxStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     border: 1,
-    height: '15%',
+    height: "15%",
 }
 
 const imgBoxStyle = {
-    width: '90%',
-    height: '100%',
-    objectFit: 'cover',
+    width: "90%",
+    height: "100%",
+    objectFit: "cover",
 }
 
 const cardMediaFontStyle = {
-    width: '250px',
+    width: "250px",
 }
 
 const formStyle = {
-    margin: '45px',
+    margin: "45px",
 }
 
 const formControltyle = {
-    marginTop: '1rem',
-    marginBottom: '10px',
+    marginTop: "1rem",
+    marginBottom: "10px",
 }
 
 export default SigninForm

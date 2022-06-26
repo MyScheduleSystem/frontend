@@ -4,7 +4,7 @@ import {
     List,
     ListItem,
     ListItemText,
-} from '@mui/material'
+} from "@mui/material"
 
 function MyCalendarSide({ date }) {
     // TODO: Calender에서 Day 클릭 시 요일도 바뀌어야 함
@@ -50,34 +50,34 @@ function MyCalendarSide({ date }) {
 
 const wrapperBox = {
     borderRadius: "10px 0 0 10px",
-    display: 'inline-block',
-    width: '30%',
-    height: '100%',
-    float: 'left',
-    color: '#fff',
-    backgroundColor: '#1976D2',
+    display: "inline-block",
+    width: "30%",
+    height: "100%",
+    float: "left",
+    color: "#fff",
+    backgroundColor: "#1976D2",
 }
 
 const monthStyle = {
-    fontSize: '8.5rem',
-    marginTop: '0.8rem',
+    fontSize: "8.5rem",
+    marginTop: "0.8rem",
 }
 
 const yearStyle = {
-    fontSize: '5rem',
+    fontSize: "5rem",
 }
 
 const dayStyle = {
-    fontSize: '2rem',
+    fontSize: "2rem",
 }
 
 const todoStyle = {
-    fontSize: '1.5rem',
-    marginTop: '2rem',
+    fontSize: "1.5rem",
+    marginTop: "2rem",
 }
 
 const todoListStyle = {
-    textAlign: 'center',
+    textAlign: "center",
 }
 
 export default MyCalendarSide

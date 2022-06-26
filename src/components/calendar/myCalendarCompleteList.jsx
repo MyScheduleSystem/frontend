@@ -1,4 +1,4 @@
-import { 
+import {
     Box,
     Container,
     ListItemText,
@@ -6,15 +6,15 @@ import {
     Avatar,
     Grid,
     Button,
-}  from '@mui/material'
-import TodoItem from '../../type/todoItem'
+}  from "@mui/material"
+import TodoItem from "../../type/todoItem"
 
 const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
     const onCompletedEventHandler = (e) => () => {
         const newObj = new TodoItem(e.title, e.content, e.startDate, e.endDate, !e.isCompleted)
         onCompletedEvent(newObj)
     }
-    
+
     return (
         <Box sx={todoListBoxStyle}>
             {item.map((e, i) => {
@@ -22,7 +22,7 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
                     <Container key={i}>
                         <Grid container>
                             <Grid item xs={2}>
-                                <Avatar alt='schedule' sx={avatarStyle} />
+                                <Avatar alt="schedule" sx={avatarStyle} />
                             </Grid>
                             <Grid item xs={8} sx={mainGridStyle}>
                                 <ListItemText primary={e.title} />
@@ -36,7 +36,7 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
                                     </Grid>
                                 <ListItemText secondary={e.content} />
                             </Grid>
-                            {e.isCompleted ? 
+                            {e.isCompleted ?
                                 <Grid item xs={1}>
                                     <Button onClick={onCompletedEventHandler(e)}>Up</Button>
                                 </Grid> :
@@ -46,7 +46,7 @@ const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
                             }
                         </Grid>
                         <Divider />
-                    </Container> 
+                    </Container>
                 )})}
         </Box>
     )
@@ -61,16 +61,16 @@ const mainGridStyle = {
 }
 
 const avatarStyle = {
-    width: '50px', 
-    height: '50px', 
+    width: "50px",
+    height: "50px",
     margin: 3,
 }
 
 const todoListBoxStyle = {
-    overflow: 'auto',
-    height: '185px',
-    alignItems: 'center',
-    boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0.085)',
+    overflow: "auto",
+    height: "185px",
+    alignItems: "center",
+    boxShadow: "10px 10px 10px 10px rgba(0, 0, 0, 0.085)",
     borderRadius: "10px 10px 10px 10px",
 }
 

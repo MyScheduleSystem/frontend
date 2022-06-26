@@ -2,9 +2,9 @@ import {
     Box,
     ListItemButton,
     Typography,
-} from '@mui/material'
+} from "@mui/material"
 
-function FriendList({ friends, onClickFriendButtonClickEvent }) {
+function MyFriendList({ friends, onClickFriendButtonClickEvent }) {
     const onClickFriendButtonClickEventHandler = (isChecked, index) => () => {
         onClickFriendButtonClickEvent(isChecked, index)
     }
@@ -25,4 +25,4 @@ function FriendList({ friends, onClickFriendButtonClickEvent }) {
     )
 }
 
-export default FriendList
+export default MyFriendList

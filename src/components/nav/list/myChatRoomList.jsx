@@ -1,9 +1,9 @@
 import {
     ListItemButton,
     Typography,
-} from '@mui/material'
+} from "@mui/material"
 
-function ChatRoomList({ chatRoom }) {
+function MyChatRoomList({ chatRoom }) {
     return (
         chatRoom.map((c) => {
             return (
@@ -18,4 +18,4 @@ function ChatRoomList({ chatRoom }) {
     )
 }
 
-export default ChatRoomList
+export default MyChatRoomList

@@ -1,4 +1,4 @@
-import MyIcon from '../../icon/MyIcon'
+import MyIcon from "../../icon/myIcon"
 import {
     Box,
     Dialog,
@@ -7,7 +7,7 @@ import {
     DialogContentText,
     DialogActions,
     Button,
-} from '@mui/material'
+} from "@mui/material"
 
 const AlertPopup = ({ isShowPopup, setIsShowPopupEvent, message }) => {
     const onCloseButtonClickHandler = (isChecked) => () => {
@@ -18,7 +18,7 @@ const AlertPopup = ({ isShowPopup, setIsShowPopupEvent, message }) => {
         <Box>
             <Dialog open={isShowPopup}>
                 <DialogTitle>
-                    <MyIcon name='excalmationCircle' /> Please check your input agin.
+                    <MyIcon name="excalmationCircle" /> Please check your input agin.
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>

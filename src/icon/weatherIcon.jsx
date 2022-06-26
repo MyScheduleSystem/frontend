@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
     faSun, faCloudRain, faCloud,
 } from "@fortawesome/free-solid-svg-icons"
@@ -13,10 +13,10 @@ export default WeatherIcon
 
 function getWeatherIcon(weather) {
     switch(weather) {
-        case 'Clear': return faSun
-        case 'Rain': return faCloudRain
-        // case 'Snow': return faCloudHail
-        case 'Clouds': return faCloud
+        case "Clear": return faSun
+        case "Rain": return faCloudRain
+        // case "Snow": return faCloudHail
+        case "Clouds": return faCloud
         default: return faSun
     }
 }

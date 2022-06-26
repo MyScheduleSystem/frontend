@@ -1,23 +1,32 @@
-import { getTodoFetchResult } from '../dev/testData'
+import {
+    getDocs,
+    collection,
+} from "firebase/firestore"
+import firestore from "../service/firebase"
 
-const calenderFetcher = {}
+// For test
+import { getTodoFetchResult } from "../dev/testData"
 
-calenderFetcher.fetchOption = {}
+const calendarFetcher = {}
 
-calenderFetcher.getTodoFetchResult = () => {
+// get all documents in the calendar collection
+// output: random key and calendar field(TodoList)
+calendarFetcher.allCalenderDocument = async function() {
+    const qs = await getDocs(collection(firestore, "calendar"))
+    console.log(qs)
+    qs.forEach((doc) => {
+        // doc.data() is nevery undefined for query doc snapshots
+        console.log(doc.data())
+    })
+}
+
+// For test
+calendarFetcher.getTodoFetchResult = () => {
     // TODO: axios
     // 현재는 Dev니까 그냥 Data 가져오자
     const data = getTodoFetchResult()
     return data
 }
 
-calenderFetcher.getFetchOptionResult = () => {
-    const fetchOption = calenderFetcher.fetchOption
-    fetchOption.userId = 1
-    fetchOption.year = '2022'
-    fetchOption.month = '05'
-    // TODO: fetchOption을 활용해서 잘 fetch 해보자
-}
-
-Object.freeze(calenderFetcher)
-export default calenderFetcher
+Object.freeze(calendarFetcher)
+export default calendarFetcher
