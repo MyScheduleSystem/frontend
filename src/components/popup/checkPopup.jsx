@@ -1,11 +1,11 @@
-import MyIcon from '../../icon/MyIcon'
+import MyIcon from "../../icon/MyIcon"
 import {
     Box,
     Dialog,
     DialogTitle,
     DialogActions,
     Button,
-} from '@mui/material'
+} from "@mui/material"
 
 function CheckPopup({ message, isShowPopup, onCheckPopupEvent }) {
     const onCloseButtonClickHandler = (isChecked) => () => {
@@ -16,7 +16,7 @@ function CheckPopup({ message, isShowPopup, onCheckPopupEvent }) {
         <Box>
             <Dialog open={isShowPopup}>
                 <DialogTitle>
-                    <MyIcon name='excalmationCircle' /> {message}
+                    <MyIcon name="excalmationCircle" /> {message}
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={onCloseButtonClickHandler(true)}>

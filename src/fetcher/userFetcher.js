@@ -6,9 +6,9 @@ import {
     signInWithPopup,
 } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
-import firestore from '../service/firebase'
-import User from '../type/user'
-import ErrorUtil from '../util/errorUtil'
+import firestore from "../service/firebase"
+import User from "../type/user"
+import ErrorUtil from "../util/errorUtil"
 
 const userFetcher = {}
 
@@ -40,7 +40,7 @@ userFetcher.signup = async (user) => {
             return userObj
         })
         .then((userObj) => {
-            setDoc(doc(firestore, 'user', `${userObj.uid}`), {
+            setDoc(doc(firestore, "user", `${userObj.uid}`), {
                 uuid: `${userObj.uid}`,
                 usernmae: user.username,
                 name: user.name,
