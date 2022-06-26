@@ -4,21 +4,21 @@ import {
     addDoc,
 } from "firebase/firestore"
 import firestore from "../service/firebase"
+import TodoItem from "../type/todoItem"
 
 // For test
 import { getTodoFetchResult } from "../dev/testData"
 
 const calendarFetcher = {}
 
-// get all documents in the calendar collection
-// output: random key and calendar field(TodoList)
-calendarFetcher.allCalenderDocument = async function() {
+calendarFetcher.allCalenderTodoList = async function() {
     const qs = await getDocs(collection(firestore, "calendar"))
-    console.log(qs)
+    const arr = []
     qs.forEach((doc) => {
-        // doc.data() is nevery undefined for query doc snapshots
-        console.log(doc.data())
+        const obj = doc.data()
+        arr.push(new TodoItem(obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
     })
+    return arr
 }
 
 // TODO: 중복되는 필드 검사
@@ -38,7 +38,6 @@ calendarFetcher.createTodoList = function(uuid, todoArr) {
 
 // For test
 calendarFetcher.getTodoFetchResult = () => {
-    // TODO: axios
     // 현재는 Dev니까 그냥 Data 가져오자
     const data = getTodoFetchResult()
     return data
