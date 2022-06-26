@@ -5,7 +5,7 @@ import Friend from "./friend"
 
 class _FriendList extends SymbolName {
     constructor(friendListArray) {
-        super('friendList')
+        super("friendList")
         this.$_friendListArray = friendListArray
     }
 
@@ -29,15 +29,15 @@ const FriendList = {}
 
 FriendList.createFriendList = function(array) {
     const fArr = ArrayUtil.createArray(array, Friend)
-    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, 'Array size > 1')
+    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, "Array size > 1")
     return new _FriendList(fArr)
 }
 
 FriendList.createFriendStringList = function(array) {
-    ErrorUtil.assert(!ArrayUtil.isEmpty(array), 'Array must be filled!')
+    ErrorUtil.assert(!ArrayUtil.isEmpty(array), "Array must be filled!")
     const fArr = array.map(friend => friend.getFriendNickname)
-    fArr.every(e => ErrorUtil.typeCheck(e, 'string'))
-    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, 'Array size > 1')
+    fArr.every(e => ErrorUtil.typeCheck(e, "string"))
+    ErrorUtil.assert(ArrayUtil.size(fArr) > 1, "Array size > 1")
     return fArr
 }
 

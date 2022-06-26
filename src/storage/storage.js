@@ -1,14 +1,14 @@
-import SymbolName from '../util/symbolName'
-import Cookies from 'universal-cookie'
+import SymbolName from "../util/symbolName"
+import Cookies from "universal-cookie"
 import ErrorUtil from "../util/errorUtil"
 
 const cookies = new Cookies()
-const REFRESH_TOKEN = 'RefreshToken'
+const REFRESH_TOKEN = "RefreshToken"
 
 // Refresh token => cookie
 class Storage extends SymbolName {
     constructor() {
-        super('storage')
+        super("storage")
         SymbolName.freezeObject(this, Storage)
     }
 }
@@ -22,7 +22,7 @@ Storage.saveRefershToken = function(refreshToken) {
     cookies.set(
         REFRESH_TOKEN,
         refreshToken,
-        { sameSite: 'strict' },
+        { sameSite: "strict" },
     )
 }
 

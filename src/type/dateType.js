@@ -1,5 +1,5 @@
-import DateUtil from '../util/dateUtil'
-import ErrorUtil from '../util/errorUtil'
+import DateUtil from "../util/dateUtil"
+import ErrorUtil from "../util/errorUtil"
 
 const DateType = {}
 
@@ -16,21 +16,21 @@ DateType.createDateFormat = function(date, format) {
 
 DateType.getYear = function(date) {
     ErrorUtil.invalidParameter(date)
-    ErrorUtil.typeCheck(date, 'string')
+    ErrorUtil.typeCheck(date, "string")
     const year = date.split("-")[0]
     return year
 }
 
 DateType.getMonth = function(date) {
     ErrorUtil.invalidParameter(date)
-    ErrorUtil.typeCheck(date, 'string')
+    ErrorUtil.typeCheck(date, "string")
     const month = date.split("-")[1]
     return month
 }
 
 DateType.getDateDay = function(date) {
     ErrorUtil.invalidParameter(date)
-    ErrorUtil.typeCheck(date, 'string')
+    ErrorUtil.typeCheck(date, "string")
     const day = date.split("-")[2]
     return day
 }
@@ -66,15 +66,15 @@ DateType.castToMonth = function(month) {
 }
 
 DateType.isBetween = function(now, prev, next) {
-    ErrorUtil.typeCheck(now, 'string')
-    ErrorUtil.typeCheck(prev, 'string')
-    ErrorUtil.typeCheck(next, 'string')
+    ErrorUtil.typeCheck(now, "string")
+    ErrorUtil.typeCheck(prev, "string")
+    ErrorUtil.typeCheck(next, "string")
     const between =  DateUtil.isBetween(now, prev, next)
     return between
 }
 
 DateType.lastDayOfMonth = function(day) {
-    
+
 }
 
 Object.freeze(DateType)

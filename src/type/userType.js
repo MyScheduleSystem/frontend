@@ -1,5 +1,5 @@
-import SymbolName from '../util/symbolName'
-import ErrorUtil from '../util/errorUtil'
+import SymbolName from "../util/symbolName"
+import ErrorUtil from "../util/errorUtil"
 
 class UserType extends SymbolName {
     constructor(uuid, nickname, infoMessage, email, name, typeName) {

@@ -1,5 +1,5 @@
-import ErrorUtil from './errorUtil'
-import Lodash from 'lodash'
+import ErrorUtil from "./errorUtil"
+import Lodash from "lodash"
 
 const ArrayUtil = {}
 
@@ -14,7 +14,7 @@ ArrayUtil.isEmpty = function(array) {
 
 ArrayUtil.createArray = function(array, type) {
     const result = ArrayUtil.removeDuplicate(Lodash.castArray(array))
-    if(type !== undefined) ErrorUtil.assert(result.every(e => e instanceof type), 'All element type must be same!')
+    if(type !== undefined) ErrorUtil.assert(result.every(e => e instanceof type), "All element type must be same!")
     return result
 }
 
