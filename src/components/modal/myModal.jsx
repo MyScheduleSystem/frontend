@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react"
 import CardModal from "./cardModal"
 import CardEditModal from "./cardEditModal"
-import CardItem from "../card/CardItem"
+import CardItem from "../card/cardItem"
 import EmptyCard from "../card/emptyCard"
 import CheckPopup from "../popup/checkPopup"
 import {
