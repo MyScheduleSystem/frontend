@@ -5,7 +5,7 @@ import {
     ListItemText,
     TextField,
     Divider,
-} from '@mui/material'
+} from "@mui/material"
 
 const MyChatRoomUserList = () => {
     const onSearchKeyDownHandler = (e) => {
@@ -14,7 +14,7 @@ const MyChatRoomUserList = () => {
     }
 
     return (
-        <Grid 
+        <Grid
             item={true}
             xs={3}
         >
@@ -25,11 +25,11 @@ const MyChatRoomUserList = () => {
                 </ListItem>
             </List>
             <Divider />
-            <Grid 
+            <Grid
                 item={true}
                 xs={12}
             >
-                <TextField 
+                <TextField
                     variant="outlined"
                     label="Search"
                     fullWidth={true}

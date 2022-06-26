@@ -1,12 +1,12 @@
-import MyChatRoomInput from './myChatRoomInput'
-import MyChatRoomUserList from './myChatRoomUserList'
-import MyChatRoomMessage from './myChatRoomMessage'
+import MyChatRoomInput from "./myChatRoomInput"
+import MyChatRoomUserList from "./myChatRoomUserList"
+import MyChatRoomMessage from "./myChatRoomMessage"
 import {
     Container,
     Grid,
     Paper,
     Divider,
-} from '@mui/material'
+} from "@mui/material"
 
 const MyChatRoom = () => {
     return (
@@ -29,9 +29,9 @@ const MyChatRoom = () => {
 }
 
 const containerStyle = {
-    marginTop: '4rem',
-    textAlign: 'center',
-    display: 'flex',
+    marginTop: "4rem",
+    textAlign: "center",
+    display: "flex",
 }
 
 export default MyChatRoom
