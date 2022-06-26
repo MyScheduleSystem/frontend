@@ -5,7 +5,7 @@ import {
 } from "react"
 import MyFriendList from "./list/myFriendList"
 import MyChatRoomList from "./list/myChatRoomList"
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
 import { Link } from "react-router-dom"
 import { createFriendsList, createChatRoomList } from "../../dev/testData"

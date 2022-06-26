@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import AlertPopup from "../components/popup/alertPopup"
-import MyIcon from "../icon/MyIcon"
+import MyIcon from "../icon/myIcon"
 import {
     Container,
     Box,

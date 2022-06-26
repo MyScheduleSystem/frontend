@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback } from "react"
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import AlertPopup from "../popup/alertPopup"
 import {
     Dialog,

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react"
 import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
 import {
     Box, IconButton, Divider,

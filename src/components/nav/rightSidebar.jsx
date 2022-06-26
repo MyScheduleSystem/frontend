@@ -10,7 +10,7 @@ import {
     CardActions,
     Button,
 } from "@mui/material"
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import weatherFetcher from "../../fetcher/weatherFetcher"
 
 const RightSideBar = () => {

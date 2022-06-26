@@ -1,4 +1,4 @@
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import {
     Box,
     Button,

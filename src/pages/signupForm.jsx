@@ -3,7 +3,7 @@ import React, {
     useState,
     useCallback,
 } from "react"
-import MyIcon from "../icon/MyIcon"
+import MyIcon from "../icon/myIcon"
 import MyStepper from "./myStepper"
 import AlertPopup from "../components/popup/alertPopup"
 import userFetcher from "../fetcher/userFetcher"

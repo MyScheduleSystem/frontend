@@ -1,5 +1,5 @@
 import { useState, useRef } from "react"
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import {
     Modal, Box, List,
     ListItem, ListItemAvatar, Avatar,
