@@ -1,8 +1,8 @@
-import SymbolName from '../util/symbolName'
+import SymbolName from "../util/symbolName"
 
 class Friend extends SymbolName {
     constructor(friendUuid, friendNickname, createdAt) {
-        super('friend')
+        super("friend")
         this.friendUuid = friendUuid
         this.friendNickname = friendNickname
         this.createAt = createdAt

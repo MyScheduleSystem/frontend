@@ -5,7 +5,7 @@ import SymbolName from "../util/symbolName"
 
 class _ChatRoomList extends SymbolName {
     constructor(chatRoomList) {
-        super('chatRoomList')
+        super("chatRoomList")
         this.$_chatRoomList = chatRoomList
     }
 
@@ -29,13 +29,13 @@ const ChatRoomList = {}
 
 ChatRoomList.createChatRoomList = function(array) {
     const cArray = ArrayUtil.createArray(array, ChatRoom)
-    ErrorUtil.assert(ArrayUtil.size(cArray) > 1, 'Array size > 1')
+    ErrorUtil.assert(ArrayUtil.size(cArray) > 1, "Array size > 1")
     return new _ChatRoomList(cArray)
 }
 
 ChatRoomList.createChatRoomNameList = function(array) {
     const newArray = array.map(e => e.name)
-    newArray.every(e => ErrorUtil.typeCheck(e, 'string'))
+    newArray.every(e => ErrorUtil.typeCheck(e, "string"))
     return newArray
 }
 

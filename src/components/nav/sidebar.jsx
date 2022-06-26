@@ -3,8 +3,8 @@ import {
     useContext,
     useCallback,
 } from "react"
-import FriendList from "./list/friendList"
-import ChatRoomList from "./list/chatRoomList"
+import MyFriendList from "./list/myFriendList"
+import MyChatRoomList from "./list/myChatRoomList"
 import MyIcon from "../../icon/MyIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
 import { Link } from "react-router-dom"
@@ -45,7 +45,7 @@ function SideBar({ isOpen }) {
         {
             name: "Friends",
             icon: <MyIcon name="friends" />,
-            list: <FriendList
+            list: <MyFriendList
                 friends={friends.allFriends}
                 onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
             />
@@ -54,7 +54,7 @@ function SideBar({ isOpen }) {
             name: "ChatRooms",
             path: "/chat",
             icon: <MyIcon name="chat" />,
-            list: <ChatRoomList chatRoom={chatRooms.allChatRooms} />,
+            list: <MyChatRoomList chatRoom={chatRooms.allChatRooms} />,
         },
         {
             name: "Schedule",
