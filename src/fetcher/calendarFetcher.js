@@ -1,6 +1,7 @@
 import {
     getDocs,
     collection,
+    addDoc,
 } from "firebase/firestore"
 import firestore from "../service/firebase"
 
@@ -17,6 +18,21 @@ calendarFetcher.allCalenderDocument = async function() {
     qs.forEach((doc) => {
         // doc.data() is nevery undefined for query doc snapshots
         console.log(doc.data())
+    })
+}
+
+// TODO: 중복되는 필드 검사
+calendarFetcher.createTodoList = function(uuid, todoArr) {
+    const userId = uuid
+    todoArr.forEach((item) => {
+        addDoc(collection(firestore, "calendar"), {
+            uuid: userId,
+            title: item.title,
+            content: item.content,
+            startDate: item.startDate,
+            endDate: item.endDate,
+            isCompleted: item.isCompleted,
+        })
     })
 }
 
