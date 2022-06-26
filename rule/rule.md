@@ -8,6 +8,7 @@
 
     - var 사용 금지
         * var의 scope가 불안정 하므로 최대한 let과 const를 사용하도록 한다.
+            eslint 참고.
 
     - 최대한 let의 사용을 자제하도록 한다.
         * 불변성 유지를 위해 let의 사용을 최소화 하고 최대한 const를 쓰도록 한다.
@@ -23,7 +24,11 @@
                 })()
         ```
     - 세미콜론
-        * 우리는 사용하지 말자... ㅠㅠ
+        * 사용하지 않음.
+            eslint 참고.
+    - String
+        * Double quote 사용.
+            eslint 참고.
 2. 함수
     - 이름
         * React 내에서 관리하는 event 함수의 경우 onClickEventHandler와 같이 명명한다. (onNameEventHandler => on ~~~ EventHandler 와 같이 명명함.)
