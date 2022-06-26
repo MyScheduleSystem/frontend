@@ -7,7 +7,7 @@ import Calendar from "react-calendar"
 import Lodash from "lodash"
 import DateType from "../../type/dateType"
 import MyModal from "../modal/myModal"
-import calendarFetcher from '../../fetcher/calendarFetcher'
+import calendarFetcher from "../../fetcher/calendarFetcher"
 import TodoItem from "../../type/todoItem"
 import MyCalendarTodoList from "./myCalendarTodoList"
 import MyCalendarSide from "./myCalendarSide"
@@ -28,7 +28,7 @@ function MyCalendar() {
     }, [])
 
     const onClickDayEventHandler = (e) => {
-        const date = DateType.createDateFormat(e, 'YYYY-MM-DD')
+        const date = DateType.createDateFormat(e, "YYYY-MM-DD")
         setSelectedDate(date)
         setIsClickModal(true)
     }
@@ -117,21 +117,21 @@ function setTodoItemList(setAllTodoItems) {
 export default MyCalendar
 
 const mainBoxSizeStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
 }
 
 const myCalendarBoxStyle = {
-    width: '75%',
-    boxShadow: '5px 10px 5px 5px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#F8F8FF',
-    border: '1px solid #eeeeee',
-    borderRadius: '10px',
-    height: '100%',
+    width: "75%",
+    boxShadow: "5px 10px 5px 5px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#F8F8FF",
+    border: "1px solid #eeeeee",
+    borderRadius: "10px",
+    height: "100%",
 }
 
 const myTodoListStyle = {
-    width: '33%',
-    height: '100%',
+    width: "33%",
+    height: "100%",
 }

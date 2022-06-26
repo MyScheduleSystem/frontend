@@ -1,11 +1,11 @@
-import MyCalendarCompleteList from './myCalendarCompleteList'
-import { 
+import MyCalendarCompleteList from "./myCalendarCompleteList"
+import {
     Box,
-    List, 
+    List,
     ListItemText,
-}  from '@mui/material'
+}  from "@mui/material"
 import DateType from "../../type/dateType"
-import Lodash from 'lodash'
+import Lodash from "lodash"
 
 const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
     const dataForCompletedRender = (todoItems) => {
@@ -40,16 +40,16 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
         <Box sx={todoListBoxStyle}>
             <List sx={todoListStyle}>
                 <ListItemText primary="Uncompleted" />
-                <MyCalendarCompleteList 
+                <MyCalendarCompleteList
                     item={dataForUnCompletedRender(todoItems)}
-                    onCompletedEvent={onCompletedEventHandler} 
+                    onCompletedEvent={onCompletedEventHandler}
                 />
             </List>
             <List sx={todoListStyle}>
                 <ListItemText primary="Completed" />
-                <MyCalendarCompleteList 
+                <MyCalendarCompleteList
                     item={dataForCompletedRender(todoItems)}
-                    onCompletedEvent={onCompletedEventHandler} 
+                    onCompletedEvent={onCompletedEventHandler}
                 />
             </List>
         </Box>
@@ -57,15 +57,15 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
 }
 
 const todoListBoxStyle = {
-    boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0.1)',
+    boxShadow: "10px 10px 10px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "10px 10px 10px 10px",
-    height: '100%',
+    height: "100%",
 }
 
 const todoListStyle = {
-    width: '22rem',
-    height: '13rem',
-    bgColor: 'background.paper',
+    width: "22rem",
+    height: "13rem",
+    bgColor: "background.paper",
 }
 
 export default MyCalendarTodoList
