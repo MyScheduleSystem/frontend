@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback } from 'react'
-import MyIcon from '../../icon/MyIcon'
-import AlertPopup from '../popup/alertPopup'
+import { useRef, useState, useCallback } from "react"
+import MyIcon from "../../icon/MyIcon"
+import AlertPopup from "../popup/alertPopup"
 import {
     Dialog,
     DialogContent,
@@ -11,11 +11,11 @@ import {
     TextField,
     Button,
 } from "@mui/material"
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import DateType from '../../type/dateType'
-import Lodash from 'lodash'
+import LocalizationProvider from "@mui/lab/LocalizationProvider"
+import AdapterDateFns from "@mui/lab/AdapterDateFns"
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
+import DateType from "../../type/dateType"
+import Lodash from "lodash"
 
 const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onCardModalCloseEvent }) => {
     const [startDate, setStartDate] = useState(DateType.createDate)
@@ -89,7 +89,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
         const isValid = (function() {
             const title = titleStr.trim()
             if(title.length < 4 || title.length === 0) return true
-            const special = ['#', '$', '|', '`']
+            const special = ["#", "$", "|", "`"]
             if(!special.every((e) => !title.includes(e))) return  true
             return false
         })()
@@ -159,7 +159,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
                     sx={buttonStyle}
                     onClick={onSaveButtonHandler}
                 >
-                    <MyIcon name='checkCircle' />
+                    <MyIcon name="checkCircle" />
                 </Button>
             </Dialog>
         </>
@@ -167,9 +167,9 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
 }
 
 const dialogStyle = {
-    '& .MuiDialog-paper': {
-        width: '80%',
-        height: '80%',
+    "& .MuiDialog-paper": {
+        width: "80%",
+        height: "80%",
     }
 }
 
@@ -178,23 +178,23 @@ const dialogContentStyle = {
 }
 
 const cardStyle = {
-    textAlign: 'center',
+    textAlign: "center",
 }
 
 const avtarStyle = {
-    bgColor: 'blue[500]'
+    bgColor: "blue[500]"
 }
 
 const titleStyle = {
-    width: '100%',
+    width: "100%",
 }
 
 const contentStyle = {
-    width: '100%',
+    width: "100%",
 }
 
 const buttonStyle = {
-    fontSize: '30px',
+    fontSize: "30px",
 }
 
 export default CardEditModal

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 import {
     Box,
     Paper,
@@ -9,9 +9,9 @@ import {
     CardContent,
     CardActions,
     Button,
-} from '@mui/material'
-import MyIcon from '../../icon/MyIcon'
-import weatherFetcher from '../../fetcher/weatherFetcher'
+} from "@mui/material"
+import MyIcon from "../../icon/MyIcon"
+import weatherFetcher from "../../fetcher/weatherFetcher"
 
 const RightSideBar = () => {
     const [weather, setWeather] = useState({})
@@ -24,8 +24,8 @@ const RightSideBar = () => {
     return (
         <Box sx={boxSizeStyle}>
             <Paper sx={menuStyle}>
-                <Typography variant="h6" align='center'><MyIcon name='radio' /> MSS</Typography>
-                <MenuList variant='menu'>
+                <Typography variant="h6" align="center"><MyIcon name="radio" /> MSS</Typography>
+                <MenuList variant="menu">
                     <MenuItem>
                         <Typography variant="inherit">DashBoard</Typography>
                     </MenuItem>
@@ -56,7 +56,7 @@ const RightSideBar = () => {
                             color="text.secondary"
                         >
                             I wish your happy day.
-                            Good luck. For more information. Contact: FoxMon's team.
+                            Good luck. For more information. Contact: FoxMon"s team.
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -81,21 +81,21 @@ function doWeatherFetch(weather, setWeather) {
 }
 
 const boxSizeStyle = {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
 }
 
 const menuStyle = {
-    marginTop: '4.5rem',
-    width: '20%',
-    height: '100%',
-    positin: 'absolute',
-    float: 'right',
+    marginTop: "4.5rem",
+    width: "20%",
+    height: "100%",
+    positin: "absolute",
+    float: "right",
 }
 
 const iconStyle = {
-    fontSize: '100px',
-    textAlign: 'center',
+    fontSize: "100px",
+    textAlign: "center",
 }
 
 export default RightSideBar

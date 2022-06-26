@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback } from 'react'
-import MyIcon from '../../icon/MyIcon'
-import AlertPopup from '../popup/alertPopup'
+import { useRef, useState, useCallback } from "react"
+import MyIcon from "../../icon/MyIcon"
+import AlertPopup from "../popup/alertPopup"
 import {
     Dialog,
     DialogContent,
@@ -11,10 +11,10 @@ import {
     TextField,
     Button,
 } from "@mui/material"
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import DateType from '../../type/dateType'
+import LocalizationProvider from "@mui/lab/LocalizationProvider"
+import AdapterDateFns from "@mui/lab/AdapterDateFns"
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
+import DateType from "../../type/dateType"
 
 const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent }) => {
     const [startDate, setStartDate] = useState(DateType.createDate)
@@ -44,8 +44,8 @@ const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent 
         itemObj.startDate = startDate
         itemObj.endDate = endDate
         onAddTodoItemEvent(itemObj)
-        titleRef.current.value = ''
-        contentRef.current.value = ''
+        titleRef.current.value = ""
+        contentRef.current.value = ""
         setStartDate(DateType.createDate())
         setEndDate(DateType.createDate())
         onCardModalCloseEvent(false)
@@ -101,7 +101,7 @@ const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent 
         const isValid = (function() {
             const title = titleStr.trim()
             if(title.length < 4 || title.length === 0) return true
-            const special = ['#', '$', '|', '`']
+            const special = ["#", "$", "|", "`"]
             if(!special.every((e) => !title.includes(e))) return  true
             return false
         })()
@@ -168,7 +168,7 @@ const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent 
                     sx={buttonStyle}
                     onClick={onSaveButtonClickEventHandler}
                 >
-                    <MyIcon name='checkCircle' />
+                    <MyIcon name="checkCircle" />
                 </Button>
         </Dialog>
         </>
@@ -176,30 +176,30 @@ const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent 
 }
 
 const dialogStyle = {
-    '& .MuiDialog-paper': {
-        width: '80%',
-        height: '80%',
+    "& .MuiDialog-paper": {
+        width: "80%",
+        height: "80%",
     },
 }
 
 const cardStyle = {
-    textAlign: 'center',
+    textAlign: "center",
 }
 
 const avtarStyle = {
-    bgColor: 'blue[500]'
+    bgColor: "blue[500]"
 }
 
 const headerStyle = {
-    width: '100%',
+    width: "100%",
 }
 
 const contentStyle = {
-    width: '100%',
+    width: "100%",
 }
 
 const buttonStyle = {
-    fontSize: '30px',
+    fontSize: "30px",
 }
 
 export default CardModal

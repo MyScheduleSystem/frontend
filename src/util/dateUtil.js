@@ -1,5 +1,5 @@
-import moment from 'moment'
-import ErrorUtil from './errorUtil'
+import moment from "moment"
+import ErrorUtil from "./errorUtil"
 
 // Object
 const DateUtil = {}
@@ -47,14 +47,14 @@ DateUtil.dateFromDate = function(start, end, operation) {
     const endDate = moment(end)
 
     switch(operation) {
-        case 'days':
-            return endDate.diff(startDate, 'days').toString()
+        case "days":
+            return endDate.diff(startDate, "days").toString()
 
-        case 'weeks':
-            return endDate.diff(startDate, 'weeks').toString()
+        case "weeks":
+            return endDate.diff(startDate, "weeks").toString()
 
-        case 'months':
-            return endDate.diff(startDate, 'months').toString()
+        case "months":
+            return endDate.diff(startDate, "months").toString()
 
         default:
             ErrorUtil.notImplemented()
@@ -71,26 +71,26 @@ DateUtil.isBetween = function(now, prev, next) {
 
 DateUtil.castToDay = function(day) {
     switch(day) {
-        case 'Mon':
-            return 'Monday'
+        case "Mon":
+            return "Monday"
 
-        case 'Tue':
-            return 'Tuesday'
+        case "Tue":
+            return "Tuesday"
 
-        case 'Wed':
-            return 'Wednesday'
+        case "Wed":
+            return "Wednesday"
 
-        case 'Thu':
-            return 'Thursday'
+        case "Thu":
+            return "Thursday"
 
-        case 'Fri':
-            return 'Friday'
+        case "Fri":
+            return "Friday"
 
-        case 'Sat':
-            return 'Saturday'
+        case "Sat":
+            return "Saturday"
 
-        case 'Sun':
-            return 'Sunday'
+        case "Sun":
+            return "Sunday"
 
         default:
             ErrorUtil.notImplemented()
@@ -100,41 +100,41 @@ DateUtil.castToDay = function(day) {
 
 DateUtil.castToMonth = function(month) {
     switch(month) {
-        case 'Jan':
-            return '01'
+        case "Jan":
+            return "01"
 
-        case 'Feb':
-            return '02'
+        case "Feb":
+            return "02"
 
-        case 'Mar':
-            return '03'
+        case "Mar":
+            return "03"
 
-        case 'Apr':
-            return '04'
+        case "Apr":
+            return "04"
 
-        case 'May':
-            return '05'
+        case "May":
+            return "05"
 
-        case 'Jun':
-            return '06'
+        case "Jun":
+            return "06"
 
-        case 'Jul':
-            return '07'
+        case "Jul":
+            return "07"
 
-        case 'Aug':
-            return '08'
+        case "Aug":
+            return "08"
 
-        case 'Sep':
-            return '09'
+        case "Sep":
+            return "09"
 
-        case 'Oct':
-            return '10'
+        case "Oct":
+            return "10"
 
-        case 'Nov':
-            return '11'
+        case "Nov":
+            return "11"
 
-        case 'Dec':
-            return '12'
+        case "Dec":
+            return "12"
 
         default:
             ErrorUtil.notImplemented()

@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import MyCalendar from '../components/calendar/myCalendar'
-import { Container } from '@mui/material'
+import styled from "styled-components"
+import MyCalendar from "../components/calendar/myCalendar"
+import { Container } from "@mui/material"
 
 const MyLayout = () => {
     return (
@@ -14,9 +14,9 @@ const MyLayout = () => {
 
 // TODO: 반응형 수정 필요
 const boxSizeStyle = {
-    width: '100%',
-    height: '100%',
-    textAlign: 'center',
+    width: "100%",
+    height: "100%",
+    textAlign: "center",
 }
 
 const MyCalendarBoxDiv = styled.div`

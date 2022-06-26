@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react"
-import CardModal from './cardModal'
+import CardModal from "./cardModal"
 import CardEditModal from "./cardEditModal"
-import CardItem from '../card/CardItem'
+import CardItem from "../card/CardItem"
 import EmptyCard from "../card/emptyCard"
 import CheckPopup from "../popup/checkPopup"
 import {
@@ -9,7 +9,7 @@ import {
     Box,
     Button,
 } from "@mui/material"
-import Lodash from 'lodash'
+import Lodash from "lodash"
 
 function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
@@ -139,31 +139,31 @@ const dataForRender = (todoItems) => {
 }
 
 const modalStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
 }
 
 const boxStyle = {
-    width: '90%',
-    height: '90%',
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    opacity: '0.95',
-    overflow: 'auto',
+    width: "90%",
+    height: "90%",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    opacity: "0.95",
+    overflow: "auto",
 }
 
 const topBoxStyle = {
-    height: '8%',
-    width: '100%',
-    paddingTop: '10px',
+    height: "8%",
+    width: "100%",
+    paddingTop: "10px",
 }
 
 const cardListStyle = {
-    display: 'grid',
-    placeItems: 'center',
-    gridTemplateColumns: 'repeat(4, 1fr)',
+    display: "grid",
+    placeItems: "center",
+    gridTemplateColumns: "repeat(4, 1fr)",
 }
 
 export default MyModal

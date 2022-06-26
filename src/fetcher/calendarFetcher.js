@@ -2,10 +2,10 @@ import {
     getDocs,
     collection,
 } from "firebase/firestore"
-import firestore from '../service/firebase'
+import firestore from "../service/firebase"
 
 // For test
-import { getTodoFetchResult } from '../dev/testData'
+import { getTodoFetchResult } from "../dev/testData"
 
 const calendarFetcher = {}
 
@@ -13,6 +13,7 @@ const calendarFetcher = {}
 // output: random key and calendar field(TodoList)
 calendarFetcher.allCalenderDocument = async function() {
     const qs = await getDocs(collection(firestore, "calendar"))
+    console.log(qs)
     qs.forEach((doc) => {
         // doc.data() is nevery undefined for query doc snapshots
         console.log(doc.data())

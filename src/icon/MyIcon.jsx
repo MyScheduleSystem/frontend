@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
     faPlus, faMinus, faPencil,
     faHeart, faAngleDown, faCheck,
@@ -24,36 +24,36 @@ function MyIcon({ name }) {
 
 function getIconName(name) {
     switch (name) {
-        case 'plus': return faPlus
-        case 'minus': return faMinus
-        case 'pencil': return faPencil
-        case 'heart': return faHeart
-        case 'expand': return faAngleDown
-        case 'check': return faCheck
-        case 'checkCircle': return faCheckCircle
-        case 'excalmationCircle': return faExclamationCircle
-        case 'send': return faPaperPlane
-        case 'expandOff': return faAngleUp
-        case 'friends': return faUserFriends
-        case 'chat': return faCommentAlt
-        case 'calendar': return faCalendar
-        case 'signin': return faSignIn
-        case 'signout': return faSignOut
-        case 'signup': return faRegistered
-        case 'user': return faUser
-        case 'password': return faLock
-        case 'history': return faHistory
-        case 'archive': return faArchive
-        case 'menu': return faBars
-        case 'notification': return faBell
-        case 'mail': return faEnvelope
-        case 'radio': return faRadio
-        case 'delete': return faXmark
-        case 'option': return faEllipsisV
-        case 'share': return faShareAlt
-        case 'comment': return faComment
-        case 'left': return faAngleLeft
-        case 'upload': return faImage
+        case "plus": return faPlus
+        case "minus": return faMinus
+        case "pencil": return faPencil
+        case "heart": return faHeart
+        case "expand": return faAngleDown
+        case "check": return faCheck
+        case "checkCircle": return faCheckCircle
+        case "excalmationCircle": return faExclamationCircle
+        case "send": return faPaperPlane
+        case "expandOff": return faAngleUp
+        case "friends": return faUserFriends
+        case "chat": return faCommentAlt
+        case "calendar": return faCalendar
+        case "signin": return faSignIn
+        case "signout": return faSignOut
+        case "signup": return faRegistered
+        case "user": return faUser
+        case "password": return faLock
+        case "history": return faHistory
+        case "archive": return faArchive
+        case "menu": return faBars
+        case "notification": return faBell
+        case "mail": return faEnvelope
+        case "radio": return faRadio
+        case "delete": return faXmark
+        case "option": return faEllipsisV
+        case "share": return faShareAlt
+        case "comment": return faComment
+        case "left": return faAngleLeft
+        case "upload": return faImage
 
         default:
             ErrorUtil.notImplemented()

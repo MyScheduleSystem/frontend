@@ -1,19 +1,19 @@
-import { useState, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import SideBar from './sidebar'
-import MyIcon from '../../icon/MyIcon'
-import MyInfoPopup from '../popup/myInfoPopup'
+import { useState, useCallback } from "react"
+import { Link } from "react-router-dom"
+import SideBar from "./sidebar"
+import MyIcon from "../../icon/MyIcon"
+import MyInfoPopup from "../popup/myInfoPopup"
 import {
     Box, IconButton, Divider,
     Toolbar, Typography, Badge,
     Menu, MenuItem, ListItemText,
     styled, List, ListItemButton
-} from '@mui/material'
-import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
-import imageUploader from '../../service/imageUploaderService'
-import { createFriendsList } from '../../dev/testData'
-import { createNotify, createMessage } from '../../dev/testData'
+} from "@mui/material"
+import MuiDrawer from "@mui/material/Drawer"
+import MuiAppBar from "@mui/material/AppBar"
+import imageUploader from "../../service/imageUploaderService"
+import { createFriendsList } from "../../dev/testData"
+import { createNotify, createMessage } from "../../dev/testData"
 
 const testMyInfo = createFriendsList().$_friendListArray[0]
 const testNotifyInfo = doFetchUserNotification()
@@ -23,62 +23,62 @@ const drawerWidth = 240
 
 const openedMixin = (theme, drawerWidth) => ({
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
 })
 
 const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
     width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
         width: `calc(${theme.spacing(8)} + 1px )`,
     },
 })
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
 }))
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
     ({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
+    whiteSpace: "nowrap",
+    boxSizing: "border-box",
     ...(open && {
         ...openedMixin(theme),
-        '& .MuiDrawer-paper': openedMixin(theme),
+        "& .MuiDrawer-paper": openedMixin(theme),
     }),
     ...(!open && {
         ...closedMixin(theme),
-        '& .MuiDrawer-paper': closedMixin(theme),
+        "& .MuiDrawer-paper": closedMixin(theme),
     }),
     }),
 )
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
+    shouldForwardProp: (prop) => prop !== "open",
     })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
+        transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
         }),
@@ -140,7 +140,7 @@ const Header = () => {
                             <MyIcon name="menu" />
                         </IconButton>
                         <IconButton>
-                            <Link to='/' style={logoButtonStyle}>MSS</Link>
+                            <Link to="/" style={logoButtonStyle}>MSS</Link>
                         </IconButton>
                         <Box component="div" sx={menuInfoStyle}>
                             <IconButton
@@ -172,11 +172,11 @@ const Header = () => {
                         </Box>
                     </Toolbar>
                 </AppBar>
-                <Drawer variant='permanent' open={isOpen}>
+                <Drawer variant="permanent" open={isOpen}>
                     <DrawerHeader>
                         <IconButton onClick={onDrawerCloseEventHandler(false)}>
                             My schedule menu
-                            <MyIcon name='left' />
+                            <MyIcon name="left" />
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
@@ -265,47 +265,47 @@ function doFetchMessage() {
 }
 
 const headerBoxStyle = {
-    display: 'flex',
+    display: "flex",
 }
 
 const iconButtonStyle = (open) => {
     return {
-        marginRight: '5',
-        ...(open && { display: 'none' }),
+        marginRight: "5",
+        ...(open && { display: "none" }),
     }
 }
 
 const logoButtonStyle = {
-    color: '#fff',
-    textDecoration: 'none',
+    color: "#fff",
+    textDecoration: "none",
 }
 
 const menuInfoStyle = {
-    position: 'absolute',
-    right: '10px',
+    position: "absolute",
+    right: "10px",
     display: {
-        xs: 'none',
-        md: 'flex',
+        xs: "none",
+        md: "flex",
     }
 }
 
 const listItemButtonStyle = (isChecked) => {
     const obj = {
         display: {
-            md: 'block',
+            md: "block",
         },
-        background: isChecked === false ? '#fffff0' : 'transparent',
+        background: isChecked === false ? "#fffff0" : "transparent",
     }
     return obj
 }
 
 const msgStyle = {
-    width: '100%',
+    width: "100%",
     maxWidth: 360,
-    bgcolor: 'background.paper',
+    bgcolor: "background.paper",
 }
 
 const msgFriendNameStyle = {
-    display: 'inline',
+    display: "inline",
 }
 export default Header
