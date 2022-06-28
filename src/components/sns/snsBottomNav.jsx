@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState } from "react"
 import MyIcon from "../../icon/MyIcon"
 import {
     Paper,
     BottomNavigation,
     BottomNavigationAction,
-} from '@mui/material'
+} from "@mui/material"
 
 const SnsBottomNav = () => {
     const [selectedNav, setSelectedNav] = useState(0)
@@ -34,7 +34,7 @@ const SnsBottomNav = () => {
 
 const bottomStyle = {
     width: 500,
-    position: 'fixed',
+    position: "fixed",
     bottom: 0,
     left: 0,
     right: 0,

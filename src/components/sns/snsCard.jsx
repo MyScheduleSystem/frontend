@@ -1,4 +1,4 @@
-import MyIcon from '../../icon/MyIcon'
+import MyIcon from "../../icon/MyIcon"
 import {
     Card,
     CardHeader,
@@ -8,7 +8,7 @@ import {
     Avatar,
     Typography,
     Button,
-} from '@mui/material'
+} from "@mui/material"
 
 const SnsCard = () => {
     return (
@@ -27,7 +27,7 @@ const SnsCard = () => {
                 alt="Sns card"
             />
             <CardContent>
-                <Typography variant='body2' color='text.secondary'>
+                <Typography variant="body2" color="text.secondary">
                     This impressive paella is a perfect party dish and a fun meal to cook
                     together with your guests. Add 1 cup of frozen peas along with the mussels,
                     if you like.
@@ -49,14 +49,14 @@ const snsCardStyle = {
 }
 
 const avatarStyle = {
-    bgcolor: 'red',
+    bgcolor: "red",
 }
 
 const buttonBoxStyle = {
-    display: 'grid',
-    placeItems: 'center',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gridColumnGap: '25px',
+    display: "grid",
+    placeItems: "center",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gridColumnGap: "25px",
 }
 
 export default SnsCard
