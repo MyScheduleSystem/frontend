@@ -3,8 +3,9 @@ import DateType from "./dateType"
 import ErrorUtil from "../util/errorUtil"
 
 class ItemType extends SymbolName {
-    constructor(startDate, endDate, name) {
+    constructor(uuid, startDate, endDate, name) {
         super(name)
+        this.uuid = uuid
         this.startDate = startDate
         this.endDate = endDate
         ErrorUtil.typeCheck(startDate, "string")

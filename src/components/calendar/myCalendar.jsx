@@ -64,13 +64,13 @@ function MyCalendar() {
         const obj = {}
         Lodash.forEach(allTodoItems, (data, dayKey) => {
             obj[dayKey] = []
-            data.forEach(todo => {
+            data.forEach((todo, i) => {
                 if((todo.startDate === e.startDate) && (todo.endDate === e.endDate) && (todo.title === e.title)) {
                     const newObj = e
                     obj[dayKey].push(newObj)
                     return
                 }
-                const newObj = new TodoItem(todo.title, todo.content, todo.startDate, todo.endDate, todo.isCompleted)
+                const newObj = new TodoItem(i, todo.title, todo.content, todo.startDate, todo.endDate, todo.isCompleted)
                 obj[dayKey].push(newObj)
             })
         })
@@ -109,8 +109,8 @@ function setTodoItemList(setAllTodoItems) {
     const todoObj = {}
     Lodash.forEach(todoList, (list, dayKey) => {
         todoObj[dayKey] = []
-        list.forEach((item) => {
-            const obj = new TodoItem(item.title, item.content, item.startDate, item.endDate, item.isCompleted)
+        list.forEach((item, i) => {
+            const obj = new TodoItem(i, item.title, item.content, item.startDate, item.endDate, item.isCompleted)
             todoObj[dayKey].push(obj)
         })
     })

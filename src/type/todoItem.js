@@ -1,8 +1,8 @@
 import ItemType from "./itemType"
 
 class TodoItem extends ItemType {
-    constructor(title, content, startDate, endDate, isCompleted) {
-        super(startDate, endDate, "todoItem")
+    constructor(uuid, title, content, startDate, endDate, isCompleted) {
+        super(uuid, startDate, endDate, "todoItem")
         this.title = title
         this.content = content
         this.isCompleted = isCompleted
