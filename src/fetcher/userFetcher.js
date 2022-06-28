@@ -89,14 +89,13 @@ userFetcher.getUserInformation = function(setUserObj) {
     const auth = getAuth()
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            console.log(user)
             const userId = user.uid
             const q = query(collection(firestore, "user"), where("uuid", "==", userId))
             const querySnapshot = await getDocs(q)
             querySnapshot.docs.forEach((item) => {
                 const obj = {}
-                obj.accessToken = item.stsTokenManager.accessToken
-                obj.refreshToken = item.stsTokenManager.refreshToken
+                obj.accessToken = user.stsTokenManager.accessToken
+                obj.refreshToken = user.stsTokenManager.refreshToken
                 obj.authenticated = true
                 obj.fetchOption = {}
                 obj.fetchOption.uuid = item.data().uuid
