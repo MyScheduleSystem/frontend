@@ -1,8 +1,8 @@
 import ItemType from "./itemType"
 
 class Notify extends ItemType {
-    constructor(startDate, isChecked, message, endDate) {
-        super(startDate, endDate, "notify")
+    constructor(uuid, startDate, isChecked, message, endDate) {
+        super(uuid, startDate, endDate, "notify")
         this.isChecked = isChecked
         this.message = message
     }

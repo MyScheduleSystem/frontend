@@ -16,7 +16,7 @@ calendarFetcher.allCalenderTodoList = async function() {
     const arr = []
     qs.forEach((doc) => {
         const obj = doc.data()
-        arr.push(new TodoItem(obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
+        arr.push(new TodoItem(obj.uuid, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
     })
     return arr
 }

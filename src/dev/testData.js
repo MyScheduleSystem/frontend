@@ -64,13 +64,13 @@ function create(calendarSpecJson) {
         todoObj.startDate = e
         todoObj.endDate = DateUtil.dateCalculate(e, i, "add", "days")
         todoObj.isCompleted = (i % 2 === 0) ? true : false
-        calendarSpecJson[e].push(new TodoItem(todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate, todoObj.isCompleted))
+        calendarSpecJson[e].push(new TodoItem(i, todoObj.title, todoObj.content, todoObj.startDate, todoObj.endDate, todoObj.isCompleted))
     })
     calendarSpecJson["2022-06-19"] = []
-    calendarSpecJson["2022-06-19"].push(new TodoItem("Todo test velo", "Todo test100", "2022-06-19", "2022-06-20", false))
-    calendarSpecJson["2022-06-19"].push(new TodoItem("Todo test velo", "Todo test100", "2022-06-19", "2022-06-30", false))
+    calendarSpecJson["2022-06-19"].push(new TodoItem(100, "Todo test velo", "Todo test100", "2022-06-19", "2022-06-20", false))
+    calendarSpecJson["2022-06-19"].push(new TodoItem(101, "Todo test velo", "Todo test100", "2022-06-19", "2022-06-30", false))
     calendarSpecJson["2022-06-22"] = []
-    calendarSpecJson["2022-06-22"].push(new TodoItem("Todo test velo", "Todo test100", "2022-06-22", "2022-06-23", false))
+    calendarSpecJson["2022-06-22"].push(new TodoItem(102, "Todo test velo", "Todo test100", "2022-06-22", "2022-06-23", false))
     // console.log(calendarSpecJson)
     return calendarSpecJson
 }
@@ -114,7 +114,7 @@ export function createNotify() {
     const message = "Arrived Message!"
     const nArr =  []
     testDays.forEach((d) => {
-        const obj = new Notify(d, isChecked, message, d)
+        const obj = new Notify(i, d, isChecked, message, d)
         nArr.push(obj)
     })
     return nArr
@@ -130,7 +130,7 @@ export function createMessage() {
     const friendName = "FoxMon"
     const mArr =  []
     testDays.forEach((d, i) => {
-        const obj = new Message(`${message}${i}`, `${friendName}${i}`, isChecked, d, d)
+        const obj = new Message(i, `${message}${i}`, `${friendName}${i}`, isChecked, d, d)
         mArr.push(obj)
     })
     return mArr
