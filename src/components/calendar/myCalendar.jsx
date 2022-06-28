@@ -2,6 +2,7 @@ import {
     useState,
     useEffect,
     useCallback,
+    useContext,
 } from "react"
 import Calendar from "react-calendar"
 import Lodash from "lodash"
@@ -11,6 +12,7 @@ import calendarFetcher from "../../fetcher/calendarFetcher"
 import TodoItem from "../../type/todoItem"
 import MyCalendarTodoList from "./myCalendarTodoList"
 import MyCalendarSide from "./myCalendarSide"
+import { UserContext } from "../../context/userContextProvider"
 import { Box } from "@mui/material"
 
 function MyCalendar() {
@@ -22,6 +24,7 @@ function MyCalendar() {
         month: DateType.getMonth(DateType.createDate()),
         day: DateType.getDay(),
     })
+    const { userObj } = useContext(UserContext)
 
     useEffect(() => {
         setTodoItemList.call(this, setAllTodoItems)
@@ -52,9 +55,9 @@ function MyCalendar() {
     }, [])
 
     const onAddTodoListEventHandler = useCallback((addedItem) => {
-        const arr = addedItem.map(e => new TodoItem(e.title, e.content, e.startDate, e.endDate))
+        const arr = addedItem.map(e => new TodoItem(e.title, e.content, e.startDate, e.endDate, false))
         allTodoItems[selectedDate] = arr
-        // TODO: Fetch saveed result to server
+        calendarFetcher.createTodoList(userObj.fetchOption.uuid, allTodoItems[selectedDate])
     }, [allTodoItems, selectedDate])
 
     const onCompletedEventHandler = useCallback((e) => {

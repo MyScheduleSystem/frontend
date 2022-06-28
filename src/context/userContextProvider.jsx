@@ -4,6 +4,7 @@ import {
     useMemo,
     useCallback,
     useReducer,
+    useEffect,
 } from "react"
 import SignupForm from "../pages/signupForm"
 import SigninForm from "../pages/signinForm"
@@ -22,6 +23,10 @@ function UserContextProvider({ children }) {
     const [isSignin, setIsSignin] = useState(true)
     const [isUserFailed, setIsUserFailed] = useState(false)
     const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
+
+    useEffect(() => {
+        userFetcher.getUserInformation(setUserObj)
+    }, [])
 
     const onSignupEventHandler = useCallback(async (user) => {
         const obj = {}
