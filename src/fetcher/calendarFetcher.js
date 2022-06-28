@@ -22,16 +22,18 @@ calendarFetcher.allCalenderTodoList = async function() {
 }
 
 // TODO: 중복되는 필드 검사
-calendarFetcher.createTodoList = function(uuid, todoArr) {
+calendarFetcher.createTodoList = function(uuid, todoArr, allTodoItems) {
     const userId = uuid
     todoArr.forEach((item) => {
         addDoc(collection(firestore, "calendar"), {
-            uuid: userId,
+            userUuid: userId,
             title: item.title,
             content: item.content,
             startDate: item.startDate,
             endDate: item.endDate,
-            isCompleted: item.isCompleted,
+            isCompleted: false,
+        }).then((result) => {
+            allTodoItems = todoArr.map(e => new TodoItem(result.id, item.title, item.content, item.startDate, item.endDate, false))
         })
     })
 }

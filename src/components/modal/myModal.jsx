@@ -35,6 +35,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
             content: addedItem.content,
             startDate: addedItem.startDate,
             endDate: addedItem.endDate,
+            isCompleted: false,
         })
     }, [todoItemList])
 
@@ -133,6 +134,7 @@ const dataForRender = (todoItems) => {
         obj.content = item.content
         obj.startDate = item.startDate
         obj.endDate = item.endDate
+        obj.isCompleted = item.isCompleted
         rtnArr.push(obj)
     })
     return rtnArr

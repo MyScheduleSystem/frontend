@@ -55,9 +55,7 @@ function MyCalendar() {
     }, [])
 
     const onAddTodoListEventHandler = useCallback((addedItem) => {
-        const arr = addedItem.map(e => new TodoItem(e.title, e.content, e.startDate, e.endDate, false))
-        allTodoItems[selectedDate] = arr
-        calendarFetcher.createTodoList(userObj.fetchOption.uuid, allTodoItems[selectedDate])
+        calendarFetcher.createTodoList(userObj.fetchOption.uuid, addedItem, allTodoItems[selectedDate])
     }, [allTodoItems, selectedDate])
 
     const onCompletedEventHandler = useCallback((e) => {
