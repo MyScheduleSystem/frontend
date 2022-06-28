@@ -78,7 +78,7 @@ function SideBar({ isOpen }) {
                         <AccordionSummary expandIcon={isOpen && <MyIcon name="expand" />}>
                             <Typography>{item.icon} {isOpen && item.name}</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        {isOpen && <AccordionDetails>
                             {item.name !== "Friends" ?
                                 <Link
                                     to={item.path}
@@ -88,7 +88,7 @@ function SideBar({ isOpen }) {
                                 </Link> :
                                 item.list
                             }
-                        </AccordionDetails>
+                        </AccordionDetails>}
                     </Accordion>
                 )
             })}
@@ -126,7 +126,6 @@ function doChatRoomFetchResult() {
 
 const sidebarStyle = {
     height: "100%",
-    backgroundColor: "white",
     overflow: "auto",
 }
 
