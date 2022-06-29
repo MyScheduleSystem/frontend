@@ -25,7 +25,6 @@ calendarFetcher.allCalenderTodoList = async function() {
 }
 
 calendarFetcher.createTodoList = function(userUuid, todo, allTodoItems) {
-    console.log("create")
     let ati = allTodoItems
     addDoc(collection(firestore, "calendar"), {
         userUuid: userUuid,
