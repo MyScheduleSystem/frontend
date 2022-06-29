@@ -16,7 +16,6 @@ import {
 } from "firebase/firestore"
 import firestore from "../service/firebase"
 import User from "../type/user"
-import ErrorUtil from "../util/errorUtil"
 
 const userFetcher = {}
 
@@ -38,8 +37,6 @@ userFetcher.signin = async function(user) {
         .catch(error => console.error(error))
 }
 
-// TODO: 400에러가 있는데 도무지 이유를 모르겠다.
-// TODO: firestore password 해시처리
 userFetcher.signup = async (user) => {
     const auth = getAuth()
     return createUserWithEmailAndPassword(auth, user.email, user.password)
@@ -53,7 +50,6 @@ userFetcher.signup = async (user) => {
                 usernmae: user.username,
                 name: user.name,
                 email: user.email,
-                password: user.password,
             })
             const obj = {}
             obj.uuid = `${userObj.uid}`
@@ -67,21 +63,6 @@ userFetcher.signup = async (user) => {
 
 userFetcher.signout = async () => {
     User.clearStorage()
-}
-
-userFetcher.signupWithGoogle = async function() {
-    const auth = getAuth()
-    const googleProvider = new GoogleAuthProvider()
-    return signInWithPopup(auth, googleProvider)
-        .then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result)
-            return credential ? true : false
-        })
-        .catch(e => console.log(e))
-}
-
-userFetcher.signupWithGithub = function() {
-    ErrorUtil.notImplemented()
 }
 
 userFetcher.getUserInformation = function(setUserObj) {
