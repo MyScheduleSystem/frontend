@@ -1,4 +1,4 @@
-import MyIcon from "../../icon/MyIcon"
+import MyIcon from "../../icon/myIcon"
 import {
     Card,
     CardHeader,
@@ -8,6 +8,7 @@ import {
     Avatar,
     Typography,
     Button,
+    Modal,
 } from "@mui/material"
 
 const SnsCard = () => {
