@@ -27,7 +27,7 @@ function MyCalendar() {
     const { userObj } = useContext(UserContext)
 
     useEffect(() => {
-        setTodoItemList.call(this, setAllTodoItems)
+        doFetchTodoItemList.call(this, setAllTodoItems)
     }, [])
 
     const onClickDayEventHandler = (e) => {
@@ -102,20 +102,26 @@ function MyCalendar() {
     )
 }
 
-function setTodoItemList(setAllTodoItems) {
-    const todoList = calendarFetcher.getTodoFetchResult()
-    const todoObj = {}
-    Lodash.forEach(todoList, (list, dayKey) => {
-        todoObj[dayKey] = []
-        list.forEach((item, i) => {
-            const obj = new TodoItem(i, item.title, item.content, item.startDate, item.endDate, item.isCompleted)
-            todoObj[dayKey].push(obj)
-        })
-    })
-    setAllTodoItems(() => Lodash.cloneDeep(todoObj))
-}
-
 function doFetchTodoItemList(setAllTodoItems) {
+    const todoListObj = {}
+    calendarFetcher.allCalenderTodoList()
+        .then((todoList) => {
+            todoList.forEach((item) => {
+                todoListObj[item.startDate] = []
+            })
+            todoList.forEach((item) => {
+                const obj = new TodoItem(
+                    item.uuid,
+                    item.title,
+                    item.content,
+                    item.startDate,
+                    item.endDate,
+                    item.isCompleted
+                )
+                todoListObj[item.startDate].push(obj)
+            })
+            setAllTodoItems(todoListObj)
+        })
 }
 
 export default MyCalendar

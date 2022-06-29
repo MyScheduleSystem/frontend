@@ -9,9 +9,6 @@ import {
 import firestore from "../service/firebase"
 import TodoItem from "../type/todoItem"
 
-// For test
-import { getTodoFetchResult } from "../dev/testData"
-
 const calendarFetcher = {}
 
 calendarFetcher.allCalenderTodoList = async function() {
@@ -19,7 +16,7 @@ calendarFetcher.allCalenderTodoList = async function() {
     const arr = []
     qs.forEach((doc) => {
         const obj = doc.data()
-        arr.push(new TodoItem(obj.uuid, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
+        arr.push(new TodoItem(doc.id, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
     })
     return arr
 }
@@ -50,13 +47,6 @@ calendarFetcher.updateTodoList = async function(uuid, obj) {
 calendarFetcher.deleteTodoList = async function(uuid) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
     await deleteDoc(calendar)
-}
-
-// For test
-calendarFetcher.getTodoFetchResult = () => {
-    // 현재는 Dev니까 그냥 Data 가져오자
-    const data = getTodoFetchResult()
-    return data
 }
 
 Object.freeze(calendarFetcher)
