@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react"
 import {
     ImageList,
     ImageListItem,
@@ -5,6 +6,11 @@ import {
 } from "@mui/material"
 
 const SnsList = () => {
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
+    const isOpenSnsModalEventHandler = useCallback(() => {
+        setIsOpenModal(true)
+    }, [])
     // sample item
     const itemData = [
         {
@@ -58,15 +64,16 @@ const SnsList = () => {
     ]
 
     return (
-        <ImageList sx={imageListStyle} cols={3} rowHeight={165}>
+        <ImageList sx={imageListStyle} cols={3} rowHeight={180} gap={70}>
             {itemData.map(item => (
                 <ImageListItem key={item.img}>
                     <CardMedia
                         component="img"
+                        onClick={isOpenSnsModalEventHandler}
                         image={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt={item.title}
-                        loading="lazy"
+                        loading="lazy"  
                     />
                 </ImageListItem>
             ))}
@@ -75,8 +82,8 @@ const SnsList = () => {
 }
 
 const imageListStyle = {
-    width: 500,
-    height: 450,
+    width: 850,
+    height: "100%",
 }
 
 export default SnsList
