@@ -9,17 +9,17 @@ import {
 import firestore from "../service/firebase"
 import TodoItem from "../type/todoItem"
 
-// For test
-import { getTodoFetchResult } from "../dev/testData"
-
 const calendarFetcher = {}
+
+// firestore에서는 userUuid가 있어야 하고
+// 우리의 TodoItem에서는 doc의 key가 저장되어야만 한다.
 
 calendarFetcher.allCalenderTodoList = async function() {
     const qs = await getDocs(collection(firestore, "calendar"))
     const arr = []
     qs.forEach((doc) => {
         const obj = doc.data()
-        arr.push(new TodoItem(obj.uuid, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
+        arr.push(new TodoItem(doc.id, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
     })
     return arr
 }
@@ -42,21 +42,22 @@ calendarFetcher.createTodoList = function(userUuid, todoArr, allTodoItems) {
     })
 }
 
-calendarFetcher.updateTodoList = async function(uuid, obj) {
+// TODO: 바로 렌더링도 안되고 새로운 Doc이 생성됨
+calendarFetcher.updateTodoList = async function(uuid, userUuid, obj) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
+    const updated = {}
+    updated.title = obj.title
+    updated.content = obj.content
+    updated.startDate = obj.startDate
+    updated.endDate = obj.endDate
+    updated.userUuid = userUuid
     await updateDoc(calendar, obj)
 }
 
+// TODO: 바로 화면에 렌더링이 안됨
 calendarFetcher.deleteTodoList = async function(uuid) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
     await deleteDoc(calendar)
-}
-
-// For test
-calendarFetcher.getTodoFetchResult = () => {
-    // 현재는 Dev니까 그냥 Data 가져오자
-    const data = getTodoFetchResult()
-    return data
 }
 
 Object.freeze(calendarFetcher)

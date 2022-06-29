@@ -1,4 +1,3 @@
-import { useRef } from "react"
 import {
     Card,
     Button,
@@ -11,27 +10,19 @@ import {
 import MyIcon from "../../icon/myIcon"
 
 const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) => {
-    const boxRef = useRef()
-
-    const onClickHandler = (isClicked) => () => {
-        const item = []
-        const children = boxRef.current.childNodes
-        children.forEach((e) => {
-            item.push(e.innerText)
-        })
-        onEditModeEnterEvent(isClicked, item)
+    const onClickEventHandler = (isClicked) => () => {
+        onEditModeEnterEvent(isClicked, cardItem)
     }
 
-    const onRemoveCardHandler = (e) => {
+    const onRemoveCardEventHandler = (e) => {
         e.stopPropagation()
         onRemoveCardEvent(index, true)
     }
 
     return ( // 카드 UI변경
         <Card
-            ref={boxRef}
             sx={cardStyle}
-            onClick={onClickHandler(true)}
+            onClick={onClickEventHandler(true)}
         >
             <CardHeader
                 avatar={<Avatar />}
@@ -40,11 +31,11 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
                 subheader={cardItem.startDate}
                 alt="Modal Card"
                 action={
-                <Button
-                    sx={buttonStyle}
-                    onClick={onRemoveCardHandler}>
-                    <MyIcon name="delete" />
-                </Button>
+                    <Button
+                        sx={buttonStyle}
+                        onClick={onRemoveCardEventHandler}>
+                        <MyIcon name="delete" />
+                    </Button>
                 }>
             </CardHeader>
             <CardMedia
