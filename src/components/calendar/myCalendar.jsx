@@ -115,6 +115,9 @@ function setTodoItemList(setAllTodoItems) {
     setAllTodoItems(() => Lodash.cloneDeep(todoObj))
 }
 
+function doFetchTodoItemList(setAllTodoItems) {
+}
+
 export default MyCalendar
 
 const mainBoxSizeStyle = {
