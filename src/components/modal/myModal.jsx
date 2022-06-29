@@ -10,6 +10,7 @@ import {
     Button,
 } from "@mui/material"
 import Lodash from "lodash"
+import calendarFetcher from "../../fetcher/calendarFetcher"
 
 function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
@@ -35,6 +36,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
             content: addedItem.content,
             startDate: addedItem.startDate,
             endDate: addedItem.endDate,
+            isCompleted: false,
         })
     }, [todoItemList])
 
@@ -57,6 +59,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
 
     const onEditTodoItemEventHandler = useCallback((prev, editedItem) => {
         const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
+        calendarFetcher.updateTodoList(editedItem)
         todoItemList[find] = editedItem
         setTodoItemList(() => [...todoItemList])
     }, [todoItemList])
@@ -67,6 +70,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
 
     const onRemoveCardEventHandler = useCallback((i, isOpen) => {
         setIsOpenAlert(isOpen)
+        calendarFetcher.deleteTodoList(todoItemList[i].uuid)
         setRemoveIndex(i)
     }, [])
 
@@ -133,6 +137,7 @@ const dataForRender = (todoItems) => {
         obj.content = item.content
         obj.startDate = item.startDate
         obj.endDate = item.endDate
+        obj.isCompleted = item.isCompleted
         rtnArr.push(obj)
     })
     return rtnArr
