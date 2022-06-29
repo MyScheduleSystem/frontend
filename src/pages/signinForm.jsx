@@ -120,9 +120,7 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                         >
                             login
                         </Button>
-                        <Button>Login From Google</Button>
                         <Button>Forgot Password</Button>
-
                     </FormGroup>
                 </Box>
                 <Box sx={signupBoxStyle}>

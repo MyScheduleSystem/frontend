@@ -24,6 +24,8 @@
 
     setup > SETUP.md 확인
 
+    git hooks pre-commit setting
+
 ## Language
 
     JavaScript(ES6)
@@ -33,8 +35,6 @@
     fortawesome
 
     Lodash
-
-    PostCss
 
     firebase
 
@@ -62,12 +62,6 @@ forEach, map, filter, every 등 이러한 함수들이 적절하게 사용되고
 
 useState(setState의) 동작 이해
 ```
-
-## JSON Spec
-
-`
-    TODO: ADD
-`
 
 ## Function
 
@@ -105,6 +99,8 @@ useState(setState의) 동작 이해
         Update User
         Delete User Info
         Show User popup
+        Profile image upload
+        Profile state message
 
     Chatroom
         Create chatroom
