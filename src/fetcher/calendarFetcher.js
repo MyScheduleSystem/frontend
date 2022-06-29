@@ -2,6 +2,9 @@ import {
     getDocs,
     collection,
     addDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
 } from "firebase/firestore"
 import firestore from "../service/firebase"
 import TodoItem from "../type/todoItem"
@@ -22,20 +25,31 @@ calendarFetcher.allCalenderTodoList = async function() {
 }
 
 // TODO: 중복되는 필드 검사
-calendarFetcher.createTodoList = function(uuid, todoArr, allTodoItems) {
-    const userId = uuid
+// 문제: allTodoItems는 모든 todoItemList임
+calendarFetcher.createTodoList = function(userUuid, todoArr, allTodoItems) {
+    let ati = allTodoItems
     todoArr.forEach((item) => {
         addDoc(collection(firestore, "calendar"), {
-            userUuid: userId,
+            userUuid: userUuid,
             title: item.title,
             content: item.content,
             startDate: item.startDate,
             endDate: item.endDate,
             isCompleted: false,
         }).then((result) => {
-            allTodoItems = todoArr.map(e => new TodoItem(result.id, item.title, item.content, item.startDate, item.endDate, false))
+            ati = todoArr.map(e => new TodoItem(result.id, item.title, item.content, item.startDate, item.endDate, false))
         })
     })
+}
+
+calendarFetcher.updateTodoList = async function(uuid, obj) {
+    const calendar = doc(firestore, "calendar", `${uuid}`)
+    await updateDoc(calendar, obj)
+}
+
+calendarFetcher.deleteTodoList = async function(uuid) {
+    const calendar = doc(firestore, "calendar", `${uuid}`)
+    await deleteDoc(calendar)
 }
 
 // For test
