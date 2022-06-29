@@ -41,12 +41,8 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
             endDate: addedItem.endDate,
             isCompleted: false,
         })
-    }, [todoItemList])
-
-    const onSaveButtonClickHandler = () => {
-        const addedItem = todoItemList.slice()
         onAddListEvent(addedItem)
-    }
+    }, [todoItemList])
 
     const onCancelButtonClickHandler = () => {
         onCloseEvent(false)
@@ -100,7 +96,6 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
             >
                 <Box sx={boxStyle}>
                     <Box sx={topBoxStyle}>
-                        <Button onClick={onSaveButtonClickHandler}>Save</Button>
                         <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
                     </Box>
                     <Box sx={cardListStyle}>
