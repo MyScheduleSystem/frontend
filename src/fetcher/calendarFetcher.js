@@ -11,6 +11,9 @@ import TodoItem from "../type/todoItem"
 
 const calendarFetcher = {}
 
+// firestore에서는 userUuid가 있어야 하고
+// 우리의 TodoItem에서는 doc의 key가 저장되어야만 한다.
+
 calendarFetcher.allCalenderTodoList = async function() {
     const qs = await getDocs(collection(firestore, "calendar"))
     const arr = []
@@ -39,11 +42,19 @@ calendarFetcher.createTodoList = function(userUuid, todoArr, allTodoItems) {
     })
 }
 
-calendarFetcher.updateTodoList = async function(uuid, obj) {
+// TODO: 바로 렌더링도 안되고 새로운 Doc이 생성됨
+calendarFetcher.updateTodoList = async function(uuid, userUuid, obj) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
+    const updated = {}
+    updated.title = obj.title
+    updated.content = obj.content
+    updated.startDate = obj.startDate
+    updated.endDate = obj.endDate
+    updated.userUuid = userUuid
     await updateDoc(calendar, obj)
 }
 
+// TODO: 바로 화면에 렌더링이 안됨
 calendarFetcher.deleteTodoList = async function(uuid) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
     await deleteDoc(calendar)
