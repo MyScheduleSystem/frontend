@@ -24,37 +24,33 @@ calendarFetcher.allCalenderTodoList = async function() {
     return arr
 }
 
-// TODO: 중복되는 필드 검사
-// 문제: allTodoItems는 모든 todoItemList임
-calendarFetcher.createTodoList = function(userUuid, todoArr, allTodoItems) {
+calendarFetcher.createTodoList = function(userUuid, todo, allTodoItems) {
+    console.log("create")
     let ati = allTodoItems
-    todoArr.forEach((item) => {
-        addDoc(collection(firestore, "calendar"), {
-            userUuid: userUuid,
-            title: item.title,
-            content: item.content,
-            startDate: item.startDate,
-            endDate: item.endDate,
-            isCompleted: false,
-        }).then((result) => {
-            ati = todoArr.map(e => new TodoItem(result.id, item.title, item.content, item.startDate, item.endDate, false))
-        })
+    addDoc(collection(firestore, "calendar"), {
+        userUuid: userUuid,
+        title: todo.title,
+        content: todo.content,
+        startDate: todo.startDate,
+        endDate: todo.endDate,
+        isCompleted: false,
+    }).then((result) => {
+        ati.push(new TodoItem(result.id, todo.title, todo.content, todo.startDate, todo.endDate, false))
     })
 }
 
-// TODO: 바로 렌더링도 안되고 새로운 Doc이 생성됨
+
 calendarFetcher.updateTodoList = async function(uuid, userUuid, obj) {
-    const calendar = doc(firestore, "calendar", `${uuid}`)
+    const calendar = doc(firestore, "calendar", uuid)
     const updated = {}
     updated.title = obj.title
     updated.content = obj.content
     updated.startDate = obj.startDate
     updated.endDate = obj.endDate
     updated.userUuid = userUuid
-    await updateDoc(calendar, obj)
+    await updateDoc(calendar, updated)
 }
 
-// TODO: 바로 화면에 렌더링이 안됨
 calendarFetcher.deleteTodoList = async function(uuid) {
     const calendar = doc(firestore, "calendar", `${uuid}`)
     await deleteDoc(calendar)
