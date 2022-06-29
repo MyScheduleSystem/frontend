@@ -4,8 +4,16 @@ import {
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
+    onAuthStateChanged,
 } from "firebase/auth"
-import { doc, setDoc } from "firebase/firestore"
+import {
+    doc,
+    setDoc,
+    query,
+    collection,
+    where,
+    getDocs,
+} from "firebase/firestore"
 import firestore from "../service/firebase"
 import User from "../type/user"
 import ErrorUtil from "../util/errorUtil"
@@ -74,6 +82,27 @@ userFetcher.signupWithGoogle = async function() {
 
 userFetcher.signupWithGithub = function() {
     ErrorUtil.notImplemented()
+}
+
+userFetcher.getUserInformation = function(setUserObj) {
+    // getAuth() => currentUser 체크하려면 onAuthStateChanged가 필요함.
+    const auth = getAuth()
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userId = user.uid
+            const q = query(collection(firestore, "user"), where("uuid", "==", userId))
+            const querySnapshot = await getDocs(q)
+            querySnapshot.docs.forEach((item) => {
+                const obj = {}
+                obj.accessToken = user.stsTokenManager.accessToken
+                obj.refreshToken = user.stsTokenManager.refreshToken
+                obj.authenticated = true
+                obj.fetchOption = {}
+                obj.fetchOption.uuid = item.data().uuid
+                setUserObj(obj)
+            })
+        }
+    })
 }
 
 Object.freeze(userFetcher)

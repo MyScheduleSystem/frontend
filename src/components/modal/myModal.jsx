@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useContext } from "react"
 import CardModal from "./cardModal"
 import CardEditModal from "./cardEditModal"
 import CardItem from "../card/cardItem"
@@ -10,6 +10,8 @@ import {
     Button,
 } from "@mui/material"
 import Lodash from "lodash"
+import { UserContext } from "../../context/userContextProvider"
+import calendarFetcher from "../../fetcher/calendarFetcher"
 
 function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const [isOpenCardModal, setIsOpenCardModal] = useState(false)
@@ -18,6 +20,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const [editTodoItem, setEditTodoItem] = useState({})
     const [isOpenAlert, setIsOpenAlert] = useState(false)
     const [removeIndex, setRemoveIndex] = useState()
+    const { userObj } = useContext(UserContext)
 
     const onCloseEventHandler = () => onCloseEvent(false)
 
@@ -31,17 +34,15 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
 
     const onAddTodoItemEventHandler = useCallback((addedItem) => {
         todoItemList.push({
+            uuid: addedItem.uuid,
             title: addedItem.title,
             content: addedItem.content,
             startDate: addedItem.startDate,
             endDate: addedItem.endDate,
+            isCompleted: false,
         })
-    }, [todoItemList])
-
-    const onSaveButtonClickHandler = () => {
-        const addedItem = todoItemList.slice()
         onAddListEvent(addedItem)
-    }
+    }, [todoItemList])
 
     const onCancelButtonClickHandler = () => {
         onCloseEvent(false)
@@ -50,13 +51,18 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
     const onEditModeEnterEventHandler = useCallback((isClicked, item) => {
         setEditmode(isClicked)
         const obj = {}
-        obj.title = item[0]
-        obj.content = item[2]
+        obj.uuid = item.uuid
+        obj.title = item.title
+        obj.content = item.content
+        obj.startDate = item.startDate
+        obj.endDate = item.endDate
+        obj.isCompleted = item.isCompleted
         setEditTodoItem(() => Lodash.cloneDeep(obj))
     }, [])
 
     const onEditTodoItemEventHandler = useCallback((prev, editedItem) => {
         const find = todoItemList.findIndex((e) => (e.title === prev.title && e.content === prev.content))
+        calendarFetcher.updateTodoList(editedItem.uuid, userObj.fetchOption.uuid, editedItem)
         todoItemList[find] = editedItem
         setTodoItemList(() => [...todoItemList])
     }, [todoItemList])
@@ -67,6 +73,7 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
 
     const onRemoveCardEventHandler = useCallback((i, isOpen) => {
         setIsOpenAlert(isOpen)
+        calendarFetcher.deleteTodoList(todoItemList[i].uuid)
         setRemoveIndex(i)
     }, [])
 
@@ -89,7 +96,6 @@ function MyModal({ isClickModal, onCloseEvent, onAddListEvent, todoItems }) {
             >
                 <Box sx={boxStyle}>
                     <Box sx={topBoxStyle}>
-                        <Button onClick={onSaveButtonClickHandler}>Save</Button>
                         <Button onClick={onCancelButtonClickHandler}>Cancel</Button>
                     </Box>
                     <Box sx={cardListStyle}>
@@ -127,12 +133,14 @@ const dataForRender = (todoItems) => {
     if(Lodash.size(todoItems) === 0) return []
     const items = todoItems
     const rtnArr = []
-    items.forEach((item, i) => {
+    items.forEach((item) => {
         const obj = {}
+        obj.uuid = item.uuid
         obj.title = item.title
         obj.content = item.content
         obj.startDate = item.startDate
         obj.endDate = item.endDate
+        obj.isCompleted = item.isCompleted
         rtnArr.push(obj)
     })
     return rtnArr

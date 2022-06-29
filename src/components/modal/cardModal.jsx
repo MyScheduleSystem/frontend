@@ -17,8 +17,8 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
 import DateType from "../../type/dateType"
 
 const CardModal = ({ isCardModalShow, onCardModalCloseEvent, onAddTodoItemEvent }) => {
-    const [startDate, setStartDate] = useState(DateType.createDate)
-    const [endDate, setEndDate] = useState(DateType.createDate)
+    const [startDate, setStartDate] = useState(DateType.createDate())
+    const [endDate, setEndDate] = useState(DateType.createDate())
     const [isOpen, setIsOpen] = useState(false)
     const [isValidTitle, setIsValidTtile] = useState(false)
     const [isValidStartDate, setIsValidStartDate] = useState(false)
