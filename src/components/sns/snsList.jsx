@@ -64,7 +64,12 @@ const SnsList = () => {
     ]
 
     return (
-        <ImageList sx={imageListStyle} cols={3} rowHeight={180} gap={70}>
+        <ImageList 
+          sx={imageListStyle} 
+          cols={3} 
+          rowHeight="auto"
+          gap={4}
+        >
             {itemData.map(item => (
                 <ImageListItem key={item.img}>
                     <CardMedia
@@ -82,7 +87,7 @@ const SnsList = () => {
 }
 
 const imageListStyle = {
-    width: 850,
+    width: "80%",
     height: "100%",
 }
 
