@@ -47,6 +47,7 @@ calendarFetcher.updateTodoList = async function(uuid, userUuid, obj) {
     updated.startDate = obj.startDate
     updated.endDate = obj.endDate
     updated.userUuid = userUuid
+    updated.isCompleted = obj.isCompleted
     await updateDoc(calendar, updated)
 }
 
