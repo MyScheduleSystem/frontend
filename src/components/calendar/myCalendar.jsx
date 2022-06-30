@@ -62,17 +62,19 @@ function MyCalendar() {
         const obj = {}
         Lodash.forEach(allTodoItems, (data, dayKey) => {
             obj[dayKey] = []
-            data.forEach((todo, i) => {
+            data.forEach((todo) => {
                 if((todo.startDate === e.startDate) && (todo.endDate === e.endDate) && (todo.title === e.title)) {
                     const newObj = e
                     obj[dayKey].push(newObj)
                     return
                 }
-                const newObj = new TodoItem(i, todo.title, todo.content, todo.startDate, todo.endDate, todo.isCompleted)
+                const newObj = new TodoItem(todo.uuid, todo.title, todo.content, todo.startDate, todo.endDate, todo.isCompleted)
                 obj[dayKey].push(newObj)
             })
         })
-        setAllTodoItems(() => Lodash.cloneDeep(obj))
+        // 새로고침시 이상한 에러
+        calendarFetcher.updateTodoList(e.uuid, userObj.fetchOption.uuid, e)
+        setAllTodoItems(obj)
     }, [allTodoItems])
 
     return (
