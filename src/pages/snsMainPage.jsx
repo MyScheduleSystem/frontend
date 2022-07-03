@@ -4,17 +4,17 @@ import {
     Container,
 } from "@mui/material"
 import SnsBottomNav from "../components/sns/snsBottomNav"
-import SnsHeadNav from "../components/sns/snsHeadNav"
-import SnsList from "../components/sns/snsList"
+import SnsMyInfoHeadNav from "../components/sns/snsMyInfoHeadNav"
+import SnsMyInfoList from "../components/sns/snsMyInfoList"
 
 const SnsMainPage = () => {
     return (
         <Container sx={snsBoxStyle}>
             <Box sx={snsHeadBoxStyle}>
-                <SnsHeadNav />
+                <SnsMyInfoHeadNav />
             </Box>
             <Box sx={snsListBoxStyle}>
-                <SnsList />
+                <SnsMyInfoList />
             </Box>
             <SnsBottomNav />
         </Container>
