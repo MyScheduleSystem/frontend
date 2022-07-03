@@ -1,20 +1,17 @@
-import React, {} from "react"
-import { 
-    Box,
-    Container,
-} from "@mui/material"
+import React from "react"
+import SnsHeadNav from "../components/sns/snsHeadNav"
+import SnsCard from "../components/sns/snsCard"
 import SnsBottomNav from "../components/sns/snsBottomNav"
-import SnsMyInfoHeadNav from "../components/sns/snsMyInfoHeadNav"
-import SnsMyInfoList from "../components/sns/snsMyInfoList"
+import { Box, Container } from "@mui/system"
 
 const SnsMainPage = () => {
     return (
         <Container sx={snsBoxStyle}>
-            <Box sx={snsHeadBoxStyle}>
-                <SnsMyInfoHeadNav />
+            <Box>
+                <SnsHeadNav />
             </Box>
-            <Box sx={snsListBoxStyle}>
-                <SnsMyInfoList />
+            <Box>
+                <SnsCard />
             </Box>
             <SnsBottomNav />
         </Container>
@@ -22,21 +19,7 @@ const SnsMainPage = () => {
 }
 
 const snsBoxStyle = {
-    width: "100%",
-    height: "100%",
-}
-
-const snsHeadBoxStyle = {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: "6rem",
-}
-
-const snsListBoxStyle = {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    mt: 5,
+    mt: 10,
 }
 
 export default SnsMainPage

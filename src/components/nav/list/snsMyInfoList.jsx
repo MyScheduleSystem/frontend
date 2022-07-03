@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react"
-import { createSnsFriendList } from "../../dev/testData"
-import SnsModal from "../modal/snsModal"
+import { createSnsFriendList } from "../../../dev/testData"
+import SnsModal from "../../modal/snsModal"
 import {
     ImageList,
     ImageListItem,
