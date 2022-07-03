@@ -33,7 +33,7 @@ const SnsBottomNav = () => {
 }
 
 const bottomStyle = {
-    width: 500,
+    width: "100%",
     position: "fixed",
     bottom: 0,
     left: 0,

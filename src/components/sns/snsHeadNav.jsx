@@ -1,42 +1,77 @@
-import { Avatar, Box, Button, ListItemText } from "@mui/material"
+import { 
+    Avatar, 
+    Box, 
+    Button, 
+    Container, 
+    Typography,
+    ListItemText,
+} from "@mui/material"
 import React from "react"
 
 const SnsHeadNav = () => {
     return (
-        <Box sx={snsHeadBoxStyle}>
+        <Container sx={snsHeadBoxStyle}>
+            <Box sx={avatarStyle}>
+                <Avatar 
+                    sx={snsAvatarSizeStyle} 
+                    src={`${process.env.PUBLIC_URL}/images/instargramAvatar.jpg`} 
+                />
+            </Box>
             <Box>
-                <Avatar sx={snsAvatarSizeStyle} src={`${process.env.PUBLIC_URL}/images/instargramAvatar.jpg`} />
+                <Typography variant="h3">leeJB1234</Typography>
+                <Box sx={buttonStyle}>
+                    <Box sx={buttonsStyle}>
+                        <Button variant="outlined">메시지 보내기</Button>
+                    </Box>
+                    <Box sx={buttonsStyle}>
+                        <Button variant="contained">팔로우</Button>
+                    </Box>
+                </Box>
+                <Box sx={followerStyle}>
+                    <Box sx={typographyStyle}>
+                        <Typography variant="h5">Follow</Typography>
+                    </Box>
+                    <Box sx={typographyStyle}>
+                        <Typography variant="h5">Follower</Typography>
+                    </Box>
+                </Box>
+                <ListItemText secondary="Lee Ju Bin" />
             </Box>
-            <Box sx={snsInfoStyle} >
-                <ListItemText>
-                    이주빈
-                </ListItemText>
-                <Button variant="outlined">메시지 보내기</Button>
-                <Button variant="contained">팔로우</Button>
-                <ListItemText>
-                    팔로우
-                </ListItemText>
-                <ListItemText>
-                    팔로워
-                </ListItemText>
-            </Box>
-        </Box>
+        </Container>
     )
 }
 
 const snsHeadBoxStyle = {
+    width: "100%",
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
 }
 
 const snsAvatarSizeStyle = {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
+}
+const avatarStyle = {
+    mr: 3,
 }
 
-const snsInfoStyle = {
-    marginLeft: "5rem",
+const buttonStyle = {
+    display: "flex",
+    mr: 3,
+    mb: 1,
+    mt: 1,
+}
+
+const buttonsStyle = {
+    mr: 1,
+}
+
+const followerStyle = {
+    display: "flex",
+}
+
+const typographyStyle = {
+    mr: 1,
 }
 
 export default SnsHeadNav
