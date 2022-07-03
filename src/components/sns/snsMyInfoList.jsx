@@ -1,15 +1,22 @@
 import { useState, useCallback } from "react"
+import { createSnsFriendList } from "../../dev/testData"
+import SnsModal from "../modal/snsModal"
 import {
     ImageList,
     ImageListItem,
     CardMedia,
 } from "@mui/material"
 
-const SnsList = () => {
+const SnsMyInfoList = () => {
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const tesSnsInfo = createSnsFriendList().$_friendListArray
 
-    const isOpenSnsModalEventHandler = useCallback(() => {
+    const onOpenSnsModalEventHandler = () => {
         setIsOpenModal(true)
+    }
+
+    const onCloseSnsModalEventHandler = useCallback((isClose) => {
+        setIsOpenModal(isClose)
     }, [])
     // sample item
     const itemData = [
@@ -73,8 +80,8 @@ const SnsList = () => {
             {itemData.map(item => (
                 <ImageListItem key={item.img}>
                     <CardMedia
+                        onClick={onOpenSnsModalEventHandler}
                         component="img"
-                        onClick={isOpenSnsModalEventHandler}
                         image={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt={item.title}
@@ -82,6 +89,13 @@ const SnsList = () => {
                     />
                 </ImageListItem>
             ))}
+            {isOpenModal &&
+              <SnsModal
+                isOpenModal={isOpenModal}
+                isCloseSnsModal={onCloseSnsModalEventHandler}
+                itemData={itemData}
+                user={tesSnsInfo}
+              />}
         </ImageList>
     )
 }
@@ -91,4 +105,4 @@ const imageListStyle = {
     height: "100%",
 }
 
-export default SnsList
+export default SnsMyInfoList

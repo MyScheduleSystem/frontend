@@ -8,7 +8,7 @@ import {
 } from "@mui/material"
 import React from "react"
 
-const SnsHeadNav = () => {
+const SnsMyInfoHeadNav = () => {
     return (
         <Container sx={snsHeadBoxStyle}>
             <Box sx={avatarStyle}>
@@ -74,4 +74,4 @@ const typographyStyle = {
     mr: 1,
 }
 
-export default SnsHeadNav
+export default SnsMyInfoHeadNav
