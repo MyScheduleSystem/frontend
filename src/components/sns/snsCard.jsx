@@ -11,13 +11,23 @@ import {
     Button,
 } from "@mui/material"
 
-const SnsCard = () => {
+const SnsCard = ({ onClickAvatarInfo }) => {
+    const onClickAvatarInfoEventHandler = () => {
+        onClickAvatarInfo(true)
+    }
+
     return (
         <Container sx={cardContainer}>
             <Card sx={snsCardStyle}>
                 {/* ID 이니셜 첫 글자 */}
                 <CardHeader
-                    avatar={<Avatar sx={avatarStyle}>R</Avatar>}
+                    avatar={
+                        <Avatar 
+                            sx={avatarStyle}
+                            onClick={onClickAvatarInfoEventHandler}
+                        >R
+                        </Avatar>
+                    }
                     action={<MyIcon name="option" />}
                     title="Fly to the moon"
                     subheader="May 20, 2022"
@@ -28,7 +38,7 @@ const SnsCard = () => {
                     image={`${process.env.PUBLIC_URL}/images/schedule.jpg`}
                     alt="Sns card"
                 />
-                <CardContent>
+                <CardContent sx={cardContentTextStyle}>
                     <Typography variant="body2" color="text.secondary">
                         This impressive paella is a perfect party dish and a fun meal to cook
                         together with your guests. Add 1 cup of frozen peas along with the mussels,
@@ -38,11 +48,6 @@ const SnsCard = () => {
                         together with your guests. Add 1 cup of frozen peas along with the mussels,
                         if you like.This impressive paella is a perfect party dish and a fun meal to cook
                         together with your guests. Add 1 cup of frozen peas along with the mussels,
-                        if you like.This impressive paella is a perfect party dish and a fun meal to cook
-                        together with your guests. Add 1 cup of frozen peas along with the mussels,
-                        if you like.This impressive paella is a perfect party dish and a fun meal to cook
-                        together with your guests. Add 1 cup of frozen peas along with the mussels,
-                        if you like.
                     </Typography>
                 </CardContent>
                 <CardActions sx={buttonBoxStyle} disableSpacing={true}>
@@ -62,8 +67,12 @@ const cardContainer = {
 }
 
 const snsCardStyle = {
-    width: "60%",
+    width: "100%",
     height: "60%",
+}
+
+const cardContentTextStyle = {
+    overflow: "hidden",
 }
 
 const avatarStyle = {

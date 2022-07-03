@@ -5,6 +5,7 @@ import Header from "../../components/nav/header"
 import RightSidebar from "../../components/nav/rightSidebar"
 import MyChatRoom from "../../components/chat/myChatRoom"
 import SnsMainPage from "../snsMainPage"
+import SnsInfoPage from "../snsInfoPage"
 
 const MyRouter = () => {
     return (
@@ -15,6 +16,7 @@ const MyRouter = () => {
                 <Route path="/" element={<MyLayout />}/>
                 <Route path="/chat" element={<MyChatRoom />} />
                 <Route path="/sns" element={<SnsMainPage />} />
+                <Route path="/sns/id" element={<SnsInfoPage />} />
             </Routes>
         </React.Fragment>
     )

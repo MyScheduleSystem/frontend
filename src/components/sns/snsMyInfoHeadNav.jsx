@@ -52,7 +52,7 @@ const snsAvatarSizeStyle = {
     height: 200,
 }
 const avatarStyle = {
-    mr: 3,
+    mr: 15,
 }
 
 const buttonStyle = {
