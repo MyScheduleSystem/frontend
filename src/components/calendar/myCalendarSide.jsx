@@ -64,6 +64,7 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
         todoObj.endDate = DateType.createDate()
         todoObj.isCompleted = false
         onClickQuickTodoListEvent(todoObj)
+        setTodoAnchor(null)
     }
 
     const validateForTodoTitle = (titleRef) => {
