@@ -28,7 +28,7 @@ const SnsMainPage = () => {
                     return(
                         <Grid item={true} xs={4} key={i}>
                             <SnsCard 
-                                onClickAvatarInfo={onClickAvatarInfoEventHandler}
+                                onClickAvatarInfoEvent={onClickAvatarInfoEventHandler}
                                 testSnsInfo={testSnsInfo}
                             />
                         </Grid>

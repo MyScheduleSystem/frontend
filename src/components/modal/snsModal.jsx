@@ -8,7 +8,7 @@ import {
 } from "@mui/material"
 
 const SnsModal = ({ isOpenModal, isCloseSnsModal, user, image }) => {
-    const onCloseSnsModalEventHandler = () => isCloseSnsModal(false)
+    const onCloseSnsModalEventHandler = () => onCloseSnsModalEvent(false)
     return (
         <Modal 
             open={isOpenModal}

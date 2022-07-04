@@ -95,7 +95,7 @@ const SnsMyInfoList = () => {
             {isOpenModal &&
               <SnsModal
                 isOpenModal={isOpenModal}
-                isCloseSnsModal={onCloseSnsModalEventHandler}
+                onCloseSnsModalEvent={onCloseSnsModalEventHandler}
                 image={imageSelected}
                 user={tesSnsInfo}
               />}

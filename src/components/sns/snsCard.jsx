@@ -11,9 +11,9 @@ import {
     Button,
 } from "@mui/material"
 
-const SnsCard = ({ onClickAvatarInfo, testSnsInfo }) => {
+const SnsCard = ({ onClickAvatarInfoEvent, testSnsInfo }) => {
     const onClickAvatarInfoEventHandler = () => {
-        onClickAvatarInfo(true, testSnsInfo[0].friendUuid)
+        onClickAvatarInfoEvent(true, testSnsInfo[0].friendUuid)
     }
     return (
         <Container sx={cardContainer}>
