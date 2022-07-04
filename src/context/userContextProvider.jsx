@@ -60,7 +60,7 @@ function UserContextProvider({ children }) {
             action: userObj,
         })
         User.saveRefreshStorage(userState.refreshToken)
-        setUserObj(Lodash.cloneDeep(userState))
+        setUserObj(userState)
     }, [userState])
 
     const onSignoutButtonClickHandler = useCallback(() => {
