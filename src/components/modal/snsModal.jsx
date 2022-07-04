@@ -7,7 +7,7 @@ import {
     Divider, Typography, TextField
 } from "@mui/material"
 
-const SnsModal = ({ isOpenModal, isCloseSnsModal, user, image }) => {
+const SnsModal = ({ isOpenModal, onCloseSnsModalEvent, user, image }) => {
     const onCloseSnsModalEventHandler = () => onCloseSnsModalEvent(false)
     return (
         <Modal 
