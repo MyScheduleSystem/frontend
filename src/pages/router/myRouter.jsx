@@ -16,7 +16,7 @@ const MyRouter = () => {
                 <Route path="/" element={<MyLayout />}/>
                 <Route path="/chat" element={<MyChatRoom />} />
                 <Route path="/sns" element={<SnsMainPage />} />
-                <Route path="/sns/id" element={<SnsInfoPage />} />
+                <Route path="/sns/:id" element={<SnsInfoPage />} />
             </Routes>
         </React.Fragment>
     )

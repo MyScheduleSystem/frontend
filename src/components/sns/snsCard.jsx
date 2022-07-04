@@ -11,11 +11,10 @@ import {
     Button,
 } from "@mui/material"
 
-const SnsCard = ({ onClickAvatarInfo }) => {
+const SnsCard = ({ onClickAvatarInfo, testSnsInfo }) => {
     const onClickAvatarInfoEventHandler = () => {
-        onClickAvatarInfo(true)
+        onClickAvatarInfo(true, testSnsInfo[0].friendUuid)
     }
-
     return (
         <Container sx={cardContainer}>
             <Card sx={snsCardStyle}>
@@ -25,8 +24,8 @@ const SnsCard = ({ onClickAvatarInfo }) => {
                         <Avatar 
                             sx={avatarStyle}
                             onClick={onClickAvatarInfoEventHandler}
-                        >R
-                        </Avatar>
+                            src={`${process.env.PUBLIC_URL}${testSnsInfo[0].friendImageUrl}`}
+                        />
                     }
                     action={<MyIcon name="option" />}
                     title="Fly to the moon"

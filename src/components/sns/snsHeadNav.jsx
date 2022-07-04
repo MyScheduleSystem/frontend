@@ -3,14 +3,15 @@ import {
     Box, Avatar, AvatarGroup,
 } from "@mui/material"
 
-const SnsHeadNav = () => {
+const SnsHeadNav = ({ testSnsInfo }) => {
     return (
         <Box>
             <AvatarGroup total={24}>
-                <Avatar />
-                <Avatar />
-                <Avatar />
-                <Avatar />
+                {Array.from(Array(5)).map((_, i) => {
+                    return(
+                        <Avatar src={`${process.env.PUBLIC_URL}${testSnsInfo[0].friendImageUrl}`} key={i} />
+                    )
+                })}
             </AvatarGroup>
         </Box>
     )
