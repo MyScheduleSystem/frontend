@@ -5,6 +5,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     onAuthStateChanged,
+    getRedirectResult,
 } from "firebase/auth"
 import {
     doc,
@@ -70,6 +71,21 @@ userFetcher.signupWithGoogle = async function() {
             return credential ? true : false
         })
         .catch(e => console.log(e))
+}
+
+userFetcher.googleResult = async function() {   //토큰 값이랑 유저정보 데이터 확인해야됨.
+    const auth = getAuth()
+    getRedirectResult(auth)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result)
+            const token = credential.accessToken
+            const user = result.user
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            console.log(errorCode, errorMessage)
+        })
 }
 
 userFetcher.signupWithGithub = function() {

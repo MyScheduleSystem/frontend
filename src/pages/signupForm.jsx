@@ -258,6 +258,16 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
                         <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
                         <Divider/>
                     </Box>
+                    <Box>
+                        <Button 
+                            startIcon={
+                                <CardMedia
+                                    component="img"
+                                    image={"/images/google.png"}
+                                    />
+                                }>
+                        </Button>
+                    </Box>
                 </FormGroup>
             </Container>
             <AlertPopup
