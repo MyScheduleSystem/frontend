@@ -56,7 +56,7 @@ function MyCalendar() {
 
     const onAddTodoListEventHandler = useCallback((addedItem) => {
         calendarFetcher.createTodoList(userObj.fetchOption.uuid, addedItem, allTodoItems[selectedDate])
-    }, [allTodoItems, selectedDate])
+    }, [])
 
     const onCompletedEventHandler = useCallback((e) => {
         const obj = {}
@@ -77,10 +77,24 @@ function MyCalendar() {
         setAllTodoItems(obj)
     }, [allTodoItems])
 
+    const onClickTodayTodoListEventHandler = useCallback((isOpen, date) => {
+        setIsClickModal(isOpen)
+        setSelectedDate(date)
+    })
+
+    const onClickQuickTodoListEventHandler = useCallback((todo) => {
+        const today = todo.startDate
+        calendarFetcher.createTodoList(userObj.fetchOption.uuid, todo, allTodoItems[today])
+    }, [])
+
     return (
         <Box sx={mainBoxSizeStyle}>
             <Box sx={myCalendarBoxStyle}>
-                <MyCalendarSide date={sideDate} />
+                <MyCalendarSide
+                    date={sideDate}
+                    onClickTodayTodoListEvent={onClickTodayTodoListEventHandler}
+                    onClickQuickTodoListEvent={onClickQuickTodoListEventHandler}
+                />
                 <Calendar
                     calendarType="US"
                     onClickDay={onClickDayEventHandler}

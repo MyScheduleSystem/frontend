@@ -25,7 +25,7 @@ const MyCalendarBoxDiv = styled.div`
     height: 100%;
     display: flex;
     margin-top: 6rem;
-    margin-left: -10rem;
+    margin-left: -8.5rem;
     float: left;
 
     .react-calendar__navigation button {

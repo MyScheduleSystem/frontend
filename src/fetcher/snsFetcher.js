@@ -3,8 +3,8 @@ import {
     onSnapShot,
     collection,
     query,
-} from 'firebase/firestore'
-import firestore from '../service/firebase'
+} from "firebase/firestore"
+import firestore from "../service/firebase"
 
 const snsFetcher = {}
 
@@ -39,7 +39,7 @@ snsFetcher.snapshotForSns = function() {
 
 function snsDocumentOfFirestore() {
     // TODO: add document id
-    const docId = ''
+    const docId = ""
     const store = doc(firestore, "schedulesns", docId)
     return store
 }

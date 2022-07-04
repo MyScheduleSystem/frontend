@@ -15,6 +15,7 @@ class _FriendList extends SymbolName {
             friendObj[f.getFriendUuid()] =  {
                 nickName: f.getFriendNickname(),
                 createdAt: f.getCreatedAt(),
+                firendImageUrl: f.getFriendImageUrl(),
             }
         })
         return friendObj
