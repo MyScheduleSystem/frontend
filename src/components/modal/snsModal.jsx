@@ -7,9 +7,8 @@ import {
     Divider, Typography, TextField
 } from "@mui/material"
 
-const SnsModal = ({ itemData, isOpenModal, isCloseSnsModal, user }) => {
+const SnsModal = ({ isOpenModal, isCloseSnsModal, user, image }) => {
     const onCloseSnsModalEventHandler = () => isCloseSnsModal(false)
-    console.log(user)
     return (
         <Modal 
             open={isOpenModal}
@@ -17,16 +16,14 @@ const SnsModal = ({ itemData, isOpenModal, isCloseSnsModal, user }) => {
             sx={snsModalStyle}
         >
             <Box sx={snsBoxStyle}>
-                <Box>
-                    {itemData.map((item, i) => {
-                        <CardMedia 
-                            key={i}
-                            component="img"
-                            image={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                        />
-                    })}
+                <Box sx={snsModalImageStyle}>
+                    <CardMedia 
+                        component="img"
+                        image={`${image}?w=164&h=164&fit=crop&auto=format`}
+                        loading="lazy"
+                    />
                 </Box>
-                <Box>
+                <Box sx={snsCommendStyle}>
                     <List>
                         <ListItem>
                             <ListItemAvatar>
@@ -74,6 +71,8 @@ const snsModalStyle = {
 }
 
 const snsBoxStyle = {
+    display: "flex",
+    flexDirection: "row",
     width: "65%",
     height: "90%",
     backgroundColor: "#fff",
@@ -82,11 +81,11 @@ const snsBoxStyle = {
     overflow: "auto",
 }
 
-// const snsImageStyle = {
-//     float: "left",
-// }
+const snsModalImageStyle = {
+    flexGrow: 1,
+}
 
-// const snsCommendStyle = {
-//     float: "right",
-// }
+const snsCommendStyle = {
+    flexGrow: 1,
+}
 export default SnsModal

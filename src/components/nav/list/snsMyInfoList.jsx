@@ -9,15 +9,18 @@ import {
 
 const SnsMyInfoList = () => {
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const [imageSelected, setImageSelected] = useState([])
     const tesSnsInfo = createSnsFriendList().$_friendListArray
 
-    const onOpenSnsModalEventHandler = () => {
+    const onOpenSnsModalEventHandler = (img) => () => {
         setIsOpenModal(true)
+        setImageSelected(img)
     }
 
     const onCloseSnsModalEventHandler = useCallback((isClose) => {
         setIsOpenModal(isClose)
     }, [])
+
     // sample item
     const itemData = [
         {
@@ -80,7 +83,7 @@ const SnsMyInfoList = () => {
             {itemData.map(item => (
                 <ImageListItem key={item.img}>
                     <CardMedia
-                        onClick={onOpenSnsModalEventHandler}
+                        onClick={onOpenSnsModalEventHandler(item.img)}
                         component="img"
                         image={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -93,7 +96,7 @@ const SnsMyInfoList = () => {
               <SnsModal
                 isOpenModal={isOpenModal}
                 isCloseSnsModal={onCloseSnsModalEventHandler}
-                itemData={itemData}
+                image={imageSelected}
                 user={tesSnsInfo}
               />}
         </ImageList>
