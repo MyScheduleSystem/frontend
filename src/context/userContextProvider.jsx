@@ -68,7 +68,11 @@ function UserContextProvider({ children }) {
             .signout()
             .then(() => {
                 setUserObj(null)
-                userDispatch({ type: UserActionType.type.signout })
+                userDispatch({
+                    type: UserActionType.type.signout,
+                    state: UserReducer.clearUserState().state,
+                    action: userObj,
+                })
             })
     }, [])
 
