@@ -21,7 +21,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
         onClickImageUploaderEvent(imageUpload, user.friendUuid)
     }
 
-    const onClickImageUploaderButtonHandler = () => {
+    const onClickImageUploaderButtonEventHandler = () => {
         imageInput.current.click()
     }
 
@@ -54,7 +54,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                         sx={uploadImageInputStyle}
                         onChange={onChangeImageUploaderEventHandler}
                     />
-                    <Button onClick={onClickImageUploaderButtonHandler}>
+                    <Button onClick={onClickImageUploaderButtonEventHandler}>
                         <MyIcon name="upload" />
                     </Button>
                     <Button onClick={onClickImageUploaderEventHandler}>확인</Button>
