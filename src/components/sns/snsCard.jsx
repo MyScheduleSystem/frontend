@@ -21,11 +21,15 @@ const SnsCard = ({ onClickAvatarInfo, testSnsInfo }) => {
                 {/* ID 이니셜 첫 글자 */}
                 <CardHeader
                     avatar={
+                        testSnsInfo[0].friendImageUrl ?
                         <Avatar 
                             sx={avatarStyle}
                             onClick={onClickAvatarInfoEventHandler}
                             src={`${process.env.PUBLIC_URL}${testSnsInfo[0].friendImageUrl}`}
-                        />
+                        /> :
+                        <Avatar>
+                            {testSnsInfo[0].friendNickname.charAt(0)}
+                        </Avatar>
                     }
                     action={<MyIcon name="option" />}
                     title="Fly to the moon"
@@ -71,7 +75,7 @@ const snsCardStyle = {
 }
 
 const cardContentTextStyle = {
-    overflow: "hidden",
+    overflow: "auto",
 }
 
 const avatarStyle = {

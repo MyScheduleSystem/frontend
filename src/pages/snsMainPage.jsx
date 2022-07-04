@@ -13,20 +13,20 @@ const SnsMainPage = () => {
     
     const onClickAvatarInfoEventHandler = useCallback((isClick, id) => {
         setEnterInfo(isClick)
-        navigate(`/sns/${id}`, {replace: true})
+        navigate(`/sns/${id}`)
     }, [])
 
     return (
-        <Grid container md={5} sx={snsContainerStyle} >
-            <Grid item xs={9}>
+        <Grid container={true} xs={5} sx={snsContainerStyle}>
+            <Grid item={true} md={9}>
                 <SnsHeadNav
                     testSnsInfo={testSnsInfo}
                 />
             </Grid>
-            <Grid container spacing={{ xs: 2 }} columns={{ md: 5 }}>
+            <Grid container={true} spacing={{ xs: 2 }} columns={{ md: 5 }}>
                 {Array.from(Array(6)).map((_, i) => {
                     return(
-                        <Grid item md={4} key={i}>
+                        <Grid item={true} xs={4} key={i}>
                             <SnsCard 
                                 onClickAvatarInfo={onClickAvatarInfoEventHandler}
                                 testSnsInfo={testSnsInfo}

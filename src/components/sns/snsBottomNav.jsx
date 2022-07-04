@@ -9,7 +9,7 @@ import {
 const SnsBottomNav = () => {
     const [selectedNav, setSelectedNav] = useState(0)
 
-    const onChangeSelectedNavHandler = (e, newVal) => {
+    const onChangeSelectedNavEventHandler = (e, newVal) => {
         e.preventDefault()
         setSelectedNav(newVal)
     }
@@ -22,7 +22,7 @@ const SnsBottomNav = () => {
             <BottomNavigation
                 showLabels={true}
                 value={selectedNav}
-                onChange={onChangeSelectedNavHandler}
+                onChange={onChangeSelectedNavEventHandler}
             >
                 <BottomNavigationAction label="Recents" icon={<MyIcon name="history" />} />
                 <BottomNavigationAction label="Favorites" icon={<MyIcon name="heart" />} />
