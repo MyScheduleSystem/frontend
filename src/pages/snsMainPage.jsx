@@ -10,14 +10,14 @@ const SnsMainPage = () => {
     const [enterInfo, setEnterInfo] = useState(false)
     const testSnsInfo = createSnsFriendList().$_friendListArray
     const navigate = useNavigate()
-    
+
     const onClickAvatarInfoEventHandler = useCallback((isClick, id) => {
         setEnterInfo(isClick)
         navigate(`/sns/${id}`)
     }, [])
 
     return (
-        <Grid container={true} xs={5} sx={snsContainerStyle}>
+        <Grid item={true} container={true} xs={5} sx={snsContainerStyle}>
             <Grid item={true} md={9}>
                 <SnsHeadNav
                     testSnsInfo={testSnsInfo}
@@ -27,7 +27,7 @@ const SnsMainPage = () => {
                 {Array.from(Array(6)).map((_, i) => {
                     return(
                         <Grid item={true} xs={4} key={i}>
-                            <SnsCard 
+                            <SnsCard
                                 onClickAvatarInfoEvent={onClickAvatarInfoEventHandler}
                                 testSnsInfo={testSnsInfo}
                             />
