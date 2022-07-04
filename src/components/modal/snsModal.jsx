@@ -78,7 +78,7 @@ const snsBoxStyle = {
     backgroundColor: "#fff",
     borderRadius: "5px",
     opacity: "0.98",
-    overflow: "auto",
+    overflow: "hidden",
 }
 
 const snsModalImageStyle = {
@@ -87,5 +87,6 @@ const snsModalImageStyle = {
 
 const snsCommendStyle = {
     flexGrow: 1,
+    overflow: "scroll",
 }
 export default SnsModal
