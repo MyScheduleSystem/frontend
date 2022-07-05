@@ -18,7 +18,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
     }
 
     const onClickImageUploaderEventHandler = () => {
-        onClickImageUploaderEvent(imageUpload, user.friendUuid)
+        onClickImageUploaderEvent(imageUpload, "profile")
     }
 
     const onClickImageUploaderButtonEventHandler = () => {
