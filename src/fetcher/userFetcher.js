@@ -67,7 +67,13 @@ userFetcher.signupWithGoogle = async function() {
     const googleProvider = new GoogleAuthProvider()
     return signInWithPopup(auth, googleProvider)
         .then((result) => {
+            const user = {}
             const credential = GoogleAuthProvider.credentialFromResult(result)
+            // user.email = result.user.auth.email
+            console.log(credential.accessToken)
+            console.log(result.user.email)
+            console.log(result.user.uid)
+            // console.log(result.user.uid)
             return credential ? true : false
         })
         .catch(e => console.log(e))
