@@ -6,7 +6,7 @@ import {
     updateDoc,
     deleteDoc,
 } from "firebase/firestore"
-import firestore from "../service/firebase"
+import { firestore } from "../service/firebase"
 import TodoItem from "../type/todoItem"
 
 const calendarFetcher = {}
@@ -25,7 +25,7 @@ calendarFetcher.allCalenderTodoList = async function() {
 }
 
 calendarFetcher.createTodoList = function(userUuid, todo, allTodoItems) {
-    let ati = allTodoItems.length == 0 ? [] : allTodoItems
+    const ati = allTodoItems.length == 0 ? [] : allTodoItems
     addDoc(collection(firestore, "calendar"), {
         userUuid: userUuid,
         title: todo.title,

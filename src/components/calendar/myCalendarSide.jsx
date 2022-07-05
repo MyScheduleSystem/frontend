@@ -9,6 +9,7 @@ import {
     MenuItem,
     TextField,
     Button,
+    MenuList,
 } from "@mui/material"
 import DateType from "../../type/dateType"
 
@@ -65,6 +66,14 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
         todoObj.isCompleted = false
         onClickQuickTodoListEvent(todoObj)
         setTodoAnchor(null)
+    }
+
+    const onCancelButtonClickEventHandler = () => {
+        setTodoAnchor(null)
+    }
+
+    const onKeyDownEventHandler = (e) => {
+        e.stopPropagation()
     }
 
     const validateForTodoTitle = (titleRef) => {
@@ -144,25 +153,29 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
                 open={isOpenTodo}
                 onClose={onMenuCloseButtonClickEventHanlder}
             >
-                <MenuItem>
-                    <TextField
-                        inputRef={titleRef}
-                        error={validObject.title}
-                        label="Todo title"
-                        variant="outlined"
-                    />
-                </MenuItem>
-                <MenuItem>
-                    <TextField
-                        inputRef={contentRef}
-                        error={validObject.content}
-                        label="Todo content"
-                        variant="outlined"
-                    />
-                </MenuItem>
+                <MenuList>
+                    <MenuItem>
+                        <TextField
+                            inputRef={titleRef}
+                            error={validObject.title}
+                            label="Enter todo title"
+                            variant="outlined"
+                            onKeyDown={onKeyDownEventHandler}
+                        />
+                    </MenuItem>
+                    <MenuItem>
+                        <TextField
+                            inputRef={contentRef}
+                            error={validObject.content}
+                            label="Enter todo content"
+                            variant="outlined"
+                            onKeyDown={onKeyDownEventHandler}
+                        />
+                    </MenuItem>
+                </MenuList>
                 <Box sx={buttonStyle}>
                     <Button onClick={onSaveButtonClickEventHandler}>Save</Button>
-                    <Button>Cancel</Button>
+                    <Button onClick={onCancelButtonClickEventHandler}>Cancel</Button>
                 </Box>
             </Menu>
         </Box>

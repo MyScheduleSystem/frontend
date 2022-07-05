@@ -5,6 +5,7 @@ import React, {
 } from "react"
 import MyIcon from "../icon/myIcon"
 import AlertPopup from "../components/popup/alertPopup"
+import userFetcher from "../fetcher/userFetcher"
 import {
     Container,
     Box,
@@ -19,6 +20,13 @@ import {
     Typography,
 } from "@mui/material"
 import Lodash from "lodash"
+import MyStepper from "./myStepper"
+
+const steps = [
+    "Sign up email or provider",
+    "Enter your information",
+]
+
 
 const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent }) => {
     const [isOpenPopup, setIsOpenPopup] = useState(false)
@@ -28,6 +36,8 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
         email: false,
         password: false,
     })
+    const [isNextStepButton, setIsNextStepButton] = useState(true)
+    const [activeStep, setActiveStep] = useState(0)
     const usernameRef = useRef()
     const nameRef = useRef()
     const emailRef = useRef()
@@ -117,6 +127,30 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
         onClickUserServiceButtonEvent(isChecked)
     }
 
+    const onStepButtonClickEventHandler = useCallback((step) => {
+        setIsNextStepButton(true)
+        setActiveStep(step)
+    }, [])
+
+    const onResetButtonClickEventHandler = useCallback((step) => {
+        setActiveStep(step)
+    }, [])
+
+    const onNextButtonClickEventHandler = useCallback((step) => {
+        setActiveStep(step)
+    }, [])
+
+    const onBackButtonClickEventHandler = useCallback((step) => {
+        setIsNextStepButton(true)
+        setActiveStep(step)
+    }, [])
+
+    const onProviderButtonClickEventHandler = useCallback(() => {
+        userFetcher.signupWithGoogle()
+        setIsNextStepButton(false)
+        setActiveStep(prev => prev + 1)
+    }, [])
+
     const validateForUserInfo = (target, value) => {
         switch(target) {
             case "username": {
@@ -173,103 +207,183 @@ const SignupForm = ({ isUserFailed, onSignupEvent, onClickUserServiceButtonEvent
 
     return (
         <Container sx={container}>
+            <MyStepper
+                steps={steps}
+                activeStep={activeStep}
+                onStepButtonClickEvent={onStepButtonClickEventHandler}
+                onResetButtonClickEvent={onResetButtonClickEventHandler}
+                onNextButtonClickEvent={onNextButtonClickEventHandler}
+                onBackButtonClickEvent={onBackButtonClickEventHandler}
+                isNextButtonDisable={isNextStepButton}
+            />
             <Container sx={signupContainer}>
                 <CardMedia
                     sx={cardMediaFontStyle}
                     component="img"
                     image={"/images/mss.png"}
                 />
-                <Box sx={signupStyle}>
-                    <Typography
-                        sx={typographyStyle}
-                        variant="h4"
-                    >
-                        Social Accounts
-                    </Typography>
-                </Box>
-                <FormGroup sx={formStyle}>
-                    <FormControl variants="standard" sx={formControltyle}>
-                        <InputLabel>
-                            With a start your username
-                        </InputLabel>
-                        <Input
-                            type="text"
-                            error={isValidUserInfo.username}
-                            inputRef={usernameRef}
-                            onChange={onUsernameChangeHandler}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <MyIcon name="user" />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl variants="standard" sx={formControltyle}>
-                        <InputLabel>
-                            With a start your name
-                        </InputLabel>
-                        <Input
-                            type="text"
-                            error={isValidUserInfo.name}
-                            inputRef={nameRef}
-                            onChange={onNameChangeHandler}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <MyIcon name="user" />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl variants="standard" sx={formControltyle}>
-                        <InputLabel>
-                            With a start your email
-                        </InputLabel>
-                        <Input
-                            type="email"
-                            error={isValidUserInfo.email}
-                            inputRef={emailRef}
-                            onChange={onEmailChangeHandler}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <MyIcon name="user" />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <FormControl variants="standard" sx={formControltyle}>
-                        <InputLabel>
-                            Enter your password
-                        </InputLabel>
-                        <Input
-                            type="password"
-                            error={isValidUserInfo.password}
-                            inputRef={passwordRef}
-                            onChange={onPasswordChangeHandler}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <MyIcon name="password" />
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    <Box sx={buttonBoxStyle}>
-                        <Button onClick={onClickRegisterButtonHandler}>register</Button>
-                        <Divider/>
-                        <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
-                        <Divider/>
+            <FormGroup sx={formStyle}>
+                {activeStep === 0 &&
+                <React.Fragment>
+                    <Box sx={signupStyle}>
+                        <Typography
+                            sx={typographyStyle}
+                            variant="h4"
+                        >
+                            Social Accounts
+                        </Typography>
                     </Box>
-                    <Box>
-                        <Button 
-                            startIcon={
-                                <CardMedia
-                                    component="img"
-                                    image={"/images/google.png"}
-                                    />
+                        <FormControl variant="standard" sx={formControltyle}>
+                            <InputLabel>
+                                With a start your email
+                            </InputLabel>
+                            <Input
+                                type="text"
+                                error={isValidUserInfo.email}
+                                inputRef={emailRef}
+                                onChange={onEmailChangeHandler}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <MyIcon name="user"></MyIcon>
+                                    </InputAdornment>
                                 }>
-                        </Button>
-                    </Box>
-                </FormGroup>
-            </Container>
+                            </Input>
+                        </FormControl>
+                        <FormControl variant="standard" sx={formControltyle}>
+                            <InputLabel>
+                                With a start your password
+                            </InputLabel>
+                            <Input
+                                type="password"
+                                error={isValidUserInfo.password}
+                                inputRef={passwordRef}
+                                onChange={onPasswordChangeHandler}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <MyIcon name="password"></MyIcon>
+                                    </InputAdornment>
+                                }>
+                            </Input>
+                        </FormControl>
+                        <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your username
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.username}
+                                    inputRef={usernameRef}
+                                    onChange={onUsernameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }   
+                                />
+                            </FormControl>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your name
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.name}
+                                    inputRef={nameRef}
+                                    onChange={onNameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <Box sx={buttonBoxStyle}>
+                                <Button onClick={onClickRegisterButtonHandler}>register</Button>
+                                <Divider/>
+                                <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
+                                <Divider/>
+                            </Box>
+                        <Box>
+                            <Button
+                                onClick={onProviderButtonClickEventHandler} 
+                                startIcon={
+                                    <CardMedia
+                                        component="img"
+                                        image={"/images/google.png"}
+                                        />
+                                    }>
+                            </Button>
+                        </Box>
+                </React.Fragment>
+                }
+                {activeStep === 1 &&
+                    <React.Fragment>
+                        <Box sx={signupStyle}>
+                            <Typography
+                                sx={typographyStyle}
+                                variant="h4"
+                            >
+                                Your Imformation
+                            </Typography>
+                        </Box>
+                        <FormControl variant="standard" sx={formControltyle}>
+                            <InputLabel>
+                                Your Provider email
+                            </InputLabel>
+                            <Input
+                                type="text"
+                                error={isValidUserInfo.email}
+                                inputRef={emailRef}
+                                onChange={onEmailChangeHandler}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <MyIcon name="user"></MyIcon>
+                                    </InputAdornment>
+                                }>
+                            </Input>
+                        </FormControl>
+                        <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your username
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.username}
+                                    inputRef={usernameRef}
+                                    onChange={onUsernameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }   
+                                />
+                            </FormControl>
+                            <FormControl variants="standard" sx={formControltyle}>
+                                <InputLabel>
+                                    With a start your name
+                                </InputLabel>
+                                <Input
+                                    type="text"
+                                    error={isValidUserInfo.name}
+                                    inputRef={nameRef}
+                                    onChange={onNameChangeHandler}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <MyIcon name="user" />
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <Box sx={buttonBoxStyle}>
+                                <Button onClick={onClickRegisterButtonHandler}>register</Button>
+                                <Divider/>
+                                <Button onClick={onClickLoginButtonHandler(true)}>login</Button>
+                                <Divider/>
+                            </Box>
+                    </React.Fragment>
+                }
+            </FormGroup>
+            </Container>    
             <AlertPopup
                 isShowPopup={isOpenPopup}
                 setIsShowPopupEvent={onSetIsShowPopupEventHandler}

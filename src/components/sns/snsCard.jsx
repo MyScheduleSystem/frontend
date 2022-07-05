@@ -11,9 +11,9 @@ import {
     Button,
 } from "@mui/material"
 
-const SnsCard = ({ onClickAvatarInfoEvent, testSnsInfo }) => {
+const SnsCard = ({ onClickAvatarInfoEvent, info }) => {
     const onClickAvatarInfoEventHandler = () => {
-        onClickAvatarInfoEvent(true, testSnsInfo[0].friendUuid)
+        onClickAvatarInfoEvent(info.friendUuid)
     }
     return (
         <Container sx={cardContainer}>
@@ -21,14 +21,14 @@ const SnsCard = ({ onClickAvatarInfoEvent, testSnsInfo }) => {
                 {/* ID 이니셜 첫 글자 */}
                 <CardHeader
                     avatar={
-                        testSnsInfo[0].friendImageUrl ?
-                        <Avatar 
+                        info.friendImageUrl ?
+                        <Avatar
                             sx={avatarStyle}
                             onClick={onClickAvatarInfoEventHandler}
-                            src={`${process.env.PUBLIC_URL}${testSnsInfo[0].friendImageUrl}`}
+                            src={`${process.env.PUBLIC_URL}${info.friendImageUrl}`}
                         /> :
                         <Avatar>
-                            {testSnsInfo[0].friendNickname.charAt(0)}
+                            {info.friendNickname.charAt(0)}
                         </Avatar>
                     }
                     action={<MyIcon name="option" />}
@@ -70,8 +70,8 @@ const cardContainer = {
 }
 
 const snsCardStyle = {
-    width: "100%",
-    height: "60%",
+    width: "80%",
+    height: "70%",
 }
 
 const cardContentTextStyle = {

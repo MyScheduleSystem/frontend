@@ -1,9 +1,8 @@
 import React, {} from "react"
-import { 
+import {
     Box,
     Container,
 } from "@mui/material"
-import SnsBottomNav from "../components/sns/snsBottomNav"
 import SnsMyInfoHeadNav from "../components/sns/snsMyInfoHeadNav"
 import SnsMyInfoList from "../components/nav/list/snsMyInfoList"
 
@@ -16,7 +15,6 @@ const SnsInfoPage = () => {
             <Box sx={snsListBoxStyle}>
                 <SnsMyInfoList />
             </Box>
-            <SnsBottomNav />
         </Container>
     )
 }

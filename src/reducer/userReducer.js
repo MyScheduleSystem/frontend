@@ -20,6 +20,7 @@ UserReducer.clearUserState = function() {
     UserInitialState.authenticated = false
     UserInitialState.fetchOption = {}
     UserInitialState.fetchOption.uuid = null
+    return UserInitialState
 }
 
 // input: action => object,
@@ -39,15 +40,14 @@ UserReducer.userReducer = function(state, action) {
             return {
                 ...state,
                 accessToken: obj.accessToken,
-                refreshToekn: obj.refreshToken,
+                refreshToken: obj.refreshToken,
                 authenticated: obj.authenticated,
                 fetchOption: obj.fetchOption.uuid,
             }
         }
 
         case UserActionType.type.signout:
-            UserReducer.clearUserState()
-            return null
+            return { ...UserReducer.clearUserState() }
 
         default:
             ErrorUtil.notImplemented()

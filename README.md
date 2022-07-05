@@ -51,6 +51,7 @@
 ## CheckList
 ```
 불변성 유지
+    - state 중 배열이 있을 경우 spread 연산 사용할 것(2022.07.05)
 
 불필요한 렌더링 자제
 
@@ -68,6 +69,10 @@ useState(setState의) 동작 이해
     MyCalendar
         Date Picker
         Completed todo list or not
+        Tab menu
+        Quick move to today's todo
+        Quick move to MSS Sns
+        Quick create todo list
 
     MyModal
         Create My Schedule
@@ -189,6 +194,40 @@ useState(setState의) 동작 이해
     Image Upload 기능 구현중 Axios 데이터 전달오류 (해결)
         - Cloudinary Upload Presets Name Mode에서 오류발견
             Signed Mode Name을 가져오지 말고 Unsigned Mode Name을가져오자.
+
+    TextField에서 label props에 의한 EventBubbling 문제 (해결)
+        - 초기 코드
+            <MenuItem>
+                <TextField
+                    inputRef={titleRef}
+                    error={validObject.title}
+                    label="Enter todo title"
+                    variant="outlined"
+                />
+            </MenuItem>}
+
+        - MUI Menu 컴포넌트의 Event bubbling
+            이렇게 작성된 코드에서 첫 문자가 E로 시작하면 다른 메뉴 탭으로 이동하는 오류가 있었다. 원인을 알지 못했기 때문에 구글링을 통해 찾아봤다.
+            Github issue에 비슷한 사례가 있었다. (https://github.com/mui/material-ui/issues/19116)
+            Mui의 Menu는 MenuList의 Item들 모두에게 이벤트가 추가된다는 내용이었다. 따라서 MenuItem의 하위 컴포넌트로 작성된 TextField의 Event bubbling을 막아준다면
+            해결이 가능한 문제였다.
+
+        - 수정 후 코드
+            const onKeyDownEventHandler = (e) => {
+                e.stopPropagation()
+            }
+
+            ...
+
+            <MenuItem>
+                <TextField
+                    inputRef={titleRef}
+                    error={validObject.title}
+                    label="Enter todo title"
+                    variant="outlined"
+                    onKeyDown={onKeyDownEventHandler}
+                />
+            </MenuItem>
 ```
 
 ## 개발 회고록
@@ -230,4 +269,17 @@ SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 �
 구현 중 Preset Name을 잘 못 가져와서 조금 헤매었지만 해결하여 기능구현에는 성공하였다.
 
 다음으로는 Image를 Cloudinary에 User에 Uuid로 폴더를 구분하여 각각 맞는 폴더에 저장하는 것을 구현해보자!
+```
+
+### 2022-07-05 (FoxMon)
+```
+최근 MSS를 앞으로 어떻게 설계하고 이어나갈지에 대한 깊은 고민에 빠졌다. 현재 이 프로젝트가 어디로 향해 나아가고 있는지 종잡을 수 없는 느낌이었다.
+
+현재 드는 생각은 여태까지 개발한 기능이라도 깔끔하게 다듬자는 생각 뿐이다.
+
+TODO부분이 끝나는 듯 싶으면 하나씩 부족한 부분들이 발견된다.
+
+작은 부분 하나하나 채워나가는 것도 벅찬 느낌이다.
+
+그래도 완성될 MSS를 상상하며...! 화이팅~
 ```

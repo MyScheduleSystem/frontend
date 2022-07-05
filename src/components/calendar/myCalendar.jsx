@@ -24,6 +24,7 @@ function MyCalendar() {
         month: DateType.getMonth(DateType.createDate()),
         day: DateType.getDay(),
     })
+
     const { userObj } = useContext(UserContext)
 
     useEffect(() => {
@@ -52,11 +53,11 @@ function MyCalendar() {
 
     const onCloseEventHandler = useCallback((closed) => {
         setIsClickModal(closed)
-    }, [])
+    }, [isClickModal])
 
     const onAddTodoListEventHandler = useCallback((addedItem) => {
         calendarFetcher.createTodoList(userObj.fetchOption.uuid, addedItem, allTodoItems[selectedDate])
-    }, [])
+    }, [allTodoItems])
 
     const onCompletedEventHandler = useCallback((e) => {
         const obj = {}
@@ -72,20 +73,18 @@ function MyCalendar() {
                 obj[dayKey].push(newObj)
             })
         })
-        // 새로고침시 이상한 에러
-        calendarFetcher.updateTodoList(e.uuid, userObj.fetchOption.uuid, e)
-        setAllTodoItems(obj)
+        setAllTodoItems(Lodash.cloneDeep(obj))
     }, [allTodoItems])
 
     const onClickTodayTodoListEventHandler = useCallback((isOpen, date) => {
         setIsClickModal(isOpen)
         setSelectedDate(date)
-    })
+    }, [isClickModal, selectedDate])
 
-    const onClickQuickTodoListEventHandler = useCallback((todo) => {
+    const onClickQuickTodoListEventHandler = (todo) => {
         const today = todo.startDate
         calendarFetcher.createTodoList(userObj.fetchOption.uuid, todo, allTodoItems[today])
-    }, [])
+    }
 
     return (
         <Box sx={mainBoxSizeStyle}>
@@ -120,6 +119,7 @@ function MyCalendar() {
 
 function doFetchTodoItemList(setAllTodoItems) {
     const todoListObj = {}
+    todoListObj[DateType.createDate()] = []
     calendarFetcher.allCalenderTodoList()
         .then((todoList) => {
             todoList.forEach((item) => {
