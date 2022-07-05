@@ -4,7 +4,7 @@ import {
     collection,
     query,
 } from "firebase/firestore"
-import firestore from "../service/firebase"
+import { firestore } from "../service/firebase"
 
 const snsFetcher = {}
 

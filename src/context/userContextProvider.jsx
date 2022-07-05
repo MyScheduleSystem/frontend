@@ -60,7 +60,7 @@ function UserContextProvider({ children }) {
             action: userObj,
         })
         User.saveRefreshStorage(userState.refreshToken)
-        setUserObj(Lodash.cloneDeep(userState))
+        setUserObj(userState)
     }, [userState])
 
     const onSignoutButtonClickHandler = useCallback(() => {
@@ -68,7 +68,11 @@ function UserContextProvider({ children }) {
             .signout()
             .then(() => {
                 setUserObj(null)
-                userDispatch({ type: UserActionType.type.signout })
+                userDispatch({
+                    type: UserActionType.type.signout,
+                    state: UserReducer.clearUserState().state,
+                    action: userObj,
+                })
             })
     }, [])
 
