@@ -12,7 +12,6 @@ import UserActionType from "../reducer/action/userActionType"
 import { UserReducer, UserInitialState } from "../reducer/userReducer"
 import userFetcher from "../fetcher/userFetcher"
 import User from "../type/user"
-import Lodash from "lodash"
 
 export const UserContext = createContext({})
 
