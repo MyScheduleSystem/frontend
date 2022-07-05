@@ -55,9 +55,9 @@ function MyCalendar() {
         setIsClickModal(closed)
     }, [isClickModal])
 
-    const onAddTodoListEventHandler = useCallback((addedItem) => {
+    const onAddTodoListEventHandler = (addedItem) => {
         calendarFetcher.createTodoList(userObj.fetchOption.uuid, addedItem, allTodoItems[selectedDate])
-    }, [allTodoItems])
+    }
 
     const onCompletedEventHandler = useCallback((e) => {
         const obj = {}
