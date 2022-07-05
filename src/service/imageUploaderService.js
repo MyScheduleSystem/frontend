@@ -9,12 +9,15 @@ const imageUploader = {}
 
 imageUploader.type = "imageUploader"
 
-imageUploader.imageUpload = function (uuid, file, folderName) {
+imageUploader.imageUpload = function (uuid, file, folderName ) {
     const imageRef = ref(firestorage, `${uuid}/${folderName}/${file.name}`)
-    console.log(imageRef)
-    uploadBytes(imageRef, file)
-        .then((snapshot) => snapshot)
-        .catch(e => console.error(e))
+    uploadBytes(imageRef, file).then(() => {
+        getDownloadURL(imageRef)
+            .then((url) => console.log(url))
+            .catch(e => console.error(e))
+            
+    })
+    .catch(e => console.error(e))
 }
 
 // TODO: 버그 수정
