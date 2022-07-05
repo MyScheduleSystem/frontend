@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import {
     Box,
     Paper,
@@ -27,16 +28,13 @@ const RightSideBar = () => {
                 <Typography variant="h6" align="center"><MyIcon name="radio" /> MSS</Typography>
                 <MenuList variant="menu">
                     <MenuItem>
-                        <Typography variant="inherit">DashBoard</Typography>
+                        <Link to="/" style={linkStyle}>DashBoard</Link>
                     </MenuItem>
                     <MenuItem>
-                        <Typography variant="inherit">Account</Typography>
+                        <Link to="/chat" style={linkStyle}>Direct Message</Link>
                     </MenuItem>
                     <MenuItem>
-                        <Typography variant="inherit">Direct Message</Typography>
-                    </MenuItem>
-                    <MenuItem>
-                        <Typography variant="inherit">MSS Timeline</Typography>
+                        <Link to="/sns" style={linkStyle}>MSS Timeline</Link>
                     </MenuItem>
                 </MenuList>
                 <Card>
@@ -96,6 +94,11 @@ const menuStyle = {
 const iconStyle = {
     fontSize: "100px",
     textAlign: "center",
+}
+
+const linkStyle = {
+    color: "#000",
+    textDecoration: "none",
 }
 
 export default RightSideBar

@@ -14,7 +14,7 @@ import {
     where,
     getDocs,
 } from "firebase/firestore"
-import firestore from "../service/firebase"
+import { firestore } from "../service/firebase"
 import User from "../type/user"
 
 const userFetcher = {}

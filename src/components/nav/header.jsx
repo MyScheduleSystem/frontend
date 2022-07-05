@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useContext } from "react"
 import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
@@ -11,6 +11,7 @@ import {
 } from "@mui/material"
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
+import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
 import { createFriendsList } from "../../dev/testData"
 import { createNotify, createMessage } from "../../dev/testData"
@@ -92,6 +93,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
     const isOepnMsg = Boolean(msgAnchorEl)
+    const { userObj } = useContext(UserContext)
 
     const onDrawerOpenEventHandler = (open) => () => {
         setIsOpen(open)
@@ -122,9 +124,9 @@ const Header = () => {
         setMsgAnchorEl(e.currentTarget)
     }
 
-    const onClickImageUploaderEventHandler = useCallback((img, folderName) => {
-        imageUploader.imageUpload(img, folderName)
-    }, [])
+    const onClickImageUploaderEventHandler = (img, folderName) => {
+        imageUploader.imageUpload(userObj.fetchOption.uuid, img, folderName)
+    }
 
     return (
         <Box role="presentation">
