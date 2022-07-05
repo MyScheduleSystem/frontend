@@ -51,6 +51,7 @@
 ## CheckList
 ```
 불변성 유지
+    - state 중 배열이 있을 경우 spread 연산 사용할 것(2022.07.05)
 
 불필요한 렌더링 자제
 
@@ -197,7 +198,7 @@ useState(setState의) 동작 이해
     TextField에서 label props에 의한 EventBubbling 문제 (해결)
         - 초기 코드
             <MenuItem>
-                <Te{xtField
+                <TextField
                     inputRef={titleRef}
                     error={validObject.title}
                     label="Enter todo title"
