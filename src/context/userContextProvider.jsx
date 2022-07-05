@@ -76,6 +76,17 @@ function UserContextProvider({ children }) {
             })
     }, [])
 
+    const onProviderSignupEventHandler = useCallback(async (user) => {
+        const obj = {}
+        obj.username = user.username
+        obj.name = user.name
+        obj.email = user.email
+        obj.uid = user.uid
+        const result = await userFetcher.providerSignup(obj)
+        if(result) setIsSignin(true)
+        else setIsUserFailed(true)
+    }, [])
+
     const onClickUserServiceButtonEvent = (isChecked) => {
         setIsSignin(isChecked)
     }
@@ -93,6 +104,7 @@ function UserContextProvider({ children }) {
                     <SignupForm
                         isUserFailed={isUserFailed}
                         onSignupEvent={onSignupEventHandler}
+                        onProviderSignupEvent={onProviderSignupEventHandler}
                         onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
                     /> :
                     <SigninForm
