@@ -6,7 +6,7 @@ import {
     updateDoc,
     deleteDoc,
 } from "firebase/firestore"
-import firestore from "../service/firebase"
+import { firestore } from "../service/firebase"
 import TodoItem from "../type/todoItem"
 
 const calendarFetcher = {}
