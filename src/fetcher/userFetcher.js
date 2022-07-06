@@ -5,6 +5,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     onAuthStateChanged,
+    getRedirectResult,
 } from "firebase/auth"
 import {
     doc,
@@ -61,15 +62,51 @@ userFetcher.signup = async (user) => {
         .catch(error => console.error(error))
 }
 
+userFetcher.providerSignup = async (user) => {
+    return setDoc(doc(firestore, "user", `${user.uid}`), {
+        uuid: `${user.uid}`,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+    })
+    .then(() => {
+        const obj = {}
+        obj.uuid = `${user.uid}`
+        obj.username = user.username
+        obj.name = user.name
+        obj.email = user.email
+        return obj
+    })
+    .catch(error => console.error(error))
+}
+
 userFetcher.signupWithGoogle = async function() {
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider()
     return signInWithPopup(auth, googleProvider)
         .then((result) => {
+            const user = {}
             const credential = GoogleAuthProvider.credentialFromResult(result)
-            return credential ? true : false
+            user.email = result.user.email
+            user.uid = result.user.uid
+            return user
         })
         .catch(e => console.log(e))
+}
+
+userFetcher.googleResult = async function() {   //토큰 값이랑 유저정보 데이터 확인해야됨.
+    const auth = getAuth()
+    getRedirectResult(auth)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result)
+            const token = credential.accessToken
+            const user = result.user
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            console.log(errorCode, errorMessage)
+        })
 }
 
 userFetcher.signupWithGithub = function() {
