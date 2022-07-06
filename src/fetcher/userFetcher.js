@@ -101,7 +101,6 @@ userFetcher.googleResult = async function() {   //토큰 값이랑 유저정보 
             const credential = GoogleAuthProvider.credentialFromResult(result)
             const token = credential.accessToken
             const user = result.user
-            console.log(result)
         })
         .catch((error) => {
             const errorCode = error.code
