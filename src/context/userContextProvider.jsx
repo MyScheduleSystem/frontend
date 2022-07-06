@@ -22,6 +22,7 @@ function UserContextProvider({ children }) {
     const [isSignin, setIsSignin] = useState(true)
     const [isUserFailed, setIsUserFailed] = useState(false)
     const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
+    const [isEamilCheckPopup, setIsEmailCheckPopup] = useState(false)
 
     useEffect(() => {
         userFetcher.getUserInformation(setUserObj)
@@ -34,7 +35,10 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.password = user.password
         const result = await userFetcher.signup(obj)
-        if(result) setIsSignin(true)
+        if(result) {
+            setIsSignin(true)
+            setIsEmailCheckPopup(true)
+        }
         else setIsUserFailed(true)
     }, [])
 
@@ -102,6 +106,7 @@ function UserContextProvider({ children }) {
                 isSignin === false ?
                     <SignupForm
                         isUserFailed={isUserFailed}
+                        isEmailCheck={isEamilCheckPopup}
                         onSignupEvent={onSignupEventHandler}
                         onProviderSignupEvent={onProviderSignupEventHandler}
                         onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}

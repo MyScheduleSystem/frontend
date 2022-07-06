@@ -6,6 +6,7 @@ import {
     signInWithPopup,
     onAuthStateChanged,
     getRedirectResult,
+    sendSignInLinkToEmail,
 } from "firebase/auth"
 import {
     doc,
@@ -19,6 +20,11 @@ import { firestore } from "../service/firebase"
 import User from "../type/user"
 
 const userFetcher = {}
+
+const actionCodeSettings = {
+    url: "http://localhost:3000",
+    handleCodeInApp: true
+}
 
 userFetcher.signin = async function(user) {
     const auth = getAuth()
@@ -42,6 +48,7 @@ userFetcher.signup = async (user) => {
     const auth = getAuth()
     return createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
+            sendSignInLinkToEmail(auth, user.email, actionCodeSettings)
             const userObj = userCredential.user
             return userObj
         })
