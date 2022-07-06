@@ -11,7 +11,7 @@ import TodoItem from "../../type/todoItem"
 
 const MyCalendarCompleteList = ({ item, onCompletedEvent }) => {
     const onCompletedEventHandler = (e) => () => {
-        const newObj = new TodoItem(e.title, e.content, e.startDate, e.endDate, !e.isCompleted)
+        const newObj = new TodoItem(e.uuid, e.title, e.content, e.startDate, e.endDate, !e.isCompleted)
         onCompletedEvent(newObj)
     }
 

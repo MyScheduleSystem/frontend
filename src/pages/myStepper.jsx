@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
     Box,
     Stepper,
@@ -10,10 +10,9 @@ import {
 
 // props: steps => Array
 function MyStepper({
-    steps, isNextButtonDisable, onStepButtonClickEvent,
-    onResetButtonClickEvent, onNextButtonClickEvent, onBackButtonClickEvent
+    steps, activeStep, isNextButtonDisable, onStepButtonClickEvent,
+    onResetButtonClickEvent, onNextButtonClickEvent, onBackButtonClickEvent,
 }) {
-    const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState({})
 
     const isLastActiveStep = isLastStep.bind(this, activeStep, steps)
@@ -21,28 +20,22 @@ function MyStepper({
     const isAllStepsCompleted = allStepsCompleted.bind(this, completed, steps)
 
     const onStepButtonClickEventHandler = (step) => () => {
-        setActiveStep(step)
         onStepButtonClickEvent(step)
     }
 
     const onResetButtonClickEventHandler = () => {
-        setActiveStep(0)
         setCompleted({})
         onResetButtonClickEvent(0)
     }
 
     const onBackButtonClickEventHandler = () => {
-        setActiveStep((prev) => {
-            onBackButtonClickEvent(prev - 1)
-            return prev - 1
-        })
+        onBackButtonClickEvent(activeStep - 1)
     }
 
     const onNextButtonClickEventHandler = () => {
         const newActiveStep = isLastActiveStep() && !isAllStepsCompleted() ?
             steps.findIndex((step, i) => !(i in completed)) :
             activeStep + 1
-        setActiveStep(newActiveStep)
         onNextButtonClickEvent(newActiveStep)
     }
 
