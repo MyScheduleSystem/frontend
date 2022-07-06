@@ -228,6 +228,13 @@ useState(setState의) 동작 이해
                     onKeyDown={onKeyDownEventHandler}
                 />
             </MenuItem>
+            
+    sendSignInLinkToEmail auth관련 오류(해결)
+        - auth/operation-not-allowed
+            코드에 문제가 있는 것으로 예상했으나, 파이어베이스 인증섹션에서 권한허용을 하는 부분이 있었다.
+        - auth/invalid-continue-uri
+            actionCodeSettings 인터페이스에서 URL부분의 값에 대한 오류였다. 파이어베이스에서 제공하는 도메인을 기본적으로 사용하였으나,
+            email -> validation -> redirect에 관한 내용이라 브라우저에서 프로젝트가 동작하는 URL로 직접 초기화하여 사용해야한다.
 ```
 
 ## 개발 회고록
