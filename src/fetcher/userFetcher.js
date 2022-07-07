@@ -138,5 +138,12 @@ userFetcher.getUserInformation = function(setUserObj) {
     })
 }
 
+userFetcher.getMyInformationByUuid = function(uuid) {
+    if(uuid) {
+        const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
+        return getDocs(q)
+    }
+}
+
 Object.freeze(userFetcher)
 export default userFetcher

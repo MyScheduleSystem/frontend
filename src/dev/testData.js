@@ -85,7 +85,7 @@ export function createFriendsList() {
     // const createdAt = "2022-05-20"
     const arr = []
     for(let i = 0; i < 10; i++) {
-        arr.push(new Friend(i + 1, `${name}${i + 1}`))
+        arr.push(new Friend(i + 1, `${name}${i + 1}`, "2022-05-20", "", `MSS!${i + 1}`))
     }
     const fArr = FriendList.createFriendList(arr)
     return fArr
