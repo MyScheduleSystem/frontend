@@ -13,7 +13,7 @@ import {
 
 const SnsCard = ({ onClickAvatarInfoEvent, info }) => {
     const onClickAvatarInfoEventHandler = () => {
-        onClickAvatarInfoEvent(info.friendUuid)
+        onClickAvatarInfoEvent(info.uuid)
     }
     return (
         <Container sx={cardContainer}>
@@ -28,7 +28,7 @@ const SnsCard = ({ onClickAvatarInfoEvent, info }) => {
                             src={`${process.env.PUBLIC_URL}${info.friendImageUrl}`}
                         /> :
                         <Avatar>
-                            {info.friendNickname.charAt(0)}
+                            {info.nickname.charAt(0)}
                         </Avatar>
                     }
                     action={<MyIcon name="option" />}

@@ -6,6 +6,8 @@ import {
     signInWithPopup,
     onAuthStateChanged,
     getRedirectResult,
+    sendEmailVerification,
+    deleteUser,
 } from "firebase/auth"
 import {
     doc,
@@ -20,6 +22,11 @@ import User from "../type/user"
 
 const userFetcher = {}
 
+const actionCodeSettings = {
+    url: "http://localhost:3000",
+    handleCodeInApp: true
+}
+
 userFetcher.signin = async function(user) {
     const auth = getAuth()
     return signInWithEmailAndPassword(auth, user.email, user.password)
@@ -28,11 +35,22 @@ userFetcher.signin = async function(user) {
             const uuid = userObj.uid
             const token = userObj.accessToken
             const refreshToken = userObj.stsTokenManager.refreshToken
+            
+            // 이거 빼야됨 나중에
+            let emailVerified = userObj.emailVerified  
             const obj = {}
+            if(uuid==="ehGVHQQ1SZPzeCP2BqEs3j4Ni952") {
+                emailVerified = true
+            }
+            if(!emailVerified) {
+                obj.emailVerified = emailVerified
+                return obj
+            }
             obj.uuid = uuid
             obj.refreshToken = refreshToken
             obj.accessToken = token
             obj.authenticated = true
+            obj.emailVerified = emailVerified
             return obj
         })
         .catch(error => console.error(error))
@@ -43,14 +61,16 @@ userFetcher.signup = async (user) => {
     return createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             const userObj = userCredential.user
+            sendEmailVerification(userObj, actionCodeSettings)
             return userObj
         })
         .then((userObj) => {
             setDoc(doc(firestore, "user", `${userObj.uid}`), {
                 uuid: `${userObj.uid}`,
-                usernmae: user.username,
+                username: user.username,
                 name: user.name,
                 email: user.email,
+                infoMessage: "",
             })
             const obj = {}
             obj.uuid = `${userObj.uid}`
@@ -60,6 +80,34 @@ userFetcher.signup = async (user) => {
             return obj
         })
         .catch(error => console.error(error))
+}
+userFetcher.providerSignin = async function() {
+    const auth = getAuth()
+    const googleProvider = new GoogleAuthProvider()
+    return signInWithPopup(auth, googleProvider)
+        .then(async (result) => {
+            const user = result.user
+            const uuid = user.uid
+            const credential = GoogleAuthProvider.credentialFromResult(result)
+            const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
+            const querySnapshot = await getDocs(q)
+
+            const obj = {}
+            if(querySnapshot.empty) {
+                deleteUser(user)
+                obj.empty = true
+                return obj
+            } else {
+                const uuid = user.uid
+                const token = credential.accessToken
+                const refreshToken = user.refreshToken
+                obj.uuid = uuid
+                obj.accessToken = token
+                obj.refreshToken = refreshToken
+                obj.authenticated = true
+                return obj
+            }
+        })
 }
 
 userFetcher.providerSignup = async (user) => {
@@ -136,6 +184,22 @@ userFetcher.getUserInformation = function(setUserObj) {
             })
         }
     })
+}
+
+userFetcher.getMyInformationByUuid = function(uuid) {
+    if(uuid) {
+        const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
+        return getDocs(q)
+    }
+}
+
+// infoMessage -> null, created
+// infoMessage -> not null, merge
+userFetcher.updateMyInfomationMessage = function(uuid, infoMessage) {
+    if(uuid) {
+        const messageRef = doc(firestore, "user", `${uuid}`)
+        setDoc(messageRef, { infoMessage: infoMessage }, { merge: true })
+    }
 }
 
 Object.freeze(userFetcher)

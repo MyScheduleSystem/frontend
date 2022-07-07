@@ -27,9 +27,10 @@ const steps = [
     "Enter your information",
 ]
 
-const SignupForm = ({ isUserFailed, onSignupEvent, 
+const SignupForm = ({ isUserFailed, isEmailCheck ,onSignupEvent, 
     onClickUserServiceButtonEvent, onProviderSignupEvent }) => {
     const [isOpenPopup, setIsOpenPopup] = useState(false)
+    const [isEamilCheckPopup, setIsEmailCheckPopup] = useState(false)
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         username: false,
         name: false,
@@ -116,6 +117,7 @@ const SignupForm = ({ isUserFailed, onSignupEvent,
             setIsOpenPopup(true)
             return
         }
+        setIsEmailCheckPopup(isEmailCheck)
         onSignupEvent(user)
         setIsOpenPopup(isUserFailed)
     }
@@ -407,6 +409,11 @@ const SignupForm = ({ isUserFailed, onSignupEvent,
                 isShowPopup={isOpenPopup}
                 setIsShowPopupEvent={onSetIsShowPopupEventHandler}
                 message="Check your account information!!"
+            />
+            <AlertPopup
+                isShowPopup={isEamilCheckPopup}
+                setIsShowPopupEvent={onSetIsShowPopupEventHandler}
+                message="Send to your email"
             />
         </Container>
     )

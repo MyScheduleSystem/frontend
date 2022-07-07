@@ -12,12 +12,12 @@ function MyFriendList({ friends, onClickFriendButtonClickEvent }) {
     return (
         friends.map((f, index) => {
             return (
-                <Box key={f.friendUuid}>
+                <Box key={f.uuid}>
                     <ListItemButton
                         divider={true}
                         onClick={onClickFriendButtonClickEventHandler(true, index)}
                     >
-                        <Typography>{f.friendNickname}</Typography>
+                        <Typography>{f.nickname}</Typography>
                     </ListItemButton>
                 </Box>
             )

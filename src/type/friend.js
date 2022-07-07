@@ -1,20 +1,21 @@
 import SymbolName from "../util/symbolName"
 
 class Friend extends SymbolName {
-    constructor(friendUuid, friendNickname, createdAt, friendImageUrl) {
+    constructor(uuid, nickname, createdAt, friendImageUrl, infoMessage) {
         super("friend")
-        this.friendUuid = friendUuid
-        this.friendNickname = friendNickname
+        this.uuid = uuid
+        this.nickname = nickname
         this.createAt = createdAt
         this.friendImageUrl = friendImageUrl
+        this.infoMessage = infoMessage
     }
 
     getFriendUuid() {
-        return this.friendUuid
+        return this.uuid
     }
 
     getFriendNickname() {
-        return this.friendNickname
+        return this.nickname
     }
 
     getCreatedAt() {
@@ -23,6 +24,10 @@ class Friend extends SymbolName {
 
     getFriendImageUrl() {
         return this.friendImageUrl
+    }
+
+    getInfoMessage() {
+        return this.infoMessage
     }
 }
 

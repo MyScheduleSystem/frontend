@@ -21,7 +21,7 @@ const SnsMainPage = () => {
         <Container sx={snsContainerStyle}>
             <Box sx={boxStyle}>
                 {testSnsInfo.map((friend) => {
-                    return <SnsCard key={friend.friendUuid} info={friend} onClickAvatarInfoEvent={onClickAvatarInfoEventHandler} />
+                    return <SnsCard key={friend.uuid} info={friend} onClickAvatarInfoEvent={onClickAvatarInfoEventHandler} />
                 })}
             </Box>
             <SnsBottomNav />
