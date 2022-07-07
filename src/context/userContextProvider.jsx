@@ -22,6 +22,8 @@ function UserContextProvider({ children }) {
     const [isSignin, setIsSignin] = useState(true)
     const [isUserFailed, setIsUserFailed] = useState(false)
     const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
+    const [isEamilCheckPopup, setIsEmailCheckPopup] = useState(false)
+    const [isEmptyUser, setIsEmptyUser] = useState(false)
 
     useEffect(() => {
         userFetcher.getUserInformation(setUserObj)
@@ -34,7 +36,10 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.password = user.password
         const result = await userFetcher.signup(obj)
-        if(result) setIsSignin(true)
+        if(result) {
+            setIsSignin(true)
+            setIsEmailCheckPopup(true)
+        }
         else setIsUserFailed(true)
     }, [])
 
@@ -43,8 +48,33 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.password = user.password
         const response = await userFetcher.signin(obj)
+        if(!response.emailVerified) {
+            setIsUserFailed(true)
+            return
+        }
         if(!response.authenticated) {
             setIsUserFailed(true)
+            return
+        }
+        const userObj = {}
+        userObj.fetchOption = {}
+        userObj.refreshToken = response.refreshToken
+        userObj.accessToken = response.accessToken
+        userObj.authenticated = response.authenticated
+        userObj.fetchOption.uuid = response.uuid
+        userDispatch({
+            type: UserActionType.type.signin,
+            state: userState,
+            action: userObj,
+        })
+        User.saveRefreshStorage(userState.refreshToken)
+        setUserObj(userState)
+    }, [userState])
+
+    const onProviderSigninEventHandler = useCallback(async () => {
+        const response = await userFetcher.providerSignin()
+        if(response.empty) {
+            setIsEmptyUser(true)
             return
         }
         const userObj = {}
@@ -102,13 +132,17 @@ function UserContextProvider({ children }) {
                 isSignin === false ?
                     <SignupForm
                         isUserFailed={isUserFailed}
+                        isEmailCheck={isEamilCheckPopup}
                         onSignupEvent={onSignupEventHandler}
                         onProviderSignupEvent={onProviderSignupEventHandler}
                         onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
                     /> :
                     <SigninForm
                         isUserFailed={isUserFailed}
+                        isEmptyUser={isEmptyUser}
+                        onLinkSigninEvent={onClickUserServiceButtonEvent}
                         onSigninEvent={onSigninEventHandler}
+                        onProviderSigninEvent={onProviderSigninEventHandler}
                         onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
                     />
             }

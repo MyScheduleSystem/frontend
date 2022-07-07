@@ -1,5 +1,6 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useCallback } from "react"
 import AlertPopup from "../components/popup/alertPopup"
+import CheckPopup from "../components/popup/checkPopup"
 import MyIcon from "../icon/myIcon"
 import {
     Container,
@@ -14,12 +15,14 @@ import {
     CardMedia,
 } from "@mui/material"
 
-const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent }) => {
+const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
+    onSigninEvent, onProviderSigninEvent, onClickUserServiceButtonEvent }) => {
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         email: false,
         password: false,
     })
     const [isShowPopup, setIsShowPopup] = useState(false)
+    const [isCheckPopup, setIsCheckPopup] = useState(false)
     const textRef = useRef()
     const passwordRef = useRef()
 
@@ -59,6 +62,14 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
         })
         onSigninEvent(userInfo)
         setIsShowPopup(isUserFailed)
+    }
+    const onLinkToEventHandler = useCallback((isChecked) => {
+        if(isChecked) onLinkSigninEvent(isChecked)
+    }, [])
+
+    const onProviderButtonClickEventHandler = () => {
+        onProviderSigninEvent()
+        setIsCheckPopup(setIsEmptyUser)
     }
 
     const onPopupCloseHanlder = (value) => {
@@ -120,18 +131,33 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
                         >
                             login
                         </Button>
+                        <Button
+                            onClick={onProviderButtonClickEventHandler} 
+                            startIcon={
+                                <CardMedia
+                                    component="img"
+                                    image={"/images/google.png"}
+                                />
+                            }>
+                        </Button>
                         <Button>Forgot Password</Button>
                     </FormGroup>
                 </Box>
+                
                 <Box sx={signupBoxStyle}>
                     <Typography>NO ACCOUNT?</Typography>
                     <Button onClick={onRegisterButtonClickHandler(false)}>register</Button>
                     <AlertPopup
                         isShowPopup={isShowPopup}
                         setIsShowPopupEvent={onPopupCloseHanlder}
-                        message="Check your input information"
+                        message="Check your input information OR validation email"
                     />
                 </Box>
+                <CheckPopup
+                    message="You are not a registered member, please sign up first"
+                    isShowPopup={isCheckPopup}
+                    onCheckPopupEvent={onLinkToEventHandler}>
+                </CheckPopup>
             </Box>
         </Container>
     )
@@ -140,7 +166,7 @@ const SigninForm = ({ isUserFailed, onSigninEvent, onClickUserServiceButtonEvent
 const signinContainer = {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: "5rem",
+    marginTop: "2rem",
     width: "48%",
     height: "100%",
 }
@@ -153,7 +179,7 @@ const signinBoxStyle = {
 
 const signinFormStyle = {
     border: 1,
-    height: "80%",
+    height: "87%",
 }
 
 const signupBoxStyle = {
@@ -161,7 +187,7 @@ const signupBoxStyle = {
     alignItems: "center",
     justifyContent: "center",
     border: 1,
-    height: "15%",
+    height: "8%",
 }
 
 const imgBoxStyle = {
@@ -180,7 +206,7 @@ const formStyle = {
 
 const formControltyle = {
     marginTop: "1rem",
-    marginBottom: "10px",
+    marginBottom: "15px",
 }
 
 export default SigninForm
