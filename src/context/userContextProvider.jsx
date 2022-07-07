@@ -23,6 +23,7 @@ function UserContextProvider({ children }) {
     const [isUserFailed, setIsUserFailed] = useState(false)
     const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
     const [isEamilCheckPopup, setIsEmailCheckPopup] = useState(false)
+    const [isEmptyUser, setIsEmptyUser] = useState(false)
 
     useEffect(() => {
         userFetcher.getUserInformation(setUserObj)
@@ -47,8 +48,33 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.password = user.password
         const response = await userFetcher.signin(obj)
+        if(!response.emailVerified) {
+            setIsUserFailed(true)
+            return
+        }
         if(!response.authenticated) {
             setIsUserFailed(true)
+            return
+        }
+        const userObj = {}
+        userObj.fetchOption = {}
+        userObj.refreshToken = response.refreshToken
+        userObj.accessToken = response.accessToken
+        userObj.authenticated = response.authenticated
+        userObj.fetchOption.uuid = response.uuid
+        userDispatch({
+            type: UserActionType.type.signin,
+            state: userState,
+            action: userObj,
+        })
+        User.saveRefreshStorage(userState.refreshToken)
+        setUserObj(userState)
+    }, [userState])
+
+    const onProviderSigninEventHandler = useCallback(async () => {
+        const response = await userFetcher.providerSignin()
+        if(response.empty) {
+            setIsEmptyUser(true)
             return
         }
         const userObj = {}
@@ -113,7 +139,10 @@ function UserContextProvider({ children }) {
                     /> :
                     <SigninForm
                         isUserFailed={isUserFailed}
+                        isEmptyUser={isEmptyUser}
+                        onLinkSigninEvent={onClickUserServiceButtonEvent}
                         onSigninEvent={onSigninEventHandler}
+                        onProviderSigninEvent={onProviderSigninEventHandler}
                         onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
                     />
             }
