@@ -15,8 +15,9 @@ import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
 import { createFriendsList } from "../../dev/testData"
 import { createNotify, createMessage } from "../../dev/testData"
+import userFetcher from "../../fetcher/userFetcher"
 
-const testMyInfo = createFriendsList().$_friendListArray[0]
+const testMyInfo = createFriendsList().$_friendListArray
 const testNotifyInfo = doFetchUserNotification()
 const testMsg = doFetchMessage()
 
@@ -88,12 +89,22 @@ const AppBar = styled(MuiAppBar, {
 
 const Header = () => {
     const [isClickInfo, setIsClickInfo] = useState(false)
+    const [isMe, setIsme] = useState(false)
+    const [myInfo, setMyInfo] = useState({
+        user: {
+            nickname: "",
+            infoMessage: "",
+            fArray: testMyInfo,
+        }
+    })
+    const [friendIndex, setFriendIndex] = useState(0)
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
     const isOepnMsg = Boolean(msgAnchorEl)
-    const { userObj } = useContext(UserContext)
+
+    const { userObj, onSignoutButtonClickHandler } = useContext(UserContext)
 
     const onDrawerOpenEventHandler = (open) => () => {
         setIsOpen(open)
@@ -108,6 +119,23 @@ const Header = () => {
     }
 
     const onClickUserIconButtonEventHandler = () => {
+        setIsme(true)
+        userFetcher
+            .getMyInformationByUuid(userObj.fetchOption.uuid)
+            .then((result) => {
+                result.docs.forEach(e => {
+                    setMyInfo((prev) => {
+                        return {
+                            ...prev,
+                            user: {
+                                nickname: e.data().name,
+                                infoMessage: e.data().infoMessage,
+                                fArray: testMyInfo,
+                            }
+                        }
+                    })
+                })
+            })
         setIsClickInfo(true)
     }
 
@@ -127,6 +155,16 @@ const Header = () => {
     const onClickImageUploaderEventHandler = (img, folderName) => {
         imageUploader.imageUpload(userObj.fetchOption.uuid, img, folderName)
     }
+    
+    const onClickFriendButtonClickEventHandler = useCallback((isChecked, index, isMe) => {
+        setIsClickInfo(isChecked)
+        setFriendIndex(index)
+        setIsme(isMe)
+    }, [])
+
+    const onSignoutBtnClickEvnetHandler = useCallback(() => {
+        onSignoutButtonClickHandler()
+    }, [])
 
     return (
         <Box role="presentation">
@@ -182,13 +220,18 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <SideBar isOpen={isOpen} />
+                    <SideBar 
+                        isOpen={isOpen} 
+                        userFriend={myInfo.user.fArray}
+                        onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+                        onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                    />
                 </Drawer>
             </Box>
             <MyInfoPopup
                 isClickInfo={isClickInfo}
                 onCloseEvent={onCloseEventHandler}
-                user={testMyInfo}
+                user={isMe ? myInfo.user: myInfo.user.fArray[friendIndex]}
                 onClickImageUploaderEvent={onClickImageUploaderEventHandler}
             />
             <Menu
