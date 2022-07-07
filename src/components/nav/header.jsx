@@ -166,6 +166,18 @@ const Header = () => {
         onSignoutButtonClickHandler()
     }, [])
 
+    const onSaveProfileMessageEventHandler = (infoMsg) => {
+        userFetcher.updateMyInfomationMessage(userObj.fetchOption.uuid, infoMsg)
+        setMyInfo((prev) => {
+            return {
+                ...prev,
+                user: {
+                    infoMessage: infoMsg,
+                }
+            }
+        })
+    }
+
     return (
         <Box role="presentation">
             <Box sx={headerBoxStyle}>
@@ -229,10 +241,11 @@ const Header = () => {
                 </Drawer>
             </Box>
             <MyInfoPopup
+                user={isMe ? myInfo.user: myInfo.user.fArray[friendIndex]}
                 isClickInfo={isClickInfo}
                 onCloseEvent={onCloseEventHandler}
-                user={isMe ? myInfo.user: myInfo.user.fArray[friendIndex]}
                 onClickImageUploaderEvent={onClickImageUploaderEventHandler}
+                onSaveProfileMessageEvent={onSaveProfileMessageEventHandler}
             />
             <Menu
                 anchorEl={notiAnchorEl}
