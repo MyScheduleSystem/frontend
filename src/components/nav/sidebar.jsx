@@ -1,14 +1,9 @@
-import {
-    useState,
-    useContext,
-    useCallback,
-} from "react"
+import { useCallback } from "react"
 import MyFriendList from "./list/myFriendList"
 import MyChatRoomList from "./list/myChatRoomList"
 import MyIcon from "../../icon/myIcon"
-import MyInfoPopup from "../popup/myInfoPopup"
 import { Link } from "react-router-dom"
-import { createFriendsList, createChatRoomList } from "../../dev/testData"
+import { createChatRoomList } from "../../dev/testData"
 import {
     Accordion,
     AccordionDetails,
@@ -17,28 +12,17 @@ import {
     ListItemButton,
     Typography,
 } from "@mui/material"
-import { UserContext } from "../../context/userContextProvider"
 import Lodash from "lodash"
 
-function SideBar({ isOpen }) {
-    const [isOpenUserPopup, setIsOpenUserPopup] = useState(false)
-    const [friendIndex, setIsFriendIndex] = useState(0)
-    const { onSignoutButtonClickHandler } = useContext(UserContext)
+const chatRooms = doChatRoomFetchResult.call(this)
 
-    const friends = doFriendsFetchResult.call(this)
-    const chatRooms = doChatRoomFetchResult.call(this)
-
+function SideBar({ isOpen, userFriend, onClickFriendButtonClickEvent, onSignoutBtnClickEvnet }) {
     const onClickFriendButtonClickEventHandler = useCallback((isChecked, index) => {
-        setIsOpenUserPopup(isChecked)
-        setIsFriendIndex(index)
+        onClickFriendButtonClickEvent(isChecked, index, false)
     }, [])
 
-    const onCloseEventHandler = useCallback((checked) => {
-        setIsOpenUserPopup(checked)
-    }, [])
-
-    const onSignoutBtnClickHandler = () => {
-        onSignoutButtonClickHandler()
+    const onSignoutBtnClickEvnetHandler = () => {
+        onSignoutBtnClickEvnet()
     }
 
     const items = [
@@ -46,7 +30,7 @@ function SideBar({ isOpen }) {
             name: "Friends",
             icon: <MyIcon name="friends" />,
             list: <MyFriendList
-                friends={friends.allFriends}
+                friends={userFriend}
                 onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
             />
         },
@@ -66,7 +50,7 @@ function SideBar({ isOpen }) {
             name: "Logout",
             path: "/",
             icon: <MyIcon name="signout" />,
-            list: <ListItemButton divider={true} onClick={onSignoutBtnClickHandler}><Typography>Logout</Typography></ListItemButton>,
+            list: <ListItemButton divider={true} onClick={onSignoutBtnClickEvnetHandler}><Typography>Logout</Typography></ListItemButton>,
         },
     ]
 
@@ -92,25 +76,8 @@ function SideBar({ isOpen }) {
                     </Accordion>
                 )
             })}
-            <MyInfoPopup
-                isClickInfo={isOpenUserPopup}
-                onCloseEvent={onCloseEventHandler}
-                user={friends.allFriends[friendIndex]}
-            />
         </Box>
     )
-}
-
-// 하나의 Fetch에서 관리하는건 어떨까?
-function doFriendsFetchResult() {
-    const friendList = createFriendsList()
-    const fetchResult = {}
-    fetchResult.allFriends = friendList.friendListArray()
-    fetchResult.target = {}
-    Lodash.forEach(friendList.friendListObject(), (v, k) => {
-        fetchResult.target[k] = v
-    })
-    return fetchResult
 }
 
 function doChatRoomFetchResult() {
