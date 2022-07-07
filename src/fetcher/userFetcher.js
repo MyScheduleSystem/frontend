@@ -71,6 +71,7 @@ userFetcher.signup = async (user) => {
                 username: user.username,
                 name: user.name,
                 email: user.email,
+                infoMessage: "",
             })
             const obj = {}
             obj.uuid = `${userObj.uid}`
@@ -185,6 +186,22 @@ userFetcher.getUserInformation = function(setUserObj) {
             })
         }
     })
+}
+
+userFetcher.getMyInformationByUuid = function(uuid) {
+    if(uuid) {
+        const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
+        return getDocs(q)
+    }
+}
+
+// infoMessage -> null, created
+// infoMessage -> not null, merge
+userFetcher.updateMyInfomationMessage = function(uuid, infoMessage) {
+    if(uuid) {
+        const messageRef = doc(firestore, "user", `${uuid}`)
+        setDoc(messageRef, { infoMessage: infoMessage }, { merge: true })
+    }
 }
 
 Object.freeze(userFetcher)
