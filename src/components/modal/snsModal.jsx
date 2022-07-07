@@ -39,7 +39,7 @@ const SnsModal = ({ isOpenModal, onCloseSnsModalEvent, user, image }) => {
                                         <Avatar src={`${process.env.PUBLIC_URL}${item.friendImageUrl}`} />
                                     </ListItemAvatar>
                                     <ListItemText 
-                                        primary={item.friendNickname}
+                                        primary={item.nickname}
                                         secondary={
                                             <Typography>
                                                 이건 코멘트 입니다
