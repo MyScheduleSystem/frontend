@@ -93,7 +93,6 @@ userFetcher.providerSignin = async function() {
             const querySnapshot = await getDocs(q)
 
             const obj = {}
-            console.log(querySnapshot.empty)
             if(querySnapshot.empty) {
                 deleteUser(user)
                 obj.empty = true
