@@ -13,6 +13,7 @@ import { UserReducer, UserInitialState } from "../reducer/userReducer"
 import userFetcher from "../fetcher/userFetcher"
 import User from "../type/user"
 import AlertPopup from "../components/popup/alertPopup"
+import CheckPopup from "../components/popup/checkPopup"
 
 export const UserContext = createContext({})
 
@@ -126,9 +127,15 @@ function UserContextProvider({ children }) {
         setIsSignin(isChecked)
     }
 
-    const onCloseAlertPopupEventHandler = () => {
+    const onCloseAlertPopupEventHandler = useCallback(() => {
         setIsUserFailed(false)
-    }
+    }, [])
+
+    const onCloseCheckPopupEventHandler = useCallback((isChecked) => {
+        if (isChecked) setIsSignin(false)
+        else setIsSignin(true)
+        setIsEmptyUser(false)
+    }, [])
 
     const userContextObj = useMemo(
         () => ({
@@ -154,9 +161,6 @@ function UserContextProvider({ children }) {
                 />
             ) : (
                 <SigninForm
-                    isEmptyUser={isEmptyUser}
-                    isEmailCheck={isEamilCheckPopup}
-                    onLinkSigninEvent={onClickUserServiceButtonEventHandler}
                     onSigninEvent={onSigninEventHandler}
                     onProviderSigninEvent={onProviderSigninEventHandler}
                     onClickUserServiceButtonEvent={
@@ -168,6 +172,11 @@ function UserContextProvider({ children }) {
                 message="Check your input information or validation email"
                 isShowPopup={isUserFailed}
                 setIsShowPopupEvent={onCloseAlertPopupEventHandler}
+            />
+            <CheckPopup
+                message="You are not registered member. Please register now."
+                isShowPopup={isEmptyUser}
+                onCheckPopupEvent={onCloseCheckPopupEventHandler}
             />
         </UserContext.Provider>
     )
