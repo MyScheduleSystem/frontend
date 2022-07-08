@@ -15,8 +15,13 @@ import {
     CardMedia,
 } from "@mui/material"
 
-const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
-    onSigninEvent, onProviderSigninEvent, onClickUserServiceButtonEvent }) => {
+const SigninForm = ({
+    isEmptyUser,
+    onLinkSigninEvent,
+    onSigninEvent,
+    onProviderSigninEvent,
+    onClickUserServiceButtonEvent,
+}) => {
     const [isValidUserInfo, setIsValidUserInfo] = useState({
         email: false,
         password: false,
@@ -31,22 +36,23 @@ const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
         userInfo.email = textRef.current.value
         userInfo.password = passwordRef.current.value
         // email 정규식 google 참고
-        const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+        const emailRegex =
+            /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
         const email = userInfo.email.trim()
-        if(!emailRegex.test(email)) {
+        if (!emailRegex.test(email)) {
             setIsValidUserInfo((prev) => {
                 return { ...prev, email: true }
             })
             setIsShowPopup(true)
             return
         }
-        if(!userInfo.email || !userInfo.password) {
-            if(!userInfo.email) {
+        if (!userInfo.email || !userInfo.password) {
+            if (!userInfo.email) {
                 setIsValidUserInfo((prev) => {
                     return { ...prev, email: true }
                 })
             }
-            if(!userInfo.password) {
+            if (!userInfo.password) {
                 setIsValidUserInfo((prev) => {
                     return { ...prev, password: true }
                 })
@@ -61,18 +67,18 @@ const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
             return { ...prev, password: false }
         })
         onSigninEvent(userInfo)
-        setIsShowPopup(isUserFailed)
     }
+
     const onLinkToEventHandler = useCallback((isChecked) => {
-        if(isChecked) onLinkSigninEvent(isChecked)
+        if (isChecked) onLinkSigninEvent(isChecked)
     }, [])
 
     const onProviderButtonClickEventHandler = () => {
         onProviderSigninEvent()
-        setIsCheckPopup(setIsEmptyUser)
+        setIsCheckPopup(isEmptyUser)
     }
 
-    const onPopupCloseHanlder = (value) => {
+    const onPopupCloseEventHanlder = (value) => {
         setIsShowPopup(value)
     }
 
@@ -111,9 +117,7 @@ const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
                             />
                         </FormControl>
                         <FormControl variants="standard" sx={formControltyle}>
-                            <InputLabel>
-                                Enter your password
-                            </InputLabel>
+                            <InputLabel>Enter your password</InputLabel>
                             <Input
                                 type="password"
                                 error={isValidUserInfo.password}
@@ -132,32 +136,34 @@ const SigninForm = ({ isUserFailed, setIsEmptyUser, onLinkSigninEvent,
                             login
                         </Button>
                         <Button
-                            onClick={onProviderButtonClickEventHandler} 
+                            onClick={onProviderButtonClickEventHandler}
                             startIcon={
                                 <CardMedia
                                     component="img"
                                     image={"/images/google.png"}
                                 />
-                            }>
-                        </Button>
+                            }
+                        ></Button>
                         <Button>Forgot Password</Button>
                     </FormGroup>
                 </Box>
-                
+
                 <Box sx={signupBoxStyle}>
                     <Typography>NO ACCOUNT?</Typography>
-                    <Button onClick={onRegisterButtonClickHandler(false)}>register</Button>
+                    <Button onClick={onRegisterButtonClickHandler(false)}>
+                        register
+                    </Button>
                     <AlertPopup
                         isShowPopup={isShowPopup}
-                        setIsShowPopupEvent={onPopupCloseHanlder}
-                        message="Check your input information OR validation email"
+                        setIsShowPopupEvent={onPopupCloseEventHanlder}
+                        message="Check your input information"
                     />
                 </Box>
                 <CheckPopup
                     message="You are not a registered member, please sign up first"
                     isShowPopup={isCheckPopup}
-                    onCheckPopupEvent={onLinkToEventHandler}>
-                </CheckPopup>
+                    onCheckPopupEvent={onLinkToEventHandler}
+                ></CheckPopup>
             </Box>
         </Container>
     )

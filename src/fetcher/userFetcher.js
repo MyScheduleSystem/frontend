@@ -23,11 +23,11 @@ import User from "../type/user"
 const userFetcher = {}
 
 const actionCodeSettings = {
-    url: "http://localhost:3000",
-    handleCodeInApp: true
+    url: `${process.env.REACT_APP_MSS}`,
+    handleCodeInApp: true,
 }
 
-userFetcher.signin = async function(user) {
+userFetcher.signin = async function (user) {
     const auth = getAuth()
     return signInWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
@@ -35,14 +35,14 @@ userFetcher.signin = async function(user) {
             const uuid = userObj.uid
             const token = userObj.accessToken
             const refreshToken = userObj.stsTokenManager.refreshToken
-            
+
             // 이거 빼야됨 나중에
-            let emailVerified = userObj.emailVerified  
+            let emailVerified = userObj.emailVerified
             const obj = {}
-            if(uuid==="ehGVHQQ1SZPzeCP2BqEs3j4Ni952") {
+            if (uuid == `${process.env.REACT_APP_MSS_ADMIN}`) {
                 emailVerified = true
             }
-            if(!emailVerified) {
+            if (!emailVerified) {
                 obj.emailVerified = emailVerified
                 return obj
             }
@@ -53,7 +53,7 @@ userFetcher.signin = async function(user) {
             obj.emailVerified = emailVerified
             return obj
         })
-        .catch(error => console.error(error))
+        .catch((error) => console.error(error))
 }
 
 userFetcher.signup = async (user) => {
@@ -79,35 +79,37 @@ userFetcher.signup = async (user) => {
             obj.email = user.email
             return obj
         })
-        .catch(error => console.error(error))
+        .catch((error) => console.error(error))
 }
-userFetcher.providerSignin = async function() {
+userFetcher.providerSignin = async function () {
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider()
-    return signInWithPopup(auth, googleProvider)
-        .then(async (result) => {
-            const user = result.user
-            const uuid = user.uid
-            const credential = GoogleAuthProvider.credentialFromResult(result)
-            const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
-            const querySnapshot = await getDocs(q)
+    return signInWithPopup(auth, googleProvider).then(async (result) => {
+        const user = result.user
+        const uuid = user.uid
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const q = query(
+            collection(firestore, "user"),
+            where("uuid", "==", uuid)
+        )
+        const querySnapshot = await getDocs(q)
 
-            const obj = {}
-            if(querySnapshot.empty) {
-                deleteUser(user)
-                obj.empty = true
-                return obj
-            } else {
-                const uuid = user.uid
-                const token = credential.accessToken
-                const refreshToken = user.refreshToken
-                obj.uuid = uuid
-                obj.accessToken = token
-                obj.refreshToken = refreshToken
-                obj.authenticated = true
-                return obj
-            }
-        })
+        const obj = {}
+        if (querySnapshot.empty) {
+            deleteUser(user)
+            obj.empty = true
+            return obj
+        } else {
+            const uuid = user.uid
+            const token = credential.accessToken
+            const refreshToken = user.refreshToken
+            obj.uuid = uuid
+            obj.accessToken = token
+            obj.refreshToken = refreshToken
+            obj.authenticated = true
+            return obj
+        }
+    })
 }
 
 userFetcher.providerSignup = async (user) => {
@@ -117,18 +119,18 @@ userFetcher.providerSignup = async (user) => {
         name: user.name,
         email: user.email,
     })
-    .then(() => {
-        const obj = {}
-        obj.uuid = `${user.uid}`
-        obj.username = user.username
-        obj.name = user.name
-        obj.email = user.email
-        return obj
-    })
-    .catch(error => console.error(error))
+        .then(() => {
+            const obj = {}
+            obj.uuid = `${user.uid}`
+            obj.username = user.username
+            obj.name = user.name
+            obj.email = user.email
+            return obj
+        })
+        .catch((error) => console.error(error))
 }
 
-userFetcher.signupWithGoogle = async function() {
+userFetcher.signupWithGoogle = async function () {
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider()
     return signInWithPopup(auth, googleProvider)
@@ -139,10 +141,11 @@ userFetcher.signupWithGoogle = async function() {
             user.uid = result.user.uid
             return user
         })
-        .catch(e => console.log(e))
+        .catch((e) => console.log(e))
 }
 
-userFetcher.googleResult = async function() {   //토큰 값이랑 유저정보 데이터 확인해야됨.
+// 토큰 값이랑 유저정보 데이터 확인해야됨.
+userFetcher.googleResult = async function () {
     const auth = getAuth()
     getRedirectResult(auth)
         .then((result) => {
@@ -157,7 +160,7 @@ userFetcher.googleResult = async function() {   //토큰 값이랑 유저정보 
         })
 }
 
-userFetcher.signupWithGithub = function() {
+userFetcher.signupWithGithub = function () {
     ErrorUtil.notImplemented()
 }
 
@@ -165,13 +168,16 @@ userFetcher.signout = async () => {
     User.clearStorage()
 }
 
-userFetcher.getUserInformation = function(setUserObj) {
+userFetcher.getUserInformation = function (setUserObj) {
     // getAuth() => currentUser 체크하려면 onAuthStateChanged가 필요함.
     const auth = getAuth()
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             const userId = user.uid
-            const q = query(collection(firestore, "user"), where("uuid", "==", userId))
+            const q = query(
+                collection(firestore, "user"),
+                where("uuid", "==", userId)
+            )
             const querySnapshot = await getDocs(q)
             querySnapshot.docs.forEach((item) => {
                 const obj = {}
@@ -186,17 +192,20 @@ userFetcher.getUserInformation = function(setUserObj) {
     })
 }
 
-userFetcher.getMyInformationByUuid = function(uuid) {
-    if(uuid) {
-        const q = query(collection(firestore, "user"), where("uuid", "==", uuid))
+userFetcher.getMyInformationByUuid = function (uuid) {
+    if (uuid) {
+        const q = query(
+            collection(firestore, "user"),
+            where("uuid", "==", uuid)
+        )
         return getDocs(q)
     }
 }
 
 // infoMessage -> null, created
 // infoMessage -> not null, merge
-userFetcher.updateMyInfomationMessage = function(uuid, infoMessage) {
-    if(uuid) {
+userFetcher.updateMyInfomationMessage = function (uuid, infoMessage) {
+    if (uuid) {
         const messageRef = doc(firestore, "user", `${uuid}`)
         setDoc(messageRef, { infoMessage: infoMessage }, { merge: true })
     }
