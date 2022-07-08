@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback } from "react"
 import AlertPopup from "../components/popup/alertPopup"
-import CheckPopup from "../components/popup/checkPopup"
 import MyIcon from "../icon/myIcon"
 import {
     Container,
