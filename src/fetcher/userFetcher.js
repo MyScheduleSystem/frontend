@@ -118,6 +118,7 @@ userFetcher.providerSignup = async (user) => {
         username: user.username,
         name: user.name,
         email: user.email,
+        infoMessage: "",
     })
         .then(() => {
             const obj = {}
