@@ -16,8 +16,6 @@ import {
 } from "@mui/material"
 
 const SigninForm = ({
-    isEmptyUser,
-    onLinkSigninEvent,
     onSigninEvent,
     onProviderSigninEvent,
     onClickUserServiceButtonEvent,
@@ -27,7 +25,6 @@ const SigninForm = ({
         password: false,
     })
     const [isShowPopup, setIsShowPopup] = useState(false)
-    const [isCheckPopup, setIsCheckPopup] = useState(false)
     const textRef = useRef()
     const passwordRef = useRef()
 
@@ -69,13 +66,8 @@ const SigninForm = ({
         onSigninEvent(userInfo)
     }
 
-    const onLinkToEventHandler = useCallback((isChecked) => {
-        if (isChecked) onLinkSigninEvent(isChecked)
-    }, [])
-
     const onProviderButtonClickEventHandler = () => {
         onProviderSigninEvent()
-        setIsCheckPopup(isEmptyUser)
     }
 
     const onPopupCloseEventHanlder = (value) => {
@@ -159,11 +151,6 @@ const SigninForm = ({
                         message="Check your input information"
                     />
                 </Box>
-                <CheckPopup
-                    message="You are not a registered member, please sign up first"
-                    isShowPopup={isCheckPopup}
-                    onCheckPopupEvent={onLinkToEventHandler}
-                ></CheckPopup>
             </Box>
         </Container>
     )
