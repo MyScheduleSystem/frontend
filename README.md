@@ -3,22 +3,17 @@
 ## MyScheduleSystem Project
 
 `
-    Release:
+Release:
 
     BackEnd: firebase
-`
 
 `
-    Project start: npm start
-`
 
-`
-    Contributors: FoxMon, Leo, Velo248
-`
+` Project start: npm start`
 
-`
-    FrontEnd: FoxMon, Leo, Velo248
-`
+` Contributors: FoxMon, Leo, Velo248`
+
+` FrontEnd: FoxMon, Leo, Velo248`
 
 ## Setting
 
@@ -42,13 +37,15 @@
 
     MaterialUi(MUI)
 
-    Cloudinary API(https://cloudinary.com/documentation)
+    Cloudinary API(https://cloudinary.com/documentation) => 사용 안함.
+        -> Firebase storage로 옮김.
 
     OpenWeather API(https://openweathermap.org/)
 
     Google Charts API(https://developers.google.com/chart)
 
 ## CheckList
+
 ```
 불변성 유지
     - state 중 배열이 있을 경우 spread 연산 사용할 것(2022.07.05)
@@ -130,7 +127,6 @@ useState(setState의) 동작 이해
         userReducer
         UserContext
 
-
 ## Issue
 
 ```
@@ -195,6 +191,8 @@ useState(setState의) 동작 이해
         - Cloudinary Upload Presets Name Mode에서 오류발견
             Signed Mode Name을 가져오지 말고 Unsigned Mode Name을가져오자.
 
+        - Cloudinary에서 firebase storage로 옮김.
+
     TextField에서 label props에 의한 EventBubbling 문제 (해결)
         - 초기 코드
             <MenuItem>
@@ -228,7 +226,7 @@ useState(setState의) 동작 이해
                     onKeyDown={onKeyDownEventHandler}
                 />
             </MenuItem>
-            
+
     sendSignInLinkToEmail auth관련 오류(해결)
         - auth/operation-not-allowed
             코드에 문제가 있는 것으로 예상했으나, 파이어베이스 인증섹션에서 권한허용을 하는 부분이 있었다.
@@ -238,7 +236,9 @@ useState(setState의) 동작 이해
 ```
 
 ## 개발 회고록
+
 ### 2022-06-11 (FoxMon)
+
 ```
 BackEnd를 Node express에서 firebase로 바꾸기로 결정했다.
     - MyScheduleSystem은 우리가 지속적으로 사용할 서비스이기 때문에 추후 유지보수적인 면에 있어 firebase가 좋다고 판단했다.
@@ -251,6 +251,7 @@ firebase로 바꿈으로서 수정돼야 할 코드들이 많이 존재했다.
 ```
 
 ### 2022-06-14 (Leo)
+
 ```
 header에 menu 아이콘을 통해 sidebar를 열었을때 동작이 부드럽게 열리지 않았다.
     - Sidebar에 Drawer를 바꿔서 동작이 부드럽게 만들었다.
@@ -261,6 +262,7 @@ Drawer를 바꾸고 보니 아직 UI를 손봐야 할 부분이 많이 있었다
 ```
 
 ### 2022-06-20 (FoxMon)
+
 ```
 reduer를 도입했다. 처음 사용해보는 reducer였기 때문에 공부하고 적용시키기 까지 꽤 오랜 시간이 걸렸다.
 
@@ -270,6 +272,7 @@ action과 type이 뭔가 Redux와 비슷한 느낌..?
 ```
 
 ### 2022-06-21 (Leo)
+
 ```
 SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 위해 Cloudinary API를 가져와 구현하였다.
 
@@ -279,6 +282,7 @@ SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 �
 ```
 
 ### 2022-07-05 (FoxMon)
+
 ```
 최근 MSS를 앞으로 어떻게 설계하고 이어나갈지에 대한 깊은 고민에 빠졌다. 현재 이 프로젝트가 어디로 향해 나아가고 있는지 종잡을 수 없는 느낌이었다.
 
@@ -292,6 +296,7 @@ TODO부분이 끝나는 듯 싶으면 하나씩 부족한 부분들이 발견된
 ```
 
 ### 2022-07-06 (velo)
+
 ```
 사용자 인증에 관한 작업 중인데 생각보다 벅찬 느낌이다.
 

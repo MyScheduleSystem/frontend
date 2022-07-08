@@ -12,6 +12,8 @@ import UserActionType from "../reducer/action/userActionType"
 import { UserReducer, UserInitialState } from "../reducer/userReducer"
 import userFetcher from "../fetcher/userFetcher"
 import User from "../type/user"
+import AlertPopup from "../components/popup/alertPopup"
+import CheckPopup from "../components/popup/checkPopup"
 
 export const UserContext = createContext({})
 
@@ -21,7 +23,10 @@ function UserContextProvider({ children }) {
     const [userObj, setUserObj] = useState(null)
     const [isSignin, setIsSignin] = useState(true)
     const [isUserFailed, setIsUserFailed] = useState(false)
-    const [userState, userDispatch] = useReducer(UserReducer.userReducer, UserInitialState)
+    const [userState, userDispatch] = useReducer(
+        UserReducer.userReducer,
+        UserInitialState
+    )
     const [isEamilCheckPopup, setIsEmailCheckPopup] = useState(false)
     const [isEmptyUser, setIsEmptyUser] = useState(false)
 
@@ -36,44 +41,48 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.password = user.password
         const result = await userFetcher.signup(obj)
-        if(result) {
+        if (result) {
             setIsSignin(true)
             setIsEmailCheckPopup(true)
+        } else {
+            setIsUserFailed(true)
         }
-        else setIsUserFailed(true)
     }, [])
 
-    const onSigninEventHandler = useCallback(async (user) => {
-        const obj = {}
-        obj.email = user.email
-        obj.password = user.password
-        const response = await userFetcher.signin(obj)
-        if(!response.emailVerified) {
-            setIsUserFailed(true)
-            return
-        }
-        if(!response.authenticated) {
-            setIsUserFailed(true)
-            return
-        }
-        const userObj = {}
-        userObj.fetchOption = {}
-        userObj.refreshToken = response.refreshToken
-        userObj.accessToken = response.accessToken
-        userObj.authenticated = response.authenticated
-        userObj.fetchOption.uuid = response.uuid
-        userDispatch({
-            type: UserActionType.type.signin,
-            state: userState,
-            action: userObj,
-        })
-        User.saveRefreshStorage(userState.refreshToken)
-        setUserObj(userState)
-    }, [userState])
+    const onSigninEventHandler = useCallback(
+        async (user) => {
+            const obj = {}
+            obj.email = user.email
+            obj.password = user.password
+            const response = await userFetcher.signin(obj)
+            if (!response.emailVerified) {
+                setIsUserFailed(true)
+                return
+            }
+            if (!response.authenticated) {
+                setIsUserFailed(true)
+                return
+            }
+            const userObj = {}
+            userObj.fetchOption = {}
+            userObj.refreshToken = response.refreshToken
+            userObj.accessToken = response.accessToken
+            userObj.authenticated = response.authenticated
+            userObj.fetchOption.uuid = response.uuid
+            userDispatch({
+                type: UserActionType.type.signin,
+                state: userState,
+                action: userObj,
+            })
+            User.saveRefreshStorage(userState.refreshToken)
+            setUserObj(userState)
+        },
+        [userState]
+    )
 
     const onProviderSigninEventHandler = useCallback(async () => {
         const response = await userFetcher.providerSignin()
-        if(response.empty) {
+        if (response.empty) {
             setIsEmptyUser(true)
             return
         }
@@ -93,16 +102,14 @@ function UserContextProvider({ children }) {
     }, [userState])
 
     const onSignoutButtonClickHandler = useCallback(() => {
-        userFetcher
-            .signout()
-            .then(() => {
-                setUserObj(null)
-                userDispatch({
-                    type: UserActionType.type.signout,
-                    state: UserReducer.clearUserState().state,
-                    action: userObj,
-                })
+        userFetcher.signout().then(() => {
+            setUserObj(null)
+            userDispatch({
+                type: UserActionType.type.signout,
+                state: UserReducer.clearUserState().state,
+                action: userObj,
             })
+        })
     }, [])
 
     const onProviderSignupEventHandler = useCallback(async (user) => {
@@ -112,40 +119,65 @@ function UserContextProvider({ children }) {
         obj.email = user.email
         obj.uid = user.uid
         const result = await userFetcher.providerSignup(obj)
-        if(result) setIsSignin(true)
+        if (result) setIsSignin(true)
         else setIsUserFailed(true)
     }, [])
 
-    const onClickUserServiceButtonEvent = (isChecked) => {
+    const onClickUserServiceButtonEventHandler = (isChecked) => {
         setIsSignin(isChecked)
     }
 
-    const userContextObj = useMemo(() => ({
-        userObj,
-        onSignoutButtonClickHandler,
-    }), [userObj, onSignoutButtonClickHandler])
+    const onCloseAlertPopupEventHandler = useCallback(() => {
+        setIsUserFailed(false)
+    }, [])
+
+    const onCloseCheckPopupEventHandler = useCallback((isChecked) => {
+        if (isChecked) setIsSignin(false)
+        else setIsSignin(true)
+        setIsEmptyUser(false)
+    }, [])
+
+    const userContextObj = useMemo(
+        () => ({
+            userObj,
+            onSignoutButtonClickHandler,
+        }),
+        [userObj, onSignoutButtonClickHandler]
+    )
 
     return (
         <UserContext.Provider value={userContextObj}>
-            {User.checkForUserPersistence() ?
-                children :
-                isSignin === false ?
-                    <SignupForm
-                        isUserFailed={isUserFailed}
-                        isEmailCheck={isEamilCheckPopup}
-                        onSignupEvent={onSignupEventHandler}
-                        onProviderSignupEvent={onProviderSignupEventHandler}
-                        onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
-                    /> :
-                    <SigninForm
-                        isUserFailed={isUserFailed}
-                        isEmptyUser={isEmptyUser}
-                        onLinkSigninEvent={onClickUserServiceButtonEvent}
-                        onSigninEvent={onSigninEventHandler}
-                        onProviderSigninEvent={onProviderSigninEventHandler}
-                        onClickUserServiceButtonEvent={onClickUserServiceButtonEvent}
-                    />
-            }
+            {User.checkForUserPersistence() ? (
+                children
+            ) : isSignin === false ? (
+                <SignupForm
+                    isUserFailed={isUserFailed}
+                    isEmailCheck={isEamilCheckPopup}
+                    onSignupEvent={onSignupEventHandler}
+                    onProviderSignupEvent={onProviderSignupEventHandler}
+                    onClickUserServiceButtonEvent={
+                        onClickUserServiceButtonEventHandler
+                    }
+                />
+            ) : (
+                <SigninForm
+                    onSigninEvent={onSigninEventHandler}
+                    onProviderSigninEvent={onProviderSigninEventHandler}
+                    onClickUserServiceButtonEvent={
+                        onClickUserServiceButtonEventHandler
+                    }
+                />
+            )}
+            <AlertPopup
+                message="Check your input information or validation email"
+                isShowPopup={isUserFailed}
+                setIsShowPopupEvent={onCloseAlertPopupEventHandler}
+            />
+            <CheckPopup
+                message="You are not registered member. Please register now."
+                isShowPopup={isEmptyUser}
+                onCheckPopupEvent={onCloseCheckPopupEventHandler}
+            />
         </UserContext.Provider>
     )
 }
