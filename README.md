@@ -233,6 +233,12 @@ useState(setState의) 동작 이해
         - auth/invalid-continue-uri
             actionCodeSettings 인터페이스에서 URL부분의 값에 대한 오류였다. 파이어베이스에서 제공하는 도메인을 기본적으로 사용하였으나,
             email -> validation -> redirect에 관한 내용이라 브라우저에서 프로젝트가 동작하는 URL로 직접 초기화하여 사용해야한다.
+
+    비동기를 실행하는 실행 컨텍스트가 완료 되기 전에 Component가 unmount된 후 setState가 실행될 때 발생하는 오류.
+        - Error message
+            Warning: Can't perform a React state update on an unmounted component.
+            This is a no-op, but it indicates a memory leak in your application.
+            To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
 ```
 
 ## 개발 회고록
