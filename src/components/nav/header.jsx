@@ -24,8 +24,10 @@ import imageUploader from "../../service/imageUploaderService"
 import { createFriendsList } from "../../dev/testData"
 import { createNotify, createMessage } from "../../dev/testData"
 import userFetcher from "../../fetcher/userFetcher"
+import Friend from "../../type/friend"
+import FriendList from "../../type/friendList"
 
-const testMyInfo = createFriendsList().$_friendListArray
+const testMyInfo = createFriendsList()
 const testNotifyInfo = doFetchUserNotification()
 const testMsg = doFetchMessage()
 
@@ -105,6 +107,7 @@ const Header = () => {
             fArray: testMyInfo,
         },
     })
+    const [friends, setFriends] = useState(null)
     const [friendIndex, setFriendIndex] = useState(0)
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
@@ -115,19 +118,22 @@ const Header = () => {
     const { userObj, onSignoutButtonClickHandler } = useContext(UserContext)
 
     useEffect(() => {
-        // doFetchUserInformation
-        //     .call(this, "ehGVHQQ1SZPzeCP2BqEs3j4Ni952")
-        //     .then((data) => {
-        //         setMyInfo(() => {
-        //             return {
-        //                 user: {
-        //                     nickname: data.nickname,
-        //                     infoMessage: data.infoMessage,
-        //                     fArray: data.fArray,
-        //                 },
-        //             }
-        //         })
-        //     })
+        const uuid = userObj.fetchOption.uuid
+        doFetchUserInformation
+            .call(this, uuid)
+            .then((data) => {
+                setMyInfo(() => {
+                    return {
+                        user: {
+                            nickname: data.nickname,
+                            infoMessage: data.infoMessage,
+                            fArray: data.fArray,
+                        },
+                    }
+                })
+                return data.fArray
+            })
+            .then((f) => doFetchFriendInformation.call(this, f, setFriends))
     }, [])
 
     const onDrawerOpenEventHandler = (open) => () => {
@@ -144,22 +150,6 @@ const Header = () => {
 
     const onClickUserIconButtonEventHandler = () => {
         setIsme(true)
-        userFetcher
-            .getMyInformationByUuid(userObj.fetchOption.uuid)
-            .then((result) => {
-                result.docs.forEach((e) => {
-                    setMyInfo((prev) => {
-                        return {
-                            ...prev,
-                            user: {
-                                nickname: e.data().name,
-                                infoMessage: e.data().infoMessage,
-                                fArray: testMyInfo,
-                            },
-                        }
-                    })
-                })
-            })
         setIsClickInfo(true)
     }
 
@@ -269,7 +259,7 @@ const Header = () => {
                     <Divider />
                     <SideBar
                         isOpen={isOpen}
-                        userFriend={myInfo.user.fArray}
+                        userFriend={friends}
                         onClickFriendButtonClickEvent={
                             onClickFriendButtonClickEventHandler
                         }
@@ -277,13 +267,15 @@ const Header = () => {
                     />
                 </Drawer>
             </Box>
-            <MyInfoPopup
-                user={isMe ? myInfo.user : myInfo.user.fArray[friendIndex]}
-                isClickInfo={isClickInfo}
-                onCloseEvent={onCloseEventHandler}
-                onClickImageUploaderEvent={onClickImageUploaderEventHandler}
-                onSaveProfileMessageEvent={onSaveProfileMessageEventHandler}
-            />
+            {friends && myInfo && (
+                <MyInfoPopup
+                    user={isMe ? myInfo.user : friends[friendIndex]}
+                    isClickInfo={isClickInfo}
+                    onCloseEvent={onCloseEventHandler}
+                    onClickImageUploaderEvent={onClickImageUploaderEventHandler}
+                    onSaveProfileMessageEvent={onSaveProfileMessageEventHandler}
+                />
+            )}
             <Menu
                 anchorEl={notiAnchorEl}
                 open={isOpenMenu}
@@ -369,6 +361,35 @@ async function doFetchUserInformation(uuid) {
             data.friends.forEach((f) => user.fArray.push(f))
         })
         return user
+    })
+}
+
+async function doFetchFriendInformation(f, setFriends) {
+    // TODO: img url 수정
+    const img =
+        "https://firebasestorage.googleapis.com/v0/b/myschedulesystem-57f41.appspot.com/o/ehGVHQQ1SZPzeCP2BqEs3j4Ni952%2Fprofile%2F11.PNG?alt=media&token=6361c0f6-2cc3-4f07-801c-058c88b3c465"
+    const fArray = []
+    if (f.length == 1) {
+        const friend = new Friend(f[0].uuid, f[0].name, img, f[0].infoMessage)
+        setFriends(friend)
+    }
+    f.forEach((v, i) => {
+        userFetcher.getMyInformationByUuid(v).then((result) => {
+            result.docs.forEach((e) => {
+                const friend = new Friend(
+                    v,
+                    e.data().name,
+                    img,
+                    e.data().infoMessage
+                )
+                fArray.push(friend)
+            })
+            if (i == f.length - 1) {
+                setFriends(
+                    FriendList.createFriendList(fArray).$_friendListArray
+                )
+            }
+        })
     })
 }
 
