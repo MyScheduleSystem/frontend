@@ -148,7 +148,7 @@ export function createFriendsList() {
         arr.push(new Friend(i + 1, `${name}${i + 1}`, "", `MSS!${i + 1}`))
     }
     const fArr = FriendList.createFriendList(arr)
-    return fArr
+    return fArr.$_friendListArray
 }
 
 export function createChatRoomList() {
