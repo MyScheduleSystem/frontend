@@ -16,10 +16,18 @@ import Lodash from "lodash"
 
 const chatRooms = doChatRoomFetchResult.call(this)
 
-function SideBar({ isOpen, userFriend, onClickFriendButtonClickEvent, onSignoutBtnClickEvnet }) {
-    const onClickFriendButtonClickEventHandler = useCallback((isChecked, index) => {
-        onClickFriendButtonClickEvent(isChecked, index, false)
-    }, [])
+function SideBar({
+    isOpen,
+    userFriend,
+    onClickFriendButtonClickEvent,
+    onSignoutBtnClickEvnet,
+}) {
+    const onClickFriendButtonClickEventHandler = useCallback(
+        (isChecked, index) => {
+            onClickFriendButtonClickEvent(isChecked, index, false)
+        },
+        []
+    )
 
     const onSignoutBtnClickEvnetHandler = () => {
         onSignoutBtnClickEvnet()
@@ -29,10 +37,14 @@ function SideBar({ isOpen, userFriend, onClickFriendButtonClickEvent, onSignoutB
         {
             name: "Friends",
             icon: <MyIcon name="friends" />,
-            list: <MyFriendList
-                friends={userFriend}
-                onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
-            />
+            list: (
+                <MyFriendList
+                    friends={userFriend}
+                    onClickFriendButtonClickEvent={
+                        onClickFriendButtonClickEventHandler
+                    }
+                />
+            ),
         },
         {
             name: "ChatRooms",
@@ -44,35 +56,57 @@ function SideBar({ isOpen, userFriend, onClickFriendButtonClickEvent, onSignoutB
             name: "Schedule",
             path: "/",
             icon: <MyIcon name="calendar" />,
-            list: <ListItemButton divider={true}><Typography>FoxMon"s Schedule</Typography></ListItemButton>,
+            list: (
+                <ListItemButton divider={true}>
+                    <Typography>FoxMon"s Schedule</Typography>
+                </ListItemButton>
+            ),
         },
         {
             name: "Logout",
             path: "/",
             icon: <MyIcon name="signout" />,
-            list: <ListItemButton divider={true} onClick={onSignoutBtnClickEvnetHandler}><Typography>Logout</Typography></ListItemButton>,
+            list: (
+                <ListItemButton
+                    divider={true}
+                    onClick={onSignoutBtnClickEvnetHandler}
+                >
+                    <Typography>Logout</Typography>
+                </ListItemButton>
+            ),
         },
     ]
 
     return (
         <Box sx={sidebarStyle}>
-            {items.map(item => {
+            {items.map((item) => {
                 return (
-                    <Accordion key={item.name} sx={sidebarListStyle} disableGutters={false}>
-                        <AccordionSummary expandIcon={isOpen && <MyIcon name="expand" />}>
-                            <Typography>{item.icon} {isOpen && item.name}</Typography>
+                    <Accordion
+                        key={item.name}
+                        sx={sidebarListStyle}
+                        disableGutters={false}
+                    >
+                        <AccordionSummary
+                            expandIcon={isOpen && <MyIcon name="expand" />}
+                        >
+                            <Typography>
+                                {item.icon} {isOpen && item.name}
+                            </Typography>
                         </AccordionSummary>
-                        {isOpen && <AccordionDetails>
-                            {item.name !== "Friends" ?
-                                <Link
-                                    to={item.path}
-                                    style={sidebarLinkStyle}
-                                >
-                                    {item.list}
-                                </Link> :
-                                item.list
-                            }
-                        </AccordionDetails>}
+                        {isOpen && (
+                            <AccordionDetails>
+                                {item.name !== "Friends" ? (
+                                    <Link
+                                        to={item.path}
+                                        style={sidebarLinkStyle}
+                                    >
+                                        {item.list}
+                                    </Link>
+                                ) : (
+                                    item.list
+                                )}
+                            </AccordionDetails>
+                        )}
                     </Accordion>
                 )
             })}

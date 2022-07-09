@@ -1,23 +1,31 @@
-import { useState, useCallback, useContext } from "react"
+import { useState, useCallback, useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
 import {
-    Box, IconButton, Divider,
-    Toolbar, Typography, Badge,
-    Menu, MenuItem, ListItemText,
-    styled, List, ListItemButton
+    Box,
+    IconButton,
+    Divider,
+    Toolbar,
+    Typography,
+    Badge,
+    Menu,
+    MenuItem,
+    ListItemText,
+    styled,
+    List,
+    ListItemButton,
 } from "@mui/material"
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
-import { createFriendsList } from "../../dev/testData"
 import { createNotify, createMessage } from "../../dev/testData"
 import userFetcher from "../../fetcher/userFetcher"
+import Friend from "../../type/friend"
+import FriendList from "../../type/friendList"
 
-const testMyInfo = createFriendsList().$_friendListArray
 const testNotifyInfo = doFetchUserNotification()
 const testMsg = doFetchMessage()
 
@@ -52,8 +60,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     ...theme.mixins.toolbar,
 }))
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
-    ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
@@ -66,12 +75,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
         ...closedMixin(theme),
         "& .MuiDrawer-paper": closedMixin(theme),
     }),
-    }),
-)
+}))
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
-    })(({ theme, open }) => ({
+})(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
@@ -81,8 +89,8 @@ const AppBar = styled(MuiAppBar, {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
         }),
     }),
 }))
@@ -94,9 +102,10 @@ const Header = () => {
         user: {
             nickname: "",
             infoMessage: "",
-            fArray: testMyInfo,
-        }
+            fArray: [],
+        },
     })
+    const [friends, setFriends] = useState(null)
     const [friendIndex, setFriendIndex] = useState(0)
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
@@ -105,6 +114,25 @@ const Header = () => {
     const isOepnMsg = Boolean(msgAnchorEl)
 
     const { userObj, onSignoutButtonClickHandler } = useContext(UserContext)
+
+    useEffect(() => {
+        const uuid = userObj.fetchOption.uuid
+        doFetchUserInformation
+            .call(this, uuid)
+            .then((data) => {
+                setMyInfo(() => {
+                    return {
+                        user: {
+                            nickname: data.nickname,
+                            infoMessage: data.infoMessage,
+                            fArray: data.fArray,
+                        },
+                    }
+                })
+                return data.fArray
+            })
+            .then((f) => doFetchFriendInformation.call(this, f, setFriends))
+    }, [])
 
     const onDrawerOpenEventHandler = (open) => () => {
         setIsOpen(open)
@@ -120,22 +148,6 @@ const Header = () => {
 
     const onClickUserIconButtonEventHandler = () => {
         setIsme(true)
-        userFetcher
-            .getMyInformationByUuid(userObj.fetchOption.uuid)
-            .then((result) => {
-                result.docs.forEach(e => {
-                    setMyInfo((prev) => {
-                        return {
-                            ...prev,
-                            user: {
-                                nickname: e.data().name,
-                                infoMessage: e.data().infoMessage,
-                                fArray: testMyInfo,
-                            }
-                        }
-                    })
-                })
-            })
         setIsClickInfo(true)
     }
 
@@ -155,12 +167,15 @@ const Header = () => {
     const onClickImageUploaderEventHandler = (img, folderName) => {
         imageUploader.imageUpload(userObj.fetchOption.uuid, img, folderName)
     }
-    
-    const onClickFriendButtonClickEventHandler = useCallback((isChecked, index, isMe) => {
-        setIsClickInfo(isChecked)
-        setFriendIndex(index)
-        setIsme(isMe)
-    }, [])
+
+    const onClickFriendButtonClickEventHandler = useCallback(
+        (isChecked, index, isMe) => {
+            setIsClickInfo(isChecked)
+            setFriendIndex(index)
+            setIsme(isMe)
+        },
+        []
+    )
 
     const onSignoutBtnClickEvnetHandler = useCallback(() => {
         onSignoutButtonClickHandler()
@@ -173,7 +188,7 @@ const Header = () => {
                 ...prev,
                 user: {
                     infoMessage: infoMsg,
-                }
+                },
             }
         })
     }
@@ -192,7 +207,9 @@ const Header = () => {
                             <MyIcon name="menu" />
                         </IconButton>
                         <IconButton>
-                            <Link to="/" style={logoButtonStyle}>MSS</Link>
+                            <Link to="/" style={logoButtonStyle}>
+                                MSS
+                            </Link>
                         </IconButton>
                         <Box component="div" sx={menuInfoStyle}>
                             <IconButton
@@ -200,7 +217,10 @@ const Header = () => {
                                 color="inherit"
                                 onClick={onMessageButtonClickEventHandler}
                             >
-                                <Badge badgeContent={testMsg.length} color="error">
+                                <Badge
+                                    badgeContent={testMsg.length}
+                                    color="error"
+                                >
                                     <MyIcon name="mail" />
                                 </Badge>
                             </IconButton>
@@ -209,7 +229,10 @@ const Header = () => {
                                 color="inherit"
                                 onClick={onNotificationButtonClickEventHandler}
                             >
-                                <Badge badgeContent={testNotifyInfo.length} color="error">
+                                <Badge
+                                    badgeContent={testNotifyInfo.length}
+                                    color="error"
+                                >
                                     <MyIcon name="notification" />
                                 </Badge>
                             </IconButton>
@@ -232,21 +255,25 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <SideBar 
-                        isOpen={isOpen} 
-                        userFriend={myInfo.user.fArray}
-                        onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+                    <SideBar
+                        isOpen={isOpen}
+                        userFriend={friends}
+                        onClickFriendButtonClickEvent={
+                            onClickFriendButtonClickEventHandler
+                        }
                         onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
                     />
                 </Drawer>
             </Box>
-            <MyInfoPopup
-                user={isMe ? myInfo.user: myInfo.user.fArray[friendIndex]}
-                isClickInfo={isClickInfo}
-                onCloseEvent={onCloseEventHandler}
-                onClickImageUploaderEvent={onClickImageUploaderEventHandler}
-                onSaveProfileMessageEvent={onSaveProfileMessageEventHandler}
-            />
+            {friends && myInfo && (
+                <MyInfoPopup
+                    user={isMe ? myInfo.user : friends[friendIndex]}
+                    isClickInfo={isClickInfo}
+                    onCloseEvent={onCloseEventHandler}
+                    onClickImageUploaderEvent={onClickImageUploaderEventHandler}
+                    onSaveProfileMessageEvent={onSaveProfileMessageEventHandler}
+                />
+            )}
             <Menu
                 anchorEl={notiAnchorEl}
                 open={isOpenMenu}
@@ -259,10 +286,7 @@ const Header = () => {
                             sx={listItemButtonStyle(e.isChecked)}
                             onClick={onMenuButtonClickEventHandler}
                         >
-                            <ListItemText
-                                align="left"
-                                primary={e.message}
-                            />
+                            <ListItemText align="left" primary={e.message} />
                             <ListItemText
                                 align="right"
                                 secondary={e.startDate}
@@ -303,8 +327,8 @@ const Header = () => {
                                     secondary={item.startDate}
                                 />
                             </ListItemButton>
-                        )}
-                    )}
+                        )
+                    })}
                 </List>
             </Menu>
         </Box>
@@ -320,6 +344,51 @@ function doFetchUserNotification() {
 function doFetchMessage() {
     const msgArr = createMessage()
     return msgArr
+}
+
+async function doFetchUserInformation(uuid) {
+    return userFetcher.getMyInformationByUuid(uuid).then((result) => {
+        const user = {}
+        user.nickname = ""
+        user.infoMessage = ""
+        user.fArray = []
+        result.forEach((e) => {
+            const data = e.data()
+            user.nickname = data.name
+            user.infoMessage = data.infoMessage
+            data.friends.forEach((f) => user.fArray.push(f))
+        })
+        return user
+    })
+}
+
+async function doFetchFriendInformation(f, setFriends) {
+    // TODO: img url 수정
+    const img =
+        "https://firebasestorage.googleapis.com/v0/b/myschedulesystem-57f41.appspot.com/o/ehGVHQQ1SZPzeCP2BqEs3j4Ni952%2Fprofile%2F11.PNG?alt=media&token=6361c0f6-2cc3-4f07-801c-058c88b3c465"
+    const fArray = []
+    if (f.length == 1) {
+        const friend = new Friend(f[0].uuid, f[0].name, img, f[0].infoMessage)
+        setFriends(friend)
+    }
+    f.forEach((v, i) => {
+        userFetcher.getMyInformationByUuid(v).then((result) => {
+            result.docs.forEach((e) => {
+                const friend = new Friend(
+                    v,
+                    e.data().name,
+                    img,
+                    e.data().infoMessage
+                )
+                fArray.push(friend)
+            })
+            if (i == f.length - 1) {
+                setFriends(
+                    FriendList.createFriendList(fArray).$_friendListArray
+                )
+            }
+        })
+    })
 }
 
 const headerBoxStyle = {
@@ -344,7 +413,7 @@ const menuInfoStyle = {
     display: {
         xs: "none",
         md: "flex",
-    }
+    },
 }
 
 const listItemButtonStyle = (isChecked) => {
@@ -366,4 +435,5 @@ const msgStyle = {
 const msgFriendNameStyle = {
     display: "inline",
 }
+
 export default Header
