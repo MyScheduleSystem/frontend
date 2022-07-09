@@ -21,13 +21,11 @@ import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
-import { createFriendsList } from "../../dev/testData"
 import { createNotify, createMessage } from "../../dev/testData"
 import userFetcher from "../../fetcher/userFetcher"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 
-const testMyInfo = createFriendsList()
 const testNotifyInfo = doFetchUserNotification()
 const testMsg = doFetchMessage()
 
@@ -104,7 +102,7 @@ const Header = () => {
         user: {
             nickname: "",
             infoMessage: "",
-            fArray: testMyInfo,
+            fArray: [],
         },
     })
     const [friends, setFriends] = useState(null)
