@@ -72,12 +72,14 @@ userFetcher.signup = async (user) => {
                 name: user.name,
                 email: user.email,
                 infoMessage: "",
+                friends: [],
             })
             const obj = {}
             obj.uuid = `${userObj.uid}`
             obj.username = user.username
             obj.name = user.name
             obj.email = user.email
+            obj.friends = []
             return obj
         })
         .catch((error) => console.error(error))
@@ -120,6 +122,7 @@ userFetcher.providerSignup = async (user) => {
         name: user.name,
         email: user.email,
         infoMessage: "",
+        friends: [],
     })
         .then(() => {
             const obj = {}
@@ -127,6 +130,7 @@ userFetcher.providerSignup = async (user) => {
             obj.username = user.username
             obj.name = user.name
             obj.email = user.email
+            obj.friends = []
             return obj
         })
         .catch((error) => console.error(error))
