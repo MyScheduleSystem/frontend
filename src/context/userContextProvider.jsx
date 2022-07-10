@@ -147,7 +147,7 @@ function UserContextProvider({ children }) {
 
     return (
         <UserContext.Provider value={userContextObj}>
-            {User.checkForUserPersistence() ? (
+            {userObj && User.checkForUserPersistence() ? (
                 children
             ) : isSignin === false ? (
                 <SignupForm
