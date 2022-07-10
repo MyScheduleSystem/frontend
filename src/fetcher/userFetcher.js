@@ -191,7 +191,7 @@ userFetcher.getUserInformation = function (setUserObj) {
                 obj.fetchOption.uuid = item.data().uuid
                 setUserObj(obj)
             })
-        }
+        } else setUserObj(undefined)
     })
 }
 
