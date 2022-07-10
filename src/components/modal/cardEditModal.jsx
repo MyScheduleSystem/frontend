@@ -17,7 +17,12 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
 import DateType from "../../type/dateType"
 import Lodash from "lodash"
 
-const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onCardModalCloseEvent }) => {
+const CardEditModal = ({
+    editTodoItem,
+    isCardModalShow,
+    onEditTodoItemEvent,
+    onCardModalCloseEvent,
+}) => {
     const [startDate, setStartDate] = useState(DateType.createDate)
     const [endDate, setEndDate] = useState(DateType.createDate)
     const [isOpen, setIsOpen] = useState(false)
@@ -35,12 +40,20 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
 
     const onSaveButtonHandler = () => {
         const prev = Lodash.cloneDeep(editTodoItem)
-        if(!titleRef.current.value || !contentRef.current.value || isValidTitle || isValieStartDate || isValieEndDate) {
+        if (
+            !titleRef.current.value ||
+            !contentRef.current.value ||
+            isValidTitle ||
+            isValieStartDate ||
+            isValieEndDate
+        ) {
             setIsOpen(true)
             return
         }
         editTodoItem.title = titleRef.current.value
         editTodoItem.content = contentRef.current.value
+        editTodoItem.startDate = startDate
+        editTodoItem.endDate = endDate
         onEditTodoItemEvent(prev, editTodoItem)
         setStartDate(DateType.createDate())
         setEndDate(DateType.createDate())
@@ -54,9 +67,10 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
     const onChangeStartDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setStartDate(date)
-        if(parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
+        if (parseInt(DateType.dateFromDate(date, endDate, "days")) < 0) {
             setIsValidStartDate(true)
-            startRef.current.labels[0].innerText = "Please check your start date!"
+            startRef.current.labels[0].innerText =
+                "Please check your start date!"
         } else {
             setIsValidStartDate(false)
             startRef.current.labels[0].innerText = "Start Date"
@@ -66,7 +80,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
     const onChangeEndDateHandler = (newValue) => {
         const date = DateType.createDateFormat(newValue, "YYYY-MM-DD")
         setEndDate(date)
-        if(parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
+        if (parseInt(DateType.dateFromDate(startDate, date, "days")) < 0) {
             setIsValidEndtDate(true)
             endRef.current.labels[0].innerText = "Please check your end date!"
         } else {
@@ -76,7 +90,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
     }
 
     const onTitleChangeHandler = useCallback((e) => {
-        if(validateForTitle(e.target.value)) {
+        if (validateForTitle(e.target.value)) {
             titleRef.current.labels[0].innerText = "Please check your title!"
             setIsValidTitle(true)
             return
@@ -86,11 +100,11 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
     }, [])
 
     const validateForTitle = (titleStr) => {
-        const isValid = (function() {
+        const isValid = (function () {
             const title = titleStr.trim()
-            if(title.length < 4 || title.length === 0) return true
+            if (title.length < 4 || title.length === 0) return true
             const special = ["#", "$", "|", "`"]
-            if(!special.every((e) => !title.includes(e))) return  true
+            if (!special.every((e) => !title.includes(e))) return true
             return false
         })()
         return isValid
@@ -108,9 +122,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
                 open={isCardModalShow}
                 onClose={onCloseCardModal}
             >
-                <DialogContent
-                    sx={dialogContentStyle}
-                >
+                <DialogContent sx={dialogContentStyle}>
                     <Card sx={cardStyle}>
                         <CardHeader
                             avatar={<Avatar sx={avtarStyle}>T</Avatar>}
@@ -132,14 +144,24 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
                                 label="Start Date"
                                 value={startDate}
                                 onChange={onChangeStartDateHandler}
-                                renderInput={(params) => <TextField {...params} error={isValieStartDate}/>}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        error={isValieStartDate}
+                                    />
+                                )}
                             />
                             <DesktopDatePicker
                                 inputRef={endRef}
                                 label="End Date"
                                 value={endDate}
                                 onChange={onChangeEndDateHandler}
-                                renderInput={(params) => <TextField {...params} error={isValieEndDate} />}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        error={isValieEndDate}
+                                    />
+                                )}
                             />
                         </LocalizationProvider>
                         <CardContent>
@@ -155,10 +177,7 @@ const CardEditModal = ({ editTodoItem, isCardModalShow, onEditTodoItemEvent, onC
                         </CardContent>
                     </Card>
                 </DialogContent>
-                <Button
-                    sx={buttonStyle}
-                    onClick={onSaveButtonHandler}
-                >
+                <Button sx={buttonStyle} onClick={onSaveButtonHandler}>
                     <MyIcon name="checkCircle" />
                 </Button>
             </Dialog>
@@ -170,7 +189,7 @@ const dialogStyle = {
     "& .MuiDialog-paper": {
         width: "80%",
         height: "80%",
-    }
+    },
 }
 
 const dialogContentStyle = {
@@ -182,7 +201,7 @@ const cardStyle = {
 }
 
 const avtarStyle = {
-    bgColor: "blue[500]"
+    bgColor: "blue[500]",
 }
 
 const titleStyle = {
