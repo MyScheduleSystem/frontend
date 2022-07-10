@@ -8,6 +8,7 @@ import {
     getRedirectResult,
     sendEmailVerification,
     deleteUser,
+    signOut,
 } from "firebase/auth"
 import {
     doc,
@@ -166,7 +167,8 @@ userFetcher.signupWithGithub = function () {
 }
 
 userFetcher.signout = async () => {
-    User.clearStorage()
+    const auth = getAuth()
+    signOut(auth).then(() => User.clearStorage())
 }
 
 userFetcher.getUserInformation = function (setUserObj) {
