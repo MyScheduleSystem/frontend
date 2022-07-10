@@ -38,7 +38,7 @@ const CardItem = ({
                         <MyIcon name="delete" />
                     </Button>
                 }
-            ></CardHeader>
+            />
             <CardMedia
                 component="img"
                 height={100}
