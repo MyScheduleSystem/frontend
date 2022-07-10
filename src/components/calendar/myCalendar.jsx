@@ -28,7 +28,7 @@ function MyCalendar() {
     const { userObj } = useContext(UserContext)
 
     useEffect(() => {
-        doFetchTodoItemList.call(this, setAllTodoItems)
+        doFetchTodoItemList.call(this, setAllTodoItems, userObj.fetchOption.uuid)
     }, [])
 
     const onClickDayEventHandler = (e) => {
@@ -73,6 +73,7 @@ function MyCalendar() {
                 obj[dayKey].push(newObj)
             })
         })
+        calendarFetcher.updateTodoList(e.uuid, userObj.fetchOption.uuid, e)
         setAllTodoItems(Lodash.cloneDeep(obj))
     }, [allTodoItems])
 
@@ -117,10 +118,10 @@ function MyCalendar() {
     )
 }
 
-function doFetchTodoItemList(setAllTodoItems) {
+function doFetchTodoItemList(setAllTodoItems, uuid) {
     const todoListObj = {}
     todoListObj[DateType.createDate()] = []
-    calendarFetcher.allCalenderTodoList()
+    calendarFetcher.allCalenderTodoList(uuid)
         .then((todoList) => {
             todoList.forEach((item) => {
                 todoListObj[item.startDate] = []

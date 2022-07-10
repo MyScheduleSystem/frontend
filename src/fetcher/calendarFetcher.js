@@ -14,18 +14,18 @@ const calendarFetcher = {}
 // firestore에서는 userUuid가 있어야 하고
 // 우리의 TodoItem에서는 doc의 key가 저장되어야만 한다.
 
-calendarFetcher.allCalenderTodoList = async function() {
+calendarFetcher.allCalenderTodoList = async function(uuid) {
     const qs = await getDocs(collection(firestore, "calendar"))
     const arr = []
     qs.forEach((doc) => {
         const obj = doc.data()
-        arr.push(new TodoItem(doc.id, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
+        if(obj.userUuid === uuid) arr.push(new TodoItem(doc.id, obj.title, obj.content, obj.startDate, obj.endDate, obj.isCompleted))
     })
     return arr
 }
 
 calendarFetcher.createTodoList = function(userUuid, todo, allTodoItems) {
-    const ati = allTodoItems.length == 0 ? [] : allTodoItems
+    const ati = !Array.isArray(allTodoItems) ? [] : allTodoItems
     addDoc(collection(firestore, "calendar"), {
         userUuid: userUuid,
         title: todo.title,
