@@ -1,10 +1,10 @@
-import { Rings } from "react-loader-spinner"
+import { BallTriangle } from "react-loader-spinner"
 import { Container } from "@mui/material"
 
 const LoadingSpinner = () => {
     return (
         <Container sx={containerStyle}>
-            <Rings color="#1976D2" height={100} width={100} />
+            <BallTriangle color="#1976D2" height={80} width={80} />
         </Container>
     )
 }
