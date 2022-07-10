@@ -14,6 +14,7 @@ import userFetcher from "../fetcher/userFetcher"
 import User from "../type/user"
 import AlertPopup from "../components/popup/alertPopup"
 import CheckPopup from "../components/popup/checkPopup"
+import LoadingSpinner from "../components/spinner/loadingSpinner"
 
 export const UserContext = createContext({})
 
@@ -147,7 +148,7 @@ function UserContextProvider({ children }) {
 
     return (
         <UserContext.Provider value={userContextObj}>
-            {User.checkForUserPersistence() ? (
+            {userObj && User.checkForUserPersistence() ? (
                 children
             ) : isSignin === false ? (
                 <SignupForm
@@ -159,6 +160,8 @@ function UserContextProvider({ children }) {
                         onClickUserServiceButtonEventHandler
                     }
                 />
+            ) : userObj === null ? (
+                <LoadingSpinner />
             ) : (
                 <SigninForm
                     onSigninEvent={onSigninEventHandler}

@@ -7,6 +7,7 @@ import {
     MenuItem,
     Typography,
     Card,
+    CardHeader,
     CardContent,
     CardActions,
     Button,
@@ -16,32 +17,52 @@ import weatherFetcher from "../../fetcher/weatherFetcher"
 
 const RightSideBar = () => {
     const [weather, setWeather] = useState({})
+    const [temperature, setTemperature] = useState({})
 
     useEffect(() => {
-        doWeatherFetch.call(this, weather, setWeather)
+        doWeatherFetch.call(
+            this,
+            weather,
+            setWeather,
+            temperature,
+            setTemperature
+        )
     }, [weather])
 
     // 날씨 정보 API 확인해서 전부 추가할 것
     return (
         <Box sx={boxSizeStyle}>
             <Paper sx={menuStyle}>
-                <Typography variant="h6" align="center"><MyIcon name="radio" /> MSS</Typography>
+                <Typography variant="h6" align="center">
+                    <MyIcon name="radio" /> MSS
+                </Typography>
                 <MenuList variant="menu">
                     <MenuItem>
-                        <Link to="/" style={linkStyle}>DashBoard</Link>
+                        <Link to="/" style={linkStyle}>
+                            DashBoard
+                        </Link>
                     </MenuItem>
                     <MenuItem>
-                        <Link to="/chat" style={linkStyle}>Direct Message</Link>
+                        <Link to="/chat" style={linkStyle}>
+                            Direct Message
+                        </Link>
                     </MenuItem>
                     <MenuItem>
-                        <Link to="/sns" style={linkStyle}>MSS Timeline</Link>
+                        <Link to="/sns" style={linkStyle}>
+                            MSS Timeline
+                        </Link>
                     </MenuItem>
                 </MenuList>
                 <Card>
-                    <CardContent sx={iconStyle}>
-                        {weatherFetcher.getWeatherIcon(weather.weatherInfo)}
-                    </CardContent>
                     <CardContent>
+                        <CardHeader
+                            title={"Today's weather"}
+                            subheader={`Current Temperatue: ${temperature.c}°C Humidity: ${temperature.humidity}%`}
+                            alt="Temperature and Humidity"
+                        />
+                        <CardContent sx={iconStyle}>
+                            {weatherFetcher.getWeatherIcon(weather.weatherInfo)}
+                        </CardContent>
                         <Typography
                             gutterBottom={true}
                             variant="h5"
@@ -49,12 +70,9 @@ const RightSideBar = () => {
                         >
                             Weather
                         </Typography>
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                        >
-                            I wish your happy day.
-                            Good luck. For more information. Contact: FoxMon"s team.
+                        <Typography variant="body2" color="text.secondary">
+                            I wish your happy day. Good luck. For more
+                            information. Contact: FoxMon"s team.
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -67,15 +85,19 @@ const RightSideBar = () => {
     )
 }
 
-function doWeatherFetch(weather, setWeather) {
+function doWeatherFetch(weather, setWeather, temperature, setTemperature) {
     const fetchResult = {}
-    weatherFetcher.getWeatherInformation()
-        .then((response) => {
-            const result = response.data.current.weather[0]
-            fetchResult.description = result.description
-            fetchResult.weatherInfo = result.main
-            setWeather(() => Object.assign(weather, fetchResult))
-        })
+    const temper = {}
+    weatherFetcher.getWeatherInformation().then((response) => {
+        const result = response.data.current.weather[0]
+        const temp = response.data.current
+        fetchResult.description = result.description
+        fetchResult.weatherInfo = result.main
+        temper.c = Math.floor(temp.temp) - 273
+        temper.humidity = temp.humidity
+        setWeather(() => Object.assign(weather, fetchResult))
+        setTemperature(() => Object.assign(temperature, temper))
+    })
 }
 
 const boxSizeStyle = {

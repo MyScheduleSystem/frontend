@@ -9,7 +9,12 @@ import {
 } from "@mui/material"
 import MyIcon from "../../icon/myIcon"
 
-const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) => {
+const CardItem = ({
+    index,
+    cardItem,
+    onEditModeEnterEvent,
+    onRemoveCardEvent,
+}) => {
     const onClickEventHandler = (isClicked) => () => {
         onEditModeEnterEvent(isClicked, cardItem)
     }
@@ -19,36 +24,28 @@ const CardItem = ({ index, cardItem, onEditModeEnterEvent, onRemoveCardEvent }) 
         onRemoveCardEvent(index, true)
     }
 
-    return ( // 카드 UI변경
-        <Card
-            sx={cardStyle}
-            onClick={onClickEventHandler(true)}
-        >
+    return (
+        // 카드 UI변경
+        <Card sx={cardStyle} onClick={onClickEventHandler(true)}>
             <CardHeader
                 avatar={<Avatar />}
                 sx={titleStyle}
                 title={cardItem.title}
-                subheader={cardItem.startDate}
+                subheader={`Start : ${cardItem.startDate} End : ${cardItem.endDate}`}
                 alt="Modal Card"
                 action={
-                    <Button
-                        sx={buttonStyle}
-                        onClick={onRemoveCardEventHandler}>
+                    <Button sx={buttonStyle} onClick={onRemoveCardEventHandler}>
                         <MyIcon name="delete" />
                     </Button>
-                }>
-            </CardHeader>
+                }
+            />
             <CardMedia
                 component="img"
                 height={100}
                 image={"/images/schedule.jpg"}
-            >
-
-            </CardMedia>
+            ></CardMedia>
             <CardContent>
-                <Typography
-                    sx={contentStyle}
-                    variant="body2">
+                <Typography sx={contentStyle} variant="body2">
                     {cardItem.content}
                 </Typography>
             </CardContent>
@@ -70,12 +67,13 @@ const cardStyle = {
 }
 
 const titleStyle = {
-    height: "10%",
+    cursor: "pointer",
+    height: "15%",
     width: "70%",
 }
 
 const contentStyle = {
-    height: "30%",
+    height: "35%",
 }
 
 const buttonStyle = {
