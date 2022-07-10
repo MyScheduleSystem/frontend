@@ -44,6 +44,8 @@ Release:
 
     Google Charts API(https://developers.google.com/chart)
 
+    react-loader-spinner
+
 ## CheckList
 
 ```
@@ -126,6 +128,8 @@ useState(setState의) 동작 이해
     UserContextProvider
         userReducer
         UserContext
+
+    Spinner
 
 ## Issue
 
@@ -234,11 +238,19 @@ useState(setState의) 동작 이해
             actionCodeSettings 인터페이스에서 URL부분의 값에 대한 오류였다. 파이어베이스에서 제공하는 도메인을 기본적으로 사용하였으나,
             email -> validation -> redirect에 관한 내용이라 브라우저에서 프로젝트가 동작하는 URL로 직접 초기화하여 사용해야한다.
 
-    비동기를 실행하는 실행 컨텍스트가 완료 되기 전에 Component가 unmount된 후 setState가 실행될 때 발생하는 오류.
+    비동기를 실행하는 실행 컨텍스트가 완료 되기 전에 Component가 unmount된 후 setState가 실행될 때 발생하는 오류(해결)
         - Error message
             Warning: Can't perform a React state update on an unmounted component.
             This is a no-op, but it indicates a memory leak in your application.
             To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+
+        - unmount 되는 상태에서 상태를 변화할 때 발생하는 오류이다.
+            useEffect에서 clean-up 형태로 작성한다면 해결이 가능하다.
+                ex)
+                useEffect(() => {
+                    ...
+                    return () => TODO...
+                })
 ```
 
 ## 개발 회고록
@@ -311,4 +323,30 @@ TODO부분이 끝나는 듯 싶으면 하나씩 부족한 부분들이 발견된
 파이어베이스와 연계하니 그들의 방식을 공부하는데 시간이 많이 투자된다.
 
 중간에 들어와서 따라잡는데 고생했는데, 슬슬 가닥이 잡혀가는 느낌이다.
+```
+
+### 2022-07-10 (FoxMon)
+
+```
+- 우리가 만들어야 할 프로젝트는 무엇인가 -
+
+Calendar, User 부분이 완성됨에 따라서 많은 테스트를 거듭하며 발생하는 오류를 찾고 프로젝트를 개선해 나가고 있다.
+단순히 기능을 개발하는 것 보다 개선을 하는 것이 더 어려운 것 같다.
+이러한 단계를 거듭할수록 나는 사용자에게 편리한 UI란 무엇일까? 라는 생각이 든다.
+
+물론 이 MSS의 UI는 나의 고집으로 이루어진 부분들이 꽤 많다.
+내가 생각하는 편리하고 강력한 UI는 사용자에게 최대한 많은 가능성을 열어주고 사용함에 있어서 불편함이 없는 것이다.
+이러한 관점에서 본다면 우리 MSS의 Calendar는 기존에 우리가 사용하고 있는 휴대폰 다이어리 앱과 크게 차이가 나지 않는다고 생각한다.
+수려하고 정결함을 갖춘 채 아름다움을 뽐내는 화려한 디자인을 갖춘 시스템은 아니지만 누구나 쉽게 우리 MSS를 사용할 수 있었으면 한다.
+따라서 현재 우리는 다음 기능 개발보다 사용에 있어 발생할 가능성이 있는 오류 해결과 기능개선에 초점을 맞추고 있다.
+
+나는 프로젝트 경험이랍시고 단순히 만들고 버리는 프로젝트를 원하지 않는다. 그런 프로젝트는 학부 시절 이미 많이 경험해 보았다.
+이번 MSS는 과거의 경험에 비추어 봤을 때, 단순히 배운 것을 활용해 본 느낌의 프로젝트가 아닌 앞으로도 우리가 계속 애정을 갖고
+지속 가능성을 갖춘 프로젝트이길 간절히 바란다.
+사용자가 있든 없든 그것이 내게 무슨 큰 의미가 있을까. 나는 내가 할 수 있는 최선을 이 프로젝트에 담아내고 있는 중이다.
+
+이것은 과연 나의 고집일까.
+
+만약 이것이 나의 강한 고집이라면 이왕 믿고 따라와준 팀원들이 끝까지 함께 동행해 주기를 바란다.
+MSS의 끝에 분명 모두에게 도움이 되리라 확신한다.
 ```
