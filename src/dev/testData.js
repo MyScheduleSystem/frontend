@@ -45,7 +45,7 @@ export function createNotify() {
     const message = "Arrived Message!"
     const nArr = []
     testDays.forEach((d, i) => {
-        const obj = new Notify(i, d, isChecked, message, d)
+        const obj = new Notify(i, d, isChecked, message)
         nArr.push(obj)
     })
     return nArr
