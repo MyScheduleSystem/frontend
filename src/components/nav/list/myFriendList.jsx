@@ -10,7 +10,7 @@ function MyFriendList({ friends, onClickFriendButtonClickEvent }) {
     }
 
     return (
-        friends.map((f, index) => {
+        Array.isArray(friends) && friends.map((f, index) => {
             return (
                 <Box key={f.uuid}>
                     <ListItemButton
