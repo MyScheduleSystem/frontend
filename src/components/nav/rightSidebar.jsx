@@ -22,12 +22,10 @@ const RightSideBar = () => {
     useEffect(() => {
         doWeatherFetch.call(
             this,
-            weather,
             setWeather,
-            temperature,
             setTemperature
         )
-    }, [weather])
+    }, [weather, temperature])
 
     // 날씨 정보 API 확인해서 전부 추가할 것
     return (
@@ -85,7 +83,7 @@ const RightSideBar = () => {
     )
 }
 
-function doWeatherFetch(weather, setWeather, temperature, setTemperature) {
+function doWeatherFetch(setWeather, setTemperature) {
     const fetchResult = {}
     const temper = {}
     weatherFetcher.getWeatherInformation().then((response) => {
@@ -95,8 +93,8 @@ function doWeatherFetch(weather, setWeather, temperature, setTemperature) {
         fetchResult.weatherInfo = result.main
         temper.c = Math.floor(temp.temp) - 273
         temper.humidity = temp.humidity
-        setWeather(() => Object.assign(weather, fetchResult))
-        setTemperature(() => Object.assign(temperature, temper))
+        setWeather(fetchResult)
+        setTemperature(temper)
     })
 }
 
