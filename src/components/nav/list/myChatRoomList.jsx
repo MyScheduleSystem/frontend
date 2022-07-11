@@ -7,14 +7,17 @@ import {
 } from "@mui/material"
 import MyIcon from "../../../icon/myIcon"
 
-function MyChatRoomList({ chatRoom, isOpenEditCharRoom }) {
+function MyChatRoomList({ chatRoom, isOpenEditCharRoom, onClickDeleteBtnEvent }) {
+    const onClickDeleteBtnEventHandler = (uuid) => {
+        onClickDeleteBtnEvent(uuid)
+    }
+
     return (
         chatRoom.map((c) => {
             return (
-                <React.Fragment>
+                <React.Fragment key={c.uuid}>
                     {!isOpenEditCharRoom ?
                         <ListItemButton
-                            key={c.uuid}
                             divider={true}
                         >
                             <Typography>{c.name}</Typography>
@@ -23,7 +26,10 @@ function MyChatRoomList({ chatRoom, isOpenEditCharRoom }) {
                         <ListItem
                             sx={myChatRoomEditStyle}
                             secondaryAction={
-                                <IconButton edge="end">
+                                <IconButton 
+                                    edge="end"
+                                    onClick={onClickDeleteBtnEventHandler(c.uuid)}
+                                >
                                     <MyIcon name="delete" />
                                 </IconButton>
                             }

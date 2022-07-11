@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import MyFriendList from "./list/myFriendList"
 import MyChatRoomList from "./list/myChatRoomList"
+import MyChatRoomModal from "../modal/myChatRoomModal"
 import MyIcon from "../../icon/myIcon"
 import { Link } from "react-router-dom"
 import { createChatRoomList } from "../../dev/testData"
@@ -25,8 +25,9 @@ function SideBar({
     onClickFriendButtonClickEvent,
     onSignoutBtnClickEvnet,
 }) {
-    const [isOpenEditCharRoom, setIsOpenEditChatRoom] = useState(false)
-    const navigate = useNavigate()
+    const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
+    const [isOpenModal, setIsOpenModal] = useState(false)
+    const [deleteChatRoom, setDeleteChatRoom] = useState()
 
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
@@ -40,13 +41,20 @@ function SideBar({
     }
 
     const onClickAddChatRoomBtnEventHandler = () => {
-        navigate("/chat/:id")
+        setIsOpenModal(true)
     }
 
     const onClickChatRoomEditBtnEventHandler = () => {
-        console.log(userFriend)
         setIsOpenEditChatRoom(current => !current)
     }
+
+    const onClickDeleteBtnEventHandler = (uuid) => () => {
+        setDeleteChatRoom(chatRooms.allChatRooms.filter(chat => chat.uuid != uuid))
+    }
+
+    const onClickCloseModalEventHandler = useCallback((closed) => {
+        setIsOpenModal(closed)
+    }, [isOpenModal])
 
     const items = [
         {
@@ -67,9 +75,14 @@ function SideBar({
             icon: <MyIcon name="chat" />,
             list: <MyChatRoomList 
                     chatRoom={chatRooms.allChatRooms}
-                    isOpenEditCharRoom={isOpenEditCharRoom}
+                    isOpenEditCharRoom={isOpenEditChatRoom}
+                    onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                 />,
-            add: <Button>추가</Button>,
+            add: <Button
+                    onClick={onClickAddChatRoomBtnEventHandler}
+                >
+                    추가
+                </Button>,
             edit: 
                 <Button
                     onClick={onClickChatRoomEditBtnEventHandler}
@@ -104,40 +117,48 @@ function SideBar({
 
     return (
         <Box sx={sidebarStyle}>
-            {items.map((item) => {
-                return (
-                    <Accordion
-                        key={item.name}
-                        sx={sidebarListStyle}
-                        disableGutters={false}
-                    >
-                        <AccordionSummary
-                            expandIcon={isOpen && <MyIcon name="expand" />}
+            <Box>
+                {items.map((item) => {
+                    return (
+                        <Accordion
+                            key={item.name}
+                            sx={sidebarListStyle}
+                            disableGutters={false}
                         >
-                            <Typography>
-                                {item.icon} {isOpen && item.name}
-                            </Typography>
-                        </AccordionSummary>
-                        {isOpen && (
-                            <AccordionDetails>
-                                {item.name !== "Friends" ? (
-                                    <React.Fragment>
-                                        {item.edit}
-                                        <Link
-                                            to={item.path}
-                                            style={sidebarLinkStyle}
-                                        >
-                                            {item.list}
-                                        </Link>
-                                    </React.Fragment>
-                                ) : (
-                                    item.list
-                                )}
-                            </AccordionDetails>
-                        )}
-                    </Accordion>
-                )
-            })}
+                            <AccordionSummary
+                                expandIcon={isOpen && <MyIcon name="expand" />}
+                            >
+                                <Typography>
+                                    {item.icon} {isOpen && item.name}
+                                </Typography>
+                            </AccordionSummary>
+                            {isOpen && (
+                                <AccordionDetails>
+                                    {item.name !== "Friends" ? (
+                                        <React.Fragment>
+                                            {item.add}{item.edit}
+                                            <Link
+                                                to={item.path}
+                                                style={sidebarLinkStyle}
+                                            >
+                                                {item.list}
+                                            </Link>
+                                        </React.Fragment>
+                                    ) : (
+                                        item.list
+                                    )}
+                                </AccordionDetails>
+                            )}
+                        </Accordion>
+                    )
+                })}
+                {isOpenModal && 
+                    <MyChatRoomModal 
+                        isOpenModal={isOpenModal}
+                        onClickCloseModalEvent={onClickCloseModalEventHandler}
+                    />
+                }
+            </Box>
         </Box>
     )
 }
