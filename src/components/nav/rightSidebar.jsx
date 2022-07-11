@@ -21,7 +21,7 @@ const RightSideBar = () => {
 
     useEffect(() => {
         doWeatherFetch.call(this, setWeather, setTemperature)
-    }, [weather, temperature])
+    }, [])
 
     return (
         <Box sx={boxSizeStyle}>
