@@ -47,9 +47,10 @@ function SideBar({
     const onClickChatRoomEditBtnEventHandler = () => {
         setIsOpenEditChatRoom(current => !current)
     }
-
+    
     const onClickDeleteBtnEventHandler = (uuid) => () => {
-        setDeleteChatRoom(chatRooms.allChatRooms.filter(chat => chat.uuid != uuid))
+        setDeleteChatRoom(() => chatRooms.allChatRooms.filter((value) => value.uuid !== uuid))
+        console.log(deleteChatRoom)
     }
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
@@ -156,6 +157,7 @@ function SideBar({
                     <MyChatRoomModal 
                         isOpenModal={isOpenModal}
                         onClickCloseModalEvent={onClickCloseModalEventHandler}
+                        Friend={userFriend}
                     />
                 }
             </Box>

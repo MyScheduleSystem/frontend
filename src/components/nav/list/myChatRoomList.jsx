@@ -8,10 +8,6 @@ import {
 import MyIcon from "../../../icon/myIcon"
 
 function MyChatRoomList({ chatRoom, isOpenEditCharRoom, onClickDeleteBtnEvent }) {
-    const onClickDeleteBtnEventHandler = (uuid) => {
-        onClickDeleteBtnEvent(uuid)
-    }
-
     return (
         chatRoom.map((c) => {
             return (
@@ -24,11 +20,10 @@ function MyChatRoomList({ chatRoom, isOpenEditCharRoom, onClickDeleteBtnEvent })
                         </ListItemButton>
                         :
                         <ListItem
-                            sx={myChatRoomEditStyle}
                             secondaryAction={
                                 <IconButton 
                                     edge="end"
-                                    onClick={onClickDeleteBtnEventHandler(c.uuid)}
+                                    onClick={onClickDeleteBtnEvent(c.uuid)}
                                 >
                                     <MyIcon name="delete" />
                                 </IconButton>
@@ -41,10 +36,6 @@ function MyChatRoomList({ chatRoom, isOpenEditCharRoom, onClickDeleteBtnEvent })
             )
         })
     )
-}
-
-const myChatRoomEditStyle = {
-    // display: "flex",
 }
 
 export default MyChatRoomList
