@@ -20,14 +20,9 @@ const RightSideBar = () => {
     const [temperature, setTemperature] = useState({})
 
     useEffect(() => {
-        doWeatherFetch.call(
-            this,
-            setWeather,
-            setTemperature
-        )
+        doWeatherFetch.call(this, setWeather, setTemperature)
     }, [weather, temperature])
 
-    // 날씨 정보 API 확인해서 전부 추가할 것
     return (
         <Box sx={boxSizeStyle}>
             <Paper sx={menuStyle}>
