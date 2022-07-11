@@ -1,4 +1,5 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import MyFriendList from "./list/myFriendList"
 import MyChatRoomList from "./list/myChatRoomList"
 import MyIcon from "../../icon/myIcon"
@@ -11,8 +12,10 @@ import {
     Box,
     ListItemButton,
     Typography,
+    Button,
 } from "@mui/material"
 import Lodash from "lodash"
+import React from "react"
 
 const chatRooms = doChatRoomFetchResult.call(this)
 
@@ -22,6 +25,9 @@ function SideBar({
     onClickFriendButtonClickEvent,
     onSignoutBtnClickEvnet,
 }) {
+    const [isOpenEditCharRoom, setIsOpenEditChatRoom] = useState(false)
+    const navigate = useNavigate()
+
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
             onClickFriendButtonClickEvent(isChecked, index, false)
@@ -31,6 +37,15 @@ function SideBar({
 
     const onSignoutBtnClickEvnetHandler = () => {
         onSignoutBtnClickEvnet()
+    }
+
+    const onClickAddChatRoomBtnEventHandler = () => {
+        navigate("/chat/:id")
+    }
+
+    const onClickChatRoomEditBtnEventHandler = () => {
+        console.log(userFriend)
+        setIsOpenEditChatRoom(current => !current)
     }
 
     const items = [
@@ -50,7 +65,17 @@ function SideBar({
             name: "ChatRooms",
             path: "/chat",
             icon: <MyIcon name="chat" />,
-            list: <MyChatRoomList chatRoom={chatRooms.allChatRooms} />,
+            list: <MyChatRoomList 
+                    chatRoom={chatRooms.allChatRooms}
+                    isOpenEditCharRoom={isOpenEditCharRoom}
+                />,
+            add: <Button>추가</Button>,
+            edit: 
+                <Button
+                    onClick={onClickChatRoomEditBtnEventHandler}
+                >
+                    편집
+                </Button>,
         },
         {
             name: "Schedule",
@@ -96,12 +121,15 @@ function SideBar({
                         {isOpen && (
                             <AccordionDetails>
                                 {item.name !== "Friends" ? (
-                                    <Link
-                                        to={item.path}
-                                        style={sidebarLinkStyle}
-                                    >
-                                        {item.list}
-                                    </Link>
+                                    <React.Fragment>
+                                        {item.edit}
+                                        <Link
+                                            to={item.path}
+                                            style={sidebarLinkStyle}
+                                        >
+                                            {item.list}
+                                        </Link>
+                                    </React.Fragment>
                                 ) : (
                                     item.list
                                 )}
