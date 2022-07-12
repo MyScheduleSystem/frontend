@@ -3,7 +3,6 @@ import ChatRoomList from "../type/chatRoomList"
 import Friend from "../type/friend"
 import FriendList from "../type/friendList"
 import User from "../type/user"
-import Message from "../type/message"
 
 export function createChatRoomList() {
     const name = "FoxMon's Chat Room"
@@ -25,36 +24,6 @@ export function createChatRoomList() {
     }
     const cArr = ChatRoomList.createChatRoomList(arr)
     return cArr
-}
-
-export function createMessage() {
-    const testDays = [
-        "2022-05-12",
-        "2022-05-13",
-        "2022-05-14",
-        "2022-05-15",
-        "2022-05-16",
-        "2022-05-17",
-        "2022-05-18",
-        "2022-05-19",
-        "2022-05-20",
-    ]
-    const isChecked = false
-    const message = "Arrived Message!"
-    const friendName = "FoxMon"
-    const mArr = []
-    testDays.forEach((d, i) => {
-        const obj = new Message(
-            i,
-            `${message}${i}`,
-            `${friendName}${i}`,
-            isChecked,
-            d,
-            d
-        )
-        mArr.push(obj)
-    })
-    return mArr
 }
 
 export function createSnsFriendList() {
