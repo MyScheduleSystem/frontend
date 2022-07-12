@@ -79,15 +79,11 @@ function SideBar({
                     isOpenEditCharRoom={isOpenEditChatRoom}
                     onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                 />,
-            add: <Button
-                    onClick={onClickAddChatRoomBtnEventHandler}
-                >
+            add: <Button onClick={onClickAddChatRoomBtnEventHandler}>
                     추가
                 </Button>,
             edit: 
-                <Button
-                    onClick={onClickChatRoomEditBtnEventHandler}
-                >
+                <Button onClick={onClickChatRoomEditBtnEventHandler}>
                     편집
                 </Button>,
         },
@@ -157,7 +153,7 @@ function SideBar({
                     <MyChatRoomModal 
                         isOpenModal={isOpenModal}
                         onClickCloseModalEvent={onClickCloseModalEventHandler}
-                        Friend={userFriend}
+                        friend={userFriend}
                     />
                 }
             </Box>
