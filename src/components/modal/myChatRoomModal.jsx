@@ -118,7 +118,7 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
             onClose={onClickCloseModalEventHandler}
         >
             <Grid container={true} sx={girdStyle} spacing={2}>
-                <Grid item={true} ref={unCompletedRef}> {createChatList("unCompletedList", unCompletedList)} </Grid>
+                <Grid item={true}> {createChatList("unCompletedList", unCompletedList)} </Grid>
                 <Grid item={true}>
                     <Grid container={true} sx={girdButtonListStyle} direction="column">
                         <Button
@@ -143,7 +143,7 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid item={true} ref={completedRef}> {createChatList("completedList", completedList)} </Grid>
+                <Grid item={true}> {createChatList("completedList", completedList)} </Grid>
             </Grid>
         </Modal>
     )
