@@ -46,6 +46,8 @@ Release:
 
     react-loader-spinner
 
+    react-Dnd(https://react-dnd.github.io/react-dnd/about)
+
 ## CheckList
 
 ```
@@ -111,6 +113,7 @@ useState(setState의) 동작 이해
         Show charoom list
         React charoom's user list
         Delete chatroom
+        Drag and Drop list
 
     Validation
         User validation
@@ -253,6 +256,24 @@ useState(setState의) 동작 이해
                     ...
                     return () => TODO...
                 })
+
+    React-Dnd 드래그시 모든 friend정보를 가져와서 한개씩 가져오지 못하는 오류가 있다(미해결)
+        - item 부분에서 모든 friend 정보를 가져옴 오류를 인지하여 해결중에 있다.
+        ex) 초기코드
+        const [{ isDraggble }, dragRef] = useDrag(() => ({
+            type: "friend",
+            item: () => ({ ...friend.map((item) => item) }),
+            end: (item, monitor) => {
+                const dropResult = monitor.getDropResult()
+                if (dropResult && item) {
+                    onMoveCompletedEventHandler(item)
+                }
+            },
+            collect: (monitor) => ({
+                isDragging: monitor.isDragging(),
+        }),
+    }))
+
 ```
 
 ## 개발 회고록
@@ -352,3 +373,17 @@ Calendar, User 부분이 완성됨에 따라서 많은 테스트를 거듭하며
 만약 이것이 나의 강한 고집이라면 이왕 믿고 따라와준 팀원들이 끝까지 함께 동행해 주기를 바란다.
 MSS의 끝에 분명 모두에게 도움이 되리라 확신한다.
 ```
+
+### 2022-07-12 (Leo)
+
+```
+현재 많은 기능이 만들어진 후 이제 얼마 남지 않은 기능들을 만들어 나가고 있다. 갈수록 어려운 기능들만 남은 거 같다.
+
+생각보다 라이브러리를 사용하는 부분에서도 편리하게 사용하도록 만들어졌지만 잘 사용해야 편리한 것 같아 공부가 많이 필요하다.
+
+이번 프로젝트를 통해 가장 많은 성장을 이루었지만 성장해야 할 것 같다. 나 스스로 부족한 부분이 많이 보인다.
+
+다들 힘내서 끝을 향해 갔으면 좋겠다.
+
+```
+
