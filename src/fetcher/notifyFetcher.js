@@ -26,6 +26,7 @@ notifyFetcher.allUserNotifyAlarm = async function (uuid) {
             querySnapshot.forEach((e) => {
                 const data = e.data()
                 const obj = {}
+                obj.uuid = data.uuid
                 obj.isChecked = data.isChecked
                 obj.message = data.message
                 obj.startDate = data.startDate
