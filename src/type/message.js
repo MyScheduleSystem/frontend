@@ -2,8 +2,8 @@ import ItemType from "./itemType"
 import ErrorUtil from "../util/errorUtil"
 
 class Message extends ItemType {
-    constructor(uuid, msg, friendName, isChecked, startDate, endDate) {
-        super(uuid, startDate, endDate, "message")
+    constructor(uuid, msg, friendName, isChecked, startDate) {
+        super(uuid, startDate, startDate, "message")
         ErrorUtil.typeCheck(msg, "string")
         this.msg = msg
         ErrorUtil.invalidParameter(friendName)

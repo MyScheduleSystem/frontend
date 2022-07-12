@@ -123,7 +123,9 @@ useState(setState의) 동작 이해
     Header
         View My Info
         View My Alarm
-        View My Notify
+        View My Message
+        Update My Alarm
+        Update My Message
 
     UserContextProvider
         userReducer
