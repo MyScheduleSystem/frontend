@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useDrag, useDrop } from "react-dnd"
 import { 
     Modal, Card, CardHeader, 
     Checkbox, Divider, ListItemText, 
@@ -54,55 +53,6 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
         setChecked(not(checked, completedChecked))
     }
 
-    const [{ isDraggble }, CompletedDragRef] = useDrag(() => ({
-        type: "friend",
-        item: () => ({ ...friend.map((item) => item) }),
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult()
-            if (dropResult && item) {
-                onMoveCompletedEventHandler(item)
-            }
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    }))
-
-    const [{ isDraggbles }, unCompletedDragRef] = useDrag(() => ({
-        type: "friend",
-        item: () => ({ ...friend.map((item) => item) }),
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult()
-            if (dropResult && item) {
-                onMoveUnCompletedEventHandler(item)
-            }
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    }))
-
-    const [{ isOver }, unCompletedRef] = useDrop({
-        accept: "friend",
-        collect: (monitor) => ({ isOver: !!monitor.isOver() }),
-    })
-
-    const [{ isOver: isCompletedOver }, completedRef] = useDrop({
-        accept: "friend",
-        collect: (monitor) => ({ isOver: !!monitor.isOver() }),
-    })
-
-    const onMoveCompletedEventHandler = (item) => {
-        console.log(item)
-        setUnCompletedList((prev) => prev.filter((_, i) => i !== item.index))
-        setCompletedList((prev) => [...prev, item])
-    }
-
-    const onMoveUnCompletedEventHandler = (item) => {
-        setCompletedList((prev) => prev.filter((_, i) => i !== item.index))
-        setUnCompletedList((prev) => [...prev, item])
-    }
-
     const createChatList = (title, friend) => (
         <Card>
             <CardHeader
@@ -140,7 +90,6 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
                     <ListItem
                         key={value.uuid}
                         role="listitem"
-                        // ref={CompletedDragRef}
                         button={true}
                         onClick={onClickToggleEventHanlder(value)}
                     >
