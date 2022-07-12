@@ -4,6 +4,7 @@ import {
     doc,
     getDocs,
     query,
+    where,
     updateDoc,
 } from "firebase/firestore"
 import { firestore } from "../service/firebase"
