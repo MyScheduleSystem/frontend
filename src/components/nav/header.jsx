@@ -21,14 +21,13 @@ import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
-import { createMessage } from "../../dev/testData"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 import Notify from "../../type/notify"
 import userFetcher from "../../fetcher/userFetcher"
 import notifyFetcher from "../../fetcher/notifyFetcher"
-
-const testMsg = doFetchMessage()
+import messageFetcher from "../../fetcher/messageFetcher"
+import Message from "../../type/message"
 
 const drawerWidth = 240
 
@@ -109,6 +108,7 @@ const Header = () => {
     const [friends, setFriends] = useState(null)
     const [friendIndex, setFriendIndex] = useState(0)
     const [notify, setNotify] = useState([])
+    const [message, setMessage] = useState([])
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -136,6 +136,7 @@ const Header = () => {
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
 
         doFetchNotifyMessage.call(this, uuid).then((data) => setNotify(data))
+        doFetchUserMessage.call(this, uuid).then((msg) => setMessage(msg))
     }, [])
 
     const onDrawerOpenEventHandler = (open) => () => {
@@ -159,8 +160,7 @@ const Header = () => {
         setNotiAnchorEl(e.currentTarget)
     }
 
-    const onMenuButtonClickEventHandler = (e) => {
-        console.log(e)
+    const onMenuButtonClickEventHandler = () => {
         setNotiAnchorEl(null)
         setMsgAnchorEl(null)
     }
@@ -212,6 +212,24 @@ const Header = () => {
             else notiArr.push(n)
         })
         setNotify(notiArr)
+        setNotiAnchorEl(null)
+    }
+
+    const onMessageItemClickEventHandler = (uuid, index) => () => {
+        const msgObj = message[index]
+        msgObj.isChecked = !msgObj.isChecked ? !msgObj.isChecked : true
+        messageFetcher.updateUserMessageAlarm(
+            uuid,
+            userObj.fetchOption.uuid,
+            msgObj
+        )
+        const msgArr = []
+        message.forEach((m) => {
+            if (m.uuid == uuid) msgArr.push(msgObj)
+            else msgArr.push(m)
+        })
+        setMessage(msgArr)
+        setMsgAnchorEl(null)
     }
 
     return (
@@ -239,7 +257,10 @@ const Header = () => {
                                 onClick={onMessageButtonClickEventHandler}
                             >
                                 <Badge
-                                    badgeContent={testMsg.length}
+                                    badgeContent={
+                                        message.filter((m) => !m.isChecked)
+                                            .length
+                                    }
                                     color="error"
                                 >
                                     <MyIcon name="mail" />
@@ -325,12 +346,16 @@ const Header = () => {
                 onClose={onMenuButtonClickEventHandler}
             >
                 <List sx={msgStyle}>
-                    {testMsg.map((item, i) => {
+                    {message.map((item, i) => {
                         // TODO: user avatar 추가
                         return (
                             <ListItemButton
                                 key={i}
                                 sx={listItemButtonStyle(item.isChecked)}
+                                onClick={onMessageItemClickEventHandler(
+                                    item.uuid,
+                                    i
+                                )}
                                 alignItems="flex-start"
                             >
                                 <ListItemText
@@ -375,9 +400,21 @@ async function doFetchNotifyMessage(uuid) {
     })
 }
 
-function doFetchMessage() {
-    const msgArr = createMessage()
-    return msgArr
+async function doFetchUserMessage(uuid) {
+    return messageFetcher.allUserMessageAlarm(uuid).then((result) => {
+        const msgArr = []
+        result.forEach((v) => {
+            const message = new Message(
+                v.uuid,
+                v.message,
+                v.friendName,
+                v.isChecked,
+                v.startDate
+            )
+            msgArr.push(message)
+        })
+        return msgArr
+    })
 }
 
 async function doFetchUserInformation(uuid) {
