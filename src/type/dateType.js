@@ -65,11 +65,16 @@ DateType.castToMonth = function(month) {
     return changedMonth
 }
 
+//prev => startDate of calendar, next => endDate of calendar
+//all props should be same month range
 DateType.isBetween = function(now, prev, next) {
     ErrorUtil.typeCheck(now, "string")
     ErrorUtil.typeCheck(prev, "string")
     ErrorUtil.typeCheck(next, "string")
-    const between =  DateUtil.isBetween(now, prev, next)
+    const month = DateUtil.dateFromMonth()
+    
+    if(!DateUtil.isBetween(prev, month[0], month[1]) || !DateUtil.isBetween(next, month[0], month[1])) return false
+    const between =  DateUtil.isBetween(now, month[0], month[1])
     return between
 }
 

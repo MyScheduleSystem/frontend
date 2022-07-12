@@ -17,6 +17,7 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
                 }
             })
         })
+        arr.sort((a, b) => a.startDate.localeCompare(b.startDate))
         return arr
     }
 
@@ -29,6 +30,7 @@ const MyCalendarTodoList = ({ todoItems, onCompletedEvent }) => {
                 }
             })
         })
+        arr.sort((a, b) => a.startDate.localeCompare(b.startDate))
         return arr
     }
 
