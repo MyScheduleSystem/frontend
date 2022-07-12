@@ -50,7 +50,6 @@ function SideBar({
     
     const onClickDeleteBtnEventHandler = (uuid) => () => {
         setDeleteChatRoom(() => chatRooms.allChatRooms.filter((value) => value.uuid !== uuid))
-        console.log(deleteChatRoom)
     }
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
