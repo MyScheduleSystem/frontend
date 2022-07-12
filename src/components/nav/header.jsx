@@ -21,12 +21,13 @@ import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
 import imageUploader from "../../service/imageUploaderService"
-import { createNotify, createMessage } from "../../dev/testData"
-import userFetcher from "../../fetcher/userFetcher"
+import { createMessage } from "../../dev/testData"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
+import Notify from "../../type/notify"
+import userFetcher from "../../fetcher/userFetcher"
+import notifyFetcher from "../../fetcher/notifyFetcher"
 
-const testNotifyInfo = doFetchUserNotification()
 const testMsg = doFetchMessage()
 
 const drawerWidth = 240
@@ -107,6 +108,7 @@ const Header = () => {
     })
     const [friends, setFriends] = useState(null)
     const [friendIndex, setFriendIndex] = useState(0)
+    const [notify, setNotify] = useState([])
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -132,6 +134,8 @@ const Header = () => {
                 return data.fArray
             })
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
+
+        doFetchNotifyMessage.call(this, uuid).then((data) => setNotify(data))
     }, [])
 
     const onDrawerOpenEventHandler = (open) => () => {
@@ -155,7 +159,8 @@ const Header = () => {
         setNotiAnchorEl(e.currentTarget)
     }
 
-    const onMenuButtonClickEventHandler = () => {
+    const onMenuButtonClickEventHandler = (e) => {
+        console.log(e)
         setNotiAnchorEl(null)
         setMsgAnchorEl(null)
     }
@@ -191,6 +196,22 @@ const Header = () => {
                 },
             }
         })
+    }
+
+    const onNotifyItemClickEventHandler = (uuid, index) => () => {
+        const notifyObj = notify[index]
+        notifyObj.isChecked = !notifyObj.isChecked ? !notifyObj.isChecked : true
+        notifyFetcher.updateCheckedNotifyAlarm(
+            uuid,
+            userObj.fetchOption.uuid,
+            notifyObj
+        )
+        const notiArr = []
+        notify.forEach((n) => {
+            if (n.uuid == uuid) notiArr.push(notifyObj)
+            else notiArr.push(n)
+        })
+        setNotify(notiArr)
     }
 
     return (
@@ -230,7 +251,10 @@ const Header = () => {
                                 onClick={onNotificationButtonClickEventHandler}
                             >
                                 <Badge
-                                    badgeContent={testNotifyInfo.length}
+                                    badgeContent={
+                                        notify.filter((d) => !d.isChecked)
+                                            .length
+                                    }
                                     color="error"
                                 >
                                     <MyIcon name="notification" />
@@ -279,12 +303,12 @@ const Header = () => {
                 open={isOpenMenu}
                 onClose={onMenuButtonClickEventHandler}
             >
-                {testNotifyInfo.map((e, i) => {
+                {notify.map((e, i) => {
                     return (
                         <MenuItem
                             key={i}
                             sx={listItemButtonStyle(e.isChecked)}
-                            onClick={onMenuButtonClickEventHandler}
+                            onClick={onNotifyItemClickEventHandler(e.uuid, i)}
                         >
                             <ListItemText align="left" primary={e.message} />
                             <ListItemText
@@ -335,10 +359,20 @@ const Header = () => {
     )
 }
 
-// TODO: 추후에는 어떤 User의 Notification인지 판별하는 로직도 필요
-function doFetchUserNotification() {
-    const notiArr = createNotify()
-    return notiArr
+async function doFetchNotifyMessage(uuid) {
+    return notifyFetcher.allUserNotifyAlarm(uuid).then((data) => {
+        const notiArr = []
+        data.forEach((d) => {
+            const notify = new Notify(
+                d.uuid,
+                d.startDate,
+                d.isChecked,
+                d.message
+            )
+            notiArr.push(notify)
+        })
+        return notiArr
+    })
 }
 
 function doFetchMessage() {

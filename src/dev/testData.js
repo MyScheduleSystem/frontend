@@ -3,7 +3,6 @@ import ChatRoomList from "../type/chatRoomList"
 import Friend from "../type/friend"
 import FriendList from "../type/friendList"
 import User from "../type/user"
-import Notify from "../type/notify"
 import Message from "../type/message"
 
 export function createChatRoomList() {
@@ -26,29 +25,6 @@ export function createChatRoomList() {
     }
     const cArr = ChatRoomList.createChatRoomList(arr)
     return cArr
-}
-
-export function createNotify() {
-    const testDays = [
-        "2022-05-12",
-        "2022-05-13",
-        "2022-05-14",
-        "2022-05-15",
-        "2022-05-16",
-        "2022-05-17",
-        "2022-05-18",
-        "2022-05-19",
-        "2022-05-20",
-        "2022-05-21",
-    ]
-    const isChecked = false
-    const message = "Arrived Message!"
-    const nArr = []
-    testDays.forEach((d, i) => {
-        const obj = new Notify(i, d, isChecked, message)
-        nArr.push(obj)
-    })
-    return nArr
 }
 
 export function createMessage() {

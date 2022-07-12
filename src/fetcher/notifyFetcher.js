@@ -6,18 +6,34 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
+    getDocs,
 } from "firebase/firestore"
 import { firestore } from "../service/firebase"
 
 const notifyFetcher = {}
 
-notifyFetcher.allUserNotifyAlarm = function (uuid) {
+notifyFetcher.allUserNotifyAlarm = async function (uuid) {
     if (uuid) {
         const q = query(
             collection(firestore, "notify"),
             where("userUuid", "==", uuid)
         )
-        return q
+        const querySnapshot = await getDocs(q)
+        const result = []
+        if (querySnapshot.empty) {
+            return []
+        } else {
+            querySnapshot.forEach((e) => {
+                const data = e.data()
+                const obj = {}
+                obj.uuid = data.uuid
+                obj.isChecked = data.isChecked
+                obj.message = data.message
+                obj.startDate = data.startDate
+                result.push(obj)
+            })
+        }
+        return result
     }
 }
 
