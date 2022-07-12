@@ -1,4 +1,3 @@
-import moment from "moment"
 import DateUtil from "../util/dateUtil"
 import ErrorUtil from "../util/errorUtil"
 
@@ -72,10 +71,10 @@ DateType.isBetween = function(now, prev, next) {
     ErrorUtil.typeCheck(now, "string")
     ErrorUtil.typeCheck(prev, "string")
     ErrorUtil.typeCheck(next, "string")
-    const startDay = moment().startOf("month").format("YYYY-MM-DD")
-    const endDay = moment().endOf("month").format("YYYY-MM-DD")
-    if(!DateUtil.isBetween(prev, startDay, endDay) || !DateUtil.isBetween(next, startDay, endDay)) return false
-    const between =  DateUtil.isBetween(now, startDay, endDay)
+    const month = DateUtil.dateFromMonth()
+    
+    if(!DateUtil.isBetween(prev, month[0], month[1]) || !DateUtil.isBetween(next, month[0], month[1])) return false
+    const between =  DateUtil.isBetween(now, month[0], month[1])
     return between
 }
 

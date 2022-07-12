@@ -69,6 +69,14 @@ DateUtil.isBetween = function(now, prev, next) {
     return moment(now).isBetween(prev, next, undefined, "[]")
 }
 
+DateUtil.dateFromMonth = function() {
+    const month = []
+    const startDay = moment().startOf("month").format("YYYY-MM-DD")
+    const endDay = moment().endOf("month").format("YYYY-MM-DD")
+    month.push(startDay, endDay)
+    return month
+}
+
 DateUtil.castToDay = function(day) {
     switch(day) {
         case "Mon":
