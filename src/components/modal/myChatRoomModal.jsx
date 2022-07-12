@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import ArrayUtil from "../../util/arrayUtil"
 import { 
     Modal, Card, CardHeader, 
     Checkbox, Divider, ListItemText, 
@@ -11,8 +12,8 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
     const [unCompletedList, setUnCompletedList] = useState([...friend])
     const [completedList, setCompletedList] = useState([])
 
-    const unCompletedChecked = intersection(checked, unCompletedList)
-    const completedChecked = intersection(checked, completedList)
+    const unCompletedChecked = ArrayUtil.intersection(checked, unCompletedList)
+    const completedChecked = ArrayUtil.intersection(checked, completedList)
     
     const onClickCloseModalEventHandler = () => {
         onClickCloseModalEvent(false)
@@ -31,26 +32,26 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
         setChecked(newChecked)
     }
 
-    const onClickNumberOfChekedEventHandler = (items) => intersection(checked, items).length
+    const onClickNumberOfChekedEventHandler = (items) => ArrayUtil.intersection(checked, items).length
 
     const onClickToggleAllEventHandler = (items) => () => {
         if (onClickNumberOfChekedEventHandler(items) === items.length) {
-            setChecked(not(checked, items))
+            setChecked(ArrayUtil.not(checked, items))
         } else {
-            setChecked(union(checked, items))
+            setChecked(ArrayUtil.union(checked, items))
         }
     }
 
     const onClickChekedRgihtEventHandler = () => {
         setCompletedList(completedList.concat(unCompletedChecked))
-        setUnCompletedList(not(unCompletedList, unCompletedChecked))
-        setChecked(not(checked, unCompletedChecked))
+        setUnCompletedList(ArrayUtil.not(unCompletedList, unCompletedChecked))
+        setChecked(ArrayUtil.not(checked, unCompletedChecked))
     }
 
     const onClickChekedLeftEventHandler = () => {
         setUnCompletedList(unCompletedList.concat(completedChecked))
-        setCompletedList(not(completedList, completedChecked))
-        setChecked(not(checked, completedChecked))
+        setCompletedList(ArrayUtil.not(completedList, completedChecked))
+        setChecked(ArrayUtil.not(checked, completedChecked))
     }
 
     const createChatList = (title, friend) => (
@@ -187,15 +188,3 @@ const girdButtonStyle = {
 }
 
 export default MyChatRoomModal
-
-function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1)
-}
-
-function intersection(a, b) {
-    return a.filter((value) => b.indexOf(value) !== -1)
-}
-
-function union(a, b) {
-    return [...a, ...not(b, a)]
-}

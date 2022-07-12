@@ -22,5 +22,17 @@ ArrayUtil.size = function(array) {
     return Lodash.size(array)
 }
 
+ArrayUtil.not = function(checked, array) {
+    return checked.filter((value) => array.indexOf(value) === -1)
+}
+
+ArrayUtil.intersection = function(checked, array) {
+    return checked.filter((value) => array.indexOf(value) !== -1)
+}
+
+ArrayUtil.union = function(checked, array) {
+    return [...checked, ...not(array, checked)]
+}
+
 Object.freeze(ArrayUtil)
 export default ArrayUtil

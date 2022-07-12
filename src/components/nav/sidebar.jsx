@@ -73,18 +73,20 @@ function SideBar({
             name: "ChatRooms",
             path: "/chat",
             icon: <MyIcon name="chat" />,
-            list: <MyChatRoomList 
-                    chatRoom={chatRooms.allChatRooms}
-                    isOpenEditCharRoom={isOpenEditChatRoom}
-                    onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
-                />,
-            add: <Button onClick={onClickAddChatRoomBtnEventHandler}>
-                    추가
-                </Button>,
-            edit: 
-                <Button onClick={onClickChatRoomEditBtnEventHandler}>
-                    편집
-                </Button>,
+            list: 
+                <React.Fragment>
+                    <Button onClick={onClickAddChatRoomBtnEventHandler}>
+                        추가
+                    </Button>
+                    <Button onClick={onClickChatRoomEditBtnEventHandler}>
+                        편집
+                    </Button>
+                    <MyChatRoomList 
+                        chatRoom={chatRooms.allChatRooms}
+                        isOpenEditChatRoom={isOpenEditChatRoom}
+                        onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                    />
+                </React.Fragment>
         },
         {
             name: "Schedule",
@@ -131,15 +133,12 @@ function SideBar({
                             {isOpen && (
                                 <AccordionDetails>
                                     {item.name !== "Friends" ? (
-                                        <React.Fragment>
-                                            {item.add}{item.edit}
-                                            <Link
-                                                to={item.path}
-                                                style={sidebarLinkStyle}
-                                            >
-                                                {item.list}
-                                            </Link>
-                                        </React.Fragment>
+                                        <Link
+                                            to={item.path}
+                                            style={sidebarLinkStyle}
+                                        >
+                                            {item.list}
+                                        </Link>
                                     ) : (
                                         item.list
                                     )}
