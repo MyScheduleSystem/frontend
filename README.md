@@ -124,6 +124,7 @@ useState(setState의) 동작 이해
         View My Info
         View My Alarm
         View My Notify
+        Update My Notify
 
     UserContextProvider
         userReducer
