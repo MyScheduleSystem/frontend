@@ -66,8 +66,7 @@ DateUtil.isSame = function(current, compare) {
 }
 
 DateUtil.isBetween = function(now, prev, next) {
-    
-    return moment(now).isBetween(DateUtil.dateCalculate(prev, 1, "subtract", "days"), moment(next))
+    return moment(now).isBetween(prev, next, undefined, "[]")
 }
 
 DateUtil.castToDay = function(day) {
