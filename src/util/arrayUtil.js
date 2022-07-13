@@ -31,7 +31,7 @@ ArrayUtil.intersection = function(checked, array) {
 }
 
 ArrayUtil.union = function(checked, array) {
-    return [...checked, ...not(array, checked)]
+    return [...checked, ...ArrayUtil.not(array, checked)]
 }
 
 Object.freeze(ArrayUtil)
