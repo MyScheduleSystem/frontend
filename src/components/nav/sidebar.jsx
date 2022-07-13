@@ -45,16 +45,18 @@ function SideBar({
     }
 
     const onClickChatRoomEditBtnEventHandler = () => {
-        setIsOpenEditChatRoom(current => !current)
+        setIsOpenEditChatRoom((current) => !current)
     }
-    
+
     const onClickDeleteBtnEventHandler = (uuid) => () => {
-        setDeleteChatRoom(() => chatRooms.allChatRooms.filter((value) => value.uuid !== uuid))
+        setDeleteChatRoom(
+            chatRooms.allChatRooms.filter((value) => value.uuid !== uuid)
+        )
     }
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
         setIsOpenModal(closed)
-    }, [isOpenModal])
+    }, [])
 
     const items = [
         {
@@ -73,20 +75,21 @@ function SideBar({
             name: "ChatRooms",
             path: "/chat",
             icon: <MyIcon name="chat" />,
-            list: 
+            list: (
                 <React.Fragment>
                     <Button onClick={onClickAddChatRoomBtnEventHandler}>
-                        추가
+                        Create
                     </Button>
                     <Button onClick={onClickChatRoomEditBtnEventHandler}>
-                        편집
+                        Edit
                     </Button>
-                    <MyChatRoomList 
+                    <MyChatRoomList
                         chatRoom={chatRooms.allChatRooms}
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                     />
                 </React.Fragment>
+            ),
         },
         {
             name: "Schedule",
@@ -147,13 +150,13 @@ function SideBar({
                         </Accordion>
                     )
                 })}
-                {isOpenModal && 
-                    <MyChatRoomModal 
+                {isOpenModal && (
+                    <MyChatRoomModal
                         isOpenModal={isOpenModal}
                         onClickCloseModalEvent={onClickCloseModalEventHandler}
                         friend={userFriend}
                     />
-                }
+                )}
             </Box>
         </Box>
     )
