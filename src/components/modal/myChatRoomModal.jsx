@@ -1,20 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
+import AlertPopup from "../popup/alertPopup"
 import ArrayUtil from "../../util/arrayUtil"
 import { 
     Modal, Card, CardHeader, 
     Checkbox, Divider, ListItemText, 
     List, ListItem, ListItemIcon,
-    Grid, Button,
+    Grid, Button, Input,
 } from "@mui/material"
 
-const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
+function MyChatRoomModal({ 
+    isOpenModal, 
+    onClickCloseModalEvent,
+    onAddChatRoomListEvent,
+    friend, 
+}) {
     const [checked, setChecked] = useState([])
     const [unCompletedList, setUnCompletedList] = useState([...friend])
     const [completedList, setCompletedList] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
+    const inputRef = useRef()
 
     const unCompletedChecked = ArrayUtil.intersection(checked, unCompletedList)
     const completedChecked = ArrayUtil.intersection(checked, completedList)
-    
+
     const onClickCloseModalEventHandler = () => {
         onClickCloseModalEvent(false)
     }
@@ -52,6 +60,21 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
         setUnCompletedList(unCompletedList.concat(completedChecked))
         setCompletedList(ArrayUtil.not(completedList, completedChecked))
         setChecked(ArrayUtil.not(checked, completedChecked))
+    }
+
+    const onAddChatRoomListEventHandelr = () => {
+        if (completedList.length < 1) {
+            setIsOpen(true)
+            return
+        }
+        if (inputRef.current.value === "") {
+            inputRef.current.value = "NEW CREATED CHATROOM"
+        }
+        onAddChatRoomListEvent(inputRef.current.value, completedList)
+    }
+
+    const onClickOpenEventHandler = (isCheked) => {
+        setIsOpen(isCheked)
     }
 
     const createChatList = (title, friend) => (
@@ -113,40 +136,54 @@ const MyChatRoomModal = ({ isOpenModal, onClickCloseModalEvent, friend }) => {
     )
 
     return (
-        <Modal
-            sx={modalStyle}
-            open={isOpenModal}
-            onClose={onClickCloseModalEventHandler}
-        >
-            <Grid container={true} sx={girdStyle} spacing={2}>
-                <Grid item={true}> {createChatList("unCompletedList", unCompletedList)} </Grid>
-                <Grid item={true}>
-                    <Grid container={true} sx={girdButtonListStyle} direction="column">
-                        <Button
-                            sx={girdButtonStyle}
-                            variant="outlined"
-                            size="large"
-                            onClick={onClickChekedRgihtEventHandler}
-                            disabled={unCompletedChecked.length === 0}
-                            aria-label="move selected right"
-                        >
-                            &gt;
-                        </Button>
-                        <Button
-                            sx={girdButtonStyle}
-                            variant="outlined"
-                            size="large"
-                            onClick={onClickChekedLeftEventHandler}
-                            disabled={completedChecked.length === 0}
-                            aria-label="move selected left"
-                        >
-                            &lt;
-                        </Button>
+        <React.Fragment>
+            <AlertPopup 
+                isShowPopup={isOpen}
+                setIsShowPopupEvent={onClickOpenEventHandler}
+                message="Please check your friendlist"
+            />
+            <Modal
+                sx={modalStyle}
+                open={isOpenModal}
+                onClose={onClickCloseModalEventHandler}
+            >
+                <Grid container={true} sx={girdStyle} spacing={2}>
+                <Input inputRef={inputRef} />
+                <Button 
+                    variant="contained"
+                    onClick={onAddChatRoomListEventHandelr}
+                >
+                    CREATE
+                </Button>
+                    <Grid item={true}> {createChatList("unCompletedList", unCompletedList)} </Grid>
+                    <Grid item={true}>
+                        <Grid container={true} sx={girdButtonListStyle} direction="column">
+                            <Button
+                                sx={girdButtonStyle}
+                                variant="outlined"
+                                size="large"
+                                onClick={onClickChekedRgihtEventHandler}
+                                disabled={unCompletedChecked.length === 0}
+                                aria-label="move selected right"
+                            >
+                                &gt;
+                            </Button>
+                            <Button
+                                sx={girdButtonStyle}
+                                variant="outlined"
+                                size="large"
+                                onClick={onClickChekedLeftEventHandler}
+                                disabled={completedChecked.length === 0}
+                                aria-label="move selected left"
+                            >
+                                &lt;
+                            </Button>
+                        </Grid>
                     </Grid>
+                    <Grid item={true}> {createChatList("completedList", completedList)} </Grid>
                 </Grid>
-                <Grid item={true}> {createChatList("completedList", completedList)} </Grid>
-            </Grid>
-        </Modal>
+            </Modal>
+        </React.Fragment>
     )
 }
 
