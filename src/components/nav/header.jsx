@@ -24,9 +24,12 @@ import imageUploader from "../../service/imageUploaderService"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 import Notify from "../../type/notify"
+import DateType from "../../type/dateType"
+import ChatRoom from "../../type/chatRoom"
 import userFetcher from "../../fetcher/userFetcher"
 import notifyFetcher from "../../fetcher/notifyFetcher"
 import messageFetcher from "../../fetcher/messageFetcher"
+import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
 
 const drawerWidth = 240
@@ -109,6 +112,7 @@ const Header = () => {
     const [friendIndex, setFriendIndex] = useState(0)
     const [notify, setNotify] = useState([])
     const [message, setMessage] = useState([])
+    const [chatRoom, setChatRoom] = useState([])
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -134,7 +138,8 @@ const Header = () => {
                 return data.fArray
             })
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
-
+            
+        doFetchChatRoomList.call(this, uuid).then((chat) => setChatRoom(chat))
         doFetchNotifyMessage.call(this, uuid).then((data) => setNotify(data))
         doFetchUserMessage.call(this, uuid).then((msg) => setMessage(msg))
     }, [])
@@ -232,6 +237,15 @@ const Header = () => {
         setMsgAnchorEl(null)
     }
 
+    const onAddChatRoomListEventHandler = useCallback((chatRoomName, friendList) => {
+        const arr = []
+        friendList.forEach(item => {
+            arr.push(item.uuid)
+        })
+        chatRoomFetcher.createChatRoom(userObj.fetchOption.uuid, arr, DateType.createDate(), chatRoomName)
+    }, [])
+
+
     return (
         <Box role="presentation">
             <Box sx={headerBoxStyle}>
@@ -303,10 +317,10 @@ const Header = () => {
                     <SideBar
                         isOpen={isOpen}
                         userFriend={friends}
-                        onClickFriendButtonClickEvent={
-                            onClickFriendButtonClickEventHandler
-                        }
+                        chatRoomList={chatRoom}
+                        onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
                         onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                        onAddChatRoomListEvent={onAddChatRoomListEventHandler}
                     />
                 </Drawer>
             </Box>
@@ -460,6 +474,18 @@ async function doFetchFriendInformation(f, setFriends) {
             }
         })
     })
+}
+
+async function doFetchChatRoomList(uuid) {
+    return chatRoomFetcher.allChatRoomList(uuid).then((result) => {
+        const chatRoomArr = []
+        result.forEach((item) => {
+            const obj = new ChatRoom(uuid, item.chatRoomName, item.startDate, item.userUuid)
+            chatRoomArr.push(obj)
+        })
+        return chatRoomArr
+    })
+
 }
 
 const headerBoxStyle = {

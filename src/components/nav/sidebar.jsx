@@ -4,7 +4,7 @@ import MyChatRoomList from "./list/myChatRoomList"
 import MyChatRoomModal from "../modal/myChatRoomModal"
 import MyIcon from "../../icon/myIcon"
 import { Link } from "react-router-dom"
-import { createChatRoomList } from "../../dev/testData"
+import ChatRoomList from "../../type/chatRoomList"
 import {
     Accordion,
     AccordionDetails,
@@ -14,16 +14,15 @@ import {
     Typography,
     Button,
 } from "@mui/material"
-import Lodash from "lodash"
 import React from "react"
-
-const chatRooms = doChatRoomFetchResult.call(this)
 
 function SideBar({
     isOpen,
     userFriend,
+    chatRoomList,
     onClickFriendButtonClickEvent,
     onSignoutBtnClickEvnet,
+    onAddChatRoomListEvent
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -40,9 +39,9 @@ function SideBar({
         onSignoutBtnClickEvnet()
     }
 
-    const onClickAddChatRoomBtnEventHandler = () => {
+    const onClickAddChatRoomBtnEventHandler = useCallback(() => {
         setIsOpenModal(true)
-    }
+    }, [])
 
     const onClickChatRoomEditBtnEventHandler = () => {
         setIsOpenEditChatRoom((current) => !current)
@@ -56,6 +55,11 @@ function SideBar({
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
         setIsOpenModal(closed)
+    }, [])
+
+    const onAddChatRoomListEventHanlder = useCallback((chatRoomName, friendList) => {
+        onAddChatRoomListEvent(chatRoomName, friendList)
+        setIsOpenModal(false)
     }, [])
 
     const items = [
@@ -84,7 +88,7 @@ function SideBar({
                         Edit
                     </Button>
                     <MyChatRoomList
-                        chatRoom={chatRooms.allChatRooms}
+                        chatRoom={ChatRoomList.createChatRoomList(chatRoomList).$_chatRoomList}
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                     />
@@ -154,23 +158,14 @@ function SideBar({
                     <MyChatRoomModal
                         isOpenModal={isOpenModal}
                         onClickCloseModalEvent={onClickCloseModalEventHandler}
+                        onClickAddChatRoomBtnEvent={onClickAddChatRoomBtnEventHandler}
+                        onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
                         friend={userFriend}
                     />
                 )}
             </Box>
         </Box>
     )
-}
-
-function doChatRoomFetchResult() {
-    const chatRoomList = createChatRoomList()
-    const fetchResult = {}
-    fetchResult.allChatRooms = chatRoomList.chatRoomList()
-    fetchResult.target = {}
-    Lodash.forEach(chatRoomList.asChatRoomObject(), (v, k) => {
-        fetchResult.target[k] = v
-    })
-    return fetchResult
 }
 
 const sidebarStyle = {
