@@ -1,17 +1,15 @@
-import { 
-    ListItemText, ListItem, ListItemIcon,
-    Checkbox,
-} from "@mui/material"
+import { ListItemText, ListItem, ListItemIcon, Checkbox } from "@mui/material"
 import React from "react"
 import { useDrop, useDrag } from "react-dnd"
 
-const SelectList = ({ 
-    friend, index, type,
+const SelectList = ({
+    friend,
+    index,
+    type,
     checked,
-    onMoveDragEvent, 
+    onMoveDragEvent,
     onClickToggleEvent,
 }) => {
-
     const [{ isDraggbles }, dragRef] = useDrag(() => ({
         type: type,
         item: () => ({ ...friend, index }),
@@ -44,11 +42,8 @@ const SelectList = ({
                 </ListItemIcon>
                 <ListItemText primary={`${friend.nickname}`} />
             </ListItem>
-            <ListItem />
         </React.Fragment>
     )
 }
-
-
 
 export default SelectList
