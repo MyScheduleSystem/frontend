@@ -142,7 +142,7 @@ const Header = () => {
                 return data.fArray
             })
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
-            
+
         doFetchChatRoomList.call(this, uuid).then((chat) => setChatRoom(chat))
         doFetchNotifyMessage.call(this, uuid).then((data) => setNotify(data))
         doFetchUserMessage.call(this, uuid).then((msg) => setMessage(msg))
@@ -241,13 +241,21 @@ const Header = () => {
         setMsgAnchorEl(null)
     }
 
-    const onAddChatRoomListEventHandler = useCallback((chatRoomName, friendList) => {
-        const arr = []
-        friendList.forEach(item => {
-            arr.push(item.uuid)
-        })
-        chatRoomFetcher.createChatRoom(userObj.fetchOption.uuid, arr, DateType.createDate(), chatRoomName)
-    }, [])
+    const onAddChatRoomListEventHandler = useCallback(
+        (chatRoomName, friendList) => {
+            const arr = []
+            friendList.forEach((item) => {
+                arr.push(item.uuid)
+            })
+            chatRoomFetcher.createChatRoom(
+                userObj.fetchOption.uuid,
+                arr,
+                DateType.createDate(),
+                chatRoomName
+            )
+        },
+        []
+    )
 
     const onClickDeleteBtnEventHandler = useCallback((isOpen) => {
         setIsOpenRemoveAlert(isOpen)
@@ -256,7 +264,6 @@ const Header = () => {
     const onRemoveChatRoomListEventHandler = (isChecked) => {
         setIsOpenRemoveAlert(isChecked)
     }
-
 
     return (
         <Box role="presentation">
@@ -331,15 +338,21 @@ const Header = () => {
                         isShowPopup={isOpenRemoveAlert}
                         onCheckPopupEvent={onRemoveChatRoomListEventHandler}
                     />
-                    <DndProvider backend={HTML5Backend}>    
+                    <DndProvider backend={HTML5Backend}>
                         <SideBar
                             isOpen={isOpen}
                             userFriend={friends}
                             chatRoomList={chatRoom}
-                            onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+                            onClickFriendButtonClickEvent={
+                                onClickFriendButtonClickEventHandler
+                            }
                             onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
-                            onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
-                            onAddChatRoomListEvent={onAddChatRoomListEventHandler}
+                            onSignoutBtnClickEvnet={
+                                onSignoutBtnClickEvnetHandler
+                            }
+                            onAddChatRoomListEvent={
+                                onAddChatRoomListEventHandler
+                            }
                         />
                     </DndProvider>
                 </Drawer>
@@ -497,15 +510,7 @@ async function doFetchFriendInformation(f, setFriends) {
 }
 
 async function doFetchChatRoomList(uuid) {
-    return chatRoomFetcher.allChatRoomList(uuid).then((result) => {
-        const chatRoomArr = []
-        result.forEach((item) => {
-            const obj = new ChatRoom(uuid, item.chatRoomName, item.startDate, item.userUuid)
-            chatRoomArr.push(obj)
-        })
-        return chatRoomArr
-    })
-
+    return chatRoomFetcher.allChatRoomLists(uuid).then((result) => result)
 }
 
 const headerBoxStyle = {
