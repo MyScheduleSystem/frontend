@@ -23,7 +23,7 @@ function SideBar({
     onClickFriendButtonClickEvent,
     onClickDeleteBtnEvent,
     onSignoutBtnClickEvnet,
-    onAddChatRoomListEvent
+    onAddChatRoomListEvent,
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -31,7 +31,9 @@ function SideBar({
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
             onClickFriendButtonClickEvent(isChecked, index, false)
-    }, [])
+        },
+        []
+    )
 
     const onSignoutBtnClickEvnetHandler = () => {
         onSignoutBtnClickEvnet()
@@ -45,18 +47,21 @@ function SideBar({
         setIsOpenEditChatRoom((current) => !current)
     }
 
-    const onClickDeleteBtnEventHandler = useCallback((isOpen, uuid) => {
-        onClickDeleteBtnEvent(isOpen)
+    const onClickDeleteBtnEventHandler = useCallback((checked, uuid) => {
+        onClickDeleteBtnEvent(checked, uuid)
     }, [])
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
         setIsOpenModal(closed)
     }, [])
 
-    const onAddChatRoomListEventHanlder = useCallback((chatRoomName, friendList) => {
-        onAddChatRoomListEvent(chatRoomName, friendList)
-        setIsOpenModal(false)
-    }, [])
+    const onAddChatRoomListEventHanlder = useCallback(
+        (chatRoomName, friendList) => {
+            onAddChatRoomListEvent(chatRoomName, friendList)
+            setIsOpenModal(false)
+        },
+        []
+    )
 
     const items = [
         {
@@ -73,7 +78,7 @@ function SideBar({
         },
         {
             name: "ChatRooms",
-            path: "/chat",
+            path: "/",
             icon: <MyIcon name="chat" />,
             list: (
                 <React.Fragment>
@@ -84,7 +89,10 @@ function SideBar({
                         Edit
                     </Button>
                     <MyChatRoomList
-                        chatRoom={ChatRoomList.createChatRoomList(chatRoomList).$_chatRoomList}
+                        chatRoom={
+                            ChatRoomList.createChatRoomList(chatRoomList)
+                                .$_chatRoomList
+                        }
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                     />
@@ -151,15 +159,17 @@ function SideBar({
                     )
                 })}
             </Box>
-            {isOpenModal && 
+            {isOpenModal && (
                 <MyChatRoomModal
                     isOpenModal={isOpenModal}
                     onClickCloseModalEvent={onClickCloseModalEventHandler}
-                    onClickAddChatRoomBtnEvent={onClickAddChatRoomBtnEventHandler}
+                    onClickAddChatRoomBtnEvent={
+                        onClickAddChatRoomBtnEventHandler
+                    }
                     onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
                     friend={userFriend}
                 />
-            }
+            )}
         </Box>
     )
 }

@@ -1,18 +1,18 @@
-import { 
-    doc, 
-    deleteDoc,
-    addDoc,
-    collection,
-    getDocs,
-    query,
-    where,
-} from "firebase/firestore"
+import { doc, deleteDoc, addDoc, collection, getDocs } from "firebase/firestore"
+import ChatRoom from "../type/chatRoom"
 import { firestore } from "../service/firebase"
 
 const chatRoomFetcher = {}
 
-chatRoomFetcher.createChatRoom = function(uuid, userUuid, startDate, chatRoomName) {
-    addDoc(collection(firestore, "chatroom"), {
+// chatRoomType에는 doc의 id가 있어야 하고
+// chatRoom field에는 user들의 id가 있어야만 한다.
+chatRoomFetcher.createChatRoom = async function (
+    uuid,
+    userUuid,
+    startDate,
+    chatRoomName
+) {
+    return addDoc(collection(firestore, "chatroom"), {
         uuid: uuid,
         userUuid: userUuid,
         startDate: startDate,
@@ -20,33 +20,29 @@ chatRoomFetcher.createChatRoom = function(uuid, userUuid, startDate, chatRoomNam
     })
 }
 
-chatRoomFetcher.allChatRoomList = async function(uuid) {
+chatRoomFetcher.allChatRoomLists = async function (uuid) {
+    const qs = await getDocs(collection(firestore, "chatroom"))
+    const result = []
     if (uuid) {
-        const q = query(
-            collection(firestore, "chatroom"),
-            where("uuid", "==", uuid)
-        )
-        const querySnapShot = await getDocs(q)
-        const result = []
-        if (querySnapShot.empty) {
-            return []
-        } else {
-            querySnapShot.forEach((e) => {
-                const data = e.data()
-                const obj = {}
-                obj.uuid = data.uuid
-                obj.chatRoomName = data.chatRoomName
-                obj.startDate = data.startDate
-                obj.userUuid = data.userUuid
-                result.push(obj)
-            })
-        }
+        qs.forEach((doc) => {
+            const obj = doc.data()
+            if (obj.userUuid.includes(uuid)) {
+                result.push(
+                    new ChatRoom(
+                        doc.id,
+                        obj.chatRoomName,
+                        obj.startDate,
+                        obj.userUuid
+                    )
+                )
+            }
+        })
         return result
     }
 }
 
-chatRoomFetcher.deleteChatRoom = async function(chatRoomUuid) {
-    const chatRoom = doc(firestore, "chatRoom", `${chatRoomUuid}`)
+chatRoomFetcher.deleteChatRoom = async function (chatRoomUuid) {
+    const chatRoom = doc(firestore, "chatroom", `${chatRoomUuid}`)
     await deleteDoc(chatRoom)
 }
 

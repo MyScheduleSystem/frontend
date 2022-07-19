@@ -1,44 +1,64 @@
-import React from "react"
-import {
-    IconButton,
-    ListItem,
-    ListItemButton,
-    Typography,
-} from "@mui/material"
+import React, { useState, useCallback } from "react"
 import MyIcon from "../../../icon/myIcon"
+import CheckPopup from "../../popup/checkPopup"
+import { IconButton, ListItem, ListItemButton, Typography } from "@mui/material"
 
-function MyChatRoomList({ chatRoom, isOpenEditChatRoom, onClickDeleteBtnEvent }) {
+function MyChatRoomList({
+    chatRoom,
+    isOpenEditChatRoom,
+    onClickDeleteBtnEvent,
+}) {
+    const [isOpen, setIsOpen] = useState(false)
+    const [selected, setSelected] = useState("")
+
     const onClickDeleteBtnEventHandler = (uuid) => () => {
-        onClickDeleteBtnEvent(uuid)
+        setIsOpen(true)
+        setSelected(uuid)
     }
 
+    const onClickDeleteCheckButtonEventHanlder = useCallback(
+        (checked) => {
+            onClickDeleteBtnEvent(checked, selected)
+            setIsOpen(false)
+        },
+        [selected]
+    )
+
     return (
-        chatRoom.length > 0 && chatRoom.map((c, i) => {
-            return (
-                <React.Fragment key={i}>
-                    {!isOpenEditChatRoom ?
-                        <ListItemButton
-                            divider={true}
-                        >
-                            <Typography>{c.chatRoomName}</Typography>
-                        </ListItemButton>
-                        :
-                        <ListItem
-                            secondaryAction={
-                                <IconButton 
-                                    edge="end"
-                                    onClick={onClickDeleteBtnEventHandler(i)}
+        <React.Fragment>
+            {chatRoom.length > 0 &&
+                chatRoom.map((c) => {
+                    return (
+                        <React.Fragment key={c.uuid}>
+                            {!isOpenEditChatRoom ? (
+                                <ListItemButton divider={true}>
+                                    <Typography>{c.chatRoomName}</Typography>
+                                </ListItemButton>
+                            ) : (
+                                <ListItem
+                                    secondaryAction={
+                                        <IconButton
+                                            edge="end"
+                                            onClick={onClickDeleteBtnEventHandler(
+                                                c.uuid
+                                            )}
+                                        >
+                                            <MyIcon name="delete" />
+                                        </IconButton>
+                                    }
                                 >
-                                    <MyIcon name="delete" />
-                                </IconButton>
-                            }
-                        >
-                            <Typography>{c.chatRoomName}</Typography>
-                        </ListItem>
-                    }
-                </React.Fragment>
-            )
-        })
+                                    <Typography>{c.chatRoomName}</Typography>
+                                </ListItem>
+                            )}
+                        </React.Fragment>
+                    )
+                })}
+            <CheckPopup
+                message="Are you sure you want to delete?"
+                isShowPopup={isOpen}
+                onCheckPopupEvent={onClickDeleteCheckButtonEventHanlder}
+            />
+        </React.Fragment>
     )
 }
 
