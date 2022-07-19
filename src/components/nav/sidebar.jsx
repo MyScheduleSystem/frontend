@@ -47,8 +47,8 @@ function SideBar({
         setIsOpenEditChatRoom((current) => !current)
     }
 
-    const onClickDeleteBtnEventHandler = useCallback((isOpen, uuid) => {
-        onClickDeleteBtnEvent(isOpen)
+    const onClickDeleteBtnEventHandler = useCallback((checked, uuid) => {
+        onClickDeleteBtnEvent(checked, uuid)
     }, [])
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
