@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
-import CheckPopup from "../popup/checkPopup"
 import {
     Box,
     IconButton,
@@ -119,7 +118,6 @@ const Header = () => {
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
-    const [isOpenRemoveAlert, setIsOpenRemoveAlert] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
     const isOepnMsg = Boolean(msgAnchorEl)
 
@@ -247,23 +245,32 @@ const Header = () => {
             friendList.forEach((item) => {
                 arr.push(item.uuid)
             })
-            chatRoomFetcher.createChatRoom(
+            arr.push(userObj.fetchOption.uuid)
+            const result = chatRoomFetcher.createChatRoom(
                 userObj.fetchOption.uuid,
                 arr,
                 DateType.createDate(),
                 chatRoomName
             )
+            result.then((data) => {
+                const obj = new ChatRoom(
+                    data.id,
+                    chatRoomName,
+                    DateType.createDate(),
+                    arr
+                )
+                setChatRoom((prev) => [...prev, obj])
+            })
         },
         []
     )
 
-    const onClickDeleteBtnEventHandler = useCallback((isOpen) => {
-        setIsOpenRemoveAlert(isOpen)
+    const onClickDeleteBtnEventHandler = useCallback((checked, uuid) => {
+        if (checked) {
+            chatRoomFetcher.deleteChatRoom(uuid)
+            setChatRoom((prev) => prev.filter((item) => item.uuid != uuid))
+        }
     }, [])
-
-    const onRemoveChatRoomListEventHandler = (isChecked) => {
-        setIsOpenRemoveAlert(isChecked)
-    }
 
     return (
         <Box role="presentation">
@@ -333,11 +340,6 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <CheckPopup
-                        message="Are you sure you want to delete?"
-                        isShowPopup={isOpenRemoveAlert}
-                        onCheckPopupEvent={onRemoveChatRoomListEventHandler}
-                    />
                     <DndProvider backend={HTML5Backend}>
                         <SideBar
                             isOpen={isOpen}
