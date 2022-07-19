@@ -6,13 +6,13 @@ const chatRoomFetcher = {}
 
 // chatRoomType에는 doc의 id가 있어야 하고
 // chatRoom field에는 user들의 id가 있어야만 한다.
-chatRoomFetcher.createChatRoom = function (
+chatRoomFetcher.createChatRoom = async function (
     uuid,
     userUuid,
     startDate,
     chatRoomName
 ) {
-    addDoc(collection(firestore, "chatroom"), {
+    return addDoc(collection(firestore, "chatroom"), {
         uuid: uuid,
         userUuid: userUuid,
         startDate: startDate,
@@ -42,7 +42,7 @@ chatRoomFetcher.allChatRoomLists = async function (uuid) {
 }
 
 chatRoomFetcher.deleteChatRoom = async function (chatRoomUuid) {
-    const chatRoom = doc(firestore, "chatRoom", `${chatRoomUuid}`)
+    const chatRoom = doc(firestore, "chatroom", `${chatRoomUuid}`)
     await deleteDoc(chatRoom)
 }
 
