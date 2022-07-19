@@ -21,19 +21,17 @@ function SideBar({
     userFriend,
     chatRoomList,
     onClickFriendButtonClickEvent,
+    onClickDeleteBtnEvent,
     onSignoutBtnClickEvnet,
     onAddChatRoomListEvent
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
-    const [deleteChatRoom, setDeleteChatRoom] = useState()
 
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
             onClickFriendButtonClickEvent(isChecked, index, false)
-        },
-        []
-    )
+    }, [])
 
     const onSignoutBtnClickEvnetHandler = () => {
         onSignoutBtnClickEvnet()
@@ -47,11 +45,9 @@ function SideBar({
         setIsOpenEditChatRoom((current) => !current)
     }
 
-    const onClickDeleteBtnEventHandler = (uuid) => () => {
-        setDeleteChatRoom(
-            chatRooms.allChatRooms.filter((value) => value.uuid !== uuid)
-        )
-    }
+    const onClickDeleteBtnEventHandler = useCallback((isOpen, uuid) => {
+        onClickDeleteBtnEvent(isOpen)
+    }, [])
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
         setIsOpenModal(closed)
@@ -154,16 +150,16 @@ function SideBar({
                         </Accordion>
                     )
                 })}
-                {isOpenModal && (
-                    <MyChatRoomModal
-                        isOpenModal={isOpenModal}
-                        onClickCloseModalEvent={onClickCloseModalEventHandler}
-                        onClickAddChatRoomBtnEvent={onClickAddChatRoomBtnEventHandler}
-                        onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
-                        friend={userFriend}
-                    />
-                )}
             </Box>
+            {isOpenModal && 
+                <MyChatRoomModal
+                    isOpenModal={isOpenModal}
+                    onClickCloseModalEvent={onClickCloseModalEventHandler}
+                    onClickAddChatRoomBtnEvent={onClickAddChatRoomBtnEventHandler}
+                    onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
+                    friend={userFriend}
+                />
+            }
         </Box>
     )
 }

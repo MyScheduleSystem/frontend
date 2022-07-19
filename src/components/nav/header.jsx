@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
+import CheckPopup from "../popup/checkPopup"
 import {
     Box,
     IconButton,
@@ -20,6 +21,8 @@ import {
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import imageUploader from "../../service/imageUploaderService"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
@@ -116,6 +119,7 @@ const Header = () => {
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
+    const [isOpenRemoveAlert, setIsOpenRemoveAlert] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
     const isOepnMsg = Boolean(msgAnchorEl)
 
@@ -245,6 +249,14 @@ const Header = () => {
         chatRoomFetcher.createChatRoom(userObj.fetchOption.uuid, arr, DateType.createDate(), chatRoomName)
     }, [])
 
+    const onClickDeleteBtnEventHandler = useCallback((isOpen) => {
+        setIsOpenRemoveAlert(isOpen)
+    }, [])
+
+    const onRemoveChatRoomListEventHandler = (isChecked) => {
+        setIsOpenRemoveAlert(isChecked)
+    }
+
 
     return (
         <Box role="presentation">
@@ -314,14 +326,22 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <SideBar
-                        isOpen={isOpen}
-                        userFriend={friends}
-                        chatRoomList={chatRoom}
-                        onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
-                        onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
-                        onAddChatRoomListEvent={onAddChatRoomListEventHandler}
+                    <CheckPopup
+                        message="Are you sure you want to delete?"
+                        isShowPopup={isOpenRemoveAlert}
+                        onCheckPopupEvent={onRemoveChatRoomListEventHandler}
                     />
+                    <DndProvider backend={HTML5Backend}>    
+                        <SideBar
+                            isOpen={isOpen}
+                            userFriend={friends}
+                            chatRoomList={chatRoom}
+                            onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+                            onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                            onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                            onAddChatRoomListEvent={onAddChatRoomListEventHandler}
+                        />
+                    </DndProvider>
                 </Drawer>
             </Box>
             {friends && myInfo && (

@@ -1,21 +1,23 @@
 import React, { useState, useRef } from "react"
+import { useDrop } from "react-dnd"
 import AlertPopup from "../popup/alertPopup"
+import SelectList from "../nav/list/selectList"
 import ArrayUtil from "../../util/arrayUtil"
 import { 
-    Modal, Card, CardHeader, 
-    Checkbox, Divider, ListItemText, 
-    List, ListItem, ListItemIcon,
+    Modal, Card, CardHeader,
+    Checkbox, Divider, List,
     Grid, Button, Input,
 } from "@mui/material"
+
 
 function MyChatRoomModal({ 
     isOpenModal, 
     onClickCloseModalEvent,
     onAddChatRoomListEvent,
-    friend, 
+    friend,
 }) {
     const [checked, setChecked] = useState([])
-    const [unCompletedList, setUnCompletedList] = useState([...friend])
+    const [unCompletedList, setUnCompletedList] = useState([ ...friend ])
     const [completedList, setCompletedList] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     const inputRef = useRef()
@@ -77,63 +79,25 @@ function MyChatRoomModal({
         setIsOpen(isCheked)
     }
 
-    const createChatList = (title, friend) => (
-        <Card>
-            <CardHeader
-                sx={cardHeaderStyle}
-                avatar={
-                    <Checkbox
-                        onClick={onClickToggleAllEventHandler(friend)}
-                        checked={
-                            onClickNumberOfChekedEventHandler(friend) === friend.length &&
-                            friend.length !== 0}
-                        indeterminate={
-                            onClickNumberOfChekedEventHandler(friend) !== friend.length && 
-                            onClickNumberOfChekedEventHandler(friend) !== 0
-                        }
-                        disabled={friend.length === 0}
-                        inputProps={{
-                            "aria-label": "all items selected",
-                        }}
-                    />
-                }
-                title={title}
-                subheader={`${onClickNumberOfChekedEventHandler(friend)}/${friend.length} selected`}
-            />
-            <Divider />
-            <List
-                sx={listStyle}
-                dense={true}
-                component="div"
-                role="list"
-            >
-                {friend.map((value) => {
-                const labelId = `transfer-list-all-item-${value.uuid}-label`
+    const [{ isOver }, unCompletedOverRef] = useDrop({
+        accept: "unCompletedList",
+        collect: (monitor) => ({ isOver: !!monitor.isOver() }),
+    })
 
-                return (
-                    <ListItem
-                        key={value.uuid}
-                        role="listitem"
-                        button={true}
-                        onClick={onClickToggleEventHanlder(value)}
-                    >
-                        <ListItemIcon>
-                            <Checkbox
-                                checked={checked.indexOf(value) !== -1}
-                                tabIndex={-1}
-                                disableRipple
-                                inputProps={{ "aria-labelledby": labelId }}
-                            />
-                        </ListItemIcon>
-                        <ListItemText id={labelId} primary={`${value.nickname}`} />
-                    </ListItem>
-                    
-                )
-                })}
-                <ListItem />
-            </List>
-        </Card>
-    )
+    const [{ isOver: isCompletedOver }, completedOverRef] = useDrop({
+        accept: "completedList",
+        collect: (monitor) => ({ isOver: !!monitor.isOver() }),
+    })
+
+    const onMoveUnCompletedEventHandler = (item) => {
+        setUnCompletedList((prev) => prev.filter((friend) => friend.uuid !== item.uuid))
+        setCompletedList((prev) => [...prev, item])
+    }
+
+    const onMoveCompletedEventHandler = (item) => {
+        setCompletedList((prev) => prev.filter((friend) => friend.uuid !== item.uuid))
+        setUnCompletedList((prev) => [...prev, item])
+    }
 
     return (
         <React.Fragment>
@@ -155,7 +119,54 @@ function MyChatRoomModal({
                 >
                     CREATE
                 </Button>
-                    <Grid item={true}> {createChatList("unCompletedList", unCompletedList)} </Grid>
+                    <Grid item={true}>
+                        <Card>
+                            <CardHeader 
+                                sx={cardHeaderStyle}
+                                avatar={
+                                    <Checkbox
+                                        onClick={onClickToggleAllEventHandler(unCompletedList)}
+                                        checked={
+                                            onClickNumberOfChekedEventHandler(unCompletedList) === unCompletedList.length &&
+                                            unCompletedList.length !== 0}
+                                        indeterminate={
+                                            onClickNumberOfChekedEventHandler(unCompletedList) !== unCompletedList.length && 
+                                            onClickNumberOfChekedEventHandler(unCompletedList) !== 0
+                                        }
+                                        disabled={unCompletedList.length === 0}
+                                        inputProps={{
+                                            "aria-label": "all items selected",
+                                        }}
+                                    />
+                                }
+                                title="unCompletedList"
+                                subheader={`${onClickNumberOfChekedEventHandler(unCompletedList)}/${unCompletedList.length} selected`}/>
+                            <Divider />
+                            <List
+                                sx={listStyle}
+                                ref={completedOverRef}
+                                dense={true}
+                                component="div"
+                                role="list"
+                            >
+                                {unCompletedList.map((friend, index) => {
+                                    return(
+                                        <SelectList
+                                            key={friend.uuid}
+                                            friend={friend}
+                                            index={index}
+                                            type="unCompletedList"
+                                            checked={checked}
+                                            onMoveDragEvent={onMoveUnCompletedEventHandler}
+                                            onClickToggleAllEvent={onClickToggleAllEventHandler}
+                                            onClickNumberOfChekedEvent={onClickNumberOfChekedEventHandler}
+                                            onClickToggleEvent={onClickToggleEventHanlder}
+                                        />
+                                    )
+                                })}
+                            </List>
+                        </Card>
+                        </Grid>
                     <Grid item={true}>
                         <Grid container={true} sx={girdButtonListStyle} direction="column">
                             <Button
@@ -180,7 +191,54 @@ function MyChatRoomModal({
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid item={true}> {createChatList("completedList", completedList)} </Grid>
+                    <Grid item={true}>
+                        <Card>
+                            <CardHeader 
+                                sx={cardHeaderStyle}
+                                avatar={
+                                    <Checkbox
+                                        onClick={onClickToggleAllEventHandler(completedList)}
+                                        checked={
+                                            onClickNumberOfChekedEventHandler(completedList) === completedList.length &&
+                                            completedList.length !== 0}
+                                        indeterminate={
+                                            onClickNumberOfChekedEventHandler(completedList) !== completedList.length && 
+                                            onClickNumberOfChekedEventHandler(completedList) !== 0
+                                        }
+                                        disabled={completedList.length === 0}
+                                        inputProps={{
+                                            "aria-label": "all items selected",
+                                        }}
+                                    />
+                                }
+                                title="CompletedList"
+                                subheader={`${onClickNumberOfChekedEventHandler(completedList)}/${completedList.length} selected`}/>
+                            <Divider />
+                            <List
+                                sx={listStyle}
+                                ref={unCompletedOverRef}
+                                dense={true}
+                                component="div"
+                                role="list"
+                            >
+                                {completedList.map((friend, index) => {
+                                    return(
+                                        <SelectList
+                                            key={index + friend.uuid}
+                                            friend={friend}
+                                            index={index}
+                                            type="completedList"
+                                            checked={checked}
+                                            onMoveDragEvent={onMoveCompletedEventHandler}
+                                            onClickToggleAllEvent={onClickToggleAllEventHandler}
+                                            onClickNumberOfChekedEvent={onClickNumberOfChekedEventHandler}
+                                            onClickToggleEvent={onClickToggleEventHanlder}
+                                        />
+                                    )
+                                })}
+                            </List>
+                        </Card>
+                    </Grid>
                 </Grid>
             </Modal>
         </React.Fragment>
@@ -204,13 +262,13 @@ const girdStyle = {
     alignItems: "center",
 }
 
+const girdButtonListStyle = {
+    alignItems: "center",
+}
+
 const cardHeaderStyle = {
     px: 2,
     py: 1,
-}
-
-const girdButtonListStyle = {
-    alignItems: "center",
 }
 
 const listStyle = {
