@@ -1,31 +1,29 @@
 import React from "react"
-import {
-    IconButton,
-    ListItem,
-    ListItemButton,
-    Typography,
-} from "@mui/material"
+import { IconButton, ListItem, ListItemButton, Typography } from "@mui/material"
 import MyIcon from "../../../icon/myIcon"
 
-function MyChatRoomList({ chatRoom, isOpenEditChatRoom, onClickDeleteBtnEvent }) {
+function MyChatRoomList({
+    chatRoom,
+    isOpenEditChatRoom,
+    onClickDeleteBtnEvent,
+}) {
     const onClickDeleteBtnEventHandler = (uuid) => () => {
         onClickDeleteBtnEvent(uuid)
     }
 
     return (
-        chatRoom.length > 0 && chatRoom.map((c, i) => {
+        chatRoom.length > 0 &&
+        chatRoom.map((c, i) => {
             return (
-                <React.Fragment key={i}>
-                    {!isOpenEditChatRoom ?
-                        <ListItemButton
-                            divider={true}
-                        >
+                <React.Fragment key={c.uuid}>
+                    {!isOpenEditChatRoom ? (
+                        <ListItemButton divider={true}>
                             <Typography>{c.chatRoomName}</Typography>
                         </ListItemButton>
-                        :
+                    ) : (
                         <ListItem
                             secondaryAction={
-                                <IconButton 
+                                <IconButton
                                     edge="end"
                                     onClick={onClickDeleteBtnEventHandler(i)}
                                 >
@@ -35,7 +33,7 @@ function MyChatRoomList({ chatRoom, isOpenEditChatRoom, onClickDeleteBtnEvent })
                         >
                             <Typography>{c.chatRoomName}</Typography>
                         </ListItem>
-                    }
+                    )}
                 </React.Fragment>
             )
         })
