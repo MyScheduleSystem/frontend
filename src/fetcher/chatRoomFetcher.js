@@ -1,12 +1,4 @@
-import {
-    doc,
-    deleteDoc,
-    addDoc,
-    collection,
-    getDocs,
-    query,
-    where,
-} from "firebase/firestore"
+import { doc, deleteDoc, addDoc, collection, getDocs } from "firebase/firestore"
 import ChatRoom from "../type/chatRoom"
 import { firestore } from "../service/firebase"
 
