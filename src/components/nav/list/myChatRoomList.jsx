@@ -13,27 +13,27 @@ function MyChatRoomList({ chatRoom, isOpenEditChatRoom, onClickDeleteBtnEvent })
     }
 
     return (
-        chatRoom.map((c) => {
+        chatRoom.length > 0 && chatRoom.map((c, i) => {
             return (
-                <React.Fragment key={c.uuid}>
+                <React.Fragment key={i}>
                     {!isOpenEditChatRoom ?
                         <ListItemButton
                             divider={true}
                         >
-                            <Typography>{c.name}</Typography>
+                            <Typography>{c.chatRoomName}</Typography>
                         </ListItemButton>
                         :
                         <ListItem
                             secondaryAction={
                                 <IconButton 
                                     edge="end"
-                                    onClick={onClickDeleteBtnEventHandler(c.uuid)}
+                                    onClick={onClickDeleteBtnEventHandler(i)}
                                 >
                                     <MyIcon name="delete" />
                                 </IconButton>
                             }
                         >
-                            <Typography>{c.name}</Typography>
+                            <Typography>{c.chatRoomName}</Typography>
                         </ListItem>
                     }
                 </React.Fragment>

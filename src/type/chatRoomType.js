@@ -1,10 +1,11 @@
 import SymbolName from "../util/symbolName"
 
 class ChatRoomType extends SymbolName {
-    constructor(uuid, name, typeName) {
+    constructor(uuid, chatRoomName, startDate , typeName) {
         super(typeName)
         this.uuid = uuid
-        this.name = name
+        this.chatRoomName = chatRoomName
+        this.startDate = startDate
         this.isGroupChat = null
     }
 
@@ -14,7 +15,7 @@ class ChatRoomType extends SymbolName {
     }
 
     getChatRoomName() {
-        return this.name
+        return this.chatRoomName
     }
 
     getUuid() {

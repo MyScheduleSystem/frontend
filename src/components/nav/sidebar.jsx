@@ -4,7 +4,7 @@ import MyChatRoomList from "./list/myChatRoomList"
 import MyChatRoomModal from "../modal/myChatRoomModal"
 import MyIcon from "../../icon/myIcon"
 import { Link } from "react-router-dom"
-import { createChatRoomList } from "../../dev/testData"
+import ChatRoomList from "../../type/chatRoomList"
 import {
     Accordion,
     AccordionDetails,
@@ -14,48 +14,48 @@ import {
     Typography,
     Button,
 } from "@mui/material"
-import Lodash from "lodash"
 import React from "react"
-
-const chatRooms = doChatRoomFetchResult.call(this)
 
 function SideBar({
     isOpen,
     userFriend,
+    chatRoomList,
     onClickFriendButtonClickEvent,
+    onClickDeleteBtnEvent,
     onSignoutBtnClickEvnet,
+    onAddChatRoomListEvent
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
-    const [deleteChatRoom, setDeleteChatRoom] = useState()
 
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
             onClickFriendButtonClickEvent(isChecked, index, false)
-        },
-        []
-    )
+    }, [])
 
     const onSignoutBtnClickEvnetHandler = () => {
         onSignoutBtnClickEvnet()
     }
 
-    const onClickAddChatRoomBtnEventHandler = () => {
+    const onClickAddChatRoomBtnEventHandler = useCallback(() => {
         setIsOpenModal(true)
-    }
+    }, [])
 
     const onClickChatRoomEditBtnEventHandler = () => {
         setIsOpenEditChatRoom((current) => !current)
     }
 
-    const onClickDeleteBtnEventHandler = (uuid) => () => {
-        setDeleteChatRoom(
-            chatRooms.allChatRooms.filter((value) => value.uuid !== uuid)
-        )
-    }
+    const onClickDeleteBtnEventHandler = useCallback((isOpen, uuid) => {
+        onClickDeleteBtnEvent(isOpen)
+    }, [])
 
     const onClickCloseModalEventHandler = useCallback((closed) => {
         setIsOpenModal(closed)
+    }, [])
+
+    const onAddChatRoomListEventHanlder = useCallback((chatRoomName, friendList) => {
+        onAddChatRoomListEvent(chatRoomName, friendList)
+        setIsOpenModal(false)
     }, [])
 
     const items = [
@@ -84,7 +84,7 @@ function SideBar({
                         Edit
                     </Button>
                     <MyChatRoomList
-                        chatRoom={chatRooms.allChatRooms}
+                        chatRoom={ChatRoomList.createChatRoomList(chatRoomList).$_chatRoomList}
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                     />
@@ -150,27 +150,18 @@ function SideBar({
                         </Accordion>
                     )
                 })}
-                {isOpenModal && (
-                    <MyChatRoomModal
-                        isOpenModal={isOpenModal}
-                        onClickCloseModalEvent={onClickCloseModalEventHandler}
-                        friend={userFriend}
-                    />
-                )}
             </Box>
+            {isOpenModal && 
+                <MyChatRoomModal
+                    isOpenModal={isOpenModal}
+                    onClickCloseModalEvent={onClickCloseModalEventHandler}
+                    onClickAddChatRoomBtnEvent={onClickAddChatRoomBtnEventHandler}
+                    onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
+                    friend={userFriend}
+                />
+            }
         </Box>
     )
-}
-
-function doChatRoomFetchResult() {
-    const chatRoomList = createChatRoomList()
-    const fetchResult = {}
-    fetchResult.allChatRooms = chatRoomList.chatRoomList()
-    fetchResult.target = {}
-    Lodash.forEach(chatRoomList.asChatRoomObject(), (v, k) => {
-        fetchResult.target[k] = v
-    })
-    return fetchResult
 }
 
 const sidebarStyle = {

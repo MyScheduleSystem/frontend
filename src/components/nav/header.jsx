@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
+import CheckPopup from "../popup/checkPopup"
 import {
     Box,
     IconButton,
@@ -20,13 +21,18 @@ import {
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import imageUploader from "../../service/imageUploaderService"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 import Notify from "../../type/notify"
+import DateType from "../../type/dateType"
+import ChatRoom from "../../type/chatRoom"
 import userFetcher from "../../fetcher/userFetcher"
 import notifyFetcher from "../../fetcher/notifyFetcher"
 import messageFetcher from "../../fetcher/messageFetcher"
+import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
 
 const drawerWidth = 240
@@ -109,9 +115,11 @@ const Header = () => {
     const [friendIndex, setFriendIndex] = useState(0)
     const [notify, setNotify] = useState([])
     const [message, setMessage] = useState([])
+    const [chatRoom, setChatRoom] = useState([])
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
+    const [isOpenRemoveAlert, setIsOpenRemoveAlert] = useState(false)
     const isOpenMenu = Boolean(notiAnchorEl)
     const isOepnMsg = Boolean(msgAnchorEl)
 
@@ -134,7 +142,8 @@ const Header = () => {
                 return data.fArray
             })
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
-
+            
+        doFetchChatRoomList.call(this, uuid).then((chat) => setChatRoom(chat))
         doFetchNotifyMessage.call(this, uuid).then((data) => setNotify(data))
         doFetchUserMessage.call(this, uuid).then((msg) => setMessage(msg))
     }, [])
@@ -232,6 +241,23 @@ const Header = () => {
         setMsgAnchorEl(null)
     }
 
+    const onAddChatRoomListEventHandler = useCallback((chatRoomName, friendList) => {
+        const arr = []
+        friendList.forEach(item => {
+            arr.push(item.uuid)
+        })
+        chatRoomFetcher.createChatRoom(userObj.fetchOption.uuid, arr, DateType.createDate(), chatRoomName)
+    }, [])
+
+    const onClickDeleteBtnEventHandler = useCallback((isOpen) => {
+        setIsOpenRemoveAlert(isOpen)
+    }, [])
+
+    const onRemoveChatRoomListEventHandler = (isChecked) => {
+        setIsOpenRemoveAlert(isChecked)
+    }
+
+
     return (
         <Box role="presentation">
             <Box sx={headerBoxStyle}>
@@ -300,14 +326,22 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <SideBar
-                        isOpen={isOpen}
-                        userFriend={friends}
-                        onClickFriendButtonClickEvent={
-                            onClickFriendButtonClickEventHandler
-                        }
-                        onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                    <CheckPopup
+                        message="Are you sure you want to delete?"
+                        isShowPopup={isOpenRemoveAlert}
+                        onCheckPopupEvent={onRemoveChatRoomListEventHandler}
                     />
+                    <DndProvider backend={HTML5Backend}>    
+                        <SideBar
+                            isOpen={isOpen}
+                            userFriend={friends}
+                            chatRoomList={chatRoom}
+                            onClickFriendButtonClickEvent={onClickFriendButtonClickEventHandler}
+                            onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                            onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                            onAddChatRoomListEvent={onAddChatRoomListEventHandler}
+                        />
+                    </DndProvider>
                 </Drawer>
             </Box>
             {friends && myInfo && (
@@ -460,6 +494,18 @@ async function doFetchFriendInformation(f, setFriends) {
             }
         })
     })
+}
+
+async function doFetchChatRoomList(uuid) {
+    return chatRoomFetcher.allChatRoomList(uuid).then((result) => {
+        const chatRoomArr = []
+        result.forEach((item) => {
+            const obj = new ChatRoom(uuid, item.chatRoomName, item.startDate, item.userUuid)
+            chatRoomArr.push(obj)
+        })
+        return chatRoomArr
+    })
+
 }
 
 const headerBoxStyle = {

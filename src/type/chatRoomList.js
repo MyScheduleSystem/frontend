@@ -29,7 +29,6 @@ const ChatRoomList = {}
 
 ChatRoomList.createChatRoomList = function(array) {
     const cArray = ArrayUtil.createArray(array, ChatRoom)
-    ErrorUtil.assert(ArrayUtil.size(cArray) > 1, "Array size > 1")
     return new _ChatRoomList(cArray)
 }
 
