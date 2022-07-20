@@ -20,8 +20,6 @@ import {
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
 import imageUploader from "../../service/imageUploaderService"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
@@ -340,23 +338,21 @@ const Header = () => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <DndProvider backend={HTML5Backend}>
-                        <SideBar
-                            isOpen={isOpen}
-                            userFriend={friends}
-                            chatRoomList={chatRoom}
-                            onClickFriendButtonClickEvent={
-                                onClickFriendButtonClickEventHandler
-                            }
-                            onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
-                            onSignoutBtnClickEvnet={
-                                onSignoutBtnClickEvnetHandler
-                            }
-                            onAddChatRoomListEvent={
-                                onAddChatRoomListEventHandler
-                            }
-                        />
-                    </DndProvider>
+                    <SideBar
+                        isOpen={isOpen}
+                        userFriend={friends}
+                        chatRoomList={chatRoom}
+                        onClickFriendButtonClickEvent={
+                            onClickFriendButtonClickEventHandler
+                        }
+                        onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                        onSignoutBtnClickEvnet={
+                            onSignoutBtnClickEvnetHandler
+                        }
+                        onAddChatRoomListEvent={
+                            onAddChatRoomListEventHandler
+                        }
+                    />
                 </Drawer>
             </Box>
             {friends && myInfo && (
