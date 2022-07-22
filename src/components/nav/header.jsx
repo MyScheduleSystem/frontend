@@ -20,8 +20,6 @@ import {
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 import Notify from "../../type/notify"
