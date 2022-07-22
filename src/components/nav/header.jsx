@@ -33,7 +33,6 @@ import notifyFetcher from "../../fetcher/notifyFetcher"
 import messageFetcher from "../../fetcher/messageFetcher"
 import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
-// import imageFetcher from "../../fetcher/imageFetcher"
 import imageFetcher from "../../fetcher/imageFetcher"
 
 const drawerWidth = 240
