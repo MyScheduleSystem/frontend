@@ -20,7 +20,8 @@ import {
 import MuiDrawer from "@mui/material/Drawer"
 import MuiAppBar from "@mui/material/AppBar"
 import { UserContext } from "../../context/userContextProvider"
-import imageUploader from "../../service/imageUploaderService"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import Friend from "../../type/friend"
 import FriendList from "../../type/friendList"
 import Notify from "../../type/notify"
@@ -31,6 +32,7 @@ import notifyFetcher from "../../fetcher/notifyFetcher"
 import messageFetcher from "../../fetcher/messageFetcher"
 import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
+import imageFetcher from "../../fetcher/imageFetcher"
 
 const drawerWidth = 240
 
@@ -105,6 +107,7 @@ const Header = () => {
         user: {
             nickname: "",
             infoMessage: "",
+            profileURL: "",
             fArray: [],
         },
     })
@@ -131,6 +134,7 @@ const Header = () => {
                         user: {
                             nickname: data.nickname,
                             infoMessage: data.infoMessage,
+                            profileURL: data.profileURL,
                             fArray: data.fArray,
                         },
                     }
@@ -174,8 +178,8 @@ const Header = () => {
         setMsgAnchorEl(e.currentTarget)
     }
 
-    const onClickImageUploaderEventHandler = (img, folderName) => {
-        imageUploader.imageUpload(userObj.fetchOption.uuid, img, folderName)
+    const onClickImageUploaderEventHandler = (img) => {
+        imageFetcher.profileImageUpload(userObj.fetchOption.uuid, img)
     }
 
     const onClickFriendButtonClickEventHandler = useCallback(
@@ -472,6 +476,7 @@ async function doFetchUserInformation(uuid) {
             const data = e.data()
             user.nickname = data.name
             user.infoMessage = data.infoMessage
+            user.profileURL = data.profileURL
             data.friends.forEach((f) => user.fArray.push(f))
         })
         return user

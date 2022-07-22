@@ -26,7 +26,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
     }
 
     const onClickImageUploaderEventHandler = () => {
-        onClickImageUploaderEvent(imageUpload, "profile")
+        onClickImageUploaderEvent(imageUpload)
         setIsEnterEditMode(false)
     }
 
@@ -47,7 +47,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
         profileInputRef.current.value = ""
         setIsEnterEditProfile(false)
     }
-
+    
     return (
         <Modal
             open={isClickInfo}
@@ -62,7 +62,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                                 <Avatar 
                                     alt="profile" 
                                     sx={avatarSizeStyle}
-                                    src="https://firebasestorage.googleapis.com/v0/b/myschedulesystem-57f41.appspot.com/o/ehGVHQQ1SZPzeCP2BqEs3j4Ni952%2Fprofile%2F11.PNG?alt=media&token=6361c0f6-2cc3-4f07-801c-058c88b3c465"
+                                    src={user.profileURL}
                                 />
                             </ListItemAvatar>
                         </ListItem>
@@ -91,7 +91,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                                     <Avatar 
                                         alt="profile" 
                                         sx={avatarSizeStyle}
-                                        src="https://firebasestorage.googleapis.com/v0/b/myschedulesystem-57f41.appspot.com/o/ehGVHQQ1SZPzeCP2BqEs3j4Ni952%2Fprofile%2F11.PNG?alt=media&token=6361c0f6-2cc3-4f07-801c-058c88b3c465"
+                                        src={user.profileURL}
                                     />
                                 </Button>
                             </ListItemAvatar>

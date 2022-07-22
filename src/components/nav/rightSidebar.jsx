@@ -40,11 +40,6 @@ const RightSideBar = () => {
                             Direct Message
                         </Link>
                     </MenuItem>
-                    <MenuItem>
-                        <Link to="/sns" style={linkStyle}>
-                            MSS Timeline
-                        </Link>
-                    </MenuItem>
                 </MenuList>
                 <Card>
                     <CardContent>
