@@ -109,6 +109,7 @@ const Header = () => {
         user: {
             nickname: "",
             infoMessage: "",
+            profileURL: "",
             fArray: [],
         },
     })
@@ -135,6 +136,7 @@ const Header = () => {
                         user: {
                             nickname: data.nickname,
                             infoMessage: data.infoMessage,
+                            profileURL: data.profileURL,
                             fArray: data.fArray,
                         },
                     }
@@ -178,9 +180,8 @@ const Header = () => {
         setMsgAnchorEl(e.currentTarget)
     }
 
-    const onClickImageUploaderEventHandler = (img, folderName) => {
-        // imageUploader.imageUpload(userObj.fetchOption.uuid, img, folderName)
-        imageFetcher.imageUpload(userObj.fetchOption.uuid, img, folderName)
+    const onClickImageUploaderEventHandler = (img) => {
+        imageFetcher.profileImageUpload(userObj.fetchOption.uuid, img)
     }
 
     const onClickFriendButtonClickEventHandler = useCallback(
@@ -479,6 +480,7 @@ async function doFetchUserInformation(uuid) {
             const data = e.data()
             user.nickname = data.name
             user.infoMessage = data.infoMessage
+            user.profileURL = data.profileURL
             data.friends.forEach((f) => user.fArray.push(f))
         })
         return user

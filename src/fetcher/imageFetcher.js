@@ -1,23 +1,13 @@
-import { async } from "@firebase/util"
-import { doc, updateDoc } from "firebase/firestore"
-import { ref, uploadBytes, getDownloadURL, list } from "firebase/storage"
+import { doc, updateDoc, getDocs, collection, where, query } from "firebase/firestore"
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"
 import { firestorage, firestore } from "../service/firebase"
 const imageFetcher = {}
 
-imageFetcher.imageUpload = function (uuid, file, folderName) {
-    const imageRef = ref(firestorage, `${uuid}/${folderName}/${file.name}`)
-    uploadBytes(imageRef, file).then(() => {
-        getDownloadURL(imageRef).then(async (url) => {
-                const imageURL = doc(firestore, "user", uuid)
-                await updateDoc(imageURL, {profileURL: url})
-            })
-            .catch(e => console.error(e))
-    })
-    .catch(e => console.error(e))
-}
-
-imageFetcher.snsImageUpload = function (uuid, file) {
-    
+imageFetcher.profileImageUpload = function (uuid, file) {
+    const imageRef = ref(firestorage, `${uuid}/profile/${file.name}`)
+    uploadBytes(imageRef, file)
+        .then(() => getUrlData(uuid, "user", imageRef))
+        .catch((e) => console.error(e))
 }
 
 imageFetcher.calendarImageUpload = function (uuid, docId, file) {
@@ -32,9 +22,26 @@ imageFetcher.calendarImageUpload = function (uuid, docId, file) {
     .catch(e => console.error(e))
 }
 
-imageFetcher.getProfileImageByUuid = function (uuid) {
-    const ref = list(`${uuid}`)
-    console.log(ref)
+async function getUrlData(uuid, cName, imageRef) {
+    const profileURL = {}
+    const url = await getDownloadURL(imageRef)
+    console.log(url)
+    const q = query(
+        collection(firestore, cName),
+        where("uuid", "==", uuid)
+    )
+    const querySnapshot = await getDocs(q)
+    querySnapshot.docs.forEach((item) => {
+        profileURL.url = item.data().profileURL
+    })
+    const deleteRef = ref(firestorage, profileURL.url)
+    const profileRef = doc(firestore, cName, uuid)
+    await updateDoc(profileRef, {profileURL: url})
+    deleteObject(deleteRef)
+        .then(() => {
+            const profileRef = doc(firestore, cName, uuid)
+            updateDoc(profileRef, {profileURL: url})
+        })
 }
 
 Object.freeze(imageFetcher)
