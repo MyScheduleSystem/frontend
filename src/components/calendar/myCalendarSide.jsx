@@ -13,7 +13,11 @@ import {
 } from "@mui/material"
 import DateType from "../../type/dateType"
 
-function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListEvent }) {
+function MyCalendarSide({
+    date,
+    onClickTodayTodoListEvent,
+    onClickQuickTodoListEvent,
+}) {
     const [tabValue, setTabValue] = useState(0)
     const [todoAnchor, setTodoAnchor] = useState(null)
     const [validObject, setValidObject] = useState({
@@ -33,12 +37,13 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
         setTodoAnchor(e.currentTarget)
     }
 
-    const onMenuCloseButtonClickEventHanlder = onClickQuickAddTodoEventHandler.bind(this, setTodoAnchor)
+    const onMenuCloseButtonClickEventHanlder =
+        onClickQuickAddTodoEventHandler.bind(this, setTodoAnchor)
 
     const onSaveButtonClickEventHandler = () => {
         const title = titleRef.current.value
         const content = contentRef.current.value
-        if(validateForTodoTitle(title)) {
+        if (validateForTodoTitle(title)) {
             setValidObject((prev) => {
                 return { ...prev, title: true }
             })
@@ -48,7 +53,7 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
                 return { ...prev, title: false }
             })
         }
-        if(validateForTodoContent(content)) {
+        if (validateForTodoContent(content)) {
             setValidObject((prev) => {
                 return { ...prev, content: true }
             })
@@ -77,20 +82,20 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
     }
 
     const validateForTodoTitle = (titleRef) => {
-        const isValid = (function() {
+        const isValid = (function () {
             const title = titleRef.trim()
-            if(title.length < 4 || title.length === 0) return true
+            if (title.length < 4 || title.length === 0) return true
             const special = ["#", "$", "|", "`"]
-            if(!special.every((e) => !title.includes(e))) return  true
+            if (!special.every((e) => !title.includes(e))) return true
             return false
         })()
         return isValid
     }
 
     const validateForTodoContent = (contentRef) => {
-        const isValid = (function() {
+        const isValid = (function () {
             const content = contentRef.trim()
-            if(content.length < 4 || content.length === 0) return true
+            if (content.length < 4 || content.length === 0) return true
             return false
         })()
         return isValid
@@ -103,39 +108,25 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
         },
         {
             name: "Today's Todo",
-            onClickEventHandler: onClickTodayTodoListEventHandler.bind(this, onClickTodayTodoListEvent),
-        },
-        {
-            name: "MSS Sns",
-            onClickEventHandler: onClickSnsEventHandler.bind(this, navigate),
+            onClickEventHandler: onClickTodayTodoListEventHandler.bind(
+                this,
+                onClickTodayTodoListEvent
+            ),
         },
     ]
 
-
-    return  (
+    return (
         <Box sx={wrapperBox}>
-            <Typography
-                sx={monthStyle}
-                variant="h1"
-            >
+            <Typography sx={monthStyle} variant="h1">
                 {date.month}
             </Typography>
-            <Typography
-                sx={yearStyle}
-                variant="h1"
-            >
+            <Typography sx={yearStyle} variant="h1">
                 {date.year}
             </Typography>
-            <Typography
-                sx={dayStyle}
-                variant="h2"
-            >
+            <Typography sx={dayStyle} variant="h2">
                 {date.day}
             </Typography>
-            <Typography
-                sx={todoStyle}
-                variant="h4"
-            >
+            <Typography sx={todoStyle} variant="h4">
                 MSS Calendar
             </Typography>
             <Box sx={tabStyle}>
@@ -145,7 +136,13 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
                     variant="scrollable"
                     scrollButtons="auto"
                 >
-                    {tabItems.map(t => <Tab key={t.name} label={t.name} onClick={t.onClickEventHandler} />)}
+                    {tabItems.map((t) => (
+                        <Tab
+                            key={t.name}
+                            label={t.name}
+                            onClick={t.onClickEventHandler}
+                        />
+                    ))}
                 </Tabs>
             </Box>
             <Menu
@@ -174,8 +171,12 @@ function MyCalendarSide({ date, onClickTodayTodoListEvent, onClickQuickTodoListE
                     </MenuItem>
                 </MenuList>
                 <Box sx={buttonStyle}>
-                    <Button onClick={onSaveButtonClickEventHandler}>Save</Button>
-                    <Button onClick={onCancelButtonClickEventHandler}>Cancel</Button>
+                    <Button onClick={onSaveButtonClickEventHandler}>
+                        Save
+                    </Button>
+                    <Button onClick={onCancelButtonClickEventHandler}>
+                        Cancel
+                    </Button>
                 </Box>
             </Menu>
         </Box>
@@ -189,10 +190,6 @@ function onClickQuickAddTodoEventHandler(setTodoAnchor) {
 function onClickTodayTodoListEventHandler(onClickTodayTodoListEvent) {
     const today = DateType.createDate()
     onClickTodayTodoListEvent(true, today)
-}
-
-function onClickSnsEventHandler(navigate) {
-    navigate("/sns")
 }
 
 const wrapperBox = {
