@@ -65,6 +65,10 @@ function SideBar({
         []
     )
 
+    const onClickEnterChatRoomEventHanlder = useCallback((chatRoomId) => {
+        const id = chatRoomId.substr(0, 7)
+    }, [])
+
     const items = [
         {
             name: "Friends",
@@ -80,7 +84,7 @@ function SideBar({
         },
         {
             name: "ChatRooms",
-            path: "/",
+            path: "/chat",
             icon: <MyIcon name="chat" />,
             list: (
                 <React.Fragment>
@@ -97,6 +101,7 @@ function SideBar({
                         }
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                        onClickEnterChatRoomEvent={onClickEnterChatRoomEventHanlder}
                     />
                 </React.Fragment>
             ),
