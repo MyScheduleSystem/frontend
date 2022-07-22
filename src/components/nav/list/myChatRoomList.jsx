@@ -7,6 +7,7 @@ function MyChatRoomList({
     chatRoom,
     isOpenEditChatRoom,
     onClickDeleteBtnEvent,
+    onClickEnterChatRoomEvent
 }) {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState("")
@@ -24,6 +25,10 @@ function MyChatRoomList({
         [selected]
     )
 
+    const onClickEnterChatRoomEventHandler = (chatRoomId) => {
+        onClickEnterChatRoomEvent(chatRoomId)
+    }
+
     return (
         <React.Fragment>
             {chatRoom.length > 0 &&
@@ -31,7 +36,10 @@ function MyChatRoomList({
                     return (
                         <React.Fragment key={c.uuid}>
                             {!isOpenEditChatRoom ? (
-                                <ListItemButton divider={true}>
+                                <ListItemButton 
+                                    divider={true}
+                                    onClick={onClickEnterChatRoomEventHandler(c.uuid)}
+                                >
                                     <Typography>{c.chatRoomName}</Typography>
                                 </ListItemButton>
                             ) : (

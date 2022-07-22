@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react"
 import MyFriendList from "./list/myFriendList"
 import MyChatRoomList from "./list/myChatRoomList"
+import ChatRoomList from "../../type/chatRoomList"
 import MyChatRoomModal from "../modal/myChatRoomModal"
 import MyIcon from "../../icon/myIcon"
 import { Link } from "react-router-dom"
-import ChatRoomList from "../../type/chatRoomList"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import {
     Accordion,
     AccordionDetails,
@@ -63,6 +65,10 @@ function SideBar({
         []
     )
 
+    const onClickEnterChatRoomEventHanlder = useCallback((chatRoomId) => {
+        const id = chatRoomId.substr(0, 7)
+    }, [])
+
     const items = [
         {
             name: "Friends",
@@ -78,7 +84,7 @@ function SideBar({
         },
         {
             name: "ChatRooms",
-            path: "/",
+            path: "/chat",
             icon: <MyIcon name="chat" />,
             list: (
                 <React.Fragment>
@@ -95,6 +101,7 @@ function SideBar({
                         }
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
+                        onClickEnterChatRoomEvent={onClickEnterChatRoomEventHanlder}
                     />
                 </React.Fragment>
             ),
@@ -160,15 +167,17 @@ function SideBar({
                 })}
             </Box>
             {isOpenModal && (
-                <MyChatRoomModal
-                    isOpenModal={isOpenModal}
-                    onClickCloseModalEvent={onClickCloseModalEventHandler}
-                    onClickAddChatRoomBtnEvent={
-                        onClickAddChatRoomBtnEventHandler
-                    }
-                    onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
-                    friend={userFriend}
-                />
+                <DndProvider backend={HTML5Backend}>
+                    <MyChatRoomModal
+                        isOpenModal={isOpenModal}
+                        onClickCloseModalEvent={onClickCloseModalEventHandler}
+                        onClickAddChatRoomBtnEvent={
+                            onClickAddChatRoomBtnEventHandler
+                        }
+                        onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
+                        friend={userFriend}
+                    />
+                </DndProvider>
             )}
         </Box>
     )

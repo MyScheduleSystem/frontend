@@ -1,3 +1,4 @@
+import React from "react"
 import MyChatRoomInput from "./myChatRoomInput"
 import MyChatRoomUserList from "./myChatRoomUserList"
 import MyChatRoomMessage from "./myChatRoomMessage"
@@ -8,29 +9,31 @@ import {
     Divider,
 } from "@mui/material"
 
-const MyChatRoom = () => {
+const MyChatRoom = ({ uuid, users }) => {
     return (
-        <Container sx={containerStyle}>
-            <Grid container={true}>
-                <Grid
-                    container={true}
-                    component={Paper}
-                >
-                    <MyChatRoomUserList />
-                    <Grid item={true} xs={9}>
-                        <MyChatRoomMessage />
-                        <Divider />
-                        <MyChatRoomInput />
+        <React.Fragment>
+            <Container sx={containerStyle}>
+                <Grid container={true}>
+                    <Grid
+                        container={true}
+                        component={Paper}
+                    >
+                        <MyChatRoomUserList />
+                        <Grid item={true} xs={9}>
+                            <MyChatRoomMessage />
+                            <Divider />
+                            <MyChatRoomInput />
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </React.Fragment>
     )
 }
 
 const containerStyle = {
-    width: "60%",
-    marginTop: "4rem",
+    width: "70%",
+    marginTop: "8rem",
     textAlign: "center",
     display: "flex",
 }
