@@ -72,7 +72,6 @@ useState(setState의) 동작 이해
         Completed todo list or not
         Tab menu
         Quick move to today's todo
-        Quick move to MSS Sns
         Quick create todo list
 
     MyModal
@@ -88,12 +87,6 @@ useState(setState의) 동작 이해
         Update My Daily Schedule
         Delete My Daily Schedule
         Create My Daily Schedule
-
-    Sns
-        Sns Read
-        Sns Post
-        Sns Update
-        Sns Delete
 
     Friend
         Add Friend
@@ -315,8 +308,6 @@ action과 type이 뭔가 Redux와 비슷한 느낌..?
 ### 2022-06-21 (Leo)
 
 ```
-SNS와 Profile Avatar에 넣어줄 이미지 업로드 기능을 구현하기 위해 Cloudinary API를 가져와 구현하였다.
-
 구현 중 Preset Name을 잘 못 가져와서 조금 헤매었지만 해결하여 기능구현에는 성공하였다.
 
 다음으로는 Image를 Cloudinary에 User에 Uuid로 폴더를 구분하여 각각 맞는 폴더에 저장하는 것을 구현해보자!
@@ -386,4 +377,3 @@ MSS의 끝에 분명 모두에게 도움이 되리라 확신한다.
 다들 힘내서 끝을 향해 갔으면 좋겠다.
 
 ```
-
