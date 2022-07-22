@@ -25,7 +25,6 @@ imageFetcher.calendarImageUpload = function (uuid, docId, file) {
 async function getUrlData(uuid, cName, imageRef) {
     const profileURL = {}
     const url = await getDownloadURL(imageRef)
-    console.log(url)
     const q = query(
         collection(firestore, cName),
         where("uuid", "==", uuid)
