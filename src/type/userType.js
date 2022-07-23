@@ -28,4 +28,5 @@ class UserType extends SymbolName {
     }
 }
 
+Object.freeze(UserType)
 export default UserType
