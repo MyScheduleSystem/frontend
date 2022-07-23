@@ -26,4 +26,5 @@ class Friend extends SymbolName {
     }
 }
 
+Object.freeze(Friend)
 export default Friend
