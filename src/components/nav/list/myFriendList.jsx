@@ -1,8 +1,4 @@
-import {
-    Box,
-    ListItemButton,
-    Typography,
-} from "@mui/material"
+import { Box, ListItemButton, Typography } from "@mui/material"
 
 function MyFriendList({ friends, onClickFriendButtonClickEvent }) {
     const onClickFriendButtonClickEventHandler = (isChecked, index) => () => {
@@ -10,14 +6,18 @@ function MyFriendList({ friends, onClickFriendButtonClickEvent }) {
     }
 
     return (
-        Array.isArray(friends) && friends.map((f, index) => {
+        Array.isArray(friends) &&
+        friends.map((f, index) => {
             return (
                 <Box key={f.uuid}>
                     <ListItemButton
                         divider={true}
-                        onClick={onClickFriendButtonClickEventHandler(true, index)}
+                        onClick={onClickFriendButtonClickEventHandler(
+                            true,
+                            index
+                        )}
                     >
-                        <Typography>{f.nickname}</Typography>
+                        <Typography>{f.username}</Typography>
                     </ListItemButton>
                 </Box>
             )

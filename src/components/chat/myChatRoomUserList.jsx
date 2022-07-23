@@ -9,25 +9,19 @@ import {
 
 const MyChatRoomUserList = ({ chatRoomName, myInfo, friendInfo }) => {
     const onSearchKeyDownHandler = (e) => {
-        if(e.key !== "Enter") return
-        if(!e.target.value) return
+        if (e.key !== "Enter") return
+        if (!e.target.value) return
     }
 
     return (
-        <Grid
-            item={true}
-            xs={3}
-        >
+        <Grid item={true} xs={3}>
             <List>
-                <ListItem button={true} >
+                <ListItem button={true}>
                     <ListItemText primary={chatRoomName} />
                 </ListItem>
             </List>
             <Divider />
-            <Grid
-                item={true}
-                xs={12}
-            >
+            <Grid item={true} xs={12}>
                 <TextField
                     variant="outlined"
                     label="Search"
@@ -39,7 +33,7 @@ const MyChatRoomUserList = ({ chatRoomName, myInfo, friendInfo }) => {
             <List>
                 <ListItem button={true}>
                     <ListItemText primary={myInfo.name} />
-                    <ListItemText secondary="Me" align="right"/>
+                    <ListItemText secondary="Me" align="right" />
                 </ListItem>
                 {friendInfo.map((f) => {
                     return (

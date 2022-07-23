@@ -1,11 +1,11 @@
 import SymbolName from "../util/symbolName"
 
 class Friend extends SymbolName {
-    constructor(uuid, nickname, friendImageUrl, infoMessage) {
+    constructor(uuid, username, profileURL, infoMessage) {
         super("friend")
         this.uuid = uuid
-        this.nickname = nickname
-        this.friendImageUrl = friendImageUrl
+        this.username = username
+        this.profileURL = profileURL
         this.infoMessage = infoMessage
     }
 
@@ -14,11 +14,11 @@ class Friend extends SymbolName {
     }
 
     getFriendNickname() {
-        return this.nickname
+        return this.username
     }
 
     getFriendImageUrl() {
-        return this.friendImageUrl
+        return this.profileURL
     }
 
     getInfoMessage() {
@@ -26,4 +26,5 @@ class Friend extends SymbolName {
     }
 }
 
+Object.freeze(Friend)
 export default Friend

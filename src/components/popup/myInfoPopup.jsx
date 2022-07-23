@@ -1,13 +1,25 @@
 import React, { useState, useRef } from "react"
 import MyIcon from "../../icon/myIcon"
 import {
-    Modal, Box, List,
-    ListItem, ListItemAvatar, Avatar,
-    ListItemText, Divider, Button,
+    Modal,
+    Box,
+    List,
+    ListItem,
+    ListItemAvatar,
+    Avatar,
+    ListItemText,
+    Divider,
+    Button,
     Input,
 } from "@mui/material"
 
-const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEvent, onSaveProfileMessageEvent }) => {
+const MyInfoPopup = ({
+    isClickInfo,
+    onCloseEvent,
+    user,
+    onClickImageUploaderEvent,
+    onSaveProfileMessageEvent,
+}) => {
     const [imageUpload, setImageUpload] = useState("")
     const [isEnterEditMode, setIsEnterEditMode] = useState(false)
     const [isEnterEditProfile, setIsEnterEditProfile] = useState(false)
@@ -15,7 +27,7 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
     const imageInput = useRef()
     const profileInputRef = useRef()
 
-    const onCloseEventHandler = () => { 
+    const onCloseEventHandler = () => {
         setIsEnterEditMode(false)
         setIsEnterEditProfile(false)
         onCloseEvent(false)
@@ -47,27 +59,23 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
         profileInputRef.current.value = ""
         setIsEnterEditProfile(false)
     }
-    
+
     return (
-        <Modal
-            open={isClickInfo}
-            sx={modalStyle}
-            onClose={onCloseEventHandler}
-        >
-            {!isEnterEditMode ?
+        <Modal open={isClickInfo} sx={modalStyle} onClose={onCloseEventHandler}>
+            {!isEnterEditMode ? (
                 <Box sx={boxStyle}>
                     <List sx={listStyle}>
                         <ListItem sx={ListItemAvatarStyle}>
                             <ListItemAvatar>
-                                <Avatar 
-                                    alt="profile" 
+                                <Avatar
+                                    alt="profile"
                                     sx={avatarSizeStyle}
                                     src={user.profileURL}
                                 />
                             </ListItemAvatar>
                         </ListItem>
                         <ListItemText
-                            primary={user.nickname}
+                            primary={user.username}
                             secondary={user.infoMessage}
                         />
                     </List>
@@ -82,40 +90,50 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                             </Button>
                         </Box>
                     </Box>
-                </Box> :
+                </Box>
+            ) : (
                 <Box sx={boxStyle}>
                     <List sx={listStyle}>
                         <ListItem sx={ListItemAvatarStyle}>
                             <ListItemAvatar>
-                                <Button onClick={onClickImageUploaderButtonEventHandler}>
-                                    <Avatar 
-                                        alt="profile" 
+                                <Button
+                                    onClick={
+                                        onClickImageUploaderButtonEventHandler
+                                    }
+                                >
+                                    <Avatar
+                                        alt="profile"
                                         sx={avatarSizeStyle}
                                         src={user.profileURL}
                                     />
                                 </Button>
                             </ListItemAvatar>
                         </ListItem>
-                        {!isEnterEditProfile ?
+                        {!isEnterEditProfile ? (
                             <React.Fragment>
                                 <ListItemText
-                                    primary={user.nickname}
+                                    primary={user.username}
                                     secondary={user.infoMessage}
                                 />
-                                <Button onClick={onClickEnterEditProfileEventHandler}>
+                                <Button
+                                    onClick={
+                                        onClickEnterEditProfileEventHandler
+                                    }
+                                >
                                     <MyIcon name="pencil" />
                                 </Button>
-                            </React.Fragment> :
+                            </React.Fragment>
+                        ) : (
                             <React.Fragment>
-                                <ListItemText primary={user.nickname} />
-                                <Input
-                                    inputRef={profileInputRef}
-                                    type="text"
-                                />
-                                <Button onClick={onSaveProfileMessageEventHandler}>
+                                <ListItemText primary={user.username} />
+                                <Input inputRef={profileInputRef} type="text" />
+                                <Button
+                                    onClick={onSaveProfileMessageEventHandler}
+                                >
                                     <MyIcon name="pencil" />
                                 </Button>
-                            </React.Fragment>}
+                            </React.Fragment>
+                        )}
                     </List>
                     <Box>
                         <Divider />
@@ -126,10 +144,13 @@ const MyInfoPopup = ({ isClickInfo, onCloseEvent, user, onClickImageUploaderEven
                                 sx={uploadImageInputStyle}
                                 onChange={onChangeImageUploaderEventHandler}
                             />
-                            <Button onClick={onClickImageUploaderEventHandler}><MyIcon name="checkCircle" /></Button>
+                            <Button onClick={onClickImageUploaderEventHandler}>
+                                <MyIcon name="checkCircle" />
+                            </Button>
                         </Box>
                     </Box>
-                </Box>}
+                </Box>
+            )}
         </Modal>
     )
 }
@@ -147,13 +168,12 @@ const boxStyle = {
     backgroundColor: "#E9ECEF",
     borderRadius: "10px",
     overflow: "auto",
-
 }
 
 const listStyle = {
     width: "100%",
     maxWidth: "360",
-    bgColor: "background.paper"
+    bgColor: "background.paper",
 }
 
 const ListItemAvatarStyle = {

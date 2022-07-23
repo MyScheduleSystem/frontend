@@ -30,6 +30,7 @@ import notifyFetcher from "../../fetcher/notifyFetcher"
 import messageFetcher from "../../fetcher/messageFetcher"
 import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
+import User from "../../type/user"
 import imageFetcher from "../../fetcher/imageFetcher"
 
 const drawerWidth = 240
@@ -101,14 +102,7 @@ const AppBar = styled(MuiAppBar, {
 const Header = () => {
     const [isClickInfo, setIsClickInfo] = useState(false)
     const [isMe, setIsme] = useState(false)
-    const [myInfo, setMyInfo] = useState({
-        user: {
-            nickname: "",
-            infoMessage: "",
-            profileURL: "",
-            fArray: [],
-        },
-    })
+    const [myInfo, setMyInfo] = useState({})
     const [friends, setFriends] = useState(null)
     const [friendIndex, setFriendIndex] = useState(0)
     const [notify, setNotify] = useState([])
@@ -128,17 +122,8 @@ const Header = () => {
         doFetchUserInformation
             .call(this, uuid)
             .then((data) => {
-                setMyInfo(() => {
-                    return {
-                        user: {
-                            nickname: data.nickname,
-                            infoMessage: data.infoMessage,
-                            profileURL: data.profileURL,
-                            fArray: data.fArray,
-                        },
-                    }
-                })
-                return data.fArray
+                setMyInfo(data)
+                return data.info.friends
             })
             .then((f) => doFetchFriendInformation.call(this, f, setFriends))
 
@@ -199,9 +184,7 @@ const Header = () => {
         setMyInfo((prev) => {
             return {
                 ...prev,
-                user: {
-                    infoMessage: infoMsg,
-                },
+                infoMessage: infoMsg,
             }
         })
     }
@@ -272,7 +255,7 @@ const Header = () => {
             setChatRoom((prev) => prev.filter((item) => item.uuid != uuid))
         }
     }, [])
-    
+
     const onClickEnterChatRoomEventHanlder = (chatRoomInfo, chatRoomPath) => {
         navigate(`/chat/${chatRoomPath}`, {
             state: {
@@ -283,6 +266,14 @@ const Header = () => {
                 startDate: chatRoomInfo.startDate,
             },
         })
+    }
+
+    const getInfoPopupInformation = () => {
+        const obj = {}
+        obj.username = myInfo.username
+        obj.profileURL = myInfo.info.profileURL
+        obj.infoMessage = myInfo.info.infoMessage
+        return obj
     }
 
     return (
@@ -361,12 +352,8 @@ const Header = () => {
                             onClickFriendButtonClickEventHandler
                         }
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
-                        onSignoutBtnClickEvnet={
-                            onSignoutBtnClickEvnetHandler
-                        }
-                        onAddChatRoomListEvent={
-                            onAddChatRoomListEventHandler
-                        }
+                        onSignoutBtnClickEvnet={onSignoutBtnClickEvnetHandler}
+                        onAddChatRoomListEvent={onAddChatRoomListEventHandler}
                         onClickEnterChatRoomEvent={
                             onClickEnterChatRoomEventHanlder
                         }
@@ -375,7 +362,9 @@ const Header = () => {
             </Box>
             {friends && myInfo && (
                 <MyInfoPopup
-                    user={isMe ? myInfo.user : friends[friendIndex]}
+                    user={
+                        isMe ? getInfoPopupInformation() : friends[friendIndex]
+                    }
                     isClickInfo={isClickInfo}
                     onCloseEvent={onCloseEventHandler}
                     onClickImageUploaderEvent={onClickImageUploaderEventHandler}
@@ -483,24 +472,30 @@ async function doFetchUserMessage(uuid) {
 async function doFetchUserInformation(uuid) {
     return userFetcher.getMyInformationByUuid(uuid).then((result) => {
         const user = {}
-        user.nickname = ""
+        user.name = ""
+        user.username = ""
         user.infoMessage = ""
         user.fArray = []
         result.forEach((e) => {
             const data = e.data()
-            user.nickname = data.name
+            user.name = data.name
+            user.email = data.email
+            user.username = data.username
             user.infoMessage = data.infoMessage
             user.profileURL = data.profileURL
             data.friends.forEach((f) => user.fArray.push(f))
         })
-        return user
+        const rtnObj = new User(uuid, user.username, user.email, user.name)
+        rtnObj.info.setInfoMessage(user.infoMessage)
+        rtnObj.info.setProfileUrl(user.profileURL)
+        rtnObj.info.setFriends(user.fArray)
+        return rtnObj
     })
 }
 
 async function doFetchFriendInformation(f, setFriends) {
-    // TODO: img url 수정
-    const img =
-        "https://firebasestorage.googleapis.com/v0/b/myschedulesystem-57f41.appspot.com/o/ehGVHQQ1SZPzeCP2BqEs3j4Ni952%2Fprofile%2F11.PNG?alt=media&token=6361c0f6-2cc3-4f07-801c-058c88b3c465"
+    // TODO img 가져오는 로직 추가
+    const img = ""
     const fArray = []
     if (f.length == 1) {
         const friend = new Friend(f[0].uuid, f[0].name, img, f[0].infoMessage)
