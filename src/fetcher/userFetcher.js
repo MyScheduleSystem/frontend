@@ -72,6 +72,7 @@ userFetcher.signup = async (user) => {
                 name: user.name,
                 email: user.email,
                 infoMessage: "",
+                profileUrl: "",
                 friends: [],
             })
             const obj = {}
@@ -122,6 +123,7 @@ userFetcher.providerSignup = async (user) => {
         name: user.name,
         email: user.email,
         infoMessage: "",
+        profileUrl: "",
         friends: [],
     })
         .then(() => {
