@@ -25,8 +25,8 @@ function MyChatRoomList({
         [selected]
     )
 
-    const onClickEnterChatRoomEventHandler = (chatRoomId) => {
-        onClickEnterChatRoomEvent(chatRoomId)
+    const onClickEnterChatRoomEventHandler = (chatRoomInfo) => () => {
+        onClickEnterChatRoomEvent(chatRoomInfo)
     }
 
     return (
@@ -38,7 +38,7 @@ function MyChatRoomList({
                             {!isOpenEditChatRoom ? (
                                 <ListItemButton 
                                     divider={true}
-                                    onClick={onClickEnterChatRoomEventHandler(c.uuid)}
+                                    onClick={onClickEnterChatRoomEventHandler(c)}
                                 >
                                     <Typography>{c.chatRoomName}</Typography>
                                 </ListItemButton>
