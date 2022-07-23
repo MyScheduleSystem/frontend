@@ -1,10 +1,10 @@
 import SymbolName from "../util/symbolName"
 
 class UserInfo extends SymbolName {
-    constructor(infoMessage, imgUrl) {
+    constructor(infoMessage, profileUrl) {
         super("userInformationType")
         this.infoMessage = infoMessage
-        this.imgUrl = imgUrl
+        this.profileUrl = profileUrl
 
         SymbolName.freezeObject(UserInfo, this)
     }
@@ -13,8 +13,16 @@ class UserInfo extends SymbolName {
         return this.infoMessage
     }
 
-    getImageUrl() {
-        return this.imgUrl
+    getProfileImageUrl() {
+        return this.profileUrl
+    }
+
+    setInfoMessage(infoMessage) {
+        this.infoMessage = infoMessage
+    }
+
+    setProfileUrl(profileUrl) {
+        this.profileUrl = profileUrl
     }
 }
 
