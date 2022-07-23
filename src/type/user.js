@@ -6,7 +6,7 @@ import ErrorUtil from "../util/errorUtil"
 class User extends UserType {
     constructor(uuid, username, email, name) {
         super(uuid, username, email, name, "user")
-        this.info = new UserInfo("", "")
+        this.info = new UserInfo("", "", [])
         ErrorUtil.invalidParameter(uuid)
     }
 }
