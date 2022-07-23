@@ -1,5 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SideBar from "./sidebar"
 import MyIcon from "../../icon/myIcon"
 import MyInfoPopup from "../popup/myInfoPopup"
@@ -121,6 +121,7 @@ const Header = () => {
     const isOepnMsg = Boolean(msgAnchorEl)
 
     const { userObj, onSignoutButtonClickHandler } = useContext(UserContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const uuid = userObj.fetchOption.uuid
@@ -271,6 +272,18 @@ const Header = () => {
             setChatRoom((prev) => prev.filter((item) => item.uuid != uuid))
         }
     }, [])
+    
+    const onClickEnterChatRoomEventHanlder = (chatRoomInfo, chatRoomPath) => {
+        navigate(`/chat/${chatRoomPath}`, {
+            state: {
+                chatRoomUuid: chatRoomInfo.uuid,
+                uuid: userObj.fetchOption.uuid,
+                friends: chatRoomInfo.users,
+                chatRoomName: chatRoomInfo.chatRoomName,
+                startDate: chatRoomInfo.startDate,
+            },
+        })
+    }
 
     return (
         <Box role="presentation">
@@ -353,6 +366,9 @@ const Header = () => {
                         }
                         onAddChatRoomListEvent={
                             onAddChatRoomListEventHandler
+                        }
+                        onClickEnterChatRoomEvent={
+                            onClickEnterChatRoomEventHanlder
                         }
                     />
                 </Drawer>
