@@ -2,12 +2,11 @@ import SymbolName from "../util/symbolName"
 import ErrorUtil from "../util/errorUtil"
 
 class UserType extends SymbolName {
-    constructor(uuid, nickname, infoMessage, email, name, typeName) {
+    constructor(uuid, username, email, name, typeName) {
         super(typeName)
         ErrorUtil.invalidParameter(uuid)
         this.uuid = uuid
-        this.nickname = nickname
-        this.infoMessage = infoMessage
+        this.username = username
         this.email = email
         this.name = name
     }
@@ -16,12 +15,8 @@ class UserType extends SymbolName {
         return this.uuid
     }
 
-    getNickname() {
-        return this.nickname
-    }
-
-    getInfoMessage() {
-        return this.infoMessage
+    getUserName() {
+        return this.username
     }
 
     getEmail() {
