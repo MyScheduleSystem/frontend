@@ -46,8 +46,10 @@ const MyChatRoom = () => {
 }
 
 const containerStyle = {
-    width: "70%",
+    width: "75%",
+    height: "100%",
     marginTop: "8rem",
+    ml: "5rem",
     textAlign: "center",
     display: "flex",
 }
