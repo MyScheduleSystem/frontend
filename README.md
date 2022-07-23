@@ -250,7 +250,7 @@ useState(setState의) 동작 이해
                     return () => TODO...
                 })
 
-    React-Dnd 드래그시 모든 friend정보를 가져와서 한개씩 가져오지 못하는 오류가 있다(미해결)
+    React-Dnd 드래그시 모든 friend정보를 가져와서 한개씩 가져오지 못하는 오류가 있다(해결)
         - item 부분에서 모든 friend 정보를 가져옴 오류를 인지하여 해결중에 있다.
         ex) 초기코드
         const [{ isDraggble }, dragRef] = useDrag(() => ({
@@ -266,6 +266,15 @@ useState(setState의) 동작 이해
                 isDragging: monitor.isDragging(),
         }),
     }))
+
+        - 새로운 컴포넌트를 만들어서 friend 정보를 map으로 한개씩 보내줌으로써 해결했다.
+            {unCompletedList.map((friend, index) => {
+                return(
+                    <SelectList />
+                )
+
+        - 해결 후 동작은 하는데 콘솔에 Uncaught TypeError: this._drop is not a function 이란 에러가 생겼다
+        찾아본 결과 내 크롬 확장 프로그램에 crxMouse Chrome 제스처란 확장 프로그램으로 인한 오류 였다.
 
 ```
 

@@ -9,7 +9,6 @@ import {
     Grid, Button, Input,
 } from "@mui/material"
 
-
 function MyChatRoomModal({ 
     isOpenModal, 
     onClickCloseModalEvent,
@@ -143,7 +142,7 @@ function MyChatRoomModal({
                                 subheader={`${onClickNumberOfChekedEventHandler(unCompletedList)}/${unCompletedList.length} selected`}/>
                             <Divider />
                             <List
-                                sx={listStyle}
+                                sx={completedOverStyle(isCompletedOver)}
                                 ref={completedOverRef}
                                 dense={true}
                                 component="div"
@@ -215,7 +214,7 @@ function MyChatRoomModal({
                                 subheader={`${onClickNumberOfChekedEventHandler(completedList)}/${completedList.length} selected`}/>
                             <Divider />
                             <List
-                                sx={listStyle}
+                                sx={unCompletedOverStlye(isOver)}
                                 ref={unCompletedOverRef}
                                 dense={true}
                                 component="div"
@@ -266,16 +265,26 @@ const girdButtonListStyle = {
     alignItems: "center",
 }
 
-const cardHeaderStyle = {
-    px: 2,
-    py: 1,
+const completedOverStyle = (isCompletedOver) => {
+    return {
+        width: 200,
+        height: 230,
+        overflow: "auto",
+        bgcolor: isCompletedOver ? "#e9e9e9" : "#fff"
+    }
 }
 
-const listStyle = {
-    width: 200,
-    height: 230,
-    bgcolor: "background.paper",
-    overflow: "auto",
+const unCompletedOverStlye = (isOver) => {
+    return {
+        width: 200,
+        height: 230,
+        overflow: "auto",
+        bgcolor: isOver ? "#e9e9e9" : "#fff"
+    }
+}
+
+const cardHeaderStyle = {
+    p: 2,
 }
 
 const girdButtonStyle = {

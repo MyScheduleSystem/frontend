@@ -1,4 +1,11 @@
-import { doc, deleteDoc, addDoc, collection, getDocs } from "firebase/firestore"
+import { 
+    doc,
+    deleteDoc, 
+    addDoc, 
+    collection, 
+    getDocs, 
+    updateDoc 
+} from "firebase/firestore"
 import ChatRoom from "../type/chatRoom"
 import { firestore } from "../service/firebase"
 
@@ -39,6 +46,14 @@ chatRoomFetcher.allChatRoomLists = async function (uuid) {
         })
         return result
     }
+}
+
+chatRoomFetcher.updateChatRoom = async function (userUuid, chatRoomName) {
+    const chatRoom = doc(firestore, "chatRoom", uuid)
+    const updated = {}
+    updated.chatRoomName = chatRoomName
+    updated.userUuid = userUuid
+    await updateDoc(chatRoom, updated)
 }
 
 chatRoomFetcher.deleteChatRoom = async function (chatRoomUuid) {
