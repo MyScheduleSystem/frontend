@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import MyChatRoomInput from "./myChatRoomInput"
 import MyChatRoomUserList from "./myChatRoomUserList"
 import MyChatRoomMessage from "./myChatRoomMessage"
+import userFetcher from "../../fetcher/userFetcher"
+import { useLocation } from "react-router"
 import {
     Container,
     Grid,
@@ -9,7 +11,17 @@ import {
     Divider,
 } from "@mui/material"
 
-const MyChatRoom = ({ uuid, users }) => {
+const MyChatRoom = () => {
+    const [myInfo, setMyInfo] = useState({})
+    const [friendInfo, setFriendInfo] = useState([])
+
+    const { state } = useLocation()
+
+    useEffect(() => {
+        doFetchMyInformation.call(this, state.uuid, setMyInfo)
+        doFetchFriendInformation.call(this, state.friends, state.uuid, setFriendInfo)
+    }, [])
+
     return (
         <React.Fragment>
             <Container sx={containerStyle}>
@@ -18,7 +30,11 @@ const MyChatRoom = ({ uuid, users }) => {
                         container={true}
                         component={Paper}
                     >
-                        <MyChatRoomUserList />
+                        <MyChatRoomUserList 
+                            chatRoomName={state.chatRoomName} 
+                            myInfo={myInfo} 
+                            friendInfo={friendInfo} 
+                        />
                         <Grid item={true} xs={9}>
                             <MyChatRoomMessage />
                             <Divider />
@@ -39,3 +55,25 @@ const containerStyle = {
 }
 
 export default MyChatRoom
+
+function doFetchMyInformation(uuid, setMyInfo) {
+    userFetcher.getMyInformationByUuid(uuid)
+            .then((result) => {
+                result.forEach((d) => {
+                    setMyInfo(d.data())
+                })
+            })
+}
+
+function doFetchFriendInformation(friends, uuid, setFriendInfo) {
+    friends.forEach((u) => {
+        if(u !== uuid) {
+            userFetcher.getMyInformationByUuid(u)
+                .then((result) => {
+                    result.forEach((d) => {
+                        setFriendInfo((prev) => [ ...prev, d.data() ])
+                    })
+                })
+        }
+    })
+}

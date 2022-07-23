@@ -12,7 +12,7 @@ const MyRouter = () => {
             <RightSidebar />
             <Routes>
                 <Route path="/" element={<MyLayout />} />
-                <Route path="/chat" element={<MyChatRoom />} />
+                <Route path="/chat/:id" element={<MyChatRoom />} />
             </Routes>
         </React.Fragment>
     )

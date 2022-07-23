@@ -26,6 +26,7 @@ function SideBar({
     onClickDeleteBtnEvent,
     onSignoutBtnClickEvnet,
     onAddChatRoomListEvent,
+    onClickEnterChatRoomEvent,
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -65,8 +66,9 @@ function SideBar({
         []
     )
 
-    const onClickEnterChatRoomEventHanlder = useCallback((chatRoomId) => {
-        const id = chatRoomId.substr(0, 7)
+    const onClickEnterChatRoomEventHanlder = useCallback((chatRoomInfo) => {
+        const chatRoomPath = chatRoomInfo.uuid.substr(0, 7)
+        onClickEnterChatRoomEvent(chatRoomInfo, chatRoomPath)
     }, [])
 
     const items = [
@@ -84,7 +86,6 @@ function SideBar({
         },
         {
             name: "ChatRooms",
-            path: "/chat",
             icon: <MyIcon name="chat" />,
             list: (
                 <React.Fragment>
@@ -150,7 +151,7 @@ function SideBar({
                             </AccordionSummary>
                             {isOpen && (
                                 <AccordionDetails>
-                                    {item.name !== "Friends" ? (
+                                    {item.name !== "Friends" && item.name !== "ChatRooms" ? (
                                         <Link
                                             to={item.path}
                                             style={sidebarLinkStyle}

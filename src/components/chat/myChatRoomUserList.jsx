@@ -7,7 +7,7 @@ import {
     Divider,
 } from "@mui/material"
 
-const MyChatRoomUserList = () => {
+const MyChatRoomUserList = ({ chatRoomName, myInfo, friendInfo }) => {
     const onSearchKeyDownHandler = (e) => {
         if(e.key !== "Enter") return
         if(!e.target.value) return
@@ -20,8 +20,7 @@ const MyChatRoomUserList = () => {
         >
             <List>
                 <ListItem button={true} >
-                    {/* TODO: Add Icon */}
-                    <ListItemText primary="FoxMon" />
+                    <ListItemText primary={chatRoomName} />
                 </ListItem>
             </List>
             <Divider />
@@ -39,14 +38,16 @@ const MyChatRoomUserList = () => {
             <Divider />
             <List>
                 <ListItem button={true}>
-                    {/* TODO: Add Icon */}
-                    <ListItemText primary="FoxMon" />
+                    <ListItemText primary={myInfo.name} />
                     <ListItemText secondary="Me" align="right"/>
                 </ListItem>
-                <ListItem button={true}>
-                    {/* TODO: Add Icon */}
-                    <ListItemText primary="FoxMon2" />
-                </ListItem>
+                {friendInfo.map((f) => {
+                    return (
+                        <ListItem key={f.uuid} button={true}>
+                            <ListItemText primary={f.username} />
+                        </ListItem>
+                    )
+                })}
             </List>
         </Grid>
     )
