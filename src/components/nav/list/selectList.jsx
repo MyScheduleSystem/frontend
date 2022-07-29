@@ -1,6 +1,6 @@
 import { ListItemText, ListItem, ListItemIcon, Checkbox } from "@mui/material"
 import React from "react"
-import { useDrop, useDrag } from "react-dnd"
+import { useDrag } from "react-dnd"
 
 const SelectList = ({
     friend,
@@ -40,7 +40,7 @@ const SelectList = ({
                         disableRipple
                     />
                 </ListItemIcon>
-                <ListItemText primary={`${friend.nickname}`} />
+                <ListItemText primary={`${friend.username}`} />
             </ListItem>
         </React.Fragment>
     )

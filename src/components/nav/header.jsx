@@ -32,6 +32,7 @@ import chatRoomFetcher from "../../fetcher/chatRoomFetcher"
 import Message from "../../type/message"
 import User from "../../type/user"
 import imageFetcher from "../../fetcher/imageFetcher"
+import ArrayUtil from "../../util/arrayUtil"
 
 const drawerWidth = 240
 
@@ -108,6 +109,8 @@ const Header = () => {
     const [notify, setNotify] = useState([])
     const [message, setMessage] = useState([])
     const [chatRoom, setChatRoom] = useState([])
+    const [selectChatRoom, setSelectChatRoom] = useState()
+    const [unInviteFriend, setUnInviteFriend] = useState([])
     const [notiAnchorEl, setNotiAnchorEl] = useState(null)
     const [msgAnchorEl, setMsgAnchorEl] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -275,6 +278,35 @@ const Header = () => {
         obj.infoMessage = myInfo.info.infoMessage
         return obj
     }
+    
+    const onClickGetChatRoomInfoEventHandler = (chatRoomInfo) => {
+        setSelectChatRoom(chatRoomInfo)
+        userFetcher
+            .getMyInformationByUuid(userObj.fetchOption.uuid)
+            .then((data) => {
+                data.forEach((item) => {
+                    const users = item.data()
+                    setUnInviteFriend(ArrayUtil.not(users.friends, chatRoomInfo.users))
+                })
+            })
+    }
+
+    const onUpdateChatRoomInfoEvnetHandler = useCallback((updateItem) => {
+        chatRoomFetcher.updateChatRoom(updateItem.uuid, updateItem)
+        setChatRoom((prev) => {
+            return prev.map((item) => {
+                if(item.uuid === updateItem.uuid) {
+                    const obj = new ChatRoom(updateItem.uuid,
+                        updateItem.chatRoomName,
+                        updateItem.startDate,
+                        updateItem.userUuid
+                    )
+                    return obj
+                }
+                return item
+            })
+        })
+    }, [])
 
     return (
         <Box role="presentation">
@@ -347,7 +379,9 @@ const Header = () => {
                     <SideBar
                         isOpen={isOpen}
                         userFriend={friends}
+                        unInviteFriend={unInviteFriend}
                         chatRoomList={chatRoom}
+                        selectChatRoom={selectChatRoom}
                         onClickFriendButtonClickEvent={
                             onClickFriendButtonClickEventHandler
                         }
@@ -356,6 +390,12 @@ const Header = () => {
                         onAddChatRoomListEvent={onAddChatRoomListEventHandler}
                         onClickEnterChatRoomEvent={
                             onClickEnterChatRoomEventHanlder
+                        }
+                        onClickGetChatRoomInfoEvent={
+                            onClickGetChatRoomInfoEventHandler
+                        }
+                        onUpdateChatRoomInfoEvnet={
+                            onUpdateChatRoomInfoEvnetHandler
                         }
                     />
                 </Drawer>

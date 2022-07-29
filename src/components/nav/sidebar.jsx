@@ -21,15 +21,20 @@ import React from "react"
 function SideBar({
     isOpen,
     userFriend,
+    unInviteFriend,
     chatRoomList,
+    selectChatRoom,
     onClickFriendButtonClickEvent,
     onClickDeleteBtnEvent,
     onSignoutBtnClickEvnet,
     onAddChatRoomListEvent,
     onClickEnterChatRoomEvent,
+    onClickGetChatRoomInfoEvent,
+    onUpdateChatRoomInfoEvnet,
 }) {
     const [isOpenEditChatRoom, setIsOpenEditChatRoom] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false)
 
     const onClickFriendButtonClickEventHandler = useCallback(
         (isChecked, index) => {
@@ -71,6 +76,22 @@ function SideBar({
         onClickEnterChatRoomEvent(chatRoomInfo, chatRoomPath)
     }, [])
 
+    const onClickOpenChatRoomEditModalEventHandler = useCallback((isOpen) => {
+        setIsOpenEditModal(isOpen)
+    }, [])
+
+    const onClickCloseChatRoomEditModalEventHandler = useCallback((isClose) => {
+        setIsOpenEditModal(isClose)
+    }, [])
+
+    const onClickGetChatRoomInfoEventHandler = useCallback((chatRoomInfo) => {
+        onClickGetChatRoomInfoEvent(chatRoomInfo)
+    }, [])
+
+    const onUpdateChatRoomInfoEvnetHandler = useCallback((updateItem) => {
+        onUpdateChatRoomInfoEvnet(updateItem)
+    }, [])
+
     const items = [
         {
             name: "Friends",
@@ -103,6 +124,8 @@ function SideBar({
                         isOpenEditChatRoom={isOpenEditChatRoom}
                         onClickDeleteBtnEvent={onClickDeleteBtnEventHandler}
                         onClickEnterChatRoomEvent={onClickEnterChatRoomEventHanlder}
+                        onClickOpenChatRoomEditModalEvent={onClickOpenChatRoomEditModalEventHandler}
+                        onClickGetChatRoomInfoEvent={onClickGetChatRoomInfoEventHandler}
                     />
                 </React.Fragment>
             ),
@@ -167,16 +190,26 @@ function SideBar({
                     )
                 })}
             </Box>
-            {isOpenModal && (
+            {(isOpenModal || isOpenEditModal) && (
                 <DndProvider backend={HTML5Backend}>
                     <MyChatRoomModal
                         isOpenModal={isOpenModal}
+                        isOpenEditModal={isOpenEditModal}
+                        friend={userFriend}
+                        unInviteFriend={userFriend.filter((value) => unInviteFriend.indexOf(value.uuid) !== -1)}
+                        selectChatRoom={selectChatRoom}
                         onClickCloseModalEvent={onClickCloseModalEventHandler}
+                        onClickCloseChatRoomEditModalEvent={
+                            onClickCloseChatRoomEditModalEventHandler
+                        }
                         onClickAddChatRoomBtnEvent={
                             onClickAddChatRoomBtnEventHandler
                         }
                         onAddChatRoomListEvent={onAddChatRoomListEventHanlder}
-                        friend={userFriend}
+                        onUpdateChatRoomInfoEvnet={
+                            onUpdateChatRoomInfoEvnetHandler
+                        }
+
                     />
                 </DndProvider>
             )}
