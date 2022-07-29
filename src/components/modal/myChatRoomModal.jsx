@@ -127,8 +127,7 @@ function MyChatRoomModal({
         itemObj.chatRoomName = inputRef.current.value
         itemObj.userUuid = arr
         itemObj.startDate = selectChatRoom.startDate
-        onUpdateChatRoomInfoEvnet(itemObj)
-        onClickCloseChatRoomEditModalEvent(false)
+        onUpdateChatRoomInfoEvnet(itemObj, false)
     }
 
     return (

@@ -88,8 +88,9 @@ function SideBar({
         onClickGetChatRoomInfoEvent(chatRoomInfo)
     }, [])
 
-    const onUpdateChatRoomInfoEvnetHandler = useCallback((updateItem) => {
+    const onUpdateChatRoomInfoEvnetHandler = useCallback((updateItem, isClose) => {
         onUpdateChatRoomInfoEvnet(updateItem)
+        setIsOpenEditModal(isClose)
     }, [])
 
     const items = [

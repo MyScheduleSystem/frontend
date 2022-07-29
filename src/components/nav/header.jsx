@@ -279,7 +279,7 @@ const Header = () => {
         return obj
     }
     
-    const onClickGetChatRoomInfoEventHandler = (chatRoomInfo) => {
+    const onClickGetChatRoomInfoEventHandler = useCallback((chatRoomInfo) => {
         setSelectChatRoom(chatRoomInfo)
         userFetcher
             .getMyInformationByUuid(userObj.fetchOption.uuid)
@@ -289,14 +289,15 @@ const Header = () => {
                     setUnInviteFriend(ArrayUtil.not(users.friends, chatRoomInfo.users))
                 })
             })
-    }
+    }, [])
 
     const onUpdateChatRoomInfoEvnetHandler = useCallback((updateItem) => {
         chatRoomFetcher.updateChatRoom(updateItem.uuid, updateItem)
         setChatRoom((prev) => {
             return prev.map((item) => {
                 if(item.uuid === updateItem.uuid) {
-                    const obj = new ChatRoom(updateItem.uuid,
+                    const obj = new ChatRoom(
+                        updateItem.uuid,
                         updateItem.chatRoomName,
                         updateItem.startDate,
                         updateItem.userUuid
