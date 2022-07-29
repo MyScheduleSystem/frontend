@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useDrop } from "react-dnd"
 import AlertPopup from "../popup/alertPopup"
 import SelectList from "../nav/list/selectList"
@@ -10,22 +10,37 @@ import {
 } from "@mui/material"
 
 function MyChatRoomModal({ 
-    isOpenModal, 
-    onClickCloseModalEvent,
-    onAddChatRoomListEvent,
+    isOpenModal,
+    isOpenEditModal,
     friend,
+    unInviteFriend,
+    selectChatRoom,
+    onClickCloseModalEvent,
+    onClickCloseChatRoomEditModalEvent,
+    onAddChatRoomListEvent,
+    onUpdateChatRoomInfoEvnet,
 }) {
     const [checked, setChecked] = useState([])
-    const [unCompletedList, setUnCompletedList] = useState([ ...friend ])
+    const [unCompletedList, setUnCompletedList] = useState([])
     const [completedList, setCompletedList] = useState([])
     const [isOpen, setIsOpen] = useState(false)
+    
     const inputRef = useRef()
 
     const unCompletedChecked = ArrayUtil.intersection(checked, unCompletedList)
     const completedChecked = ArrayUtil.intersection(checked, completedList)
 
+    useEffect(() => {
+        if (isOpenModal) {
+            setUnCompletedList([ ...friend ])
+        } else {
+            setUnCompletedList([ ...unInviteFriend ])
+        }
+    }, [friend, unInviteFriend])
+
     const onClickCloseModalEventHandler = () => {
         onClickCloseModalEvent(false)
+        onClickCloseChatRoomEditModalEvent(false)
     }
 
     const onClickToggleEventHanlder = (value) => () => {
@@ -98,26 +113,59 @@ function MyChatRoomModal({
         setUnCompletedList((prev) => [...prev, item])
     }
 
+    const onClickUpdateButtonEventHandler = () => {
+        const itemObj = {}
+        if (!inputRef.current.value) {
+            setIsOpen(true)
+            return
+        }
+        const arr = [...selectChatRoom.users]
+        completedList.forEach((item) => {
+            arr.push(item.uuid)
+        })
+        itemObj.uuid = selectChatRoom.uuid
+        itemObj.chatRoomName = inputRef.current.value
+        itemObj.userUuid = arr
+        itemObj.startDate = selectChatRoom.startDate
+        onUpdateChatRoomInfoEvnet(itemObj, false)
+    }
+
     return (
         <React.Fragment>
             <AlertPopup 
                 isShowPopup={isOpen}
                 setIsShowPopupEvent={onClickOpenEventHandler}
-                message="Please check your friendlist"
+                message={isOpenModal ? "Please check your friendlist" : "Please Check Your ChatRoomName"}
             />
             <Modal
                 sx={modalStyle}
-                open={isOpenModal}
+                open={(isOpenModal || isOpenEditModal)}
                 onClose={onClickCloseModalEventHandler}
             >
                 <Grid container={true} sx={girdStyle} spacing={2}>
+                {isOpenModal ? 
+                <React.Fragment>
                 <Input inputRef={inputRef} />
                 <Button 
                     variant="contained"
                     onClick={onAddChatRoomListEventHandelr}
                 >
                     CREATE
+                </Button> 
+                </React.Fragment>
+                :
+                <React.Fragment>
+                <Input 
+                    inputRef={inputRef}
+                    defaultValue={selectChatRoom.chatRoomName} 
+                />
+                <Button 
+                    variant="contained"
+                    onClick={onClickUpdateButtonEventHandler}
+                >
+                    Update
                 </Button>
+                </React.Fragment>}
                     <Grid item={true}>
                         <Card>
                             <CardHeader 

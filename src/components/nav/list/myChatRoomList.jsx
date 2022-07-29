@@ -7,7 +7,9 @@ function MyChatRoomList({
     chatRoom,
     isOpenEditChatRoom,
     onClickDeleteBtnEvent,
-    onClickEnterChatRoomEvent
+    onClickEnterChatRoomEvent,
+    onClickOpenChatRoomEditModalEvent,
+    onClickGetChatRoomInfoEvent,
 }) {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState("")
@@ -28,6 +30,11 @@ function MyChatRoomList({
     const onClickEnterChatRoomEventHandler = (chatRoomInfo) => () => {
         onClickEnterChatRoomEvent(chatRoomInfo)
     }
+    
+    const onClickOpenChatRoomEditModalEventHandler = (chatRoomInfo) => () => {
+        onClickGetChatRoomInfoEvent(chatRoomInfo)
+        onClickOpenChatRoomEditModalEvent(true)
+    }
 
     return (
         <React.Fragment>
@@ -45,15 +52,26 @@ function MyChatRoomList({
                             ) : (
                                 <ListItem
                                     secondaryAction={
-                                        <IconButton
-                                            edge="end"
-                                            onClick={onClickDeleteBtnEventHandler(
-                                                c.uuid
-                                            )}
-                                        >
-                                            <MyIcon name="delete" />
-                                        </IconButton>
+                                        <React.Fragment>
+                                            <IconButton
+                                                edge="end"
+                                                size="small"
+                                                onClick={onClickOpenChatRoomEditModalEventHandler(c)}
+                                            >
+                                                <MyIcon name="pencil" />
+                                            </IconButton>
+                                            <IconButton
+                                                edge="end"
+                                                size="medium"
+                                                onClick={onClickDeleteBtnEventHandler(
+                                                    c.uuid
+                                                )}
+                                            >
+                                                <MyIcon name="delete" />
+                                            </IconButton>
+                                        </React.Fragment>
                                     }
+                                    divider={true}
                                 >
                                     <Typography>{c.chatRoomName}</Typography>
                                 </ListItem>
