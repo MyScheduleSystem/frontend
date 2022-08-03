@@ -1,10 +1,11 @@
-import { 
+import {
     doc,
-    deleteDoc, 
-    addDoc, 
-    collection, 
-    getDocs, 
+    deleteDoc,
+    addDoc,
+    collection,
+    getDocs,
     updateDoc,
+    onSnapshot,
 } from "firebase/firestore"
 import ChatRoom from "../type/chatRoom"
 import { firestore } from "../service/firebase"
@@ -56,6 +57,18 @@ chatRoomFetcher.updateChatRoom = function (uuid, updated) {
 chatRoomFetcher.deleteChatRoom = async function (chatRoomUuid) {
     const chatRoom = doc(firestore, "chatroom", `${chatRoomUuid}`)
     await deleteDoc(chatRoom)
+}
+
+// ?@? 기준으로 날짜/시간/메세지 나눔
+// send: 2022-07-30?@?16:32?@?This is admin !
+chatRoomFetcher.subscribeChatContents = async function (uuid) {
+    onSnapshot(
+        doc(firestore, "chatroom", uuid),
+        { includeMetaDataChanges: true },
+        (doc) => {
+            console.log(doc.data())
+        }
+    )
 }
 
 Object.freeze(chatRoomFetcher)

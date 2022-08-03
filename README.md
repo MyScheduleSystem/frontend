@@ -173,13 +173,13 @@ useState(setState의) 동작 이해
             따라서 우리의 project에서는 React의 In memory에 저장하도록 수정했다. 물론 In memory에 저장할 경우 새로운 탭을 열 경우 다시 로그인을 해야할 수도 있지만
             이러한 점들을 보완하며 새롭게 완성시켜 보기로 했다. 이러한 기능을 완성하기 위해 나는 Reducer를 사용하기로 했다.
                 * In memory로 구현하는 경우, 외부 공격으로부터 안전하다.
-            이러한 Reducer의 도입으로 Context의 object를 In memory를 활용해 쉽게 관리할 수 있었으며 refreshToken을 Cookie에 저장함으로서 Token관리가 더욱 용이해졌다.
+            이러한 Reducer의 도입으로 Context의 object를 In memory를 활용해 쉽게 관리할 수 있었으며 accessToken을 Cookie에 저장함으로서 Token관리가 더욱 용이해졌다.
             전 보다 훨씬 더 부드럽고 정확한 동작을 하도록 작성할 수 있었다.
 
         - Cookie에 저장하는 방식
             Cookie는 CSRF 공격에 취약하지만 SameSite Cookie는 Cookie기반 접근 방식을 CSRF 공격으로부터 방지할 수 있다.
             인증 및 API server가 다른 domain에서 hosting되는 경우 solution이 아닐 수 있지만 그렇지 않은 경우 이러한 단점을 보완할 수 있다.
-                * 우리의 프로젝트에서는 refreshToken의 경우 cookie에 저장하고, accessToken의 경우 In memory에 저장한다.
+                * 우리의 프로젝트에서는 accessToken의 경우 cookie에 저장하고, refreshToken의 경우 In memory에 저장한다.
                 * sameSite option은 'strict' => 같은 domain에서 해당 cookie에 접근이 가능하다.
 
         - What is Reducer?
@@ -188,12 +188,6 @@ useState(setState의) 동작 이해
             Component 바깥에 작성할 수도 있고 다른 file에서도 불러와 사용할 수 있다.
                 * 즉 useState의 대체 함수라고도 볼 수 있다.
                 * 이러한 상태변화 로직을 사용하기 위해선 dispatch를 사용해야함.
-
-    Image Upload 기능 구현중 Axios 데이터 전달오류 (해결)
-        - Cloudinary Upload Presets Name Mode에서 오류발견
-            Signed Mode Name을 가져오지 말고 Unsigned Mode Name을가져오자.
-
-        - Cloudinary에서 firebase storage로 옮김.
 
     TextField에서 label props에 의한 EventBubbling 문제 (해결)
         - 초기 코드
@@ -264,8 +258,8 @@ useState(setState의) 동작 이해
             },
             collect: (monitor) => ({
                 isDragging: monitor.isDragging(),
-        }),
-    }))
+            }),
+        }))
 
         - 새로운 컴포넌트를 만들어서 friend 정보를 map으로 한개씩 보내줌으로써 해결했다.
             {unCompletedList.map((friend, index) => {

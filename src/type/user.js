@@ -11,8 +11,8 @@ class User extends UserType {
     }
 }
 
-User.saveRefreshStorage = function (refreshToken) {
-    Storage.saveRefershToken(refreshToken)
+User.saveAccessStorage = function (accessToken) {
+    Storage.saveAccessToken(accessToken)
 }
 
 User.checkForUserPersistence = function () {
