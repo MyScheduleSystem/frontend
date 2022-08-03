@@ -189,12 +189,6 @@ useState(setState의) 동작 이해
                 * 즉 useState의 대체 함수라고도 볼 수 있다.
                 * 이러한 상태변화 로직을 사용하기 위해선 dispatch를 사용해야함.
 
-    Image Upload 기능 구현중 Axios 데이터 전달오류 (해결)
-        - Cloudinary Upload Presets Name Mode에서 오류발견
-            Signed Mode Name을 가져오지 말고 Unsigned Mode Name을가져오자.
-
-        - Cloudinary에서 firebase storage로 옮김.
-
     TextField에서 label props에 의한 EventBubbling 문제 (해결)
         - 초기 코드
             <MenuItem>
@@ -264,8 +258,8 @@ useState(setState의) 동작 이해
             },
             collect: (monitor) => ({
                 isDragging: monitor.isDragging(),
-        }),
-    }))
+            }),
+        }))
 
         - 새로운 컴포넌트를 만들어서 friend 정보를 map으로 한개씩 보내줌으로써 해결했다.
             {unCompletedList.map((friend, index) => {
