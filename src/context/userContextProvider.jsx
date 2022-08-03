@@ -75,7 +75,7 @@ function UserContextProvider({ children }) {
                 state: userState,
                 action: userObj,
             })
-            User.saveRefreshStorage(userState.refreshToken)
+            User.saveAccessStorage(userState.accessToken)
             setUserObj(userState)
         },
         [userState]
@@ -98,7 +98,7 @@ function UserContextProvider({ children }) {
             state: userState,
             action: userObj,
         })
-        User.saveRefreshStorage(userState.refreshToken)
+        User.saveAccessStorage(userState.accessToken)
         setUserObj(userState)
     }, [userState])
 
